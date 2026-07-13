@@ -56,22 +56,28 @@ Change the intensity with `/deanchor [lite|full|ultra]` (Default: `full`):
 
 ## Installation
 
-### PowerShell (Windows)
-Run this command from the project root:
-```powershell
-.\install.ps1
-```
-
 ### Node.js CLI
-Install globally or run via npm:
-```bash
-node bin/deanchor.js install
-```
+Run the following commands from the project root:
 
-This installs the custom workflows into your agent's global paths:
+1. **Install Workflows & Skills:**
+   ```bash
+   node bin/deanchor.js install
+   ```
+
+2. **Enable Git Pre-Commit Hook (Auto-Syncing):**
+   ```bash
+   node bin/deanchor.js init-hook
+   ```
+
+3. **Check Status:**
+   ```bash
+   node bin/deanchor.js status
+   ```
+
+This compiles templates (injecting custom banned paradigms and settings) and installs custom rules into your agent's global paths:
 - **Antigravity Profiles:** `%USERPROFILE%\AntigravityProfiles\<profile>\.gemini\antigravity\global_workflows\`
-- **Claude Code:** `~/.config/claude-code/workflows/` (or global plugins directory)
-- **Cursor:** Automatically generates `.cursorrules` in your project root.
+- **Claude Code:** Project-specific `.clauderules` or configuration file instructions.
+- **Cursor:** `.cursorrules` in your project root.
 
 ---
 
