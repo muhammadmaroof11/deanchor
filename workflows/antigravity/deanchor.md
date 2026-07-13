@@ -20,24 +20,32 @@ Default level: **full**. Change level via `/deanchor lite|full|ultra`.
 
 ---
 
+## Persistent Cognitive Ledger (`DEANCHOR.md`)
+
+To save context tokens and maintain memory across agent sessions:
+1. **Restore Context:** At the start of any deanchoring task, scan for a `DEANCHOR.md` file in the project workspace. If present, read it *first* to inherit previously decoupled data contracts, banned list, and pending ascended backlogs.
+2. **Update Ledger:** When implementing redesigns, performing audits, or defining new banned paradigms, you **MUST** record your findings and concepts in the `DEANCHOR.md` ledger. This ensures future agent iterations remain aligned and do not slip back into anchored thinking.
+
+---
+
 ## The Deanchor Protocol
 
-Before you edit, write, or touch any code or design assets, you **MUST** run the existing codebase through this elite filter:
+Before you edit, write, or touch any code or design assets, execute this four-step pipeline:
 
 ### 1. Decouple Data & Facts
 Extract and list the pure informational content, user intents, inputs, and functional requirements of the request.
-- **Rules:** Strip all junior styling, classes, folders, HTML structures, and database schemas. Define only the raw mathematical data contract.
+- **Rules:** Strip all junior styling, classes, folders, HTML structures, and database schemas. Define only the raw mathematical data contract. Log this in `DEANCHOR.md` under **1. Decoupled Data Contracts**.
 
 ### 2. Ban Existing Paradigms
 Identify the paradigms and templates used in the current implementation.
-- **Rules:** Write these down and explicitly tag them as **`BANNED_PARADIGM`**. You are legally forbidden from using any of them in your conceptualization. Treat them as junior-level templates to avoid.
+- **Rules:** Write these down and explicitly tag them as **`BANNED_PARADIGM`**. You are legally forbidden from using any of them in your conceptualization. Log these in `DEANCHOR.md` under **2. Banned Paradigms Ledger**.
 
 ### 3. Conceptualize (Blank Slate Redesign)
 Design a completely new system or visual layout from scratch.
-- **Rules:** Solve the functional needs of the data contract from Step 1 while strictly avoiding all items in the Banned list. Focus on elite, high-agency patterns (asymmetric spacing, gesture/keyboard-driven workflows, localized single-focus states, custom event streams, state machines, etc.) that ascend the original design to another level.
+- **Rules:** Solve the functional needs of the data contract from Step 1 while strictly avoiding all items in the Banned list. Focus on elite, high-agency patterns (asymmetric spacing, gesture/keyboard-driven workflows, localized single-focus states, custom event streams, state machines, etc.) that ascend the original design to another level. Log the vision in `DEANCHOR.md` under **3. Recommended Ascended Architectures**.
 
 ### 4. Execute
-Write the code or design from scratch. Do not reuse their boilerplate. Build the new paradigm directly.
+Write the code or design from scratch. Do not reuse their boilerplate. Build the new paradigm directly. Log the transition in `DEANCHOR.md` under **4. Redesign Log**.
 
 ---
 
@@ -57,6 +65,8 @@ Under `/deanchor` mode, structure your responses as follows:
 
 ```markdown
 ### 🌌 Deanchor Protocol: [Task Name]
+
+[Read DEANCHOR.md configuration verified / updated]
 
 #### 1. Decoupled Data & Intents
 - [Data Contract / Raw Inputs & Outputs]
