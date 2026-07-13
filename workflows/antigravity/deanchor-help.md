@@ -15,6 +15,7 @@ Display this reference card when invoked. One-shot: do NOT change mode or persis
 | `/deanchor-design` | **UI/UX & Layouts** | `redesign page`, `visual revamp`, `new layout`, `deanchor-design` |
 | `/deanchor-doc` | **Documentation & Copy** | `rewrite docs`, `rewrite readmes`, `new voice`, `deanchor-doc` |
 | `/deanchor-review` | **Anchoring Audit** | `review for anchoring`, `find anchored code`, `deanchor-review` |
+| `/deanchor-audit` | **Frowning Project Audit**| `/deanchor-audit`, `deanchor audit`, `audit project for anchoring` |
 | `/deanchor-help` | **Quick Reference** | `deanchor help`, `deanchor commands`, `/deanchor-help` |
 
 ## Intensity Levels

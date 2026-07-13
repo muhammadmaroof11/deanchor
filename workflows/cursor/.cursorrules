@@ -35,3 +35,4 @@ When a user begins a prompt with these phrases, automatically activate the corre
 - `deanchor-design`: Activate UI/UX layout/styling redesign protocol.
 - `deanchor-doc`: Activate technical documentation/readme writing protocol.
 - `deanchor-review`: Audit files for anchoring bias (identify where legacy structures are holding the code back).
+- `deanchor-audit`: Review the codebase, call out the current BS, and propose a clean-slate upgrade path without code changes.

@@ -41,4 +41,5 @@ Implement the approved concept from a clean slate. Do not patch or copy-paste le
 - `/deanchor-design` (or `deanchor-design`): Activate visual/UI redesign.
 - `/deanchor-doc` (or `deanchor-doc`): Activate copywriting/doc rewrite.
 - `/deanchor-review` (or `deanchor-review`): Audit a file or diff for anchoring bias.
+- `/deanchor-audit` (or `deanchor-audit`): Audits the project, frowns at the BS code, and suggests ascended recommendations without modifying code.
 - `/deanchor-help` (or `deanchor-help`): Display this quick reference card.

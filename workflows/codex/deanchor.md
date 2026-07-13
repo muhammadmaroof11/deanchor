@@ -28,3 +28,4 @@ Before writing code or layouts, execute this cognitive loop:
 - `@deanchor-design`: UI/UX visual redesign.
 - `@deanchor-doc`: Documentation rewrite.
 - `@deanchor-review`: Audit files for anchoring bias.
+- `@deanchor-audit`: Critique current over-engineering and recommend a deanchored design path without code changes.
