@@ -57,6 +57,7 @@ Under `/deanchor-design` mode, structure your responses as follows:
 
 #### 2. Banned Junior Visual Paradigms
 - 🚫 [Existing layout / grid template] -> BANNED
+{{CUSTOM_BANNED_PARADIGMS}}
 
 #### 3. Ascended Visual Concept
 - **Atmosphere:** [Evocative vibe description, e.g., "Art Gallery Airy", "Dense Cockpit"]

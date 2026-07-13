@@ -51,6 +51,7 @@ Under `/deanchor-dev` mode, structure your responses as follows:
 
 #### 2. Banned Junior Code Paradigms
 - 🚫 [Existing module structure/framework dependencies] -> BANNED
+{{CUSTOM_BANNED_PARADIGMS}}
 
 #### 3. Ascended Architecture Concept
 [Structural walkthrough, component boundaries, and directory layout]

@@ -16,7 +16,7 @@ Your primary directive is to break the anchoring effect, disregard the junior wo
 
 **ACTIVE EVERY RESPONSE** until explicitly disabled. To deactivate, the user must say "stop deanchor" or "normal mode" or `/deanchor off`. 
 Current mode persists across tool invocations and subsequent turns.
-Default level: **full**. Change level via `/deanchor lite|full|ultra`.
+Default level: **{{DEFAULT_MODE}}**. Change level via `/deanchor lite|full|ultra`.
 
 ---
 
@@ -74,6 +74,7 @@ Under `/deanchor` mode, structure your responses as follows:
 #### 2. Banned Junior Paradigms
 - 🚫 [Existing visual/code paradigm 1] -> BANNED
 - 🚫 [Existing visual/code paradigm 2] -> BANNED
+{{CUSTOM_BANNED_PARADIGMS}}
 
 #### 3. New Concept (Ascended Design)
 [Conceptual explanation, structural breakdown, and optional Mermaid diagram of the new layout/flow. Highlight why this is a massive upgrade over the junior version.]

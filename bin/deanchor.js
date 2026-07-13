@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * Deanchor CLI Tool & Installer
- * Helps install and manage the Deanchor agent skill across environments.
+ * Deanchor CLI Tool & Rule Compiler
+ * Compiles and installs the Deanchor agent skill across environments.
  */
 
 const fs = require('fs');
@@ -13,13 +13,33 @@ const WORKFLOWS_SRC_DIR = path.join(__dirname, '..', 'workflows', 'antigravity')
 const SKILLS_SRC_DIR = path.join(__dirname, '..', 'skills', 'deanchor');
 const CURSORRULES_SRC = path.join(__dirname, '..', 'workflows', 'cursor', '.cursorrules');
 const CLAUDE_SRC = path.join(__dirname, '..', 'workflows', 'claude-code', 'deanchor.md');
+const CODEX_SRC = path.join(__dirname, '..', 'workflows', 'codex', 'deanchor.md');
 
 const args = process.argv.slice(2);
 const command = args[0] || 'help';
 
+// Load configurations
+const configPath = path.join(__dirname, '..', 'config', 'config.json');
+let config = {
+  defaultMode: 'full',
+  customBannedParadigms: []
+};
+
+if (fs.existsSync(configPath)) {
+  try {
+    const raw = fs.readFileSync(configPath, 'utf8');
+    config = JSON.parse(raw);
+  } catch (err) {
+    console.warn('⚠️ Warning: Failed to parse config/config.json. Using defaults.');
+  }
+}
+
 switch (command) {
   case 'install':
     installDeanchor();
+    break;
+  case 'init-hook':
+    installGitHook();
     break;
   case 'cursor':
     exportCursorRules();
@@ -42,16 +62,20 @@ Deanchor CLI Tool ⚓➡️🌌
 Usage: node bin/deanchor.js <command>
 
 Commands:
-  install   Install deanchor workflows and skills into all detected Antigravity profiles
-  cursor    Generate a .cursorrules file in the current working directory
-  claude    Generate a deanchor.md file in the current directory for Claude Code
-  status    Check installation status across active Antigravity profiles
-  help      Display this help card
+  install     Compile and install deanchor workflows/skills into Antigravity profiles
+  init-hook   Setup a git pre-commit hook to automatically compile & sync on commit
+  cursor      Generate compiled .cursorrules in current directory
+  claude      Generate compiled deanchor.md for Claude Code in current directory
+  status      Check installation status across active profiles
+  help        Display this help card
   `);
 }
 
 function getAntigravityProfilesBase() {
   const userHome = os.homedir();
+  if (userHome.includes('AntigravityProfiles')) {
+    return path.dirname(userHome);
+  }
   return path.join(userHome, 'AntigravityProfiles');
 }
 
@@ -75,22 +99,50 @@ function findProfilePaths(profileBase) {
   return paths;
 }
 
-function copyFolderSync(from, to) {
+// Compile templates replacing {{DEFAULT_MODE}} and {{CUSTOM_BANNED_PARADIGMS}}
+function compileTemplate(content) {
+  let mode = config.defaultMode || 'full';
+  let bannedText = '';
+  
+  if (Array.isArray(config.customBannedParadigms) && config.customBannedParadigms.length > 0) {
+    bannedText = config.customBannedParadigms
+      .map(p => `  - 🚫 ${p} -> BANNED`)
+      .join('\n');
+  }
+
+  return content
+    .replace(/\{\{DEFAULT_MODE\}\}/g, mode)
+    .replace(/\{\{CUSTOM_BANNED_PARADIGMS\}\}/g, bannedText);
+}
+
+function compileAndWrite(srcPath, destPath) {
+  const content = fs.readFileSync(srcPath, 'utf8');
+  const compiled = compileTemplate(content);
+  fs.writeFileSync(destPath, compiled, 'utf8');
+}
+
+function compileFolderSync(from, to) {
   if (!fs.existsSync(to)) {
     fs.mkdirSync(to, { recursive: true });
   }
   fs.readdirSync(from).forEach(element => {
-    const stat = fs.lstatSync(path.join(from, element));
+    const srcPath = path.join(from, element);
+    const destPath = path.join(to, element);
+    const stat = fs.lstatSync(srcPath);
     if (stat.isFile()) {
-      fs.copyFileSync(path.join(from, element), path.join(to, element));
+      if (element.endsWith('.md')) {
+        compileAndWrite(srcPath, destPath);
+      } else {
+        fs.copyFileSync(srcPath, destPath);
+      }
     } else if (stat.isDirectory()) {
-      copyFolderSync(path.join(from, element), path.join(to, element));
+      compileFolderSync(srcPath, destPath);
     }
   });
 }
 
 function installDeanchor() {
-  console.log('⚓ Installing Deanchor workflows and skills...');
+  console.log('⚓ Compiling and installing Deanchor workflows and skills...');
   
   const filesToCopy = fs.readdirSync(WORKFLOWS_SRC_DIR)
     .filter(f => f.startsWith('deanchor') && f.endsWith('.md'));
@@ -116,35 +168,58 @@ function installDeanchor() {
   }
 
   for (const dest of destinations) {
-    console.log(`➡️ Installing for profile: ${dest.profileName}...`);
+    console.log(`➡️ Compiling for profile: ${dest.profileName}...`);
     
-    // Copy workflows
+    // Compile workflows
     for (const file of filesToCopy) {
       const srcFile = path.join(WORKFLOWS_SRC_DIR, file);
       const destFile = path.join(dest.workflowsPath, file);
-      fs.copyFileSync(srcFile, destFile);
-      console.log(`  + Copied workflow ${file} to ${dest.profileName}`);
+      compileAndWrite(srcFile, destFile);
+      console.log(`  + Compiled workflow ${file} to ${dest.profileName}`);
     }
 
-    // Copy skills
+    // Compile skills
     const destSkillDir = path.join(dest.skillsPath, 'deanchor');
-    copyFolderSync(SKILLS_SRC_DIR, destSkillDir);
-    console.log(`  + Copied skill directory to ${dest.profileName}`);
+    compileFolderSync(SKILLS_SRC_DIR, destSkillDir);
+    console.log(`  + Compiled skill directory to ${dest.profileName}`);
   }
 
-  console.log('\n✅ Deanchor workflows and skills successfully installed!');
+  console.log('\n✅ Deanchor rule compilation and installation completed!');
 }
 
 function exportCursorRules() {
   const destPath = path.join(process.cwd(), '.cursorrules');
-  fs.copyFileSync(CURSORRULES_SRC, destPath);
-  console.log(`✅ Generated .cursorrules at ${destPath}`);
+  compileAndWrite(CURSORRULES_SRC, destPath);
+  console.log(`✅ Compiled and generated .cursorrules at ${destPath}`);
 }
 
 function exportClaudeRules() {
   const destPath = path.join(process.cwd(), 'deanchor.md');
-  fs.copyFileSync(CLAUDE_SRC, destPath);
-  console.log(`✅ Generated deanchor.md at ${destPath}`);
+  compileAndWrite(CLAUDE_SRC, destPath);
+  console.log(`✅ Compiled and generated deanchor.md at ${destPath}`);
+}
+
+function installGitHook() {
+  const gitDir = path.join(__dirname, '..', '.git');
+  if (!fs.existsSync(gitDir)) {
+    console.error('❌ Error: .git directory not found. Please initialize a git repo first.');
+    process.exit(1);
+  }
+
+  const hooksDir = path.join(gitDir, 'hooks');
+  if (!fs.existsSync(hooksDir)) {
+    fs.mkdirSync(hooksDir);
+  }
+
+  const hookPath = path.join(hooksDir, 'pre-commit');
+  const hookScript = `#!/bin/sh
+# Auto-compile and distribute Deanchor rules before committing
+echo "⚓ Deanchor: Auto-compiling workflows..."
+node bin/deanchor.js install
+`;
+
+  fs.writeFileSync(hookPath, hookScript, { mode: 0o755 });
+  console.log(`✅ Git pre-commit hook installed successfully at ${hookPath}`);
 }
 
 function checkStatus() {
