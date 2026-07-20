@@ -33,12 +33,25 @@ Implement the approved concept from scratch. Do not reuse legacy boilerplate.
 
 ---
 
+## Workspace Cleanliness & Scratch Isolation 🧹
+- **Scratch Files:** Never create temporary scripts, sandbox files, or test configurations directly in the project root.
+- **Location:** Always write scratch/test files into the designated sandbox folder: `<appDataDir>\brain\<conversation-id>\scratch/` (or a local `.deanchor-scratch/` directory).
+
+## Specialized Performance & UI Auditing
+- **Vanilla Replacements:** Swap heavy UI libraries (e.g. Framer Motion, slider packages) with clean, hardware-accelerated vanilla CSS transitions.
+- **Dynamic Loading:** Lazy-load large third-party modules dynamically if they are essential.
+- **Lighthouse Optimization Loop:** Run Lighthouse audits using the browser subagent (when permitted). Use the report findings to run further iterations of performance optimization, repeating until page performance is fully optimized.
+
+---
+
 ## Trigger Commands
 When a user begins a prompt with these phrases, automatically activate the corresponding deanchor mode:
 
 - `deanchor`: Activate general redesign protocol.
 - `deanchor-dev`: Activate code architecture/refactoring protocol.
-- `deanchor-design`: Activate UI/UX layout/styling redesign protocol.
+- `deanchor-design`: Activate UI/UX layout/styling redesign protocol with HSL, responsive scales, and spring easing.
+- `deanchor-sec`: Activate security audits, verifying CVEs and proposing native alternatives.
+- `deanchor-perf`: Activate performance optimization with low allocations and Lighthouse feedback loops.
 - `deanchor-doc`: Activate technical documentation/readme writing protocol.
 - `deanchor-review`: Audit files for anchoring bias (identify where legacy structures are holding the code back).
 - `deanchor-audit`: Review the codebase, call out the current BS, and propose a clean-slate upgrade path without code changes.

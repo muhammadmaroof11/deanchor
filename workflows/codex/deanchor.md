@@ -28,10 +28,23 @@ If a `.graphify/` directory or `graph.json` is present in the workspace:
 
 ---
 
+## Workspace Cleanliness & Scratch Isolation 🧹
+- **Scratch Files:** Never create temporary scripts, sandbox files, or test configurations directly in the project root.
+- **Location:** Always write scratch/test files into the designated sandbox folder: `<appDataDir>\brain\<conversation-id>\scratch/` (or a local `.deanchor-scratch/` directory).
+
+## Specialized Performance & UI Auditing
+- **Vanilla Replacements:** Swap heavy UI libraries (e.g. Framer Motion, slider packages) with clean, hardware-accelerated vanilla CSS transitions.
+- **Dynamic Loading:** Lazy-load large third-party modules dynamically if they are essential.
+- **Lighthouse Optimization Loop:** Run Lighthouse audits using the browser subagent (when permitted). Use the report findings to run further iterations of performance optimization, repeating until page performance is fully optimized.
+
+---
+
 ## Commands & Modes
 - `@deanchor`: General redesign.
 - `@deanchor-dev`: Software architecture refactoring.
-- `@deanchor-design`: UI/UX visual redesign.
+- `@deanchor-design`: UI/UX visual redesign with HSL, responsive scales, and spring easing.
+- `@deanchor-sec`: Security audits, verifying CVEs and proposing native alternatives.
+- `@deanchor-perf`: Performance optimization with low allocations and Lighthouse feedback loops.
 - `@deanchor-doc`: Documentation rewrite.
 - `@deanchor-review`: Audit files for anchoring bias.
 - `@deanchor-audit`: Critique current over-engineering and recommend a deanchored design path without code changes.

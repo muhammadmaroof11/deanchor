@@ -40,11 +40,24 @@ Implement the approved concept from a clean slate. Do not patch or copy-paste le
 
 ---
 
+## Workspace Cleanliness & Scratch Isolation 🧹
+- **Scratch Files:** Never create temporary scripts, sandbox files, or test configurations directly in the project root.
+- **Location:** Always write scratch/test files into the designated sandbox folder: `<appDataDir>\brain\<conversation-id>\scratch/` (or a local `.deanchor-scratch/` directory).
+
+## Specialized Performance & UI Auditing
+- **Vanilla Replacements:** Swap heavy UI libraries (e.g. Framer Motion, slider packages) with clean, hardware-accelerated vanilla CSS transitions.
+- **Dynamic Loading:** Lazy-load large third-party modules dynamically if they are essential.
+- **Lighthouse Optimization Loop:** Run Lighthouse audits using the browser subagent (when permitted). Use the report findings to run further iterations of performance optimization, repeating until page performance is fully optimized.
+
+---
+
 ## Commands & Modes
 
 - `/deanchor` (or `deanchor`): Activate general redesign.
 - `/deanchor-dev` (or `deanchor-dev`): Activate code architecture refactoring.
-- `/deanchor-design` (or `deanchor-design`): Activate visual/UI redesign.
+- `/deanchor-design` (or `deanchor-design`): Activate visual/UI redesign with HSL, responsive scales, and spring easing.
+- `/deanchor-sec` (or `deanchor-sec`): Activate security audits, verifying CVEs and proposing native alternatives.
+- `/deanchor-perf` (or `deanchor-perf`): Activate performance optimization with low allocations and Lighthouse feedback loops.
 - `/deanchor-doc` (or `deanchor-doc`): Activate copywriting/doc rewrite.
 - `/deanchor-review` (or `deanchor-review`): Audit a file or diff for anchoring bias.
 - `/deanchor-audit` (or `deanchor-audit`): Audits the project, frowns at the BS code, and suggests ascended recommendations without modifying code.
