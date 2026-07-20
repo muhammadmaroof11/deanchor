@@ -1,23 +1,23 @@
 {
   "D:\\Maroof\\Me\\JustThinkBro\\bin\\deanchor.js": {
-    "mtime": 1784568345418.6594,
-    "hash": "9db18510383a43683f668e0e62fe2c8c"
+    "mtime": 1784571080472.14,
+    "hash": "4f629c0e82dc76dac0ebb400f7e72087"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\benchmarks\\anchored_vs_deanchored.md": {
     "mtime": 1783968320487.7112,
     "hash": "06b176a6a056b6f0a2733006ccf49552"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\DEANCHOR.md": {
-    "mtime": 1784570225657.6084,
-    "hash": "7092697823c3c0aa1b5c708e13070f44"
+    "mtime": 1784571070894.7317,
+    "hash": "f8920eeaf61708215d4615b7dafaea49"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\README.md": {
     "mtime": 1784570206060.8281,
     "hash": "41f1336231ceb42421eab3144789e88a"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\skills\\deanchor\\SKILL.md": {
-    "mtime": 1784566914931.3042,
-    "hash": "da3cbd7b932934533c3a5fcfe37548a8"
+    "mtime": 1784570725363.7854,
+    "hash": "d044c47174a881dbb313f1cf7b351596"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\workflows\\antigravity\\deanchor-audit.md": {
     "mtime": 1783968321129.4377,
@@ -48,24 +48,24 @@
     "hash": "0f749ca8647564e7a9a5c1cb6ad8657e"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\workflows\\claude-code\\deanchor.md": {
-    "mtime": 1784566904317.7598,
-    "hash": "9e5d9fb9f2caa96882dbf790b139496c"
+    "mtime": 1784570836367.2617,
+    "hash": "c001d34149a4a92f8d77851676183ab0"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\workflows\\codex\\deanchor.md": {
-    "mtime": 1784566910061.7334,
-    "hash": "f48de0cadb313f1a85174bf8814674ac"
+    "mtime": 1784570845039.0532,
+    "hash": "df1afa5fb9ee9bcefc5c26a8fc69bc89"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\.graphify\\GRAPH_REPORT.md": {
-    "mtime": 1784569605361.3293,
-    "hash": "14879678ce31888c1f4fd31d863ee336"
+    "mtime": 1784570234545.1687,
+    "hash": "ad2d3dfa9a686629fbd02ea34302bbfc"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\repo-map.md": {
     "mtime": 1784566952532.5657,
     "hash": "ff4b29792e0616a7bef7940fa39d5786"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\lib\\commands.js": {
-    "mtime": 1784568340365.3933,
-    "hash": "3919de84001118c455ccc7b7f111a13f"
+    "mtime": 1784571074527.2021,
+    "hash": "baf8371bdfc860b1a5f5a30ea0633768"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\lib\\compiler.js": {
     "mtime": 1784568332337.6235,
@@ -74,5 +74,9 @@
   "D:\\Maroof\\Me\\JustThinkBro\\workflows\\antigravity\\deanchor-sec.md": {
     "mtime": 1784569557572.5503,
     "hash": "1efbeb3dd8ee2c7316e7b84f3768de8a"
+  },
+  "D:\\Maroof\\Me\\JustThinkBro\\workflows\\antigravity\\deanchor-perf.md": {
+    "mtime": 1784570732990.3606,
+    "hash": "92de69964fd6643889e4f0b4bdb3e79e"
   }
 }

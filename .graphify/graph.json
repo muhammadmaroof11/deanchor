@@ -8,11 +8,12 @@
       "2": "Community 2",
       "3": "Community 3",
       "4": "Community 4",
-      "5": "Community 5"
+      "5": "Community 5",
+      "6": "Community 6"
     },
-    "built_from_commit": "7b3948259bce0d0960c20068aa95c4b8bdb0c980"
+    "built_from_commit": "2db8d35948ce459f584c0f1b645600f72b469e61"
   },
-  "topology_signature": "n=61;e=69;bin_deanchor_args,bin_deanchor_commands,bin_deanchor_js,bin_deanchor_printhelp,deanchor_args,deanchor_checkstatus,deanchor_claude_src,deanchor_codex_src,deanchor_commands,deanchor_compileandwrite,deanchor_compilefoldersync,deanchor_compiletemplate,deanchor_config,deanchor_configpath,deanchor_cursorrules_src,deanchor_execsync,deanchor_exportclauderules,deanchor_exportcursorrules,deanchor_findprofilepaths,deanchor_fs,deanchor_getantigravityprofilesbase,deanchor_installdeanchor,deanchor_installgithook,deanchor_js,deanchor_os,deanchor_path,deanchor_printhelp,deanchor_raw,deanchor_rungraphifyupdate,deanchor_skills_src_dir,deanchor_workflows_src_dir,lib_commands_checkstatus,lib_commands_claude_src,lib_commands_codex_src,lib_commands_compiler,lib_commands_cursorrules_src,lib_commands_execsync,lib_commands_exportclauderules,lib_commands_exportcursorrules,lib_commands_fs,lib_commands_generaterepomap,lib_commands_installdeanchor,lib_commands_installgithook,lib_commands_js,lib_commands_os,lib_commands_path,lib_commands_rungraphifyupdate,lib_commands_skills_src_dir,lib_commands_startmcpserver,lib_commands_workflows_src_dir,lib_compiler_compileandwrite,lib_compiler_compilefoldersync,lib_compiler_compiletemplate,lib_compiler_config,lib_compiler_configpath,lib_compiler_fs,lib_compiler_getantigravitypaths,lib_compiler_js,lib_compiler_os,lib_compiler_path,lib_compiler_raw|bin_deanchor_args\tbin_deanchor_js\tcontains;bin_deanchor_commands\tbin_deanchor_js\tcontains;bin_deanchor_js\tbin_deanchor_printhelp\tcontains;bin_deanchor_js\tlib_commands_js\timports_from;deanchor_args\tdeanchor_js\tcontains;deanchor_checkstatus\tdeanchor_findprofilepaths\tcalls;deanchor_checkstatus\tdeanchor_getantigravityprofilesbase\tcalls;deanchor_checkstatus\tdeanchor_js\tcontains;deanchor_claude_src\tdeanchor_js\tcontains;deanchor_codex_src\tdeanchor_js\tcontains;deanchor_commands\tdeanchor_js\tcontains;deanchor_compileandwrite\tdeanchor_compiletemplate\tcalls;deanchor_compileandwrite\tdeanchor_exportclauderules\tcalls;deanchor_compileandwrite\tdeanchor_exportcursorrules\tcalls;deanchor_compileandwrite\tdeanchor_installdeanchor\tcalls;deanchor_compileandwrite\tdeanchor_js\tcontains;deanchor_compilefoldersync\tdeanchor_installdeanchor\tcalls;deanchor_compilefoldersync\tdeanchor_js\tcontains;deanchor_compiletemplate\tdeanchor_js\tcontains;deanchor_config\tdeanchor_js\tcontains;deanchor_configpath\tdeanchor_js\tcontains;deanchor_cursorrules_src\tdeanchor_js\tcontains;deanchor_execsync\tdeanchor_js\tcontains;deanchor_exportclauderules\tdeanchor_js\tcontains;deanchor_exportcursorrules\tdeanchor_js\tcontains;deanchor_findprofilepaths\tdeanchor_installdeanchor\tcalls;deanchor_findprofilepaths\tdeanchor_js\tcontains;deanchor_fs\tdeanchor_js\tcontains;deanchor_getantigravityprofilesbase\tdeanchor_installdeanchor\tcalls;deanchor_getantigravityprofilesbase\tdeanchor_js\tcontains;deanchor_installdeanchor\tdeanchor_js\tcontains;deanchor_installgithook\tdeanchor_js\tcontains;deanchor_js\tdeanchor_os\tcontains;deanchor_js\tdeanchor_path\tcontains;deanchor_js\tdeanchor_printhelp\tcontains;deanchor_js\tdeanchor_raw\tcontains;deanchor_js\tdeanchor_rungraphifyupdate\tcontains;deanchor_js\tdeanchor_skills_src_dir\tcontains;deanchor_js\tdeanchor_workflows_src_dir\tcontains;lib_commands_checkstatus\tlib_commands_js\tcontains;lib_commands_claude_src\tlib_commands_js\tcontains;lib_commands_codex_src\tlib_commands_js\tcontains;lib_commands_compiler\tlib_commands_js\tcontains;lib_commands_cursorrules_src\tlib_commands_js\tcontains;lib_commands_execsync\tlib_commands_js\tcontains;lib_commands_exportclauderules\tlib_commands_js\tcontains;lib_commands_exportcursorrules\tlib_commands_js\tcontains;lib_commands_fs\tlib_commands_js\tcontains;lib_commands_generaterepomap\tlib_commands_js\tcontains;lib_commands_installdeanchor\tlib_commands_js\tcontains;lib_commands_installgithook\tlib_commands_js\tcontains;lib_commands_js\tlib_commands_os\tcontains;lib_commands_js\tlib_commands_path\tcontains;lib_commands_js\tlib_commands_rungraphifyupdate\tcontains;lib_commands_js\tlib_commands_skills_src_dir\tcontains;lib_commands_js\tlib_commands_startmcpserver\tcontains;lib_commands_js\tlib_commands_workflows_src_dir\tcontains;lib_commands_js\tlib_compiler_js\timports_from;lib_compiler_compileandwrite\tlib_compiler_compiletemplate\tcalls;lib_compiler_compileandwrite\tlib_compiler_js\tcontains;lib_compiler_compilefoldersync\tlib_compiler_js\tcontains;lib_compiler_compiletemplate\tlib_compiler_js\tcontains;lib_compiler_config\tlib_compiler_js\tcontains;lib_compiler_configpath\tlib_compiler_js\tcontains;lib_compiler_fs\tlib_compiler_js\tcontains;lib_compiler_getantigravitypaths\tlib_compiler_js\tcontains;lib_compiler_js\tlib_compiler_os\tcontains;lib_compiler_js\tlib_compiler_path\tcontains;lib_compiler_js\tlib_compiler_raw\tcontains",
+  "topology_signature": "n=63;e=77;bin_deanchor_args,bin_deanchor_commands,bin_deanchor_js,bin_deanchor_printhelp,deanchor_args,deanchor_checkstatus,deanchor_claude_src,deanchor_codex_src,deanchor_commands,deanchor_compileandwrite,deanchor_compilefoldersync,deanchor_compiletemplate,deanchor_config,deanchor_configpath,deanchor_cursorrules_src,deanchor_execsync,deanchor_exportclauderules,deanchor_exportcursorrules,deanchor_findprofilepaths,deanchor_fs,deanchor_getantigravityprofilesbase,deanchor_installdeanchor,deanchor_installgithook,deanchor_js,deanchor_os,deanchor_path,deanchor_printhelp,deanchor_raw,deanchor_rungraphifyupdate,deanchor_skills_src_dir,deanchor_workflows_src_dir,lib_commands_checkstatus,lib_commands_claude_src,lib_commands_codex_src,lib_commands_compiler,lib_commands_compileunifiedfile,lib_commands_cursorrules_src,lib_commands_execsync,lib_commands_exportclauderules,lib_commands_exportcodexrules,lib_commands_exportcursorrules,lib_commands_fs,lib_commands_generaterepomap,lib_commands_installdeanchor,lib_commands_installgithook,lib_commands_js,lib_commands_os,lib_commands_path,lib_commands_rungraphifyupdate,lib_commands_skills_src_dir,lib_commands_startmcpserver,lib_commands_workflows_src_dir,lib_compiler_compileandwrite,lib_compiler_compilefoldersync,lib_compiler_compiletemplate,lib_compiler_config,lib_compiler_configpath,lib_compiler_fs,lib_compiler_getantigravitypaths,lib_compiler_js,lib_compiler_os,lib_compiler_path,lib_compiler_raw|bin_deanchor_args\tbin_deanchor_js\tcontains;bin_deanchor_commands\tbin_deanchor_js\tcontains;bin_deanchor_js\tbin_deanchor_printhelp\tcontains;bin_deanchor_js\tlib_commands_js\timports_from;deanchor_args\tdeanchor_js\tcontains;deanchor_checkstatus\tdeanchor_findprofilepaths\tcalls;deanchor_checkstatus\tdeanchor_getantigravityprofilesbase\tcalls;deanchor_checkstatus\tdeanchor_js\tcontains;deanchor_claude_src\tdeanchor_js\tcontains;deanchor_codex_src\tdeanchor_js\tcontains;deanchor_commands\tdeanchor_js\tcontains;deanchor_compileandwrite\tdeanchor_compiletemplate\tcalls;deanchor_compileandwrite\tdeanchor_exportclauderules\tcalls;deanchor_compileandwrite\tdeanchor_exportcursorrules\tcalls;deanchor_compileandwrite\tdeanchor_installdeanchor\tcalls;deanchor_compileandwrite\tdeanchor_js\tcontains;deanchor_compilefoldersync\tdeanchor_installdeanchor\tcalls;deanchor_compilefoldersync\tdeanchor_js\tcontains;deanchor_compiletemplate\tdeanchor_js\tcontains;deanchor_config\tdeanchor_js\tcontains;deanchor_configpath\tdeanchor_js\tcontains;deanchor_cursorrules_src\tdeanchor_js\tcontains;deanchor_execsync\tdeanchor_js\tcontains;deanchor_exportclauderules\tdeanchor_js\tcontains;deanchor_exportcursorrules\tdeanchor_js\tcontains;deanchor_findprofilepaths\tdeanchor_installdeanchor\tcalls;deanchor_findprofilepaths\tdeanchor_js\tcontains;deanchor_fs\tdeanchor_js\tcontains;deanchor_getantigravityprofilesbase\tdeanchor_installdeanchor\tcalls;deanchor_getantigravityprofilesbase\tdeanchor_js\tcontains;deanchor_installdeanchor\tdeanchor_js\tcontains;deanchor_installgithook\tdeanchor_js\tcontains;deanchor_js\tdeanchor_os\tcontains;deanchor_js\tdeanchor_path\tcontains;deanchor_js\tdeanchor_printhelp\tcontains;deanchor_js\tdeanchor_raw\tcontains;deanchor_js\tdeanchor_rungraphifyupdate\tcontains;deanchor_js\tdeanchor_skills_src_dir\tcontains;deanchor_js\tdeanchor_workflows_src_dir\tcontains;lib_commands_checkstatus\tlib_commands_js\tcontains;lib_commands_claude_src\tlib_commands_js\tcontains;lib_commands_codex_src\tlib_commands_js\tcontains;lib_commands_compiler\tlib_commands_js\tcontains;lib_commands_compileunifiedfile\tlib_commands_exportclauderules\tcalls;lib_commands_compileunifiedfile\tlib_commands_exportcodexrules\tcalls;lib_commands_compileunifiedfile\tlib_commands_exportcursorrules\tcalls;lib_commands_compileunifiedfile\tlib_commands_js\tcontains;lib_commands_cursorrules_src\tlib_commands_js\tcontains;lib_commands_execsync\tlib_commands_js\tcontains;lib_commands_exportclauderules\tlib_commands_installdeanchor\tcalls;lib_commands_exportclauderules\tlib_commands_js\tcontains;lib_commands_exportcodexrules\tlib_commands_installdeanchor\tcalls;lib_commands_exportcodexrules\tlib_commands_js\tcontains;lib_commands_exportcursorrules\tlib_commands_installdeanchor\tcalls;lib_commands_exportcursorrules\tlib_commands_js\tcontains;lib_commands_fs\tlib_commands_js\tcontains;lib_commands_generaterepomap\tlib_commands_js\tcontains;lib_commands_installdeanchor\tlib_commands_js\tcontains;lib_commands_installgithook\tlib_commands_js\tcontains;lib_commands_js\tlib_commands_os\tcontains;lib_commands_js\tlib_commands_path\tcontains;lib_commands_js\tlib_commands_rungraphifyupdate\tcontains;lib_commands_js\tlib_commands_skills_src_dir\tcontains;lib_commands_js\tlib_commands_startmcpserver\tcontains;lib_commands_js\tlib_commands_workflows_src_dir\tcontains;lib_commands_js\tlib_compiler_js\timports_from;lib_compiler_compileandwrite\tlib_compiler_compiletemplate\tcalls;lib_compiler_compileandwrite\tlib_compiler_js\tcontains;lib_compiler_compilefoldersync\tlib_compiler_js\tcontains;lib_compiler_compiletemplate\tlib_compiler_js\tcontains;lib_compiler_config\tlib_compiler_js\tcontains;lib_compiler_configpath\tlib_compiler_js\tcontains;lib_compiler_fs\tlib_compiler_js\tcontains;lib_compiler_getantigravitypaths\tlib_compiler_js\tcontains;lib_compiler_js\tlib_compiler_os\tcontains;lib_compiler_js\tlib_compiler_path\tcontains;lib_compiler_js\tlib_compiler_raw\tcontains",
   "nodes": [
     {
       "id": "bin_deanchor_js",
@@ -20,8 +21,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L1",
-      "community": 4,
-      "community_name": "Community 4"
+      "community": 5,
+      "community_name": "Community 5"
     },
     {
       "id": "bin_deanchor_commands",
@@ -29,8 +30,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L8",
-      "community": 4,
-      "community_name": "Community 4"
+      "community": 5,
+      "community_name": "Community 5"
     },
     {
       "id": "bin_deanchor_args",
@@ -38,17 +39,17 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L10",
-      "community": 4,
-      "community_name": "Community 4"
+      "community": 5,
+      "community_name": "Community 5"
     },
     {
       "id": "bin_deanchor_printhelp",
       "label": "printHelp()",
       "file_type": "code",
       "source_file": "bin/deanchor.js",
-      "source_location": "L44",
-      "community": 4,
-      "community_name": "Community 4"
+      "source_location": "L47",
+      "community": 5,
+      "community_name": "Community 5"
     },
     {
       "id": "lib_commands_js",
@@ -56,8 +57,8 @@
       "file_type": "code",
       "source_file": "lib/commands.js",
       "source_location": "L1",
-      "community": 0,
-      "community_name": "Community 0"
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_fs",
@@ -65,8 +66,8 @@
       "file_type": "code",
       "source_file": "lib/commands.js",
       "source_location": "L1",
-      "community": 0,
-      "community_name": "Community 0"
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_path",
@@ -74,8 +75,8 @@
       "file_type": "code",
       "source_file": "lib/commands.js",
       "source_location": "L2",
-      "community": 0,
-      "community_name": "Community 0"
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_os",
@@ -83,8 +84,8 @@
       "file_type": "code",
       "source_file": "lib/commands.js",
       "source_location": "L3",
-      "community": 0,
-      "community_name": "Community 0"
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_execsync",
@@ -92,8 +93,8 @@
       "file_type": "code",
       "source_file": "lib/commands.js",
       "source_location": "L4",
-      "community": 0,
-      "community_name": "Community 0"
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_compiler",
@@ -101,8 +102,8 @@
       "file_type": "code",
       "source_file": "lib/commands.js",
       "source_location": "L5",
-      "community": 0,
-      "community_name": "Community 0"
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_workflows_src_dir",
@@ -110,8 +111,8 @@
       "file_type": "code",
       "source_file": "lib/commands.js",
       "source_location": "L7",
-      "community": 0,
-      "community_name": "Community 0"
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_skills_src_dir",
@@ -119,8 +120,8 @@
       "file_type": "code",
       "source_file": "lib/commands.js",
       "source_location": "L8",
-      "community": 0,
-      "community_name": "Community 0"
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_cursorrules_src",
@@ -128,8 +129,8 @@
       "file_type": "code",
       "source_file": "lib/commands.js",
       "source_location": "L9",
-      "community": 0,
-      "community_name": "Community 0"
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_claude_src",
@@ -137,8 +138,8 @@
       "file_type": "code",
       "source_file": "lib/commands.js",
       "source_location": "L10",
-      "community": 0,
-      "community_name": "Community 0"
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_codex_src",
@@ -146,80 +147,98 @@
       "file_type": "code",
       "source_file": "lib/commands.js",
       "source_location": "L11",
-      "community": 0,
-      "community_name": "Community 0"
+      "community": 1,
+      "community_name": "Community 1"
+    },
+    {
+      "id": "lib_commands_compileunifiedfile",
+      "label": "compileUnifiedFile()",
+      "file_type": "code",
+      "source_file": "lib/commands.js",
+      "source_location": "L13",
+      "community": 4,
+      "community_name": "Community 4"
     },
     {
       "id": "lib_commands_installdeanchor",
       "label": "installDeanchor()",
       "file_type": "code",
       "source_file": "lib/commands.js",
-      "source_location": "L13",
-      "community": 0,
-      "community_name": "Community 0"
+      "source_location": "L74",
+      "community": 4,
+      "community_name": "Community 4"
     },
     {
       "id": "lib_commands_exportcursorrules",
       "label": "exportCursorRules()",
       "file_type": "code",
       "source_file": "lib/commands.js",
-      "source_location": "L53",
-      "community": 0,
-      "community_name": "Community 0"
+      "source_location": "L120",
+      "community": 4,
+      "community_name": "Community 4"
     },
     {
       "id": "lib_commands_exportclauderules",
       "label": "exportClaudeRules()",
       "file_type": "code",
       "source_file": "lib/commands.js",
-      "source_location": "L59",
-      "community": 0,
-      "community_name": "Community 0"
+      "source_location": "L126",
+      "community": 4,
+      "community_name": "Community 4"
+    },
+    {
+      "id": "lib_commands_exportcodexrules",
+      "label": "exportCodexRules()",
+      "file_type": "code",
+      "source_file": "lib/commands.js",
+      "source_location": "L132",
+      "community": 4,
+      "community_name": "Community 4"
     },
     {
       "id": "lib_commands_installgithook",
       "label": "installGitHook()",
       "file_type": "code",
       "source_file": "lib/commands.js",
-      "source_location": "L65",
-      "community": 0,
-      "community_name": "Community 0"
+      "source_location": "L138",
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_rungraphifyupdate",
       "label": "runGraphifyUpdate()",
       "file_type": "code",
       "source_file": "lib/commands.js",
-      "source_location": "L104",
-      "community": 0,
-      "community_name": "Community 0"
+      "source_location": "L177",
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_startmcpserver",
       "label": "startMcpServer()",
       "file_type": "code",
       "source_file": "lib/commands.js",
-      "source_location": "L114",
-      "community": 0,
-      "community_name": "Community 0"
+      "source_location": "L187",
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_generaterepomap",
       "label": "generateRepoMap()",
       "file_type": "code",
       "source_file": "lib/commands.js",
-      "source_location": "L128",
-      "community": 0,
-      "community_name": "Community 0"
+      "source_location": "L201",
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_commands_checkstatus",
       "label": "checkStatus()",
       "file_type": "code",
       "source_file": "lib/commands.js",
-      "source_location": "L147",
-      "community": 0,
-      "community_name": "Community 0"
+      "source_location": "L220",
+      "community": 1,
+      "community_name": "Community 1"
     },
     {
       "id": "lib_compiler_js",
@@ -326,8 +345,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L1",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_commands",
@@ -335,8 +354,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L8",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_args",
@@ -344,8 +363,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L10",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_printhelp",
@@ -353,8 +372,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L44",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_fs",
@@ -362,8 +381,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L8",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_path",
@@ -371,8 +390,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L9",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_os",
@@ -380,8 +399,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L10",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_execsync",
@@ -389,8 +408,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L11",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_workflows_src_dir",
@@ -398,8 +417,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L13",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_skills_src_dir",
@@ -407,8 +426,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L14",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_cursorrules_src",
@@ -416,8 +435,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L15",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_claude_src",
@@ -425,8 +444,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L16",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_codex_src",
@@ -434,8 +453,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L17",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_configpath",
@@ -443,8 +462,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L23",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_config",
@@ -452,8 +471,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L24",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_raw",
@@ -461,8 +480,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L31",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_getantigravityprofilesbase",
@@ -488,8 +507,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L108",
-      "community": 5,
-      "community_name": "Community 5"
+      "community": 6,
+      "community_name": "Community 6"
     },
     {
       "id": "deanchor_compileandwrite",
@@ -497,8 +516,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L123",
-      "community": 5,
-      "community_name": "Community 5"
+      "community": 6,
+      "community_name": "Community 6"
     },
     {
       "id": "deanchor_compilefoldersync",
@@ -524,8 +543,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L195",
-      "community": 5,
-      "community_name": "Community 5"
+      "community": 6,
+      "community_name": "Community 6"
     },
     {
       "id": "deanchor_exportclauderules",
@@ -533,8 +552,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L201",
-      "community": 5,
-      "community_name": "Community 5"
+      "community": 6,
+      "community_name": "Community 6"
     },
     {
       "id": "deanchor_installgithook",
@@ -542,8 +561,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L207",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_rungraphifyupdate",
@@ -551,8 +570,8 @@
       "file_type": "code",
       "source_file": "bin/deanchor.js",
       "source_location": "L236",
-      "community": 1,
-      "community_name": "Community 1"
+      "community": 0,
+      "community_name": "Community 0"
     },
     {
       "id": "deanchor_checkstatus",
@@ -747,6 +766,18 @@
     },
     {
       "source": "lib_commands_js",
+      "target": "lib_commands_compileunifiedfile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/commands.js",
+      "source_location": "L13",
+      "weight": 1,
+      "_src": "lib_commands_js",
+      "_tgt": "lib_commands_compileunifiedfile",
+      "confidence_score": 1
+    },
+    {
+      "source": "lib_commands_js",
       "target": "lib_commands_installdeanchor",
       "relation": "contains",
       "confidence": "EXTRACTED",
@@ -779,6 +810,18 @@
       "weight": 1,
       "_src": "lib_commands_js",
       "_tgt": "lib_commands_exportclauderules",
+      "confidence_score": 1
+    },
+    {
+      "source": "lib_commands_js",
+      "target": "lib_commands_exportcodexrules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/commands.js",
+      "source_location": "L132",
+      "weight": 1,
+      "_src": "lib_commands_js",
+      "_tgt": "lib_commands_exportcodexrules",
       "confidence_score": 1
     },
     {
@@ -839,6 +882,78 @@
       "weight": 1,
       "_src": "lib_commands_js",
       "_tgt": "lib_commands_checkstatus",
+      "confidence_score": 1
+    },
+    {
+      "source": "lib_commands_installdeanchor",
+      "target": "lib_commands_exportcursorrules",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/commands.js",
+      "source_location": "L113",
+      "weight": 1,
+      "_src": "lib_commands_installdeanchor",
+      "_tgt": "lib_commands_exportcursorrules",
+      "confidence_score": 1
+    },
+    {
+      "source": "lib_commands_installdeanchor",
+      "target": "lib_commands_exportclauderules",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/commands.js",
+      "source_location": "L114",
+      "weight": 1,
+      "_src": "lib_commands_installdeanchor",
+      "_tgt": "lib_commands_exportclauderules",
+      "confidence_score": 1
+    },
+    {
+      "source": "lib_commands_installdeanchor",
+      "target": "lib_commands_exportcodexrules",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/commands.js",
+      "source_location": "L115",
+      "weight": 1,
+      "_src": "lib_commands_installdeanchor",
+      "_tgt": "lib_commands_exportcodexrules",
+      "confidence_score": 1
+    },
+    {
+      "source": "lib_commands_exportcursorrules",
+      "target": "lib_commands_compileunifiedfile",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/commands.js",
+      "source_location": "L122",
+      "weight": 1,
+      "_src": "lib_commands_exportcursorrules",
+      "_tgt": "lib_commands_compileunifiedfile",
+      "confidence_score": 1
+    },
+    {
+      "source": "lib_commands_exportclauderules",
+      "target": "lib_commands_compileunifiedfile",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/commands.js",
+      "source_location": "L128",
+      "weight": 1,
+      "_src": "lib_commands_exportclauderules",
+      "_tgt": "lib_commands_compileunifiedfile",
+      "confidence_score": 1
+    },
+    {
+      "source": "lib_commands_exportcodexrules",
+      "target": "lib_commands_compileunifiedfile",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/commands.js",
+      "source_location": "L134",
+      "weight": 1,
+      "_src": "lib_commands_exportcodexrules",
+      "_tgt": "lib_commands_compileunifiedfile",
       "confidence_score": 1
     },
     {
