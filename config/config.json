@@ -1,11 +1,5 @@
 {
   "defaultMode": "full",
-  "ignoredPaths": [
-    "node_modules",
-    "dist",
-    ".git",
-    "build"
-  ],
   "customBannedParadigms": [
     "traditional-sidebar-dashboard",
     "use-effect-data-fetching"
