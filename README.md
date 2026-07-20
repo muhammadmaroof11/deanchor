@@ -31,6 +31,93 @@ graph TD
 
 ---
 
+## Agent Persona & Execution Flow
+
+Below is the detailed flow showing how the `deanchor` agent persona restores context, bypasses anchoring bias, and syncs updates to the project files:
+
+### Sequence Diagram
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Developer / User
+    participant Agent as AI Coding Agent (Persona)
+    participant Ledger as DEANCHOR.md (Cognitive Ledger)
+    participant Graph as .graphify/ / repo-map.md (Index)
+    participant Code as Active Codebase
+
+    User->>Agent: Prompt/Request (e.g. "/deanchor-dev Rewrite routing")
+    activate Agent
+
+    Note over Agent: Workflow Auto-Triggered
+
+    %% Step 1: Context Retrieval
+    Agent->>Ledger: Scan & Read (Restore Ledger Context)
+    Ledger-->>Agent: Data contracts, Banned List, Ascended Log
+    Agent->>Graph: Map Blast Radius (MCP / repo-map.md)
+    Graph-->>Agent: Code topology, cluster nodes, dependency path
+
+    %% Step 2: Protocol Pipeline
+    Note over Agent: Deanchor Protocol Execution
+    Agent->>Agent: 1. Decouple (Filter raw data & intents from current files)
+    Agent->>Agent: 2. Ban (Identify and prohibit current conventions/libraries)
+    Agent->>Agent: 3. Conceptualize (Draft clean-slate, premium architectures)
+
+    alt Level == Lite
+        Agent->>User: Present 2 Design Concepts & Pause for Approval
+        User-->>Agent: Select Concept / Approve
+    else Level == Full (Default) or Ultra
+        Note over Agent: Proceed directly to Execution
+    end
+
+    %% Step 3: Write and Update
+    Agent->>Code: 4. Execute (Write clean-slate implementation)
+    Agent->>Ledger: Update Redesign Log & Ascended backlogs
+    Agent->>Graph: Rebuild knowledge graph (graphify update)
+    
+    deactivate Agent
+    Agent-->>User: High-agency explanation of the Ascended architecture
+```
+
+### State Machine Transition
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> RestoringContext : Trigger (Slash Command / Keyword Match)
+    state RestoringContext {
+        [*] --> ReadLedger
+        ReadLedger --> QueryIndex : Read DEANCHOR.md
+        QueryIndex --> [*] : Query MCP / repo-map.md
+    }
+    
+    RestoringContext --> DeanchorProtocol : Context Restored
+    state DeanchorProtocol {
+        [*] --> DecoupleData
+        DecoupleData --> BanParadigms : Extract facts
+        BanParadigms --> Conceptualize : Define Prohibitions
+        Conceptualize --> [*] : Design Blank-Slate UI/Architecture
+    }
+
+    DeanchorProtocol --> ExecutionMode : Concept Designed
+    state ExecutionMode {
+        [*] --> CheckLevel
+        CheckLevel --> PauseForUser : Lite Mode
+        PauseForUser --> WriteCode : User Approved
+        CheckLevel --> WriteCode : Full / Ultra Mode
+        WriteCode --> [*]
+    }
+
+    ExecutionMode --> PostSync : Code Implemented
+    state PostSync {
+        [*] --> UpdateLedger
+        UpdateLedger --> RegenerateIndex : Log changes
+        RegenerateIndex --> [*] : Rebuild graph & repomap
+    }
+    
+    PostSync --> Idle : Completed
+```
+
+---
+
 ## Command Suite
 
 | Command | Focus | Auto-Activation Triggers |
@@ -74,8 +161,25 @@ Run the following commands from the project root:
    node bin/deanchor.js status
    ```
 
+4. **Update Graphify Knowledge Graph:**
+   ```bash
+   node bin/deanchor.js graphify
+   ```
+
+5. **Start Graphify MCP Server:**
+   ```bash
+   node bin/deanchor.js mcp
+   ```
+
+6. **Generate Repository Map:**
+   ```bash
+   node bin/deanchor.js repomap
+   ```
+
+*Note: The git pre-commit hook will automatically trigger workflow compilation, a Graphify knowledge graph rebuild (`graphify update`), and an Aider repository map rebuild (`aider --show-repo-map > repo-map.md`) depending on what commands are available on the host system.*
+
 This compiles templates (injecting custom banned paradigms and settings) and installs custom rules into your agent's global paths:
-- **Antigravity Profiles:** `%USERPROFILE%\AntigravityProfiles\<profile>\.gemini\antigravity\global_workflows\`
+- **Antigravity:** `%USERPROFILE%\.gemini\antigravity\global_workflows\` (resolves to active environment path)
 - **Claude Code:** Project-specific `.clauderules` or configuration file instructions.
 - **Cursor:** `.cursorrules` in your project root.
 

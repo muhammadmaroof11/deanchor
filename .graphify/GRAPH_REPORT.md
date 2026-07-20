@@ -1,7 +1,7 @@
 # Graph Report - .  (2026-07-20)
 
 ## Corpus Check
-- Corpus is ~6,997 words - fits in a single context window. You may not need a graph.
+- Corpus is ~8,190 words - fits in a single context window. You may not need a graph.
 
 ## Summary
 - 27 nodes · 35 edges · 3 communities detected
@@ -13,12 +13,12 @@
 ## Input Scope
 - Requested: auto
 - Resolved: committed (source: default-auto)
-- Included files: 14 · Candidates: 18
-- Excluded: 16 untracked · 0 ignored · 0 sensitive · 0 missing committed
+- Included files: 16 · Candidates: 28
+- Excluded: 0 untracked · 0 ignored · 0 sensitive · 0 missing committed
 - Recommendation: Use --scope all or graphify.yaml inputs.corpus for a knowledge-base folder.
 
 ## Graph Freshness
-- Built from Git commit: `7613873`
+- Built from Git commit: `b99dfe6`
 - Compare this hash to `git rev-parse HEAD` before trusting freshness-sensitive graph output.
 ## God Nodes (most connected - your core abstractions)
 1. `compileAndWrite()` - 5 edges
