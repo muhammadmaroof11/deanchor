@@ -31,15 +31,29 @@ Identify the patterns and templates used in the current screen and mark them as 
 
 ### 3. Conceptualize Ascended Visual Layout
 Draft a completely new design system and visual hierarchy using only the decoupled content and the banned list.
-- **High-Agency Techniques to Apply:**
-  - **Asymmetric Grid Spacing:** Offset layouts where elements break the grid boundary to create focal tension.
-  - **Inline Typography Media:** Small, rounded contextual images embedded directly *within* a text headline as visual punctuation.
-  - **Single-Focus Cards:** Banish multiple equal cards; use one massive focus item and secondary items as inline text lists or horizontal scrolls.
-  - **Tactile Micro-interactions:** Spring-physics active states, perpetual micro-motion loops, and canvas particle backgrounds.
-  - **Typography Pairing:** Ban Inter. Use Satoshi, Geist, Cabinet Grotesk, or Outfit. Use elegant modern serifs (Fraunces, Gambarino) for editorial contexts.
+
+#### 🎨 Premium Visual Design System Guidelines
+To ensure that your blank-slate designs feel premium, state-of-the-art, and visually stunning, adhere strictly to these principles:
+
+*   **Typography & Visual Contrast:**
+    *   *Typography Selection:* Ban browser defaults and generic fonts (e.g., Arial, default Inter). Prioritize premium pairings (Satoshi, Geist, Cabinet Grotesk, Syne, or Outfit) for modern interfaces; use editorial serifs (Fraunces, Gambarino, Playfair Display) for headlines.
+    *   *Contrast Scale:* Maintain dramatic size contrast (e.g., 5rem headers paired with 0.8rem micro-labels).
+    *   *Line-height & Letter Spacing:* For large headings, decrease tracking (`letter-spacing: -0.02em` to `-0.05em`) and tighten line-height (`line-height: 0.9` to `1.1`).
+*   **Color Systems & Dark Modes (HSL Custom Palettes):**
+    *   *Rich Backgrounds:* Avoid raw pure black (`#000`) or plain white (`#fff`). Use deep, tailored HSL backgrounds (e.g., `hsl(220, 15%, 5%)` for deep slate-blue, `hsl(0, 0%, 3%)` for rich obsidian).
+    *   *Harmonious Gradients:* Use subtle linear gradients with clean color stops (e.g., from `hsl(260, 80%, 15%)` to `hsl(290, 80%, 10%)`). Avoid muddy gradients.
+    *   *Glassmorphism & Depth:* Stack layers using transparent backing, blur effects, and border highlights to establish clear visual hierarchy:
+        `background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08);`
+*   **Micro-animations & Spring Physics:**
+    *   *Fluid Transitions:* Use smooth transitions with custom cubic-bezier curves for interactive states instead of simple linear animations (e.g., `transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1)`).
+    *   *Perpetual Motion:* Incorporate subtle ambient animations (such as floating background blobs, slow SVG path loops, or canvas particle fields) to make the interface feel alive.
+*   **High-Agency Responsive Layout Architectures:**
+    *   *Asymmetric Spacing:* Build layouts with offset columns or items that break the container boundary, creating visual tension.
+    *   *Typography inline-media:* Embed small, rounded media objects (e.g., high-quality abstract images/GIFs) inline *inside* title headlines to act as graphical punctuation.
+    *   *Single-Focus Cards:* Avoid standard multi-column card grids. Highlight one primary card as a large focal point, and format secondary cards as a compact scrollable list or sidebar feed.
 
 ### 4. Execute Clean-Slate Styling
-Write the styling code (HTML/CSS, Tailwind, or Stitch design tokens) from scratch. Never copy-paste existing class structures. Build the new design directly.
+Write the styling code (HTML/CSS, Tailwind, or native CSS design variables) from scratch. Never copy-paste existing class structures. Build the new design directly.
 
 ---
 
