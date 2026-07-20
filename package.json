@@ -1,0 +1,31 @@
+{
+  "name": "deanchor",
+  "version": "1.0.0",
+  "description": "Break contextual anchoring (anchoring bias) in LLM-driven coding, design, and documentation.",
+  "main": "bin/deanchor.js",
+  "bin": {
+    "deanchor": "./bin/deanchor.js"
+  },
+  "scripts": {
+    "install-rules": "node bin/deanchor.js install",
+    "init-hook": "node bin/deanchor.js init-hook",
+    "export-cursor": "node bin/deanchor.js cursor",
+    "export-claude": "node bin/deanchor.js claude",
+    "export-codex": "node bin/deanchor.js codex",
+    "graphify": "node bin/deanchor.js graphify",
+    "mcp": "node bin/deanchor.js mcp",
+    "repomap": "node bin/deanchor.js repomap",
+    "status": "node bin/deanchor.js status"
+  },
+  "keywords": [
+    "deanchor",
+    "llm",
+    "copilot",
+    "cursor",
+    "claude-code",
+    "prompt-engineering"
+  ],
+  "author": "Antigravity Team",
+  "license": "MIT",
+  "dependencies": {}
+}
