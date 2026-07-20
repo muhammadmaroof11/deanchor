@@ -42,6 +42,10 @@ Design a clean-slate, maximum-performance replacement that meets the computation
   - **Lazy Evaluation:** Utilize Generators (`function*`) or stream pipelines to defer computations until absolutely needed.
   - **Struct-of-Arrays / TypedArrays:** For mathematical operations, use TypedArrays or linear memory layouts to maximize cache locality.
   - **Concurrency & Offloading:** Move heavy computations off the main thread using worker threads or async microtask queues.
+  - **Vanilla UI Replacements:** Swap heavy visual frameworks (e.g., Framer Motion, slider packages, canvas engines) for pure, hardware-accelerated vanilla CSS transitions and custom CSS keyframes.
+  - **Code Splitting & Lazy Payload Loading:** If a heavy external library is essential, split it from the main bundle and load it asynchronously only when needed.
+  - **Lighthouse Performance Auditing:** After optimizations are written, use the browser subagent tool (when permitted) to run Lighthouse audits, verifying the speed, layout stability (CLS), and performance score improvements.
+  - **Scratch Files Isolation:** Never create sandbox scripts or benchmark suites directly in the project root. Put all testing artifacts inside `<appDataDir>\brain\<conversation-id>\scratch/` (or a local `.deanchor-scratch/` directory) to avoid cluttering the repository.
 
 ---
 

@@ -40,3 +40,15 @@ If a `.graphify/` directory or `graph.json` is present in the workspace:
 
 4. **Execute:**
    Write the code or design from a blank slate. Log the transition in `DEANCHOR.md` under **4. Redesign Log**.
+
+## Workspace Cleanliness & Scratch Isolation 🧹
+To keep the codebase root directory pristine and organized:
+- **Scratch Files:** Never create temporary scripts, sandbox files, or test configurations directly in the project root.
+- **Location:** Always write scratch/test files into the designated sandbox folder: `<appDataDir>\brain\<conversation-id>\scratch/` (or a local `.deanchor-scratch/` directory if workspace boundaries apply).
+
+## Specialized Performance & UI Auditing
+When working on code optimization or visual assets:
+- **Vanilla Replacements:** Proactively check if heavy UI libraries (e.g. framer-motion, external sliders, or heavy dynamic layout engines) can be substituted with clean vanilla CSS transitions, animations, or native browser elements.
+- **Dynamic Loading:** If a heavy library is absolutely required, ensure it is split out and lazy-loaded dynamically rather than bundled into the initial main payload.
+- **Lighthouse Verification:** When permitted, use the browser subagent tool at the end of optimization cycles to run Lighthouse audits, verifying that performance metrics and page speed scores have successfully improved.
+
