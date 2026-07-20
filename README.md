@@ -2,7 +2,7 @@
 
 An advanced agentic skill to break **contextual anchoring** (anchoring bias) in LLM-driven coding, design, and writing.
 
-Like `ponytail` for simplicity, `deanchor` is a persistent mode and command suite designed to force AI agents (such as Antigravity, Claude Code, Codex, and Cursor) to escape "local maxima." It explicitly decouples the underlying data/facts from current presentation layers, bans legacy structural paradigms, and drafts new layout concepts before writing a single line of code.
+`deanchor` is a persistent mode and command suite designed to force AI agents (such as Antigravity, Claude Code, Codex, and Cursor) to escape "local maxima." It explicitly decouples the underlying data/facts from current presentation layers, bans legacy structural paradigms, and drafts new layout concepts before writing a single line of code.
 
 ---
 
