@@ -125,6 +125,7 @@ stateDiagram-v2
 | `/deanchor` | **General Redesign** | `deanchor`, `unanchor`, `blank slate`, `tabula rasa`, `anchoring bias` |
 | `/deanchor-dev` | **Software Architecture** | `redesign architecture`, `rewrite codebase`, `restructure files`, `deanchor-dev` |
 | `/deanchor-design` | **UI/UX & Layouts** | `redesign page`, `visual revamp`, `new layout`, `deanchor-design` |
+| `/deanchor-sec` | **Security Audit & CVEs** | `security audit`, `vulnerability check`, `secure alternative`, `deanchor-sec` |
 | `/deanchor-doc` | **Documentation & Copy** | `rewrite docs`, `rewrite readmes`, `new voice`, `deanchor-doc` |
 | `/deanchor-review` | **Anchoring Audit** | `review for anchoring`, `find anchored code`, `deanchor-review` |
 | `/deanchor-help` | **Quick Reference** | `deanchor help`, `deanchor commands`, `/deanchor-help` |

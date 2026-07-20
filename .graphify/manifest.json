@@ -8,12 +8,12 @@
     "hash": "06b176a6a056b6f0a2733006ccf49552"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\DEANCHOR.md": {
-    "mtime": 1784568362979.9868,
-    "hash": "e46a045f092da15b31f6d6701379f870"
+    "mtime": 1784569594428.7166,
+    "hash": "f048a2e7a962eaac017fc266e06d110c"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\README.md": {
-    "mtime": 1784568438156.4817,
-    "hash": "951d4f4da572fc125f0eb954866d7240"
+    "mtime": 1784569572115.2932,
+    "hash": "c9d5f5d0507e3ff2eaa0d7f21f136fc1"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\skills\\deanchor\\SKILL.md": {
     "mtime": 1784566914931.3042,
@@ -24,8 +24,8 @@
     "hash": "36184f6828d10afb5a2e7941e5936484"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\workflows\\antigravity\\deanchor-design.md": {
-    "mtime": 1783968321129.4377,
-    "hash": "6e09e32a8a8160ee6ddbefd808e4a13b"
+    "mtime": 1784569564962.559,
+    "hash": "5285372c7ba5566553ed23bbbab39970"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\workflows\\antigravity\\deanchor-dev.md": {
     "mtime": 1784566889850.7117,
@@ -36,8 +36,8 @@
     "hash": "4da37e47aafccb34b15fa9a9a8ddde39"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\workflows\\antigravity\\deanchor-help.md": {
-    "mtime": 1783968320644.374,
-    "hash": "f68ded56c8de23761914ae59a4c88927"
+    "mtime": 1784569581500.4167,
+    "hash": "38e2a3a87be7b9d7c5d32a85423c3336"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\workflows\\antigravity\\deanchor-review.md": {
     "mtime": 1784566894868.2441,
@@ -56,11 +56,19 @@
     "hash": "f48de0cadb313f1a85174bf8814674ac"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\.graphify\\GRAPH_REPORT.md": {
-    "mtime": 1784568028668.251,
-    "hash": "35ba6994a4d830d8770da31ada1c6f43"
+    "mtime": 1784568596218.0364,
+    "hash": "58712b89b9174eeaa06d853041546ec4"
   },
   "D:\\Maroof\\Me\\JustThinkBro\\repo-map.md": {
     "mtime": 1784566952532.5657,
     "hash": "ff4b29792e0616a7bef7940fa39d5786"
+  },
+  "D:\\Maroof\\Me\\JustThinkBro\\lib\\commands.js": {
+    "mtime": 1784568340365.3933,
+    "hash": "3919de84001118c455ccc7b7f111a13f"
+  },
+  "D:\\Maroof\\Me\\JustThinkBro\\lib\\compiler.js": {
+    "mtime": 1784568332337.6235,
+    "hash": "96db04d89bef03c7b3241b04f1e4944b"
   }
 }

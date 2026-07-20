@@ -1,24 +1,24 @@
 # Graph Report - .  (2026-07-20)
 
 ## Corpus Check
-- Corpus is ~8,190 words - fits in a single context window. You may not need a graph.
+- Corpus is ~9,443 words - fits in a single context window. You may not need a graph.
 
 ## Summary
-- 27 nodes · 35 edges · 3 communities detected
+- 61 nodes · 69 edges · 6 communities detected
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
-- Edge kinds: contains: 26 · calls: 9
+- Edge kinds: contains: 57 · calls: 10 · imports_from: 2
 
 
 ## Input Scope
 - Requested: auto
 - Resolved: committed (source: default-auto)
-- Included files: 16 · Candidates: 28
-- Excluded: 0 untracked · 0 ignored · 0 sensitive · 0 missing committed
+- Included files: 18 · Candidates: 30
+- Excluded: 1 untracked · 0 ignored · 0 sensitive · 0 missing committed
 - Recommendation: Use --scope all or graphify.yaml inputs.corpus for a knowledge-base folder.
 
 ## Graph Freshness
-- Built from Git commit: `b99dfe6`
+- Built from Git commit: `5552d68`
 - Compare this hash to `git rev-parse HEAD` before trusting freshness-sensitive graph output.
 ## God Nodes (most connected - your core abstractions)
 1. `compileAndWrite()` - 5 edges
@@ -27,43 +27,59 @@
 4. `findProfilePaths()` - 3 edges
 5. `checkStatus()` - 3 edges
 6. `compileTemplate()` - 2 edges
-7. `compileFolderSync()` - 2 edges
-8. `exportCursorRules()` - 2 edges
-9. `exportClaudeRules()` - 2 edges
-10. `commands` - 1 edges
+7. `compileAndWrite()` - 2 edges
+8. `compileTemplate()` - 2 edges
+9. `compileFolderSync()` - 2 edges
+10. `exportCursorRules()` - 2 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `installDeanchor()` --calls--> `compileAndWrite()`  [EXTRACTED]
-  bin/deanchor.js → bin/deanchor.js  _Bridges community 1 → community 2_
+  bin/deanchor.js → bin/deanchor.js  _Bridges community 3 → community 5_
 
 ## Communities
 
 ### Community 0 - "Community 0"
 Cohesion: 0.11
-Nodes (14): commands, args, fs, path, os, { execSync }, WORKFLOWS_SRC_DIR, SKILLS_SRC_DIR (+6 more)
+Nodes (10): CLAUDE_SRC, CODEX_SRC, compiler, CURSORRULES_SRC, { execSync }, fs, os, path (+2 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.50
-Nodes (5): getAntigravityProfilesBase(), findProfilePaths(), compileFolderSync(), installDeanchor(), checkStatus()
+Cohesion: 0.11
+Nodes (14): args, CLAUDE_SRC, CODEX_SRC, commands, config, configPath, CURSORRULES_SRC, { execSync } (+6 more)
 
 ### Community 2 - "Community 2"
+Cohesion: 0.20
+Nodes (8): compileAndWrite(), compileTemplate(), config, configPath, fs, os, path, raw
+
+### Community 3 - "Community 3"
 Cohesion: 0.50
-Nodes (4): compileTemplate(), compileAndWrite(), exportCursorRules(), exportClaudeRules()
+Nodes (5): checkStatus(), compileFolderSync(), findProfilePaths(), getAntigravityProfilesBase(), installDeanchor()
+
+### Community 4 - "Community 4"
+Cohesion: 0.50
+Nodes (2): args, commands
+
+### Community 5 - "Community 5"
+Cohesion: 0.50
+Nodes (4): compileAndWrite(), compileTemplate(), exportClaudeRules(), exportCursorRules()
 
 ## Knowledge Gaps
-- **14 isolated node(s):** `commands`, `args`, `fs`, `path`, `os` (+9 more)
+- **32 isolated node(s):** `commands`, `args`, `fs`, `path`, `os` (+27 more)
   These have ≤1 connection - possible missing edges or undocumented components.
+- **Thin community `Community 4`** (2 nodes): `args`, `commands`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `compileAndWrite()` connect `Community 2` to `Community 0`, `Community 1`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `installDeanchor()` connect `Community 1` to `Community 0`, `Community 2`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `getAntigravityProfilesBase()` connect `Community 1` to `Community 0`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `compileAndWrite()` connect `Community 5` to `Community 1`, `Community 3`?**
+  _High betweenness centrality (0.002) - this node is a cross-community bridge._
+- **Why does `installDeanchor()` connect `Community 3` to `Community 1`, `Community 5`?**
+  _High betweenness centrality (0.002) - this node is a cross-community bridge._
+- **Why does `getAntigravityProfilesBase()` connect `Community 3` to `Community 1`?**
+  _High betweenness centrality (0.000) - this node is a cross-community bridge._
 - **What connects `commands`, `args`, `fs` to the rest of the system?**
-  _14 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _32 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
+  _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
+- **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._

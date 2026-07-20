@@ -1,7 +1,9 @@
 {
   "files": {
     "code": [
-      "bin/deanchor.js"
+      "bin/deanchor.js",
+      "lib/commands.js",
+      "lib/compiler.js"
     ],
     "document": [
       ".graphify/GRAPH_REPORT.md",
@@ -24,10 +26,10 @@
     "image": [],
     "video": []
   },
-  "total_files": 16,
-  "total_words": 8190,
+  "total_files": 18,
+  "total_words": 9443,
   "needs_graph": false,
-  "warning": "Corpus is ~8,190 words - fits in a single context window. You may not need a graph.",
+  "warning": "Corpus is ~9,443 words - fits in a single context window. You may not need a graph.",
   "skipped_sensitive": [],
   "graphifyignore_patterns": 5,
   "scope": {
@@ -36,10 +38,10 @@
     "source": "default-auto",
     "root": ".",
     "git_root": ".",
-    "head": "b99dfe6a200e1d27e49be39e19457f5f86b53209",
-    "candidate_count": 28,
-    "included_count": 16,
-    "excluded_untracked_count": 0,
+    "head": "5552d680fe9573cf837f96b9066369888018f9e0",
+    "candidate_count": 30,
+    "included_count": 18,
+    "excluded_untracked_count": 1,
     "excluded_ignored_count": 0,
     "excluded_sensitive_count": 0,
     "missing_committed_count": 0,
