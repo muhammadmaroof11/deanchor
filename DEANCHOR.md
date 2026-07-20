@@ -52,18 +52,19 @@ This file is the persistent cognitive ledger for the `deanchor` skill. It serves
   2. Create `repomap` subcommand in `deanchor.js` to automatically output Aider-style signatures or Graphify reports. (Done)
   3. Update Git hook to auto-update both Aider and Graphify structures if they are present on commit. (Done)
 
-### ✅ Specialized Tasks & Elite Design/Security Modes
+### ✅ Specialized Tasks & Elite Design/Security/Performance Modes
 - **Status:** Implemented
-- **Original BS:** Generic deanchoring prompts failing to provide deep task-specific domain expertise for specialized topics like UX/UI and security audits.
-- **Ascended Vision:** Introduce specialized workflow modes like `/deanchor-design` (upgraded with HSL, typography scales, glassmorphism, responsive spring animations) and `/deanchor-sec` (security audit mode utilizing web search CVE checks and native platform alternatives).
+- **Original BS:** Generic deanchoring prompts failing to provide deep task-specific domain expertise for specialized topics like UX/UI, security, and low-latency performance tuning.
+- **Ascended Vision:** Introduce specialized workflow modes like `/deanchor-design` (upgraded with HSL, typography scales, glassmorphism, responsive spring animations), `/deanchor-sec` (security audit mode utilizing web search CVE checks and native platform alternatives), and `/deanchor-perf` (performance optimization mode targeting Big O complexity and low garbage collection pressure).
 - **Upgrade Path:**
   1. Add `/deanchor-sec` command, auto-triggers, and security auditing guidelines in `workflows/antigravity/deanchor-sec.md`. (Done)
   2. Upgrade `workflows/antigravity/deanchor-design.md` with expert UI design specifications (contrast, typography pairing, HSL palettes, spring transitions). (Done)
-  3. Integrate the new command references in the global help card and README. (Done)
+  3. Add `/deanchor-perf` command, auto-triggers, and optimization profiling guidelines in `workflows/antigravity/deanchor-perf.md`. (Done)
+  4. Integrate the new command references in the global help card and README. (Done)
 
 ---
 
 ## 4. Redesign Log
 
 - **2026-07-13:** Project initialized, Git repository configured with 5 commits. Frowning expert persona integrated across all platform rules.
-- **2026-07-20:** Graphify, Aider repository maps, and Model Context Protocol (MCP) integrations implemented. Subcommands for `graphify`, `mcp`, and `repomap` added, pre-commit hooks configured to automatically rebuild indices, and updated templates distributed to the active user environment. Added specialized Security Deanchor mode (`/deanchor-sec`) and upgraded UI design rules with elite typography, HSL palettes, and spring motion animations.
+- **2026-07-20:** Graphify, Aider repository maps, and Model Context Protocol (MCP) integrations implemented. Subcommands for `graphify`, `mcp`, and `repomap` added, pre-commit hooks configured to automatically rebuild indices, and updated templates distributed to the active user environment. Added specialized Security Deanchor mode (`/deanchor-sec`), Performance Deanchor mode (`/deanchor-perf`), and upgraded UI design rules with elite typography, HSL palettes, and spring motion animations.

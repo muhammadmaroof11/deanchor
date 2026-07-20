@@ -1,7 +1,7 @@
 # Graph Report - .  (2026-07-20)
 
 ## Corpus Check
-- Corpus is ~9,443 words - fits in a single context window. You may not need a graph.
+- Corpus is ~10,209 words - fits in a single context window. You may not need a graph.
 
 ## Summary
 - 61 nodes · 69 edges · 6 communities detected
@@ -13,12 +13,12 @@
 ## Input Scope
 - Requested: auto
 - Resolved: committed (source: default-auto)
-- Included files: 18 · Candidates: 30
+- Included files: 19 · Candidates: 35
 - Excluded: 1 untracked · 0 ignored · 0 sensitive · 0 missing committed
 - Recommendation: Use --scope all or graphify.yaml inputs.corpus for a knowledge-base folder.
 
 ## Graph Freshness
-- Built from Git commit: `5552d68`
+- Built from Git commit: `7b39482`
 - Compare this hash to `git rev-parse HEAD` before trusting freshness-sensitive graph output.
 ## God Nodes (most connected - your core abstractions)
 1. `compileAndWrite()` - 5 edges
@@ -38,34 +38,34 @@
 
 ## Communities
 
+### Community 4 - "Community 4"
+Cohesion: 0.50
+Nodes (2): commands, args
+
 ### Community 0 - "Community 0"
 Cohesion: 0.11
-Nodes (10): CLAUDE_SRC, CODEX_SRC, compiler, CURSORRULES_SRC, { execSync }, fs, os, path (+2 more)
-
-### Community 1 - "Community 1"
-Cohesion: 0.11
-Nodes (14): args, CLAUDE_SRC, CODEX_SRC, commands, config, configPath, CURSORRULES_SRC, { execSync } (+6 more)
+Nodes (10): fs, path, os, { execSync }, compiler, WORKFLOWS_SRC_DIR, SKILLS_SRC_DIR, CURSORRULES_SRC (+2 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.20
-Nodes (8): compileAndWrite(), compileTemplate(), config, configPath, fs, os, path, raw
+Nodes (8): fs, path, os, configPath, config, raw, compileTemplate(), compileAndWrite()
+
+### Community 1 - "Community 1"
+Cohesion: 0.11
+Nodes (14): commands, args, fs, path, os, { execSync }, WORKFLOWS_SRC_DIR, SKILLS_SRC_DIR (+6 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.50
-Nodes (5): checkStatus(), compileFolderSync(), findProfilePaths(), getAntigravityProfilesBase(), installDeanchor()
-
-### Community 4 - "Community 4"
-Cohesion: 0.50
-Nodes (2): args, commands
+Nodes (5): getAntigravityProfilesBase(), findProfilePaths(), compileFolderSync(), installDeanchor(), checkStatus()
 
 ### Community 5 - "Community 5"
 Cohesion: 0.50
-Nodes (4): compileAndWrite(), compileTemplate(), exportClaudeRules(), exportCursorRules()
+Nodes (4): compileTemplate(), compileAndWrite(), exportCursorRules(), exportClaudeRules()
 
 ## Knowledge Gaps
 - **32 isolated node(s):** `commands`, `args`, `fs`, `path`, `os` (+27 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Community 4`** (2 nodes): `args`, `commands`
+- **Thin community `Community 4`** (2 nodes): `commands`, `args`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
