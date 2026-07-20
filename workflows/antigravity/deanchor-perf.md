@@ -44,7 +44,7 @@ Design a clean-slate, maximum-performance replacement that meets the computation
   - **Concurrency & Offloading:** Move heavy computations off the main thread using worker threads or async microtask queues.
   - **Vanilla UI Replacements:** Swap heavy visual frameworks (e.g., Framer Motion, slider packages, canvas engines) for pure, hardware-accelerated vanilla CSS transitions and custom CSS keyframes.
   - **Code Splitting & Lazy Payload Loading:** If a heavy external library is essential, split it from the main bundle and load it asynchronously only when needed.
-  - **Lighthouse Performance Auditing:** After optimizations are written, use the browser subagent tool (when permitted) to run Lighthouse audits, verifying the speed, layout stability (CLS), and performance score improvements.
+  - **Lighthouse Optimization Loop:** After optimizations are implemented, use the browser subagent tool (when permitted) to run Lighthouse audits. Inspect the audit report findings; if there are further actionable suggestions (e.g., render-blocking resources, unoptimized layouts, unused assets), loop them back into the Deanchor performance pipeline to refine the code. Re-run Lighthouse to verify performance gains, repeating until no further optimization is possible.
   - **Scratch Files Isolation:** Never create sandbox scripts or benchmark suites directly in the project root. Put all testing artifacts inside `<appDataDir>\brain\<conversation-id>\scratch/` (or a local `.deanchor-scratch/` directory) to avoid cluttering the repository.
 
 ---

@@ -50,5 +50,5 @@ To keep the codebase root directory pristine and organized:
 When working on code optimization or visual assets:
 - **Vanilla Replacements:** Proactively check if heavy UI libraries (e.g. framer-motion, external sliders, or heavy dynamic layout engines) can be substituted with clean vanilla CSS transitions, animations, or native browser elements.
 - **Dynamic Loading:** If a heavy library is absolutely required, ensure it is split out and lazy-loaded dynamically rather than bundled into the initial main payload.
-- **Lighthouse Verification:** When permitted, use the browser subagent tool at the end of optimization cycles to run Lighthouse audits, verifying that performance metrics and page speed scores have successfully improved.
+- **Lighthouse Optimization Loop:** When permitted, use the browser subagent tool to run Lighthouse audits. Analyze the report findings; if any actionable issues remain (e.g. unused code, render-blocking scripts, unoptimized assets), feed them back into another iteration of the Deanchor performance pipeline to optimize the code further. Re-run the Lighthouse audit to confirm score improvement.
 
