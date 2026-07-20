@@ -1,0 +1,47 @@
+{
+  "files": {
+    "code": [
+      "bin/deanchor.js"
+    ],
+    "document": [
+      "DEANCHOR.md",
+      "README.md",
+      "benchmarks/anchored_vs_deanchored.md",
+      "skills/deanchor/SKILL.md",
+      "workflows/antigravity/deanchor-audit.md",
+      "workflows/antigravity/deanchor-design.md",
+      "workflows/antigravity/deanchor-dev.md",
+      "workflows/antigravity/deanchor-doc.md",
+      "workflows/antigravity/deanchor-help.md",
+      "workflows/antigravity/deanchor-review.md",
+      "workflows/antigravity/deanchor.md",
+      "workflows/claude-code/deanchor.md",
+      "workflows/codex/deanchor.md"
+    ],
+    "paper": [],
+    "image": [],
+    "video": []
+  },
+  "total_files": 14,
+  "total_words": 6997,
+  "needs_graph": false,
+  "warning": "Corpus is ~6,997 words - fits in a single context window. You may not need a graph.",
+  "skipped_sensitive": [],
+  "graphifyignore_patterns": 5,
+  "scope": {
+    "requested_mode": "auto",
+    "resolved_mode": "committed",
+    "source": "default-auto",
+    "root": ".",
+    "git_root": ".",
+    "head": "7613873cec394c00ec1fab0a7e8e690393d86ef0",
+    "candidate_count": 18,
+    "included_count": 14,
+    "excluded_untracked_count": 16,
+    "excluded_ignored_count": 0,
+    "excluded_sensitive_count": 0,
+    "missing_committed_count": 0,
+    "warnings": [],
+    "recommendation": "Use --scope all or graphify.yaml inputs.corpus for a knowledge-base folder."
+  }
+}

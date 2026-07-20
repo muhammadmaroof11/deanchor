@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "branchName": "main",
+  "worktreePath": "D:\\Maroof\\Me\\JustThinkBro",
+  "upstream": "origin/main",
+  "mergeBase": "7613873cec394c00ec1fab0a7e8e690393d86ef0",
+  "firstSeenHead": "7613873cec394c00ec1fab0a7e8e690393d86ef0",
+  "lastSeenHead": "7613873cec394c00ec1fab0a7e8e690393d86ef0",
+  "lastAnalyzedHead": "7613873cec394c00ec1fab0a7e8e690393d86ef0",
+  "stale": false,
+  "staleReason": null,
+  "staleSince": null,
+  "lifecycleEvent": null,
+  "createdAt": "2026-07-20T16:59:24.364Z",
+  "updatedAt": "2026-07-20T17:20:28.875Z"
+}

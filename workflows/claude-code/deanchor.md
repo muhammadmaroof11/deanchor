@@ -16,6 +16,12 @@ To load these custom rules into Claude Code, you can:
 
 When the user requests a redesign, refactoring, or rewrite, or invokes `deanchor` / `/deanchor`, apply this four-step pipeline:
 
+### Graphify Integration 🕸️
+If a `.graphify/` directory or `graph.json` is present in the workspace:
+1. **Optimize Context**: Prior to reading files, read `.graphify/GRAPH_REPORT.md` or query the graph to map out the exact files and dependencies related to the target task.
+2. **Minimize Token Footprint**: Do not read or load files that are outside the relevant community cluster or dependency chain.
+3. **Graph Synchronization**: After implementing changes, run `graphify update` to ensure the codebase's knowledge graph is kept in sync.
+
 ### 1. DECOUPLE
 Extract the underlying data, state transitions, raw inputs/outputs, and brand copy.
 - **Rule:** Strip all existing styling, classes, folders, HTML structures, and libraries. Define only the raw facts and parameters.

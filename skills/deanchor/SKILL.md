@@ -23,6 +23,12 @@ To save context tokens and maintain memory across agent sessions:
 
 Before modifying any file, generating any code, or rendering any layout under `deanchor` invocation:
 
+### Graphify Integration 🕸️
+If a `.graphify/` directory or `graph.json` is present in the workspace:
+1. **Optimize Context**: Prior to reading files, read `.graphify/GRAPH_REPORT.md` or query the graph to map out the exact files and dependencies related to the target task.
+2. **Minimize Token Footprint**: Do not read or load files that are outside the relevant community cluster or dependency chain.
+3. **Graph Synchronization**: After implementing changes, run `graphify update` to ensure the codebase's knowledge graph is kept in sync.
+
 1. **Decouple Data/Facts:**
    Extract and list all informational content, parameters, and intents. Remove all visual grid, file structures, classes, and code syntax. Log this in `DEANCHOR.md` under **1. Decoupled Data Contracts**.
 

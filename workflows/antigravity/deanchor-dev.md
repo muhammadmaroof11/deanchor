@@ -71,3 +71,12 @@ Under `/deanchor-dev` mode, structure your responses as follows:
 - **Zero-Boilerplate:** Avoid writing wrapper classes that only delegate to standard library functions.
 - **Strict Separation of Concerns:** Decouple data retrieval/storage from business logic, and business logic from presentation.
 - **Banish "Later" Code:** Do not add empty functions or folders "for future expansion."
+
+---
+
+## Graphify Architecture Mapping 🕸️
+
+If `.graphify/` is present in the workspace:
+1. **Analyze Impact (Blast Radius)**: Run `graphify path "<source_module>" "<target_module>"` or trace dependencies to map call trees before refactoring.
+2. **Identify Central Modules (God Nodes)**: Use Graphify report analysis to recognize highly coupled components and design FSMs/event buses to decouple them.
+3. **Synchronize Codebase**: Run `graphify update` immediately after refactoring code files to ensure the graph remains current.

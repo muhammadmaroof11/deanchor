@@ -20,6 +20,14 @@ Search the target code/design for the following "Anchor Tells":
 
 ---
 
+## Graphify-Driven Review 🕸️
+
+If `.graphify/` is present in the workspace:
+1. **Targeted Review Context**: Prior to auditing changes or files, run `graphify review-analysis --files <target_files>` to check the community membership, blast radius, and potential regression risks of the modified code.
+2. **Review Delta**: Use `graphify review-delta --files <target_files>` or `graphify review-context --files <target_files>` to focus the review on dependency impacts, reducing token waste and false positives.
+
+---
+
 ## Format
 
 Output the findings in a structured table format with one line per finding:

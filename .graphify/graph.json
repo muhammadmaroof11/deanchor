@@ -1,0 +1,681 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "community_labels": {
+      "0": "Community 0",
+      "1": "Community 1",
+      "2": "Community 2"
+    },
+    "built_from_commit": "7613873cec394c00ec1fab0a7e8e690393d86ef0"
+  },
+  "topology_signature": "n=27;e=35;deanchor_args,deanchor_checkstatus,deanchor_claude_src,deanchor_codex_src,deanchor_commands,deanchor_compileandwrite,deanchor_compilefoldersync,deanchor_compiletemplate,deanchor_config,deanchor_configpath,deanchor_cursorrules_src,deanchor_execsync,deanchor_exportclauderules,deanchor_exportcursorrules,deanchor_findprofilepaths,deanchor_fs,deanchor_getantigravityprofilesbase,deanchor_installdeanchor,deanchor_installgithook,deanchor_js,deanchor_os,deanchor_path,deanchor_printhelp,deanchor_raw,deanchor_rungraphifyupdate,deanchor_skills_src_dir,deanchor_workflows_src_dir|deanchor_args\tdeanchor_js\tcontains;deanchor_checkstatus\tdeanchor_findprofilepaths\tcalls;deanchor_checkstatus\tdeanchor_getantigravityprofilesbase\tcalls;deanchor_checkstatus\tdeanchor_js\tcontains;deanchor_claude_src\tdeanchor_js\tcontains;deanchor_codex_src\tdeanchor_js\tcontains;deanchor_commands\tdeanchor_js\tcontains;deanchor_compileandwrite\tdeanchor_compiletemplate\tcalls;deanchor_compileandwrite\tdeanchor_exportclauderules\tcalls;deanchor_compileandwrite\tdeanchor_exportcursorrules\tcalls;deanchor_compileandwrite\tdeanchor_installdeanchor\tcalls;deanchor_compileandwrite\tdeanchor_js\tcontains;deanchor_compilefoldersync\tdeanchor_installdeanchor\tcalls;deanchor_compilefoldersync\tdeanchor_js\tcontains;deanchor_compiletemplate\tdeanchor_js\tcontains;deanchor_config\tdeanchor_js\tcontains;deanchor_configpath\tdeanchor_js\tcontains;deanchor_cursorrules_src\tdeanchor_js\tcontains;deanchor_execsync\tdeanchor_js\tcontains;deanchor_exportclauderules\tdeanchor_js\tcontains;deanchor_exportcursorrules\tdeanchor_js\tcontains;deanchor_findprofilepaths\tdeanchor_installdeanchor\tcalls;deanchor_findprofilepaths\tdeanchor_js\tcontains;deanchor_fs\tdeanchor_js\tcontains;deanchor_getantigravityprofilesbase\tdeanchor_installdeanchor\tcalls;deanchor_getantigravityprofilesbase\tdeanchor_js\tcontains;deanchor_installdeanchor\tdeanchor_js\tcontains;deanchor_installgithook\tdeanchor_js\tcontains;deanchor_js\tdeanchor_os\tcontains;deanchor_js\tdeanchor_path\tcontains;deanchor_js\tdeanchor_printhelp\tcontains;deanchor_js\tdeanchor_raw\tcontains;deanchor_js\tdeanchor_rungraphifyupdate\tcontains;deanchor_js\tdeanchor_skills_src_dir\tcontains;deanchor_js\tdeanchor_workflows_src_dir\tcontains",
+  "nodes": [
+    {
+      "id": "deanchor_js",
+      "label": "deanchor.js",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L1",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_commands",
+      "label": "commands",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L8",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_args",
+      "label": "args",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L10",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_printhelp",
+      "label": "printHelp()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L44",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_fs",
+      "label": "fs",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L8",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_path",
+      "label": "path",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L9",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_os",
+      "label": "os",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L10",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_execsync",
+      "label": "{ execSync }",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L11",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_workflows_src_dir",
+      "label": "WORKFLOWS_SRC_DIR",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L13",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_skills_src_dir",
+      "label": "SKILLS_SRC_DIR",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L14",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_cursorrules_src",
+      "label": "CURSORRULES_SRC",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L15",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_claude_src",
+      "label": "CLAUDE_SRC",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L16",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_codex_src",
+      "label": "CODEX_SRC",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L17",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_configpath",
+      "label": "configPath",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L23",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_config",
+      "label": "config",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L24",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_raw",
+      "label": "raw",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L31",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_getantigravityprofilesbase",
+      "label": "getAntigravityProfilesBase()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L79",
+      "community": 1,
+      "community_name": "Community 1"
+    },
+    {
+      "id": "deanchor_findprofilepaths",
+      "label": "findProfilePaths()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L87",
+      "community": 1,
+      "community_name": "Community 1"
+    },
+    {
+      "id": "deanchor_compiletemplate",
+      "label": "compileTemplate()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L108",
+      "community": 2,
+      "community_name": "Community 2"
+    },
+    {
+      "id": "deanchor_compileandwrite",
+      "label": "compileAndWrite()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L123",
+      "community": 2,
+      "community_name": "Community 2"
+    },
+    {
+      "id": "deanchor_compilefoldersync",
+      "label": "compileFolderSync()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L129",
+      "community": 1,
+      "community_name": "Community 1"
+    },
+    {
+      "id": "deanchor_installdeanchor",
+      "label": "installDeanchor()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L149",
+      "community": 1,
+      "community_name": "Community 1"
+    },
+    {
+      "id": "deanchor_exportcursorrules",
+      "label": "exportCursorRules()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L195",
+      "community": 2,
+      "community_name": "Community 2"
+    },
+    {
+      "id": "deanchor_exportclauderules",
+      "label": "exportClaudeRules()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L201",
+      "community": 2,
+      "community_name": "Community 2"
+    },
+    {
+      "id": "deanchor_installgithook",
+      "label": "installGitHook()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L207",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_rungraphifyupdate",
+      "label": "runGraphifyUpdate()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L236",
+      "community": 0,
+      "community_name": "Community 0"
+    },
+    {
+      "id": "deanchor_checkstatus",
+      "label": "checkStatus()",
+      "file_type": "code",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L246",
+      "community": 1,
+      "community_name": "Community 1"
+    }
+  ],
+  "links": [
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_commands",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L8",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_commands",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_args",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L18",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_args",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_printhelp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L59",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_printhelp",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_fs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L8",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_fs",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_path",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L9",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_path",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_os",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L10",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_os",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_execsync",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L11",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_execsync",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_workflows_src_dir",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L12",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_workflows_src_dir",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_skills_src_dir",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L13",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_skills_src_dir",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_cursorrules_src",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L14",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_cursorrules_src",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_claude_src",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L15",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_claude_src",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_codex_src",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L16",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_codex_src",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_configpath",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L22",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_configpath",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_config",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L23",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_config",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_raw",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L30",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_raw",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_getantigravityprofilesbase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L74",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_getantigravityprofilesbase",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_findprofilepaths",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L82",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_findprofilepaths",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_compiletemplate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L103",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_compiletemplate",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_compileandwrite",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L118",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_compileandwrite",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_compilefoldersync",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L124",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_compilefoldersync",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_installdeanchor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L144",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_installdeanchor",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_exportcursorrules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L190",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_exportcursorrules",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_exportclauderules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L196",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_exportclauderules",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_installgithook",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L202",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_installgithook",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_rungraphifyupdate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L236",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_rungraphifyupdate",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_js",
+      "target": "deanchor_checkstatus",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L225",
+      "weight": 1,
+      "_src": "deanchor_js",
+      "_tgt": "deanchor_checkstatus",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_compileandwrite",
+      "target": "deanchor_compiletemplate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L120",
+      "weight": 1,
+      "_src": "deanchor_compileandwrite",
+      "_tgt": "deanchor_compiletemplate",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_installdeanchor",
+      "target": "deanchor_getantigravityprofilesbase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L155",
+      "weight": 1,
+      "_src": "deanchor_installdeanchor",
+      "_tgt": "deanchor_getantigravityprofilesbase",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_installdeanchor",
+      "target": "deanchor_findprofilepaths",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L156",
+      "weight": 1,
+      "_src": "deanchor_installdeanchor",
+      "_tgt": "deanchor_findprofilepaths",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_installdeanchor",
+      "target": "deanchor_compileandwrite",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L177",
+      "weight": 1,
+      "_src": "deanchor_installdeanchor",
+      "_tgt": "deanchor_compileandwrite",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_installdeanchor",
+      "target": "deanchor_compilefoldersync",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L183",
+      "weight": 1,
+      "_src": "deanchor_installdeanchor",
+      "_tgt": "deanchor_compilefoldersync",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_exportcursorrules",
+      "target": "deanchor_compileandwrite",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L192",
+      "weight": 1,
+      "_src": "deanchor_exportcursorrules",
+      "_tgt": "deanchor_compileandwrite",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_exportclauderules",
+      "target": "deanchor_compileandwrite",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L198",
+      "weight": 1,
+      "_src": "deanchor_exportclauderules",
+      "_tgt": "deanchor_compileandwrite",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_checkstatus",
+      "target": "deanchor_getantigravityprofilesbase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L227",
+      "weight": 1,
+      "_src": "deanchor_checkstatus",
+      "_tgt": "deanchor_getantigravityprofilesbase",
+      "confidence_score": 1
+    },
+    {
+      "source": "deanchor_checkstatus",
+      "target": "deanchor_findprofilepaths",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/deanchor.js",
+      "source_location": "L228",
+      "weight": 1,
+      "_src": "deanchor_checkstatus",
+      "_tgt": "deanchor_findprofilepaths",
+      "confidence_score": 1
+    }
+  ],
+  "hyperedges": []
+}
