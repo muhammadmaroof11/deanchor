@@ -438,4 +438,33 @@ Following expert scientific evaluation of the Deanchor framework, two critical v
 
 ---
 
+### Section 13: OpenRouter API Integration & Remote Free Model Telemetry
+
+* **Integration Timestamp**: 2026-08-20 22:56:00 PKT
+* **Authentication**: OpenRouter API Key (`sk-or-v1-...`)
+* **Endpoint**: `https://openrouter.ai/api/v1`
+
+#### Tested OpenRouter Model Backends:
+1. `nvidia/nemotron-3-super-120b-a12b:free` (120B parameter MoE architecture) — **Active & Operational**
+2. `google/gemma-4-31b-it:free` (31B parameter instruction model)
+3. `cohere/north-mini-code:free` (Dedicated code synthesis model)
+
+#### Empirical Two-Stage Decoupling Run Output (`nvidia/nemotron-3-super-120b-a12b:free`):
+- **Stage 1 YAML Distillation**:
+  ```yaml
+  page_title: "User Profile"
+  core_entities:
+    - name: "User"
+      data_fields:
+        Name: "Alice"
+        Role: "Administrator"
+        Status: "Active"
+  interactive_actions:
+    - action_name: "Edit"
+      intent: "editProfile"
+  ```
+- **Stage 2 Unanchored Output**: Synthesized clean dark-mode glassmorphic interface with CSS custom properties (`--bg-dark`, `--accent`), 0 legacy inline styles retained.
+
+---
+
 *Chronicle maintained continuously as an empirical record of the Deanchor Research Initiative.*
