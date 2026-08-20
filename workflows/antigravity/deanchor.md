@@ -20,12 +20,12 @@ Default level: **{{DEFAULT_MODE}}**. Change level via `/deanchor lite|full|ultra
 
 ---
 
-## Graphify Integration 🕸️
+## CodeGraph Integration 🕸️
 
-If a `.graphify/` directory or `graph.json` is present in the workspace:
-1. **Optimize Context with Graph**: Prior to reading files blindly, read `.graphify/GRAPH_REPORT.md` or use the Graphify MCP tools (`query_graph`, `shortest_path`) to map out the exact files and dependencies related to the target task.
-2. **Minimize Token Footprint**: Do not read or load files that are outside the relevant community cluster or dependency chain of the files being modified.
-3. **Graph Synchronization**: After implementing redesigns or architectural updates, run `graphify update` to ensure the codebase's knowledge graph remains accurate and reflects the new decoupled structure.
+If a `.codegraph/` directory is present in the workspace:
+1. **Optimize Context with CodeGraph**: Prior to reading files blindly, query CodeGraph using the `codegraph_explore` tool or run `codegraph explore` in the shell to map out symbol call paths and dependencies related to the target task.
+2. **Minimize Token Footprint**: Do not read or load files that are outside the relevant symbol cluster or dependency chain of the files being modified.
+3. **Dynamic Synchronization**: Rely on CodeGraph's native file watcher, which auto-syncs changes within milliseconds of saving a file.
 
 ---
 

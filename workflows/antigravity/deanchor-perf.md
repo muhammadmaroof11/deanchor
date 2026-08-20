@@ -23,7 +23,7 @@ Extract the raw input data format, the target output format, and the mathematica
 ### 2. Profile & Identify Bottlenecks
 Analyze the current code and profile its Time and Space complexity (Big O).
 - **Focus:** Identify CPU bottlenecks (e.g., $O(N^2)$ checks, deep recursive calls) and Memory bottlenecks (e.g., redundant object copying, excessive GC pressure, deep clone calls).
-- **Blast Radius:** Check the Graphify code graph to estimate how the optimization changes affect dependent modules.
+- **Blast Radius:** Check the CodeGraph code graph to estimate how the optimization changes affect dependent modules.
 
 ### 3. Ban Bloated & Slow Paradigms
 Identify the current suboptimal patterns and place them on the **`BANNED_PERFORMANCE_PARADIGM`** list.
@@ -65,7 +65,7 @@ Under `/deanchor-perf` mode, structure your detailed report as follows:
 - **Current Time Complexity:** [e.g. O(N^2)]
 - **Current Space Complexity:** [e.g. O(N)]
 - **Identified Bottlenecks:** [Redundant allocations, sync blocking, loop nesting, etc.]
-- **Graphify Blast Radius:** [Impact list of dependencies from code graph]
+- **CodeGraph Blast Radius:** [Impact list of dependencies from code graph]
 
 #### 3. Banned Performance Paradigms
 - 🚫 [Suboptimal code pattern or library usage] -> BANNED

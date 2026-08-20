@@ -1,0 +1,12 @@
+{
+  "bare_skill": {
+    "latency": 36.1035361289978,
+    "ast_divergence": 0.28063646157097166,
+    "tokens_read_approx": 1737
+  },
+  "codegraph_enabled": {
+    "latency": 20.882620811462402,
+    "ast_divergence": 0.201483866666789,
+    "tokens_read_approx": 1036
+  }
+}

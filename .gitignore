@@ -11,3 +11,7 @@ __pycache__/
 .pytest_cache/
 .agent/
 .agents/
+.agent/
+.agents/
+scratch/
+SKILL.md

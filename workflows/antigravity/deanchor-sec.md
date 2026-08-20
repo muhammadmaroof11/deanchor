@@ -58,7 +58,7 @@ Under `/deanchor-sec` mode, structure your detailed report as follows:
 #### 2. Web Security Intel (CVEs & Vulnerabilities)
 - **Library/Pattern Searched:** [Name]
 - **Identified Issues:** [CVE IDs, exploits, or unmaintained status fetched from web search]
-- **Blast Radius:** [How this impacts other parts of the codebase based on the Graphify index]
+- **Blast Radius:** [How this impacts other parts of the codebase based on the CodeGraph index]
 
 #### 3. Banned Security Paradigms
 - 🚫 [Insecure dependency or logic pattern] -> BANNED

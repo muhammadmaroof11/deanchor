@@ -153,12 +153,12 @@ Under `/deanchor-dev` mode, structure your responses as follows:
 
 ---
 
-## Graphify Architecture Mapping 🕸️
+## CodeGraph Architecture Mapping 🕸️
 
-If `.graphify/` is present in the workspace:
-1. **Analyze Impact (Blast Radius)**: Run `graphify path "<source_module>" "<target_module>"` or trace dependencies to map call trees before refactoring.
-2. **Identify Central Modules (God Nodes)**: Use Graphify report analysis to recognize highly coupled components and design FSMs/event buses to decouple them.
-3. **Synchronize Codebase**: Run `graphify update` immediately after refactoring code files to ensure the graph remains current.
+If `.codegraph/` is present in the workspace:
+1. **Analyze Impact (Blast Radius)**: Query CodeGraph or run `codegraph explore` to map call trees and dependencies before refactoring.
+2. **Identify Central Modules (God Nodes)**: Use CodeGraph trace paths to identify highly coupled components and design FSMs/event buses to decouple them.
+3. **Dynamic Synchronization**: Rely on CodeGraph's native file watcher, which auto-syncs code changes within milliseconds of saving a file.
 
 ---
 
@@ -309,7 +309,7 @@ Under `/deanchor-sec` mode, structure your detailed report as follows:
 #### 2. Web Security Intel (CVEs & Vulnerabilities)
 - **Library/Pattern Searched:** [Name]
 - **Identified Issues:** [CVE IDs, exploits, or unmaintained status fetched from web search]
-- **Blast Radius:** [How this impacts other parts of the codebase based on the Graphify index]
+- **Blast Radius:** [How this impacts other parts of the codebase based on the CodeGraph index]
 
 #### 3. Banned Security Paradigms
 - 🚫 [Insecure dependency or logic pattern] -> BANNED
@@ -346,7 +346,7 @@ Extract the raw input data format, the target output format, and the mathematica
 ### 2. Profile & Identify Bottlenecks
 Analyze the current code and profile its Time and Space complexity (Big O).
 - **Focus:** Identify CPU bottlenecks (e.g., $O(N^2)$ checks, deep recursive calls) and Memory bottlenecks (e.g., redundant object copying, excessive GC pressure, deep clone calls).
-- **Blast Radius:** Check the Graphify code graph to estimate how the optimization changes affect dependent modules.
+- **Blast Radius:** Check the CodeGraph code graph to estimate how the optimization changes affect dependent modules.
 
 ### 3. Ban Bloated & Slow Paradigms
 Identify the current suboptimal patterns and place them on the **`BANNED_PERFORMANCE_PARADIGM`** list.
@@ -388,7 +388,7 @@ Under `/deanchor-perf` mode, structure your detailed report as follows:
 - **Current Time Complexity:** [e.g. O(N^2)]
 - **Current Space Complexity:** [e.g. O(N)]
 - **Identified Bottlenecks:** [Redundant allocations, sync blocking, loop nesting, etc.]
-- **Graphify Blast Radius:** [Impact list of dependencies from code graph]
+- **CodeGraph Blast Radius:** [Impact list of dependencies from code graph]
 
 #### 3. Banned Performance Paradigms
 - 🚫 [Suboptimal code pattern or library usage] -> BANNED
@@ -488,11 +488,11 @@ Search the target code/design for the following "Anchor Tells":
 
 ---
 
-## Graphify-Driven Review 🕸️
+## CodeGraph-Driven Review 🕸️
 
-If `.graphify/` is present in the workspace:
-1. **Targeted Review Context**: Prior to auditing changes or files, run `graphify review-analysis --files <target_files>` to check the community membership, blast radius, and potential regression risks of the modified code.
-2. **Review Delta**: Use `graphify review-delta --files <target_files>` or `graphify review-context --files <target_files>` to focus the review on dependency impacts, reducing token waste and false positives.
+If `.codegraph/` is present in the workspace:
+1. **Targeted Review Context**: Prior to auditing changes or files, query CodeGraph to trace the recursive symbol usages and dependencies of the target files to understand regression risks.
+2. **Review Delta**: Focus your review strictly on the active dependency tree, minimizing token waste and avoiding irrelevant directories.
 
 ---
 

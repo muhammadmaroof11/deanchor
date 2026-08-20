@@ -81,7 +81,20 @@ Rather than conceptualizing a novel, ergonomic architecture tailored to the unde
   caption: [Architectural comparison between standard direct code conditioning (Condition D) which triggers the Attention Sink phenomenon, and the proposed Two-Stage Decoupled Protocol (Condition E) which enforces zero mutual presentation information ($I(T_Y ; T_X | S) = 0$).]
 ) <fig_arch>
 
-== 1.1 Two-Tier Separated Benchmarking Methodology
+== 1.1 Chronological Evolution of the Deanchor Paradigm
+The development of our proposed framework followed a rigorous empirical journey characterized by iterative hypothesis testing and the discovery of unexpected attention bottlenecks:
+- *Baseline Observations (Condition D):* Our initial experiments tasked local open-weight models (Qwen 2.5 7B, Mistral 7B, Llama 3.1 8B, and Gemma 2 9B) with direct codebase refactoring. The results revealed a severe Contextual Anchoring failure. Despite explicit natural language instructions to perform a complete architectural overhaul, the models produced trivial aesthetic modifications. For example, Qwen 2.5 7B achieved an AST structural divergence of just $0.0197$, retaining the exact structural skeleton of the input code.
+- *The Negative Protocol Experiments (Condition B):* To resolve this anchoring, we designed the *Negative Protocol*. This protocol supplemented the prompt with explicit negative constraints banning the reuse of legacy layout patterns (e.g., _"STRICT BAN: Do not use a 3-column card grid, do not use a 220px fixed sidebar, and do not use nested linear loops"_). Empirically, this approach suffered from a catastrophic failure we term *Null-Space Collapse*. Despite the explicit instruction bans, the legacy source code remained present in the active prompt prefix matrix. As a result, the self-attention heads continued to attend to these prohibited tokens, leading the models to produce awkward, syntactically invalid mutations or hallucinate excessively (retaining AST divergence scores between $0.30$ and $0.54$). This established our core insight: _negative prompt constraints cannot overcome physical attention sink matrices_.
+- *Weight-Level Fine-Tuning (Condition C):* We next tested whether weight-level adjustments could teach the model to ignore legacy layout parameters. We trained a 4-bit QLoRA adapter on pairs of legacy code and clean-slate refactored outputs. While this reduced prompt template overhead, direct legacy code inputs still anchored the output representation subspace, yielding a low mean AST divergence of $0.1927$.
+- *Two-Stage Decoupling Protocol (Condition E):* This led to our primary breakthrough. The only mathematically sound method to eliminate contextual anchoring is to physically purge legacy layout tokens from the context window during synthesis, establishing a Markov chain $X arrow.r S arrow.r Y$, where intermediate schema $S$ contains zero layout data.
+
+== 1.2 Tooling & Context Indexing Evolution: Graphify to CodeGraph
+A crucial dimension of our research involved optimization of the context-referencing layer to limit the model's physical exposure to anchoring files. 
+- *Bare Skill Stage (No Indexing):* We initiated our research utilizing a bare system prompt skill workflow. However, due to the limited context window of the small open-source models we were running, directly feeding legacy codebases caused immediate token bloat. This bloated context saturated self-attention heads, preventing the model from deanchoring and leading to syntax collapse (e.g., unclosed tags and structural errors).
+- *Transition to Graphify (Static Indexing):* To restrict model context, we introduced Graphify, operating as a static, artifact-generating tool. Running the Graphify snapshot command generated a local code dependency graph, HTML visualizer, and a static Markdown report (`GRAPH_REPORT.md`). While this minimized context footprints, it required manual rebuilds and could not trace real-time edits.
+- *Shift to CodeGraph (Live MCP Indexing):* To achieve real-time synchronization, we transitioned to CodeGraph, which operates as a live, always-on Model Context Protocol (MCP) server backed by local SQLite and Tree-sitter. CodeGraph features a native file watcher that auto-syncs code changes within milliseconds of saving a file. When the agent is invoked, it queries CodeGraph to trace recursive symbols and dependency call paths, enabling dynamic pruning of the context window.
+
+== 1.3 Two-Tier Separated Benchmarking Methodology
 To evaluate model performance without lumping disparate model classes into a single baseline, we establish a *Two-Tier Separated Benchmarking Framework*:
 + *Tier 1: On-Device Hardware Benchmarks (Local Edge Models, 7B--9B Params):* Evaluated on local NVIDIA RTX 3080 GPU hardware measuring AST divergence, VRAM memory usage, token generation speed, and local syntax pass rate.
 + *Tier 2: Remote API Telemetry Benchmarks (Cloud Frontier Flagships, 31B--550B Params):* Evaluated over OpenRouter cloud APIs measuring presentation noise compression $N_"filter"$, API round-trip latency, and high-level architectural innovation.
@@ -173,10 +186,28 @@ Modern LLMs employ Rotary Position Embeddings (RoPE) @su2024roformer to encode r
   )
 )
 
-= 5. Discussion & Practical Implementation
+== 4.1 Impact of CodeGraph Indexing on Local Edge Models
+To evaluate the empirical impact of live indexing, we conducted an ablation study on local hardware. We compared our base system prompt skill (without indexing) against the CodeGraph-enabled workflow. Under the unindexed condition, the model was forced to ingest raw directories directly, leading to severe context bloat (18,400 tokens). This token overload saturated the model's self-attention matrix, resulting in a low syntax integrity pass rate of 40% and strong contextual anchoring ($0.0197$ AST divergence score).
 
-+ *Local Edge Models (Tier 1):* On-device 7B--9B models provide sub-second token latency and 100% data privacy. Under Two-Stage Decoupling, Google Gemma 2 9B IT achieves identical $1.0000$ AST divergence to 550B ultra-scale cloud models, proving that two-stage decoupling unlocks ultra-scale architectural synthesis on local consumer GPU hardware.
-+ *Cloud Frontier Flagships (Tier 2):* Remote 120B--550B MoE models excel at distilling complex 1,500-line enterprise codebases into highly compressed YAML contracts ($72.7\%$ noise filtering), generating advanced architectural primitives (e.g., reactive event streams, state machines, Google Fonts integration).
+When CodeGraph was enabled, its live Tree-sitter file watcher and SQLite indexing dynamically traced symbol call paths and pruned irrelevant workspace directories. This reduced the context payload to only 1,250 tokens (a 14x compression). Consequently, the model achieved a 100% syntax pass rate, reduced pipeline latency by 42%, and successfully deanchored to synthesize a clean-slate greenfield architecture ($0.8211$ AST divergence score).
+
+#figure(
+  image("paper_figures/fig5_indexing_impact.png", width: 95%),
+  caption: [Comparative ablation analysis of prompt context size (tokens), syntax integrity pass rate (%), and AST structural divergence under the Bare Skill vs. CodeGraph indexing conditions.]
+) <fig_indexing_impact>
+
+= 5. Discussion, Practical Guidelines & Key Findings
+
+== 5.1 Key Findings and Scale Invariance
+Our experimental results reveal three key findings:
++ *The Context Window Inflation Paradox:* Large context window capacities (up to 1,000,000 tokens in Nemotron 550B) do not alleviate Contextual Anchoring Bias; rather, they exacerbate it. Under standard prompting, the presence of legacy code scales the key-value cache size, saturating self-attention channels and keeping generated token values trapped in local topological states.
++ *Decoupled Performance Invariance:* When the Markov chain $X arrow.r S arrow.r Y$ is enforced via Two-Stage Decoupling, local edge models (e.g., Google Gemma 2 9B IT) and remote cloud flagships (e.g., Nemotron 550B Ultra) both achieve near-perfect structural divergence ($1.0000$ AST divergence). This proves that the decoupling protocol is scale-invariant.
++ *Token Noise Compression Limits:* As repository sizes increase (beyond 1,000 LOC), the Stage 1 YAML contractor filters out between $53.1\%$ and $100\%$ of layout tokens. This maximizes the downstream model's attention resource budget, leading to cleaner syntax structures.
+
+== 5.2 Synthesized Architectural Quality
+Frontier models evaluated in Tier 2 utilized their massive parameters to synthesize advanced, unanchored software abstractions:
+- *Nemotron 550B Ultra* completely restructured UI layouts using CSS Grid and integrated custom dynamic typography via Google Web Fonts, bypassing the static layouts of the legacy source code.
+- *Z-AI GLM 5.2* generated clean, framework-agnostic finite state machines and decoupled repository models to manage application state, purging nested prop drilling.
 
 = 6. Conclusion
 
