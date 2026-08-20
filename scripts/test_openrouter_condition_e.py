@@ -37,8 +37,8 @@ def query_openrouter(model_id: str, prompt: str, system_prompt: str = "") -> str
     return ""
 
 def test_openrouter_deanchor():
-    model_id = "nvidia/nemotron-3-super-120b-a12b:free"
-    print(f"=== Testing OpenRouter Deanchor Pipeline on Model: {model_id} ===")
+    model_id = "nvidia/nemotron-3-ultra-550b-a55b:free"
+    print(f"=== Testing OpenRouter Deanchor Pipeline on 550B Model: {model_id} ===")
     
     sample_code = """
     <div style="background:#fff; padding:20px; width:220px;" class="sidebar-container">

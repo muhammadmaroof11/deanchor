@@ -41,7 +41,9 @@ TEST_SUBJECTS = {
 }
 
 MODELS_TO_BENCHMARK = [
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
     "nvidia/nemotron-3-super-120b-a12b:free",
+    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"
 ]
 
 def query_openrouter(model_id: str, prompt: str, system_prompt: str = "") -> str:
