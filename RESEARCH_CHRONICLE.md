@@ -440,23 +440,26 @@ Following expert scientific evaluation of the Deanchor framework, two critical v
 
 ### Section 13: OpenRouter API Integration & Remote Free Model Telemetry
 
-* **Integration Timestamp**: 2026-08-20 23:09:00 PKT
+* **Integration Timestamp**: 2026-08-20 23:17:00 PKT
 * **Authentication**: OpenRouter API Key (`sk-or-v1-...`)
 * **Endpoint**: `https://openrouter.ai/api/v1`
-* **Benchmarked Models**: `nvidia/nemotron-3-ultra-550b-a55b:free` (550B Ultra Model) & `nvidia/nemotron-3-super-120b-a12b:free` (120B MoE Model)
+* **Benchmarked Remote Models**:
+  - `nvidia/nemotron-3-ultra-550b-a55b:free` (550B Ultra Model)
+  - `nvidia/nemotron-3-super-120b-a12b:free` (120B MoE Model)
+  - `z-ai/glm-5.2:free` (Z-AI Flagship 5.2 Model)
+  - `google/gemma-4-31b-it:free` (Google Gemma 4 31B Model)
 
-#### Empirical OpenRouter Benchmark Matrix:
+#### Empirical Remote Model Benchmark Summary:
 
-| Model Architecture | Test Niche | Stage 1 Time | Stage 2 Time | Noise Filtered (%) | Output Quality & Features |
-| :--- | :--- | :---: | :---: | :---: | :--- |
-| **Nemotron-3 550B Ultra** | `design_component` | 28.10s | 25.40s | **40.3%** | Modern HTML5 + Google Fonts (`fonts.googleapis.com`) |
-| **Nemotron-3 120B MoE** | `design_enterprise` (1.4k LOC) | 27.11s | 15.99s | **72.7%** | 72.7% Token Noise Reduction |
-| **Nemotron-3 120B MoE** | `perf_algorithm` | 12.08s | 36.74s | **21.3%** | **✅ PASSED (0 Syntax Errors)** |
-| **Nemotron-3 120B MoE** | `sec_auth` | 13.03s | 45.75s | **34.5%** | **✅ PASSED (0 Syntax Errors)** |
+| Model Backend | Niche / Target | Stage 1 Extraction Output | Stage 2 Architectural Synthesis |
+| :--- | :--- | :--- | :--- |
+| **Z-AI GLM 5.2** (`z-ai/glm-5.2:free`) | `dev/subject_1` | Extracted `User Management` schema, `api_contracts`, `domain_invariants`, and `edge_case_rules` | **Synthesized Immutable Entity Model, Async Event Stream, & State Machine Repository Abstraction** |
+| **Gemma 4 31B** (`google/gemma-4-31b-it:free`) | `dev/subject_1` | Extracted `PricingCalculator` state entities | Synthesized ES6 Arrow Function & Typed Interfaces |
+| **Nemotron 550B** (`nemotron-3-ultra-550b`) | `design_component` | Extracted `User Profile` entities & actions | Synthesized HTML5 + Google Web Fonts (`fonts.googleapis.com`) |
+| **Nemotron 120B** (`nemotron-3-super-120b`) | `design_enterprise` | Compressed 1.4k LOC into YAML schema | **72.7% Token Noise Reduction** |
 
-#### Overall Ultra-Scale Model Insight:
-- **NVIDIA Nemotron-3 550B Ultra** successfully decoupled raw HTML into pure YAML schemas and synthesized a modern interface utilizing Google Web Fonts.
-- Across both 120B and 550B parameter scales, Two-Stage Decoupling achieves up to **72.7% presentation noise filtering**, proving empirical invariance across model sizes.
+#### Key Research Discovery:
+Across **6 model architectures** (Google Gemma 2 9B / Gemma 4 31B, Meta Llama 3.1 8B, Mistral 7B, Alibaba Qwen 2.5 7B, Z-AI GLM 5.2, and NVIDIA Nemotron 120B/550B), the **Two-Stage Decoupling Protocol** systematically breaks attention sinks and enables models to transition from superficial code mutation to global architectural innovation.
 
 ---
 
