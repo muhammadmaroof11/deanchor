@@ -1,0 +1,96 @@
+{
+  "realworld": {
+    "design_portfolio": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.7642,
+        "elapsed_s": 6.41,
+        "embedding_dim": 384
+      },
+      "C": {
+        "embedding_score": 0.2124,
+        "elapsed_s": 6.66,
+        "embedding_dim": 384
+      },
+      "D": {
+        "embedding_score": 0.3893,
+        "elapsed_s": 6.4,
+        "embedding_dim": 384
+      },
+      "E": {
+        "embedding_score": 0.6193,
+        "elapsed_s": 6.37,
+        "embedding_dim": 384
+      }
+    },
+    "dev_webhook": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.4019,
+        "elapsed_s": 6.38,
+        "embedding_dim": 384
+      },
+      "C": {
+        "embedding_score": 0.2452,
+        "elapsed_s": 6.41,
+        "embedding_dim": 384
+      },
+      "D": {
+        "embedding_score": 0.1729,
+        "elapsed_s": 6.76,
+        "embedding_dim": 384
+      },
+      "E": {
+        "embedding_score": 0.5804,
+        "elapsed_s": 6.53,
+        "embedding_dim": 384
+      }
+    },
+    "perf_orderbook": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.1254,
+        "elapsed_s": 6.74,
+        "embedding_dim": 384
+      },
+      "C": {
+        "embedding_score": 0.0,
+        "elapsed_s": 6.55,
+        "embedding_dim": 384
+      },
+      "D": {
+        "embedding_score": 0.0,
+        "elapsed_s": 6.56,
+        "embedding_dim": 384
+      },
+      "E": {
+        "embedding_score": 0.8176,
+        "elapsed_s": 6.48,
+        "embedding_dim": 384
+      }
+    },
+    "sec_auth": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.0695,
+        "elapsed_s": 6.41,
+        "embedding_dim": 384
+      },
+      "C": {
+        "embedding_score": 0.0768,
+        "elapsed_s": 6.46,
+        "embedding_dim": 384
+      },
+      "D": {
+        "embedding_score": 0.1312,
+        "elapsed_s": 6.64,
+        "embedding_dim": 384
+      },
+      "E": {
+        "embedding_score": 0.9088,
+        "elapsed_s": 6.61,
+        "embedding_dim": 384
+      }
+    }
+  }
+}

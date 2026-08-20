@@ -1,0 +1,116 @@
+{
+  "mistral-7b-v03": {
+    "name": "Mistral 7B Instruct v0.3 (Q4_K_M)",
+    "scale": "7B",
+    "arch": "Mistral",
+    "runs": {
+      "design/subject_1": {
+        "D": {
+          "time_sec": 13.32,
+          "chars": 2961
+        },
+        "E": {
+          "time_sec": 12.64,
+          "chars": 2942
+        }
+      },
+      "design/subject_enterprise": {
+        "D": {
+          "time_sec": 10.22,
+          "chars": 2155
+        },
+        "E": {
+          "time_sec": 17.27,
+          "chars": 3351
+        }
+      },
+      "perf/subject_1": {
+        "D": {
+          "time_sec": 13.87,
+          "chars": 3780
+        },
+        "E": {
+          "time_sec": 12.44,
+          "chars": 3182
+        }
+      },
+      "realworld/design_portfolio": {
+        "D": {
+          "time_sec": 19.01,
+          "chars": 5257
+        },
+        "E": {
+          "time_sec": 17.84,
+          "chars": 3051
+        }
+      },
+      "realworld/perf_orderbook": {
+        "D": {
+          "time_sec": 14.97,
+          "chars": 4156
+        },
+        "E": {
+          "time_sec": 13.27,
+          "chars": 2453
+        }
+      }
+    }
+  },
+  "gemma-2-9b-it": {
+    "name": "Google Gemma 2 9B IT (Q4_K_M)",
+    "scale": "9B",
+    "arch": "Gemma",
+    "runs": {
+      "design/subject_1": {
+        "D": {
+          "time_sec": 11.45,
+          "chars": 2981
+        },
+        "E": {
+          "time_sec": 14.22,
+          "chars": 2130
+        }
+      },
+      "design/subject_enterprise": {
+        "D": {
+          "time_sec": 13.49,
+          "chars": 2965
+        },
+        "E": {
+          "time_sec": 11.06,
+          "chars": 2232
+        }
+      },
+      "perf/subject_1": {
+        "D": {
+          "time_sec": 26.84,
+          "chars": 4492
+        },
+        "E": {
+          "time_sec": 16.11,
+          "chars": 2377
+        }
+      },
+      "realworld/design_portfolio": {
+        "D": {
+          "time_sec": 15.97,
+          "chars": 2783
+        },
+        "E": {
+          "time_sec": 19.8,
+          "chars": 1893
+        }
+      },
+      "realworld/perf_orderbook": {
+        "D": {
+          "time_sec": 47.85,
+          "chars": 7226
+        },
+        "E": {
+          "time_sec": 15.97,
+          "chars": 1857
+        }
+      }
+    }
+  }
+}

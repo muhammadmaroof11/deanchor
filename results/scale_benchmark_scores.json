@@ -1,0 +1,212 @@
+{
+  "design/subject_1": {
+    "mistral-7b-v03": {
+      "D": {
+        "ast_divergence": 0.5167,
+        "embedding_distance": 0.2337
+      },
+      "E": {
+        "ast_divergence": 0.8864,
+        "embedding_distance": 0.6613
+      }
+    },
+    "gemma-2-9b-it": {
+      "D": {
+        "ast_divergence": 0.8,
+        "embedding_distance": 0.5651
+      },
+      "E": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.834
+      }
+    },
+    "llama3.1-8b-official": {
+      "D": {
+        "ast_divergence": 0.5476,
+        "embedding_distance": 0.2273
+      },
+      "E": {
+        "ast_divergence": 0.8,
+        "embedding_distance": 0.4212
+      }
+    },
+    "llama3.1-8b-q6k": {
+      "D": {
+        "ast_divergence": 0.5909,
+        "embedding_distance": 0.2346
+      },
+      "E": {
+        "ast_divergence": 0.7271,
+        "embedding_distance": 0.6985
+      }
+    }
+  },
+  "design/subject_enterprise": {
+    "mistral-7b-v03": {
+      "D": {
+        "ast_divergence": 0.9118,
+        "embedding_distance": 0.6489
+      },
+      "E": {
+        "ast_divergence": 0.8488,
+        "embedding_distance": 0.3553
+      }
+    },
+    "gemma-2-9b-it": {
+      "D": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.7466
+      },
+      "E": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.9011
+      }
+    },
+    "llama3.1-8b-official": {
+      "D": {
+        "ast_divergence": 0.8495,
+        "embedding_distance": 0.4764
+      },
+      "E": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.6124
+      }
+    },
+    "llama3.1-8b-q6k": {
+      "D": {
+        "ast_divergence": 0.7933,
+        "embedding_distance": 0.2977
+      },
+      "E": {
+        "ast_divergence": 0.8264,
+        "embedding_distance": 0.3845
+      }
+    }
+  },
+  "perf/subject_1": {
+    "mistral-7b-v03": {
+      "D": {
+        "ast_divergence": 0.6259,
+        "embedding_distance": 0.1838
+      },
+      "E": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.4242
+      }
+    },
+    "gemma-2-9b-it": {
+      "D": {
+        "ast_divergence": 0.7454,
+        "embedding_distance": 0.2429
+      },
+      "E": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.5961
+      }
+    },
+    "llama3.1-8b-official": {
+      "D": {
+        "ast_divergence": 0.87,
+        "embedding_distance": 0.2342
+      },
+      "E": {
+        "ast_divergence": 0.989,
+        "embedding_distance": 0.5216
+      }
+    },
+    "llama3.1-8b-q6k": {
+      "D": {
+        "ast_divergence": 0.9077,
+        "embedding_distance": 0.2537
+      },
+      "E": {
+        "ast_divergence": 0.9945,
+        "embedding_distance": 0.2858
+      }
+    }
+  },
+  "realworld/design_portfolio": {
+    "mistral-7b-v03": {
+      "D": {
+        "ast_divergence": 0.6808,
+        "embedding_distance": 0.7229
+      },
+      "E": {
+        "ast_divergence": 0.8906,
+        "embedding_distance": 0.7071
+      }
+    },
+    "gemma-2-9b-it": {
+      "D": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.6006
+      },
+      "E": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.7849
+      }
+    },
+    "llama3.1-8b-official": {
+      "D": {
+        "ast_divergence": 0.7073,
+        "embedding_distance": 0.6531
+      },
+      "E": {
+        "ast_divergence": 0.7634,
+        "embedding_distance": 0.5478
+      }
+    },
+    "llama3.1-8b-q6k": {
+      "D": {
+        "ast_divergence": 0.6574,
+        "embedding_distance": 0.5574
+      },
+      "E": {
+        "ast_divergence": 0.6485,
+        "embedding_distance": 0.5328
+      }
+    }
+  },
+  "realworld/perf_orderbook": {
+    "mistral-7b-v03": {
+      "D": {
+        "ast_divergence": 0.9791,
+        "embedding_distance": 0.9128
+      },
+      "E": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.7672
+      }
+    },
+    "gemma-2-9b-it": {
+      "D": {
+        "ast_divergence": 0.7944,
+        "embedding_distance": 0.3467
+      },
+      "E": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.6526
+      }
+    },
+    "llama3.1-8b-official": {
+      "D": {
+        "ast_divergence": 0.9609,
+        "embedding_distance": 0.6245
+      },
+      "E": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.6726
+      }
+    },
+    "llama3.1-8b-q6k": {
+      "D": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.7831
+      },
+      "E": {
+        "ast_divergence": 1.0,
+        "embedding_distance": 0.9189
+      }
+    }
+  }
+}

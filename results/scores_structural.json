@@ -1,0 +1,292 @@
+{
+  "realworld": {
+    "design_portfolio": {
+      "A": null,
+      "B": {
+        "structural_score": 0.3577,
+        "features": {
+          "tag_div": 0.10309278350515463,
+          "tag_section": 0.020618556701030927,
+          "tag_aside": 0.0,
+          "tag_nav": 0.010309278350515464,
+          "tag_header": 0.010309278350515464,
+          "tag_main": 0.0,
+          "tag_article": 0.0,
+          "tag_table": 0.0,
+          "tag_ul": 0.010309278350515464,
+          "tag_li": 0.061855670103092786,
+          "tag_span": 0.09278350515463918,
+          "tag_button": 0.041237113402061855,
+          "tag_svg": 0.0,
+          "tag_canvas": 0.0,
+          "class_entropy": 0.5562862729282851,
+          "avg_depth": 0.4,
+          "layout_sidebar": 1.0,
+          "layout_topbar": 1.0,
+          "layout_card_grid": 1.0,
+          "layout_data_table": 1.0,
+          "layout_hero_section": 1.0,
+          "layout_feature_cols": 0.0,
+          "layout_pricing": 0.0,
+          "layout_footer": 0.0,
+          "css_selectors": 0.02,
+          "css_vars": 0.0,
+          "css_animations": 0.0,
+          "dom_size": 0.3233333333333333
+        }
+      },
+      "C": {
+        "structural_score": 0.303,
+        "features": {
+          "tag_div": 0.12087912087912088,
+          "tag_section": 0.02197802197802198,
+          "tag_aside": 0.0,
+          "tag_nav": 0.01098901098901099,
+          "tag_header": 0.01098901098901099,
+          "tag_main": 0.0,
+          "tag_article": 0.0,
+          "tag_table": 0.0,
+          "tag_ul": 0.01098901098901099,
+          "tag_li": 0.06593406593406594,
+          "tag_span": 0.04395604395604396,
+          "tag_button": 0.04395604395604396,
+          "tag_svg": 0.0,
+          "tag_canvas": 0.0,
+          "class_entropy": 0.5569662545103264,
+          "avg_depth": 0.5,
+          "layout_sidebar": 0.0,
+          "layout_topbar": 1.0,
+          "layout_card_grid": 1.0,
+          "layout_data_table": 1.0,
+          "layout_hero_section": 1.0,
+          "layout_feature_cols": 0.0,
+          "layout_pricing": 0.0,
+          "layout_footer": 0.0,
+          "css_selectors": 0.0,
+          "css_vars": 0.0,
+          "css_animations": 0.0,
+          "dom_size": 0.30333333333333334
+        }
+      },
+      "D": {
+        "structural_score": 0.3052,
+        "features": {
+          "tag_div": 0.22972972972972974,
+          "tag_section": 0.02702702702702703,
+          "tag_aside": 0.0,
+          "tag_nav": 0.0,
+          "tag_header": 0.013513513513513514,
+          "tag_main": 0.0,
+          "tag_article": 0.0,
+          "tag_table": 0.0,
+          "tag_ul": 0.0,
+          "tag_li": 0.0,
+          "tag_span": 0.05405405405405406,
+          "tag_button": 0.04054054054054054,
+          "tag_svg": 0.0,
+          "tag_canvas": 0.0,
+          "class_entropy": 0.5572006978537727,
+          "avg_depth": 0.5,
+          "layout_sidebar": 0.0,
+          "layout_topbar": 1.0,
+          "layout_card_grid": 1.0,
+          "layout_data_table": 1.0,
+          "layout_hero_section": 1.0,
+          "layout_feature_cols": 0.0,
+          "layout_pricing": 1.0,
+          "layout_footer": 1.0,
+          "css_selectors": 0.0,
+          "css_vars": 0.0,
+          "css_animations": 0.0,
+          "dom_size": 0.24666666666666667
+        }
+      },
+      "E": {
+        "structural_score": 0.3828,
+        "features": {
+          "tag_div": 0.125,
+          "tag_section": 0.0625,
+          "tag_aside": 0.0,
+          "tag_nav": 0.03125,
+          "tag_header": 0.0,
+          "tag_main": 0.0,
+          "tag_article": 0.0,
+          "tag_table": 0.0,
+          "tag_ul": 0.0,
+          "tag_li": 0.0,
+          "tag_span": 0.0,
+          "tag_button": 0.0625,
+          "tag_svg": 0.0,
+          "tag_canvas": 0.0,
+          "class_entropy": 0.3558518613048906,
+          "avg_depth": 0.3,
+          "layout_sidebar": 0.0,
+          "layout_topbar": 0.0,
+          "layout_card_grid": 1.0,
+          "layout_data_table": 1.0,
+          "layout_hero_section": 1.0,
+          "layout_feature_cols": 0.0,
+          "layout_pricing": 0.0,
+          "layout_footer": 0.0,
+          "css_selectors": 0.12,
+          "css_vars": 0.0,
+          "css_animations": 0.2,
+          "dom_size": 0.10666666666666667
+        }
+      }
+    },
+    "dev_webhook": {
+      "A": null,
+      "B": {
+        "structural_score": 0.4523,
+        "features": {
+          "imports": 0.0,
+          "functions": 0.3333333333333333,
+          "control_flow": 0.28,
+          "async_patterns": 1.0,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.652
+        }
+      },
+      "C": {
+        "structural_score": 0.0996,
+        "features": {
+          "imports": 0.0,
+          "functions": 0.1,
+          "control_flow": 0.06,
+          "async_patterns": 0.2,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.26
+        }
+      },
+      "D": {
+        "structural_score": 0.0654,
+        "features": {
+          "imports": 0.0,
+          "functions": 0.1,
+          "control_flow": 0.02,
+          "async_patterns": 0.0,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.25
+        }
+      },
+      "E": {
+        "structural_score": 0.1786,
+        "features": {
+          "imports": 0.0,
+          "functions": 0.4666666666666667,
+          "control_flow": 0.06,
+          "async_patterns": 0.0,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.194
+        }
+      }
+    },
+    "perf_orderbook": {
+      "A": null,
+      "B": {
+        "structural_score": 0.3883,
+        "features": {
+          "imports": 0.25,
+          "functions": 0.2,
+          "control_flow": 0.18,
+          "async_patterns": 0.0,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.384
+        }
+      },
+      "C": {
+        "structural_score": 0.3586,
+        "features": {
+          "imports": 0.3,
+          "functions": 0.1,
+          "control_flow": 0.26,
+          "async_patterns": 0.0,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.41
+        }
+      },
+      "D": {
+        "structural_score": 0.2991,
+        "features": {
+          "imports": 0.3,
+          "functions": 0.06666666666666667,
+          "control_flow": 0.44,
+          "async_patterns": 0.0,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.45
+        }
+      },
+      "E": {
+        "structural_score": 0.4398,
+        "features": {
+          "imports": 0.0,
+          "functions": 0.36666666666666664,
+          "control_flow": 0.16,
+          "async_patterns": 0.0,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.28
+        }
+      }
+    },
+    "sec_auth": {
+      "A": null,
+      "B": {
+        "structural_score": 0.1372,
+        "features": {
+          "imports": 0.0,
+          "functions": 0.2,
+          "control_flow": 0.12,
+          "async_patterns": 0.7,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.192
+        }
+      },
+      "C": {
+        "structural_score": 0.0984,
+        "features": {
+          "imports": 0.0,
+          "functions": 0.1,
+          "control_flow": 0.2,
+          "async_patterns": 0.6,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.24
+        }
+      },
+      "D": {
+        "structural_score": 0.0526,
+        "features": {
+          "imports": 0.0,
+          "functions": 0.06666666666666667,
+          "control_flow": 0.14,
+          "async_patterns": 0.5,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.218
+        }
+      },
+      "E": {
+        "structural_score": 0.319,
+        "features": {
+          "imports": 0.0,
+          "functions": 0.7333333333333333,
+          "control_flow": 0.14,
+          "async_patterns": 0.0,
+          "use_effect": 0.0,
+          "react_hooks": 0.0,
+          "line_count": 0.286
+        }
+      }
+    }
+  }
+}
