@@ -440,22 +440,23 @@ Following expert scientific evaluation of the Deanchor framework, two critical v
 
 ### Section 13: OpenRouter API Integration & Remote Free Model Telemetry
 
-* **Integration Timestamp**: 2026-08-20 22:59:00 PKT
+* **Integration Timestamp**: 2026-08-20 23:01:00 PKT
 * **Authentication**: OpenRouter API Key (`sk-or-v1-...`)
 * **Endpoint**: `https://openrouter.ai/api/v1`
 * **Benchmarked Model**: `nvidia/nemotron-3-super-120b-a12b:free` (120B MoE Architecture)
 
 #### Empirical OpenRouter Benchmark Matrix (`nvidia/nemotron-3-super-120b-a12b:free`):
 
-| Test Subject Niche | Stage 1 Latency | Stage 2 Latency | Noise Filtered (%) | Syntax Valid |
+| Test Subject Niche | Stage 1 Latency | Stage 2 Latency | Noise Filtered (%) | Syntax Integrity Status |
 | :--- | :---: | :---: | :---: | :---: |
-| **Design Component** (`design_component`) | 30.34s | 24.15s | 32.1% | ❌ Truncated (`max_tokens`) |
-| **Enterprise Monolith** (`design_enterprise` 1.4k LOC) | 22.65s | 17.52s | **72.1%** | ❌ Conversational Wrapping |
-| **Performance Algo** (`perf_algorithm`) | 8.44s | 26.49s | 2.2% | ❌ Conversational Wrapping |
-| **Backend Security** (`sec_auth`) | 4.21s | 45.59s | **34.5%** | **✅ PASSED (0 Errors)** |
+| **Enterprise Monolith** (`design_enterprise` 1.4k LOC) | 27.11s | 15.99s | **72.7%** | ❌ Conversational Wrapping |
+| **Performance Algo** (`perf_algorithm`) | 12.08s | 36.74s | **21.3%** | **✅ PASSED (0 Errors)** |
+| **Backend Security** (`sec_auth`) | 13.03s | 45.75s | **34.5%** | **✅ PASSED (0 Errors)** |
+| **Design Component** (`design_component`) | 34.86s | 30.14s | **40.3%** | ❌ Truncated (`max_tokens`) |
 
-#### Key Observation:
-- `nvidia/nemotron-3-super-120b-a12b:free` successfully achieves **72.1% presentation noise reduction** on enterprise monoliths and passes **100% executable syntax validation** on Backend Security modules. However, chat-completion free endpoints tend to output conversational markdown explanations around code, reinforcing the need for system-level persona constraints (`auto_repair=True`).
+#### Overall Free API Performance Summary:
+- **Syntax Pass Rate**: **50.0% (2/4 Scenarios PASSED)** without auto-repair retries.
+- **Presentation Noise Filtering**: Up to **72.7%** token compression on complex enterprise codebases.
 
 ---
 
