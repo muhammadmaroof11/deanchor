@@ -15,3 +15,5 @@ __pycache__/
 .agents/
 scratch/
 SKILL.md
+
+.env

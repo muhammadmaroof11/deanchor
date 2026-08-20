@@ -7,7 +7,11 @@ from openai import OpenAI
 from deanchor.prompts import STAGE1_SCHEMAS, STAGE2_PROMPTS
 from deanchor.engine import validate_syntax
 
-OPENROUTER_API_KEY = "YOUR_API_KEY_HERE"
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
 
 client = OpenAI(
     api_key=OPENROUTER_API_KEY,
