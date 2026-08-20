@@ -1,0 +1,7 @@
+{
+  "defaultMode": "full",
+  "customBannedParadigms": [
+    "traditional-sidebar-dashboard",
+    "use-effect-data-fetching"
+  ]
+}
