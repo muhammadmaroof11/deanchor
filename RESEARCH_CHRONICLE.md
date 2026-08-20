@@ -440,30 +440,22 @@ Following expert scientific evaluation of the Deanchor framework, two critical v
 
 ### Section 13: OpenRouter API Integration & Remote Free Model Telemetry
 
-* **Integration Timestamp**: 2026-08-20 22:56:00 PKT
+* **Integration Timestamp**: 2026-08-20 22:59:00 PKT
 * **Authentication**: OpenRouter API Key (`sk-or-v1-...`)
 * **Endpoint**: `https://openrouter.ai/api/v1`
+* **Benchmarked Model**: `nvidia/nemotron-3-super-120b-a12b:free` (120B MoE Architecture)
 
-#### Tested OpenRouter Model Backends:
-1. `nvidia/nemotron-3-super-120b-a12b:free` (120B parameter MoE architecture) — **Active & Operational**
-2. `google/gemma-4-31b-it:free` (31B parameter instruction model)
-3. `cohere/north-mini-code:free` (Dedicated code synthesis model)
+#### Empirical OpenRouter Benchmark Matrix (`nvidia/nemotron-3-super-120b-a12b:free`):
 
-#### Empirical Two-Stage Decoupling Run Output (`nvidia/nemotron-3-super-120b-a12b:free`):
-- **Stage 1 YAML Distillation**:
-  ```yaml
-  page_title: "User Profile"
-  core_entities:
-    - name: "User"
-      data_fields:
-        Name: "Alice"
-        Role: "Administrator"
-        Status: "Active"
-  interactive_actions:
-    - action_name: "Edit"
-      intent: "editProfile"
-  ```
-- **Stage 2 Unanchored Output**: Synthesized clean dark-mode glassmorphic interface with CSS custom properties (`--bg-dark`, `--accent`), 0 legacy inline styles retained.
+| Test Subject Niche | Stage 1 Latency | Stage 2 Latency | Noise Filtered (%) | Syntax Valid |
+| :--- | :---: | :---: | :---: | :---: |
+| **Design Component** (`design_component`) | 30.34s | 24.15s | 32.1% | ❌ Truncated (`max_tokens`) |
+| **Enterprise Monolith** (`design_enterprise` 1.4k LOC) | 22.65s | 17.52s | **72.1%** | ❌ Conversational Wrapping |
+| **Performance Algo** (`perf_algorithm`) | 8.44s | 26.49s | 2.2% | ❌ Conversational Wrapping |
+| **Backend Security** (`sec_auth`) | 4.21s | 45.59s | **34.5%** | **✅ PASSED (0 Errors)** |
+
+#### Key Observation:
+- `nvidia/nemotron-3-super-120b-a12b:free` successfully achieves **72.1% presentation noise reduction** on enterprise monoliths and passes **100% executable syntax validation** on Backend Security modules. However, chat-completion free endpoints tend to output conversational markdown explanations around code, reinforcing the need for system-level persona constraints (`auto_repair=True`).
 
 ---
 

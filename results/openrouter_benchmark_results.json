@@ -1,0 +1,60 @@
+{
+  "nvidia/nemotron-3-super-120b-a12b:free": {
+    "design_component": {
+      "stage1_time_sec": 30.34,
+      "stage2_time_sec": 24.15,
+      "raw_loc_bytes": 2851,
+      "yaml_loc_bytes": 1935,
+      "noise_filtered_pct": 32.1,
+      "syntax_valid": false,
+      "syntax_errors": [
+        "Unclosed tag '<html>' at end of document",
+        "Unclosed tag '<head>' at end of document",
+        "Unclosed tag '<style>' at end of document"
+      ],
+      "stage1_yaml_snippet": "yaml\npage_title: \"CloudMetrics System Dashboard\"\ncore_entities:\n  - name: \"CPU Utilization\"\n    data_fields:\n      value: \"68.4%\"\n      sub: \"\u2191 4.2% from last hour\"\n  - name: \"Memory Allocation\"\n    d",
+      "stage2_code_snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<title>CloudMetrics System Dashboard</title>\n<style>\n:root {\n  --bg: hsl(220, 10%, 8%);\n  --surface: hsl(220, 10%, 12%);\n  --primary: hsl"
+    },
+    "design_enterprise": {
+      "stage1_time_sec": 22.65,
+      "stage2_time_sec": 17.52,
+      "raw_loc_bytes": 46313,
+      "yaml_loc_bytes": 12919,
+      "noise_filtered_pct": 72.1,
+      "syntax_valid": false,
+      "syntax_errors": [
+        "Unclosed tag '<title>' at end of document",
+        "Unclosed tag '<string>' at end of document",
+        "Unclosed tag '<field_name>' at end of document",
+        "Unclosed tag '<value>' at end of document",
+        "Unclosed tag '<string>' at end of document"
+      ],
+      "stage1_yaml_snippet": "We are given an HTML file and we need to extract:\n - page_title\n - core_entities: list of entities with name and data_fields (each data_field is a key-value pair)\n - interactive_actions: list of actio",
+      "stage2_code_snippet": "We are given an HTML file and we need to extract:\n - page_title\n - core_entities: list of entities with name and data_fields (each data_field is a key-value pair)\n - interactive_actions: list of actio"
+    },
+    "perf_algorithm": {
+      "stage1_time_sec": 8.44,
+      "stage2_time_sec": 26.49,
+      "raw_loc_bytes": 2334,
+      "yaml_loc_bytes": 2282,
+      "noise_filtered_pct": 2.2,
+      "syntax_valid": false,
+      "syntax_errors": [
+        "Unclosed bracket '(' at character index 10494"
+      ],
+      "stage1_yaml_snippet": "```yaml\nalgorithmic_task: >-\n  Maintain a limit order book by inserting incoming buy/sell orders, keeping bids\n  sorted descending and asks sorted ascending, and executing trades whenever the\n  highes",
+      "stage2_code_snippet": "**Solution Overview**\n\nWe maintain two *price\u2011aggregated* maps:\n\n* **bids** \u2013 a map `price \u2192 totalSize` kept in **strictly descending** price order.  \n* **asks** \u2013 a map `price \u2192 totalSize` kept in **"
+    },
+    "sec_auth": {
+      "stage1_time_sec": 4.21,
+      "stage2_time_sec": 45.59,
+      "raw_loc_bytes": 1721,
+      "yaml_loc_bytes": 1127,
+      "noise_filtered_pct": 34.5,
+      "syntax_valid": true,
+      "syntax_errors": [],
+      "stage1_yaml_snippet": "```yaml\nsecurity_boundary: \"User Authentication and Profile Service\"\nprincipals_and_roles:\n  - anonymous\n  - authenticated_user\n  - role_based (e.g., admin, user)\nprotected_resources:\n  - /api/profile",
+      "stage2_code_snippet": "**Zero\u2011Trust, Defense\u2011in\u2011Depth Implementation**  \n*User Authentication and Profile Service* \u2013 built **only** from the constraints expressed in the supplied security\u2011boundary schema.\n\n---\n\n## 1. High\u2011L"
+    }
+  }
+}
