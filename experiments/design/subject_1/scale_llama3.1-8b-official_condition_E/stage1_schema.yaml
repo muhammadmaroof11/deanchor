@@ -1,0 +1,46 @@
+Here's the extracted raw facts, entities, user inputs, buttons/actions, and text copy in a clean YAML schema:
+
+```yaml
+page_title: CloudMetrics System Dashboard
+core_entities:
+  - name: CPU Utilization
+    data_fields:
+      value: 68.4%
+      change: ↑ 4.2% from last hour
+  - name: Memory Allocation
+    data_fields:
+      total: 32 GB
+      used: 24.8 GB
+      capacity: 77.5%
+  - name: Active I/O Operations
+    data_fields:
+      operations_per_second: 1,420 ops/s
+      latency: Normal latency 1.8ms
+interactive_actions:
+  - action_name: Refresh Data
+    intent: refresh_page
+content_copy:
+  - section: Header
+    text: Infrastructure Telemetry
+  - section: Card 1
+    text: CPU Utilization
+  - section: Card 2
+    text: Memory Allocation
+  - section: Card 3
+    text: Active I/O Operations
+  - section: Table
+    text:
+      rows:
+        - Node Name: prod-cluster-us-east-1
+          Region: us-east-1a
+          Status: HEALTHY
+          Uptime: 99.98%
+        - Node Name: prod-cluster-eu-central-1
+          Region: eu-central-1
+          Status: DEGRADED
+          Uptime: 98.40%
+        - Node Name: prod-cluster-ap-southeast-1
+          Region: ap-southeast-1
+          Status: HEALTHY
+          Uptime: 100.0%
+```

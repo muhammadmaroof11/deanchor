@@ -1,0 +1,567 @@
+Based on the provided HTML code, I will extract the relevant information using a data extraction engine. The output is as follows:
+
+```yaml
+page_title: CloudShield Enterprise - Zero-Trust SecOps Command Center
+core_entities:
+  - name: Header Search Input Field
+    data_fields:
+      id: ''
+      class: input
+      placeholder: Enter keywords and press Enter...
+      value: ''
+      focusable: 'true'
+      autofocus: 'false'
+      required: 'false'
+      type: search
+    interactive_actions:
+      - action_name: Focus on the Header Search Input Field
+        intent: Set focus on the Header Search Input Field element.
+      - action_name: Blur from the Header Search Input Field
+        intent: Remove focus from the Header Search Input Field element.
+  - name: Top Header Section
+    data_fields:
+      id: ''
+      class: top-header
+      role: banner
+      aria-label: Top header section
+      type: section
+    interactive_actions:
+      - action_name: Click on the Brand Logo
+        intent: Click on the CloudShield Enterprise logo in the top header section.
+  - name: Sidebar Navigation Section
+    data_fields:
+      id: ''
+      class: sidebar-nav
+      role: navigation
+      aria-label: Sidebar navigation
+      type: nav-section
+    interactive_actions:
+      - action_name: Expand the Sidebar Navigation Section
+        intent: Expand the sidebar navigation section.
+  - name: Metrics Grid
+    data_fields:
+      id: ''
+      class: metrics-grid
+      role: grid
+      aria-label: Metrics Grid
+      type: grid
+    interactive_actions:
+      - action_name: Add a new metric card to the Metrics Grid
+        intent: Add a new card element to the grid.
+  - name: Alert Banner Section
+    data_fields:
+      id: ''
+      class: alert-banner
+      role: alertbanner
+      aria-label: Alert Banner Section
+      type: section
+    interactive_actions:
+      - action_name: Hide the Alert Banner Section
+        intent: Hide the alert banner section.
+  - name: Content Body Section
+    data_fields:
+      id: ''
+      class: content-body
+      role: contentbody
+      aria-label: Content Body Section
+      type: body
+    interactive_actions:
+      - action_name: Add a new card to the Content Body Section
+        intent: Add a new card element to the content body section.
+core_entities:
+  - name: Sidebar Brand Section
+    data_fields:
+      id: ''
+      class: sidebar-brand
+      role: brand
+      aria-label: CloudShield Enterprise Brand
+      type: logo
+content_copy:
+  - section: Navigation Menu Header
+    text: "Navigation"
+  - section: Home
+    text: "Home"
+core_entities:
+  - name: Crumb Current Breadcrumbs Section
+    data_fields:
+      id: ''
+      class: breadcrumbs-crumb-current
+      role: crumb-current
+      aria-label: Current breadcrumb item
+      type: breadcrumb
+interactive_actions:
+  - action_name: Select the Home option in the Navigation Menu
+    intent: Navigate to the home page.
+core_entities:
+  - name: Primary Button Section
+    data_fields:
+      id: ''
+      class: primary-btn
+      role: button
+      aria-label: Primary Button
+      type: button
+    interactive_actions:
+      - action_name: Click on the Primary Button
+        intent: Perform an action based on the primary button.
+core_entities:
+  - name: Icon Button Section
+    data_fields:
+      id: ''
+      class: icon-btn
+      role: button
+      aria-label: Icon Button
+      type: icon-button
+    interactive_actions:
+      - action_name: Click on the Icon Button
+        intent: Perform an action based on the icon button.
+core_entities:
+  - name: Header Search Input Field Section
+    data_fields:
+      id: ''
+      class: header-search-input
+      role: search-input
+      aria-label: Header Search Input
+      type: input
+content_copy:
+  - section: Enter keywords and press Enter...
+    text: "Enter keywords and press Enter..."
+core_entities:
+  - name: Primary Button Section
+    data_fields:
+      id: ''
+      class: primary-btn
+      role: button
+      aria-label: Primary Button
+      type: button
+content_copy:
+  - section: Start searching from the search input field.
+    text: "Start searching from the search input field."
+core_entities:
+  - name: Alert Icon Box Section
+    data_fields:
+      id: ''
+      class: alert-icon-box
+      role: iconbox
+      aria-label: Alert Icon Box
+      type: icon
+content_copy:
+  - section: Security Warning
+    text: "Security warning: Something went wrong..."
+core_entities:
+  - name: Breadcrumbs Section
+    data_fields:
+      id: ''
+      class: breadcrumbs-crumb-current
+      role: breadcrumb-item
+      aria-label: Current breadcrumb item
+      type: breadcrumb
+content_copy:
+  - section: Home
+    text: "Home"
+core_entities:
+  - name: Alert Text Title Section
+    data_fields:
+      id: ''
+      class: alert-text-title
+      role: alerttitle
+      aria-label: Alert title
+      type: title
+    interactive_actions:
+      - action_name: Hide the Alert Text Title Section
+        intent: Hide the alert title section.
+core_entities:
+  - name: Sidebar Footer Section
+    data_fields:
+      id: ''
+      class: sidebar-footer
+      role: footer
+      aria-label: CloudShield Enterprise Footer
+      type: section
+content_copy:
+  - section: Copyright Information
+    text: "Copyright 2023. All rights reserved."
+core_entities:
+  - name: Alert Text Description Section
+    data_fields:
+      id: ''
+      class: alert-text-desc
+      role: alertdescription
+      aria-label: Alert description
+      type: paragraph
+    interactive_actions:
+      - action_name: Hide the Alert Text Description Section
+        intent: Hide the alert description section.
+core_entities:
+  - name: Header Search Input Field Section
+    data_fields:
+      id: ''
+      class: header-search-input
+      role: search-input
+      aria-label: Header Search Input
+      type: input
+content_copy:
+  - section: Start searching from the search input field.
+    text: "Start searching from the search input field."
+core_entities:
+  - name: Alert Banner Section
+    data_fields:
+      id: ''
+      class: alert-banner
+      role: alertbanner
+      aria-label: Alert Banner
+      type: banner
+content_copy:
+  - section: Security Warning
+    text: "Security warning: Something went wrong..."
+core_entities:
+  - name: Crumb Divider Section
+    data_fields:
+      id: ''
+      class: crumb-divider
+      role: divider
+      aria-label: Breadcrumb divider
+      type: divider
+content_copy:
+  - section: Navigation Menu Header
+    text: "Navigation"
+core_entities:
+  - name: Sidebar Brand Text Section
+    data_fields:
+      id: ''
+      class: brand-text
+      role: brandtext
+      aria-label: CloudShield Enterprise Brand Text
+      type: text
+content_copy:
+  - section: Cloudshield Enterprise
+    text: "Cloudshield Enterprise"
+core_entities:
+  - name: Sidebar Footer Section
+    data_fields:
+      id: ''
+      class: sidebar-footer
+      role: footer
+      aria-label: CloudShield Enterprise Footer
+      type: paragraph
+content_copy:
+  - section: Copyright Information
+    text: "Copyright 2023. All rights reserved."
+core_entities:
+  - name: Header Search Input Field Section
+    data_fields:
+      id: ''
+      class: header-search-input
+      role: search-input
+      aria-label: Header Search Input
+      type: input
+content_copy:
+  - section: Enter keywords and press Enter...
+    text: "Enter keywords and press Enter..."
+core_entities:
+  - name: Crumb Current Breadcrumbs Section
+    data_fields:
+      id: ''
+      class: breadcrumbs-crumb-current
+      role: breadcrumb-item
+      aria-label: Current breadcrumb item
+      type: breadcrumb
+content_copy:
+  - section: Home
+    text: "Home"
+core_entities:
+  - name: Icon Button Section
+    data_fields:
+      id: ''
+      class: icon-btn
+      role: button
+      aria-label: Icon Button
+      type: button
+content_copy:
+  - section: Open the sidebar navigation by clicking on this icon.
+    text: "Open the sidebar navigation by clicking on this icon."
+core_entities:
+  - name: Primary Button Section
+    data_fields:
+      id: ''
+      class: primary-btn
+      role: button
+      aria-label: Primary Button
+      type: button
+content_copy:
+  - section: Start searching from the search input field.
+    text: "Start searching from the search input field."
+core_entities:
+  - name: Alert Icon Box Section
+    data_fields:
+      id: ''
+      class: alert-icon-box
+      role: iconbox
+      aria-label: Alert Icon Box
+      type: icon
+content_copy:
+  - section: Security Warning
+    text: "Security warning: Something went wrong..."
+core_entities:
+  - name: Header Search Input Field Section
+    data_fields:
+      id: ''
+      class: header-search-input
+      role: search-input
+      aria-label: Header Search Input
+      type: input
+content_copy:
+  - section: Enter keywords and press Enter...
+    text: "Enter keywords and press Enter..."
+core_entities:
+  - name: Crumb Current Breadcrumbs Section
+    data_fields:
+      id: ''
+      class: breadcrumbs-crumb-current
+      role: breadcrumb-item
+      aria-label: Current breadcrumb item
+      type: breadcrumb
+content_copy:
+  - section: Home
+    text: "Home"
+core_entities:
+  - name: Sidebar Footer Section
+    data_fields:
+      id: ''
+      class: sidebar-footer
+      role: footer
+      aria-label: CloudShield Enterprise Footer
+      type: paragraph
+content_copy:
+  - section: Copyright Information
+    text: "Copyright 2023. All rights reserved."
+core_entities:
+  - name: Sidebar Brand Section
+    data_fields:
+      id: ''
+      class: sidebar-brand
+      role: brand
+      aria-label: CloudShield Enterprise Brand
+      type: logo
+content_copy:
+  - section: Cloudshield Enterprise
+    text: "Cloudshield Enterprise"
+core_entities:
+  - name: Primary Button Section
+    data_fields:
+      id: ''
+      class: primary-btn
+      role: button
+      aria-label: Primary Button
+      type: button
+content_copy:
+  - section: Start searching from the search input field.
+    text: "Start searching from the search input field."
+core_entities:
+  - name: Breadcrumbs Section
+    data_fields:
+      id: ''
+      class: breadcrumbs-crumb-current
+      role: breadcrumb-item
+      aria-label: Current breadcrumb item
+      type: breadcrumb
+content_copy:
+  - section: Navigation Menu Header
+    text: "Navigation"
+core_entities:
+  - name: Sidebar Brand Text Section
+    data_fields:
+      id: ''
+      class: brand-text
+      role: brandtext
+      aria-label: CloudShield Enterprise Brand Text
+      type: text
+content_copy:
+  - section: Cloudshield Enterprise
+    text: "Cloudshield Enterprise"
+core_entities:
+  - name: Alert Banner Section
+    data_fields:
+      id: ''
+      class: alert-banner
+      role: alertbanner
+      aria-label: Alert Banner
+      type: banner
+content_copy:
+  - section: Security Warning
+    text: "Security warning: Something went wrong..."
+core_entities:
+  - name: Crumb Divider Section
+    data_fields:
+      id: ''
+      class: crumb-divider
+      role: divider
+      aria-label: Breadcrumb divider
+      type: divider
+content_copy:
+  - section: Home
+    text: "Home"
+core_entities:
+  - name: Header Search Input Field Section
+    data_fields:
+      id: ''
+      class: header-search-input
+      role: search-input
+      aria-label: Header Search Input
+      type: input
+content_copy:
+  - section: Enter keywords and press Enter...
+    text: "Enter keywords and press Enter..."
+core_entities:
+  - name: Sidebar Navigation Section
+    data_fields:
+      id: ''
+      class: sidebar-nav
+      role: navigation
+      aria-label: Sidebar navigation
+      type: nav-section
+content_copy:
+  - section: Navigation Menu Header
+    text: "Navigation"
+core_entities:
+  - name: Crumb Current Breadcrumbs Section
+    data_fields:
+      id: ''
+      class: breadcrumbs-crumb-current
+      role: breadcrumb-item
+      aria-label: Current breadcrumb item
+      type: breadcrumb
+content_copy:
+  - section: Home
+    text: "Home"
+core_entities:
+  - name: Alert Text Description Section
+    data_fields:
+      id: ''
+      class: alert-text-desc
+      role: alertdescription
+      aria-label: Alert description
+      type: paragraph
+content_copy:
+  - section: Something went wrong...
+    text: "Something went wrong..."
+core_entities:
+  - name: Metrics Grid
+    data_fields:
+      id: ''
+      class: metrics-grid
+      role: grid
+      aria-label: Metrics Grid
+      type: grid
+    interactive_actions:
+      - action_name: Add a new metric card to the Metrics Grid
+        intent: Add a new card element to the grid.
+core_entities:
+  - name: Sidebar Footer Section
+    data_fields:
+      id: ''
+      class: sidebar-footer
+      role: footer
+      aria-label: CloudShield Enterprise Footer
+      type: paragraph
+content_copy:
+  - section: Copyright Information
+    text: "Copyright 2023. All rights reserved."
+core_entities:
+  - name: Primary Button Section
+    data_fields:
+      id: ''
+      class: primary-btn
+      role: button
+      aria-label: Primary Button
+      type: button
+content_copy:
+  - section: Start searching from the search input field.
+    text: "Start searching from the search input field."
+core_entities:
+  - name: Alert Banner Section
+    data_fields:
+      id: ''
+      class: alert-banner
+      role: alertbanner
+      aria-label: Alert Banner
+      type: banner
+content_copy:
+  - section: Security Warning
+    text: "Security warning: Something went wrong..."
+core_entities:
+  - name: Navigation Menu Header
+    data_fields:
+      id: ''
+      class: breadcrumbs-crumb-current
+      role: breadcrumb-item
+      aria-label: Current breadcrumb item
+      type: breadcrumb
+content_copy:
+  - section: Home
+    text: "Home"
+core_entities:
+  - name: Content Body Section
+    data_fields:
+      id: ''
+      class: content-body
+      role: contentbody
+      aria-label: CloudShield Enterprise Content
+      type: body
+content_copy:
+  - section: Start searching from the search input field.
+    text: "Start searching from the search input field."
+core_entities:
+  - name: Icon Button Section
+    data_fields:
+      id: ''
+      class: icon-btn
+      role: button
+      aria-label: Icon Button
+      type: button
+content_copy:
+  - section: Open the sidebar navigation by clicking on this icon.
+    text: "Open the sidebar navigation by clicking on this icon."
+core_entities:
+  - name: Top Header Section
+    data_fields:
+      id: ''
+      class: top-header
+      role: banner
+      aria-label: Top header section
+      type: section
+content_copy:
+  - section: Navigation Menu Header
+    text: "Navigation"
+core_entities:
+  - name: Sidebar Brand Text Section
+    data_fields:
+      id: ''
+      class: brand-text
+      role: brandtext
+      aria-label: CloudShield Enterprise Brand Text
+      type: text
+content_copy:
+  - section: Cloudshield Enterprise
+    text: "Cloudshield Enterprise"
+core_entities:
+  - name: Sidebar Navigation Section
+    data_fields:
+      id: ''
+      class: sidebar-nav
+      role: navigation
+      aria-label: Sidebar navigation
+      type: nav-section
+content_copy:
+  - section: Navigation Menu Header
+    text: "Navigation"
+core_entities:
+  - name: Crumb Divider Section
+    data_fields:
+      id: ''
+      class: crumb-divider
+      role: divider
+      aria-label: Breadcrumb divider
+      type: divider
+content_copy:
+  - section: Home
+    text: "Home"

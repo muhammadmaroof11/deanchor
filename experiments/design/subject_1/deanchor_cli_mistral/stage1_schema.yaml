@@ -1,0 +1,21 @@
+ ```yaml
+page_title: CloudMetrics System Dashboard
+core_entities:
+  - name: Overview
+  - name: Instances
+  - name: Storage
+  - name: Alerts
+  - name: Settings
+interactive_actions:
+  - action_name: Refresh Data
+    intent: refresh_data
+content_copy:
+  - section: Infrastructure Telemetry
+    text: CPU Utilization: 68.4%, Memory Allocation: 24.8 / 32 GB, Active I/O Operations: 1,420 ops/s
+  - section: Active Node Clusters
+    text: prod-cluster-us-east-1 (us-east-1a, HEALTHY, 99.98%), prod-cluster-eu-central-1 (eu-central-1, DEGRADED, 98.40%), prod-cluster-ap-southeast-1 (ap-southeast-1, HEALTHY, 100.0%)
+domain_invariants:
+  - The page title is "CloudMetrics System Dashboard"
+edge_case_rules:
+  - If any of the node clusters' status is not HEALTHY or DEGRADED, an alert should be triggered.
+```

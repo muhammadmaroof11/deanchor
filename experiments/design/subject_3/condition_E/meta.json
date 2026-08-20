@@ -1,0 +1,10 @@
+{
+  "condition": "E",
+  "mode": "design",
+  "subject": "subject_3",
+  "model": "Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+  "system_prompt": false,
+  "elapsed_s": 212.66,
+  "output_chars": 2916,
+  "timestamp": "2026-08-20T03:20:34"
+}

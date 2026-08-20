@@ -1,0 +1,14 @@
+ ```yaml
+algorithmic_task: High-Frequency Limit Order Book & Trade Matching
+input_datastream: Stream of order messages with {id, side (buy/sell), price, size, timestamp}
+output_contract: Stream of trade history messages with {tradeId, price, size, time} and depth information as a list of [price, size] pairs for bids and asks up to a specified level
+performance_bottleneck_target: Reduce the O(N^2) complexity of order matching and array splicing on every insert, deep cloning, linear scans, bubble sort, and garbage allocation in hot path
+invariants:
+  - The order book maintains a sorted list of bids and asks by price
+  - Each order has a unique id
+  - Trade history does not contain duplicate tradeIds
+edge_case_rules:
+  - Handling cases where multiple orders have the same price, size, or time
+  - Handling cases where the size of an order is greater than the available size on the other side of the market
+  - Handling cases where there are no matching orders in the book
+```

@@ -1,0 +1,17 @@
+Based on the provided input code, here's the extracted core algorithmic contract in YAML format:
+
+```yaml
+algorithmic_task: "High-Frequency Limit Order Book & Trade Matching Engine"
+input_datastream: "Stream of orders with attributes id, price, size, and timestamp"
+output_contract: "Trade history with attributes tradeId, price, size, and time"
+performance_bottleneck_target: "Reduce matching and array splicing complexity to O(N) or less"
+invariants:
+  - "Orders are matched based on price and size"
+  - "Bids are sorted in descending order of price"
+  - "Asks are sorted in ascending order of price"
+edge_case_rules:
+  - "When bid size is zero, remove the bid from the book"
+  - "When ask size is zero, remove the ask from the book"
+```
+
+Note that this output focuses on extracting the core mathematical problem statement and performance objective while omitting existing loop constructs, nested scans, class hierarchies, and memory layouts as per your requirements.

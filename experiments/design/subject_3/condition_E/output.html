@@ -1,0 +1,134 @@
+```jsx
+import React from 'react';
+import styled from 'styled-components';
+
+// Define custom styles for the UI components
+const PageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #242931;
+  color: white;
+  height: 100vh;
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 4rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+const AssetCard = styled.div`
+  background-color: #31394a;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .value {
+    font-weight: bold;
+    color: #3ddc84;
+  }
+`;
+
+const RecentActivity = styled.div`
+  background-color: #31394a;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  margin-bottom: 2rem;
+
+  h5 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+  }
+`;
+
+const Header = styled.h3`
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+`;
+
+// Function to render the UI
+function ApexVault() {
+  return (
+    <PageWrapper>
+      <CardContainer>
+        <AssetCard>
+          <Header>Total Portfolio Net Worth</Header>
+          <p>$142,890.45</p>
+          <p className="value">+$4,210.80 (3.04%) past 24h</p>
+        </AssetCard>
+
+        <AssetCard>
+          <Header>Bitcoin (BTC)</Header>
+          <p>1.8420 BTC</p>
+          <p className="value">&asymp; $98,420.00 USD (68.8%)</p>
+        </AssetCard>
+
+        <AssetCard>
+          <Header>Ethereum (ETH)</Header>
+          <p>12.5000 ETH</p>
+          <p className="value">&asymp; $32,150.00 USD (22.5%)</p>
+        </AssetCard>
+
+        <AssetCard>
+          <Header>Solana (SOL)</Header>
+          <p>85.0000 SOL</p>
+          <p className="value">&asymp; $12,320.45 USD (8.6%)</p>
+        </AssetCard>
+      </CardContainer>
+
+      <RecentActivity>
+        <h5>Recent Ledger Activity</h5>
+        <p>Bought 0.05 BTC</p>
+        <p>&asymp; $2,650.00</p>
+        <p>Staked 4.00 ETH</p>
+        <p>Earn 4.2% APY</p>
+        <p>Transferred 15.0 SOL to Cold Wallet</p>
+        <p>&asymp; -$2,175.00</p>
+      </RecentActivity>
+
+      {/* Deposit Funds Action */}
+      <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+        <button style={{
+          backgroundColor: '#3ddc84',
+          color: 'white',
+          padding: '0.75rem 1.5rem',
+          borderRadius: '6px',
+          cursor: 'pointer',
+          transition: 'background-color 0.3s',
+          boxShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
+        }}
+          onClick={() => alert('Deposit Funds Action')}
+        >
+          Deposit Funds
+        </button>
+      </div>
+    </PageWrapper>
+  );
+}
+
+export default ApexVault;
+```
+```

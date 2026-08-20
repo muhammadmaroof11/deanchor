@@ -1,0 +1,43 @@
+```yaml
+page_title: CloudMetrics System Dashboard
+
+core_entities:
+  - name: Overview
+    data_fields:
+      description: Overview of the system
+  - name: Instances
+    data_fields:
+      count: 10
+      status: Running
+  - name: Storage
+    data_fields:
+      capacity: 1000 GB
+      usage: 80%
+  - name: Alerts
+    data_fields:
+      severity: Critical
+      message: System overload detected
+
+interactive_actions:
+  - action_name: Refresh Data
+    intent: Update system metrics
+
+content_copy:
+  - section: Header
+    text: Infrastructure Telemetry
+  - section: Card Title
+    text: CPU Utilization
+  - section: Card Value
+    text: 68.4%
+  - section: Card Subtext
+    text: ↑ 4.2% from last hour
+
+domain_invariants:
+  - System metrics are updated every 5 minutes
+  - Node clusters must be in a HEALTHY status
+  - Storage capacity must not exceed 1000 GB
+
+edge_case_rules:
+  - If system metrics are not available, display an error message
+  - If node cluster is DEGRADED, display a warning message
+```

@@ -1,0 +1,67 @@
+```yaml
+page_title: CloudMetrics System Dashboard
+core_entities:
+  - name: Overview
+    data_fields:
+      title: Overview
+  - name: Instances
+    data_fields:
+      title: Instances
+  - name: Storage
+    data_fields:
+      title: Storage
+  - name: Alerts
+    data_fields:
+      title: Alerts
+  - name: Settings
+    data_fields:
+      title: Settings
+  - name: CPU Utilization
+    data_fields:
+      title: CPU Utilization
+      value: 68.4%
+      sub_value: ↑ 4.2% from last hour
+  - name: Memory Allocation
+    data_fields:
+      title: Memory Allocation
+      value: 24.8 / 32 GB
+      sub_value: 77.5% capacity
+  - name: Active I/O Operations
+    data_fields:
+      title: Active I/O Operations
+      value: 1,420 ops/s
+      sub_value: Normal latency 1.8ms
+  - name: prod-cluster-us-east-1
+    data_fields:
+      node_name: prod-cluster-us-east-1
+      region: us-east-1a
+      status: HEALTHY
+      uptime: 99.98%
+  - name: prod-cluster-eu-central-1
+    data_fields:
+      node_name: prod-cluster-eu-central-1
+      region: eu-central-1
+      status: DEGRADED
+      uptime: 98.40%
+  - name: prod-cluster-ap-southeast-1
+    data_fields:
+      node_name: prod-cluster-ap-southeast-1
+      region: ap-southeast-1
+      status: HEALTHY
+      uptime: 100.0%
+interactive_actions:
+  - action_name: Refresh Data
+    intent: refresh_data
+content_copy:
+  - section: Sidebar
+    text: CloudMetrics
+  - section: Header
+    text: Infrastructure Telemetry
+  - section: Card Title
+    text: CPU Utilization, Memory Allocation, Active I/O Operations
+domain_invariants:
+  - title in header is always "Infrastructure Telemetry"
+  - refresh button is always present and styled as specified
+edge_case_rules:
+  - if any node status is DEGRADED, it should be highlighted or have a different color
+```

@@ -1,0 +1,76 @@
+```yaml
+page_title: High-Frequency Limit Order Book & Trade Matching Engine
+
+core_entities:
+  - name: OrderBook
+    data_fields:
+      bids: Array of { id, price, size, timestamp }
+      asks: Array of { id, price, size, timestamp }
+      tradeHistory: Array
+
+interactive_actions:
+  - action_name: addOrder
+    intent: Add an order to the order book and match orders if necessary
+  - action_name: matchOrders
+    intent: Match bids with asks and record trades
+  - action_name: getDepth
+    intent: Get the current depth of the order book
+
+content_copy:
+  - section: Legacy Inefficiencies
+    text: "Legacy Inefficiencies: O(N^2) full linear scans, JSON deep-cloning in hot path, unindexed searches, synchronous garbage allocations"
+  - section: Class Constructor
+    text: "this.bids = []; this.asks = []; this.tradeHistory = [];"
+  - section: addOrder Method
+    text: |
+      const orderCopy = JSON.parse(JSON.stringify(order));
+      orderCopy.timestamp = Date.now();
+      
+      if (orderCopy.side === 'buy') {
+        this.bids.push(orderCopy);
+        this.bids.sort((a, b) => b.price - a.price); // O(N log N) per tick
+        this.matchOrders();
+      } else {
+        this.asks.push(orderCopy);
+        this.asks.sort((a, b) => a.price - b.price);
+        this.matchOrders();
+      }
+  - section: matchOrders Method
+    text: |
+      for (let i = 0; i < this.bids.length; i++) {
+        for (let j = 0; j < this.asks.length; j++) {
+          const bid = this.bids[i];
+          const ask = this.asks[j];
+
+          if (bid && ask && bid.price >= ask.price && bid.size > 0 && ask.size > 0) {
+            const matchSize = Math.min(bid.size, ask.size);
+            const matchPrice = ask.price;
+
+            bid.size -= matchSize;
+            ask.size -= matchSize;
+
+            this.tradeHistory.push({
+              tradeId: Math.random().toString(36).substring(2),
+              price: matchPrice,
+              size: matchSize,
+              time: Date.now()
+            });
+
+            if (bid.size === 0) {
+              this.bids.splice(i, 1);
+              i--;
+            }
+            if (ask.size === 0) {
+              this.asks.splice(j, 1);
+              j--;
+            }
+          }
+        }
+      }
+  - section: getDepth Method
+    text: |
+      return {
+        bids: this.bids.slice(0, levels).map(b => [b.price, b.size]),
+        asks: this.asks.slice(0, levels).map(a => [a.price, a.size])
+      };
+```

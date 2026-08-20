@@ -1,0 +1,61 @@
+ ```yaml
+page_title: CloudMetrics System Dashboard
+core_entities:
+  - name: Infrastructure Telemetry
+    data_fields:
+      title: Infrastructure Telemetry
+  - name: CPU Utilization
+    data_fields:
+      value: 68.4%
+      change: ↑ 4.2% from last hour
+  - name: Memory Allocation
+    data_fields:
+      used: 24.8
+      total: 32 GB
+      capacity: 77.5%
+  - name: Active I/O Operations
+    data_fields:
+      ops_per_second: 1,420 ops/s
+      latency: Normal latency 1.8ms
+  - name: prod-cluster-us-east-1
+    data_fields:
+      region: us-east-1a
+      status: HEALTHY
+      uptime: 99.98%
+  - name: prod-cluster-eu-central-1
+    data_fields:
+      region: eu-central-1
+      status: DEGRADED
+      uptime: 98.40%
+  - name: prod-cluster-ap-southeast-1
+    data_fields:
+      region: ap-southeast-1
+      status: HEALTHY
+      uptime: 100.0%
+interactive_actions:
+  - action_name: Refresh Data
+    intent: refresh_data
+content_copy:
+  - section: Header Title
+    text: Infrastructure Telemetry
+  - section: CPU Utilization Value
+    text: 68.4%
+  - section: Memory Allocation Used
+    text: 24.8
+  - section: Memory Allocation Total
+    text: 32 GB
+  - section: Memory Allocation Capacity
+    text: 77.5%
+  - section: Active I/O Operations ops_per_second
+    text: 1,420 ops/s
+  - section: Active I/O Operations Latency
+    text: Normal latency 1.8ms
+  - section: Node Name prod-cluster-us-east-1
+    text: prod-cluster-us-east-1
+  - section: Region of prod-cluster-us-east-1
+    text: us-east-1a
+  - section: Status of prod-cluster-us-east-1
+    text: HEALTHY
+  - section: Uptime of prod-cluster-us-east-1
+    text: 99.98%
+```

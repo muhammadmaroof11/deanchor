@@ -1,0 +1,44 @@
+Here is the extracted data in YAML format:
+
+```yaml
+page_title: CloudShield Enterprise - Zero-Trust SecOps Command Center
+
+core_entities:
+  - name: Core Operations
+    data_fields:
+      overview: /overview
+      threats: /threats
+      zerotrust: /zerotrust
+      observability: /observability
+
+  - name: Identity & Access
+    data_fields:
+      iam: /iam
+      policies: /policies
+      assets: /assets
+
+  - name: Compliance & Audits
+    data_fields:
+      soc2: /soc2
+      auditlog: /auditlog
+
+interactive_actions:
+  - action_name: Enforce Quarantine
+    intent: enforce_quarantine
+
+content_copy:
+  - section: Top Header
+    text: Organization / SecOps / Zero-Trust Command
+
+  - section: Critical Incident Banner
+    text: Active Remote Code Execution Exploit Detected (CVE-2026-9812)
+
+domain_invariants:
+  - Zero-Trust Mesh is syncing
+  - Quarantine order executed
+
+edge_case_rules:
+  - If threat classification is CRITICAL, display red badge
+  - If threat classification is HIGH, display yellow badge
+  - If threat classification is MEDIUM, display blue badge
+```

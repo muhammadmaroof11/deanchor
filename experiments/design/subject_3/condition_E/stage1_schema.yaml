@@ -1,0 +1,60 @@
+```yaml
+page_title: Apex Vault - Digital Asset Portfolio
+core_entities:
+  - name: Total Portfolio Net Worth
+    data_fields:
+      total_balance: $142,890.45
+      change: +$4,210.80 (3.04%) past 24h
+  - name: Bitcoin (BTC)
+    data_fields:
+      amount: 1.8420 BTC
+      fiat: &asymp; $98,420.00 USD (68.8%)
+  - name: Ethereum (ETH)
+    data_fields:
+      amount: 12.5000 ETH
+      fiat: &asymp; $32,150.00 USD (22.5%)
+  - name: Solana (SOL)
+    data_fields:
+      amount: 85.0000 SOL
+      fiat: &asymp; $12,320.45 USD (8.6%)
+interactive_actions:
+  - action_name: Deposit Funds
+    intent: Deposit Funds
+content_copy:
+  - section: Header
+    text: Total Portfolio Net Worth
+  - section: Header
+    text: $142,890.45
+  - section: Header
+    text: +$4,210.80 (3.04%) past 24h
+  - section: Asset Card
+    text: Bitcoin (BTC)
+  - section: Asset Card
+    text: 1.8420 BTC
+  - section: Asset Card
+    text: &asymp; $98,420.00 USD (68.8%)
+  - section: Asset Card
+    text: Ethereum (ETH)
+  - section: Asset Card
+    text: 12.5000 ETH
+  - section: Asset Card
+    text: &asymp; $32,150.00 USD (22.5%)
+  - section: Asset Card
+    text: Solana (SOL)
+  - section: Asset Card
+    text: 85.0000 SOL
+  - section: Asset Card
+    text: &asymp; $12,320.45 USD (8.6%)
+  - section: Recent Ledger Activity
+    text: Bought 0.05 BTC
+  - section: Recent Ledger Activity
+    text: +$2,650.00
+  - section: Recent Ledger Activity
+    text: Staked 4.00 ETH
+  - section: Recent Ledger Activity
+    text: Earn 4.2% APY
+  - section: Recent Ledger Activity
+    text: Transferred 15.0 SOL to Cold Wallet
+  - section: Recent Ledger Activity
+    text: -$2,175.00
+```

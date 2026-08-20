@@ -1,0 +1,32 @@
+```yaml
+page_title: AeroSound Nova Pro Wireless Headphones
+
+core_entities:
+  - name: AeroSound Nova Pro
+    data_fields:
+      price: $349.00 USD
+      frequency_response: 5Hz - 48,000Hz
+      driver_size: 50mm Custom Beryllium
+      connectivity: Bluetooth 5.4 Ultra-Low Latency / Lossless USB-C
+      battery_life: 42h with ANC active
+
+interactive_actions:
+  - action_name: Add to Cart &bull; Express Checkout
+    intent: add_to_cart_and_checkout
+
+content_copy:
+  - section: title
+    text: AeroSound Nova Pro Wireless Headphones
+  - section: tag
+    text: Studio Reference Series
+  - section: price
+    text: $349.00 USD
+  - section: description
+    text: Precision-engineered acoustic planar drivers delivering uncompromising spatial clarity, 42-hour battery life, and military-grade adaptive noise cancellation.
+  - section: specs
+    text: |- 
+      - Frequency Response: 5Hz - 48,000Hz
+      - Driver Size: 50mm Custom Beryllium
+      - Connectivity: Bluetooth 5.4 Ultra-Low Latency / Lossless USB-C
+      - Battery Life: 42h with ANC active
+```

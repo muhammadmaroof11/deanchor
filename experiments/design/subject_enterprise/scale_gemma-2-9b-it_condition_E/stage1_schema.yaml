@@ -1,0 +1,16 @@
+```yaml
+page_title: CloudShield Enterprise - Zero-Trust SecOps Command Center
+
+core_entities: []
+interactive_actions:
+  - action_name: Search
+    intent: search
+  - action_name: Toggle Sidebar
+    intent: toggle_sidebar 
+content_copy:
+  - section: breadcrumbs
+    text: 'CloudShield Enterprise / Zero-Trust SecOps Command Center'
+
+
+
+```

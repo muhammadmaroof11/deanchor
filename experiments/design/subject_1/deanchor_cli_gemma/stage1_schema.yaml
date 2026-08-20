@@ -1,0 +1,54 @@
+```yaml
+page_title: CloudMetrics System Dashboard
+core_entities:
+  - name: Overview
+    data_fields: {}
+  - name: Instances
+    data_fields: {}
+  - name: Storage
+    data_fields: {}
+  - name: Alerts
+    data_fields: {}
+  - name: Settings
+    data_fields: {}
+interactive_actions:
+  - action_name: Refresh Data
+    intent: refresh_data
+content_copy:
+  - section: header
+    text: Infrastructure Telemetry
+  - section: card1_title
+    text: CPU Utilization
+  - section: card1_value
+    text: 68.4%
+  - section: card1_subtext
+    text: ↑ 4.2% from last hour
+  - section: card2_title
+    text: Memory Allocation
+  - section: card2_value
+    text: 24.8 / 32 GB
+  - section: card2_subtext
+    text: 77.5% capacity
+  - section: card3_title
+    text: Active I/O Operations
+  - section: card3_value
+    text: 1,420 ops/s
+  - section: card3_subtext
+    text: Normal latency 1.8ms
+  - section: node_cluster_table_header
+    text: |
+      Node Name\tRegion\tStatus\tUptime
+  - section: node_cluster_row1
+    text: prod-cluster-us-east-1\tus-east-1a\tHEALTHY\t99.98%
+  - section: node_cluster_row2
+    text: prod-cluster-eu-central-1\teu-central-1\tDEGRADED\t98.40%
+  - section: node_cluster_row3
+    text: prod-cluster-ap-southeast-1\tap-southeast-1\tHEALTHY\t100.0%
+domain_invariants:
+  - The dashboard displays metrics related to cloud infrastructure.
+edge_case_rules:
+  - If an instance's status is DEGRADED, it should be highlighted or flagged.
+
+
+
+```

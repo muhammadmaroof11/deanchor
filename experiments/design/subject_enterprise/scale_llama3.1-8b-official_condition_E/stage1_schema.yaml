@@ -1,0 +1,54 @@
+### Extraction Output in YAML format
+```yaml
+page_title: "CloudShield Enterprise - Zero-Trust SecOps Command Center"
+
+core_entities:
+  - name: Sidebar
+    data_fields:
+      width: 260px
+      background_color: "#0f172a"
+      border_color: "#1e293b"
+
+  - name: Nav Section Title
+    data_fields:
+      font_size: 11px
+      font_weight: 700
+
+  - name: Metric Card
+    data_fields:
+      background_color: "#131c31"
+      border_radius: 16px
+
+interactive_actions:
+  - action_name: Search Icon Click
+    intent: search_term_submission
+
+  - action_name: Primary Button Click
+    intent: primary_action_trigger
+
+content_copy:
+  - section: Top Header
+    text: "CloudShield Enterprise - Zero-Trust SecOps Command Center"
+
+  - section: Alert Banner
+    text: "Important Alert Message"
+```
+### Explanation:
+
+The above YAML output is extracted from the given HTML file. Here's a brief explanation of each key-value pair in the extracted data:
+
+1. **page_title**: This is the title of the page, which is extracted directly from the `<title>` tag.
+2. **core_entities**: These are the essential components of the webpage that have been identified:
+   - **Sidebar**: The sidebar's width and background color are extracted as its data fields.
+   - **Nav Section Title**: The font size and weight for this title are extracted.
+   - **Metric Card**: The background color, border radius, and other relevant attributes are extracted.
+
+3. **interactive_actions**: These represent the interactive elements on the page:
+   - **Search Icon Click**: This action's intent is set to search term submission.
+   - **Primary Button Click**: This action's intent is set to primary action trigger.
+
+4. **content_copy**: The content of the webpage that doesn't fit into other categories:
+   - **Top Header**: The text within this section is extracted and stored in the YAML output.
+   - **Alert Banner**: The alert banner's text message is also extracted.
+
+This YAML output represents a simplified version of the original HTML file, focusing on essential information and interactive components.

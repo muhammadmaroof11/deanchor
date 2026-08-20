@@ -1,0 +1,22 @@
+ ```yaml
+page_title: "High-Frequency Limit Order Book & Trade Matching Engine"
+core_entities:
+  - name: OrderBook
+    data_fields:
+      bids: ["Array of { id, price, size, timestamp }"]
+      asks: ["Array of { id, price, size, timestamp }"]
+      tradeHistory: ["Array of { tradeId, price, size, time }"]
+interactive_actions:
+  - action_name: addOrder
+    intent: "Add an order to the OrderBook"
+content_copy:
+  - section: Code
+    text: |
+      class OrderBook {
+        constructor() {...}
+        addOrder(order) {...}
+        matchOrders() {...}
+        getDepth(levels = 10) {...}
+      }
+      module.exports = { OrderBook };
+```

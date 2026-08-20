@@ -1,0 +1,243 @@
+Here's a radically different layout for the UI page. This new design is inspired by modern dashboard designs and breaks away from traditional navigation patterns.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudShield Enterprise - Zero-Trust SecOps Command Center</title>
+    <style>
+        /* Global styles */
+        :root {
+            --bg-primary: #090d16;
+            --bg-secondary: #0f172a;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        /* Main container */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            padding: 24px;
+            gap: 24px;
+        }
+
+        /* Dashboard background */
+        .dashboard-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, #06b6d4, #0284c7);
+            opacity: 0.1;
+        }
+
+        /* Top navigation bar */
+        .top-nav {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-secondary);
+            padding: 8px 16px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .top-nav-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .top-nav-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Main content area */
+        .content-area {
+            width: calc(100% - 48px);
+            padding: 16px;
+            background-color: var(--bg-primary);
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Content rows */
+        .content-row {
+            display: flex;
+            gap: 24px;
+        }
+
+        .content-col {
+            width: calc(33.33% - 8px);
+            padding: 16px;
+            background-color: var(--bg-secondary);
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-col-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-col-data {
+            padding: 16px;
+        }
+
+        /* Metrics grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .metric-card {
+            width: 100%;
+            padding: 24px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .metric-icon {
+            width: 64px;
+            height: 64px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-data {
+            padding: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Dashboard background -->
+        <div class="dashboard-background"></div>
+
+        <!-- Top navigation bar -->
+        <div class="top-nav">
+            <span class="top-nav-logo">CloudShield Enterprise</span>
+            <button>Menu</button>
+        </div>
+
+        <!-- Main content area -->
+        <div class="content-area">
+            <!-- Content rows -->
+            <div class="content-row">
+                <!-- Content columns -->
+                <div class="content-col">
+                    <div class="content-col-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="content-col-data">
+                        <h2>Metrics</h2>
+                        <p>View your metrics and performance data.</p>
+                    </div>
+                </div>
+
+                <div class="content-col">
+                    <div class="content-col-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="content-col-data">
+                        <h2>Settings</h2>
+                        <p>Configure your settings and preferences.</p>
+                    </div>
+                </div>
+
+                <div class="content-col">
+                    <div class="content-col-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="content-col-data">
+                        <h2>Help</h2>
+                        <p>Get help and support for your application.</p>
+                    </div>
+                </div>
+
+                <div class="content-col">
+                    <div class="content-col-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <div class="content-col-data">
+                        <h2>Share</h2>
+                        <p>Share your application with others.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metrics grid -->
+            <div class="metrics-grid">
+                <!-- Metric cards -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span><i class="fas fa-chart-line"></i> Metrics 1</span>
+                        <button>Delete</button>
+                    </div>
+                    <div class="metric-data">
+                        <h2>1234</h2>
+                        <p>This is a metric.</p>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span><i class="fas fa-cog"></i> Metrics 2</span>
+                        <button>Delete</button>
+                    </div>
+                    <div class="metric-data">
+                        <h2>5678</h2>
+                        <p>This is another metric.</p>
+                    </div>
+                </div>
+
+                <!-- More metric cards -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+```
+
+This new design breaks away from traditional navigation patterns and uses a more modern and sleek approach. The dashboard background is now a subtle gradient that adds visual interest to the page. The top navigation bar is now simplified and only contains essential links. The main content area is now divided into rows and columns, making it easier to navigate and find relevant information.
+
+The metrics grid is also redesigned to be more visually appealing and easy to use. Each metric card now has a clear header with an icon and a delete button, making it easier to manage and customize your metrics. The data section of each metric card is now larger and contains more detailed information about the metric.
+
+Overall, this new design is a major improvement over the original layout and provides a more intuitive and user-friendly experience for users.

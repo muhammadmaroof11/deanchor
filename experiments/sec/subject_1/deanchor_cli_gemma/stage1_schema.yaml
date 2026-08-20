@@ -1,0 +1,21 @@
+```yaml
+security_boundary: /api
+principals_and_roles: 
+  - User
+protected_resources: 
+  - /api/login
+  - /api/profile
+authentication_flows:
+  - JWT based authentication with role-based access control
+threat_vectors_to_eliminate: 
+  - SQL Injection (via concatenated queries)
+  - Weak Token Signing Algorithm and Expiration
+  - Insecure JWT Decoding without Signature Verification
+edge_case_rules: 
+  - Enforce strict input validation for username and password during login.
+  - Use parameterized SQL queries to prevent injection vulnerabilities.
+  - Implement robust JWT signing with a strong algorithm and appropriate expiration time.
+  - Verify JWT signatures before decoding and accessing user information.
+
+
+```

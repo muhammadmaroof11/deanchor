@@ -1,0 +1,60 @@
+```yaml
+page_title: CloudMetrics System Dashboard
+core_entities:
+  - name: Overview
+    data_fields:
+  - name: Instances
+    data_fields:
+  - name: Storage
+    data_fields:
+  - name: Alerts
+    data_fields:
+  - name: Settings
+    data_fields:
+  - name: Infrastructure Telemetry
+    data_fields:
+  - name: CPU Utilization
+    data_fields:
+      val: "68.4%"
+      sub: "↑ 4.2% from last hour"
+  - name: Memory Allocation
+    data_fields:
+      val: "24.8 / 32 GB"
+      sub: "77.5% capacity"
+  - name: Active I/O Operations
+    data_fields:
+      val: "1,420 ops/s"
+      sub: "Normal latency 1.8ms"
+  - name: Node Name
+    data_fields:
+      - prod-cluster-us-east-1
+      - prod-cluster-eu-central-1
+      - prod-cluster-ap-southeast-1
+  - name: Region
+    data_fields:
+      - us-east-1a
+      - eu-central-1
+      - ap-southeast-1
+  - name: Status
+    data_fields:
+      - HEALTHY
+      - DEGRADED
+      - HEALTHY
+  - name: Uptime
+    data_fields:
+      - "99.98%"
+      - "98.40%"
+      - "100.0%"
+interactive_actions:
+  - action_name: Refresh Data
+    intent: refresh_data
+content_copy:
+  - section: Sidebar
+    text: CloudMetrics
+  - section: Overview List
+    text: Overview Instances Storage Alerts Settings
+  - section: Main Header Title
+    text: Infrastructure Telemetry
+  - section: Card Section Header
+    text: Active Node Clusters
+```

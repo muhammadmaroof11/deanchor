@@ -1,0 +1,55 @@
+```yaml
+page_title: CloudShield Enterprise - Zero-Trust SecOps Command Center
+
+core_entities:
+  - name: CloudShield Logo
+    data_fields:
+      brand-logo-color: #fff
+      brand-logo-background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue))
+      brand-text-color: var(--text-primary)
+      brand-badge-color: rgba(56, 189, 248, 0.15)
+      brand-badge-text: PRO
+  - name: SecOps Command Section
+    data_fields:
+      section-active-pill-color: var(--accent-rose)
+      section-active-pill-background: rgba(2, 132, 199, 0.15)
+      section-active-pill-border-left-color: var(--border-focus)
+  - name: Real-Time Incursion Telemetry
+    data_fields:
+      severity-dot-critical-color: var(--accent-rose)
+      severity-dot-high-color: var(--accent-amber)
+      severity-dot-medium-color: var(--accent-cyan)
+      severity-dot-low-color: var(--accent-emerald)
+
+interactive_actions:
+  - action_name: nav-item-click
+    intent: Navigate to SecOps Command section
+  - action_name: search-icon-click
+    intent: Trigger header search functionality
+  - action_name: icon-btn-live-notifications
+    intent: View live notifications
+  - action_name: icon-btn-global-mesh-status
+    intent: Check global mesh status
+  - action_name: primary-btn-enforce-quarantine
+    intent: Enforce quarantine on a targeted workload
+
+content_copy:
+  - section: Top Header Breadcrumbs
+    text: Organization / SecOps / Zero-Trust Command
+  - section: Critical Incident Banner Text
+    text: Active Remote Code Execution Exploit Detected (CVE-2026-9812)
+  - section: Critical Incident Banner Description
+    text: Ingress Gateway edge-gw-frankfurt-04 is dropping anomalous serialized payloads targeting port 8443. Autonomous micro-segmentation applied.
+  - section: Real-Time Incursion Telemetry Section Title
+    text: Real-Time Incursion Telemetry
+
+domain_invariants:
+  - Active Threat Incursions: 284
+  - Auto-Mitigation Rate: 99.82%
+  - Active Zero-Trust Tunnels: 14,920
+  - Anomalous Identities: 12
+
+edge_case_rules:
+  - If the user clicks on a nav-item with an active class, it indicates they are currently viewing that section.
+  - The search-icon-click action should filter results based on the input provided in the header search bar.
+```

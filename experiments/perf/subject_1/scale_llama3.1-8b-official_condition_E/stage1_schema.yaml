@@ -1,0 +1,30 @@
+Based on the provided input file, I've extracted the required information into a clean YAML schema. Here's the output:
+
+```yaml
+page_title: High-Frequency Limit Order Book & Trade Matching Engine
+
+core_entities:
+  - name: OrderBook
+    data_fields:
+      bids: Array of { id, price, size, timestamp }
+      asks: Array of { id, price, size, timestamp }
+      tradeHistory: Array of { tradeId, price, size, time }
+
+interactive_actions:
+  - action_name: addOrder
+    intent: Add a new order to the book
+
+content_copy:
+  - section: Legacy Inefficiencies
+    text: O(N^2) full linear scans, JSON deep-cloning in hot path, unindexed searches, synchronous garbage allocations
+  - section: Inefficiency 1
+    text: Heavy deep cloning on every single trade message
+  - section: Inefficiency 2
+    text: Linear scan and bubble sort on every insert
+  - section: Inefficiency 3
+    text: Quadratic nested scanning across all bids and asks
+  - section: Inefficiency 4
+    text: Allocating new object and pushing to unbounded history array
+  - section: Inefficiency 5
+    text: Full map & slice allocation on hot telemetry calls
+```

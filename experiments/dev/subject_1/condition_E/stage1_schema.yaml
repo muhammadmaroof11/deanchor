@@ -1,0 +1,24 @@
+```yaml
+page_title: Telemetry Poller & Webhook Dispatcher
+core_entities:
+  - name: pollingInterval
+    data_fields:
+      value: null
+  - name: cachedTelemetryData
+    data_fields:
+      type: array
+  - name: isRunning
+    data_fields:
+      value: false
+  - name: failureCount
+    data_fields:
+      value: 0
+interactive_actions:
+  - action_name: startPolling
+    intent: Start polling for a target URL with a given frequency in milliseconds.
+  - action_name: stopPolling
+    intent: Stop the current polling and clean up resources.
+content_copy:
+  - section: Legacy Problem
+    text: Spaghetti setInterval inside global scope, mutable global state, tightly coupled file writes
+```

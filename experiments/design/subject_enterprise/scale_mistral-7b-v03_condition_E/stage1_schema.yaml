@@ -1,0 +1,39 @@
+ Based on your strict negative constraints, I have extracted the following raw facts, entities, user inputs, buttons/actions, and text copy from the provided file:
+
+```yaml
+page_title: CloudShield Enterprise - Zero-Trust SecOps Command Center
+core_entities:
+  - name: Brand Logo
+    data_fields:
+      image: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue))
+
+  - name: Sidebar
+    data_fields:
+      width: 260px
+
+  - name: Header Height
+    data_fields:
+      height: 64px
+
+  - name: Primary Background Color
+    data_fields:
+      color: var(--bg-primary)
+
+  - name: Text Primary Color
+    data_fields:
+      color: var(--text-primary)
+
+interactive_actions:
+  - action_name: Navigation Items
+    intent: click
+
+content_copy:
+  - section: Sidebar Title
+    text: Zero-Trust SecOps Command Center
+
+  - section: Brand Text
+    text: CloudShield Enterprise
+
+  - section: Badge Text
+    text: BETA
+```

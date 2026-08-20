@@ -1,0 +1,134 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CloudMetrics System Dashboard</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1a1b26;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    display: flex;
+    height: 100vh;
+    max-width: 1440px;
+    margin: auto;
+    overflow-x: hidden;
+  }
+  header {
+    background-color: #282c34;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sidebar {
+    background-color: #21262d;
+    width: 25%;
+    padding: 20px;
+    position: relative;
+  }
+  .header-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0;
+  }
+  nav li {
+    margin: 5px 0;
+  }
+  .main-header {
+    background-color: #282c34;
+    padding: 20px;
+    width: 75%;
+    position: relative;
+  }
+  .card-section {
+    display: flex;
+    gap: 16px;
+  }
+  .card-item {
+    background-color: #3a3f4b;
+    border-radius: 8px;
+    padding: 20px;
+    width: calc(50% - 16px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+  .card-header {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .card-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-value {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  .card-subtext {
+    color: #9ea3b0;
+    margin-top: 5px;
+  }
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+    .main-header, .sidebar {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="sidebar">
+      <h3 class="header-title">CloudMetrics</h3>
+      <nav>
+        <li>Overview</li>
+        <li>Instances</li>
+        <li>Storage</li>
+        <li>Alerts</li>
+        <li>Settings</li>
+      </nav>
+    </div>
+    <div class="main-header">
+      <h2 class="header-title">Infrastructure Telemetry</h2>
+    </div>
+  </header>
+  <div class="main-content">
+    <div class="card-section">
+      <div class="card-item" onclick="refreshData()">
+        <div class="card-header">Active Node Clusters</div>
+        <div class="card-content">
+          <span class="card-value">3</span>
+          <span class="card-subtext">Clusters</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function refreshData() {
+  alert('Data refreshed!');
+}
+</script>
+</body>
+</html>
+```
+
+This code snippet creates a modern, responsive UI for the CloudMetrics System Dashboard. It uses a clean and asymmetric layout with subtle micro-interactions such as the ability to refresh data. The design is premium and high-craft, featuring a sleek dark mode with subtle typography hierarchy.

@@ -1,0 +1,59 @@
+```yaml
+page_title: CloudShield Enterprise - Zero-Trust SecOps Command Center
+
+core_entities:
+  - name: brand-logo
+    data_fields:
+      width: 32px
+      height: 32px
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue))
+      border-radius: var(--radius-md)
+      font-weight: 900
+      color: #fff
+  - name: brand-text
+    data_fields:
+      font-size: 16px
+      font-weight: 700
+      letter-spacing: -0.5px
+      color: var(--text-primary)
+  - name: brand-badge
+    data_fields:
+      font-size: 10px
+      padding: 2px 6px
+      background: rgba(56, 189, 248, 0.15)
+      color: var(--accent-cyan)
+      border-radius: var(--radius-full)
+      font-weight: 600
+      text-transform: uppercase
+  - name: user-profile
+    data_fields:
+      gap: 10px
+  - name: avatar
+    data_fields:
+      width: 34px
+      height: 34px
+      border-radius: var(--radius-full)
+      background-color: var(--border-color)
+      font-weight: 600
+      font-size: 12px
+      color: var(--accent-cyan)
+  - name: user-info
+    data_fields:
+      gap: 10px
+
+interactive_actions:
+  - action_name: nav-item-hover
+    intent: change background and text colors, add border-left when active
+  - action_name: header-search-click
+    intent: focus input field
+  - action_name: btn-badge-click
+    intent: open alert or perform action associated with badge
+
+content_copy:
+  - section: sidebar-brand
+    text: "Brand Logo: \u25b6 CloudShield Enterprise"
+  - section: header-left
+    text: "Breadcrumbs: Home \u2192 Resources \u2192 Settings"
+  - section: alert-icon-box
+    text: "Alert Icon Box: ⚠️"
+```

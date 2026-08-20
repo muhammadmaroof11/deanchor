@@ -1,0 +1,258 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudShield Enterprise - Zero-Trust SecOps Command Center</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: hsl(235, 18%, 9%);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            width: 100%;
+            max-width: 1440px;
+            margin: auto;
+            padding: 2rem;
+        }
+        /* Header Styles */
+        header {
+            background-color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header-breadcrumbs {
+            font-size: 0.9rem;
+            display: flex;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        .header-breadcrumbs a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .header-breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        header .search-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 0.5rem;
+            color: var(--text-primary);
+            width: 100%;
+            max-width: 300px;
+            outline: none;
+        }
+        header .search-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 0.5rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            outline: none;
+        }
+        header .search-icon:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        /* Main Content Styles */
+        main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding-top: 2rem;
+            flex-grow: 1;
+        }
+        .secops-command {
+            background-color: var(--accent-blue);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        .secops-command .pill {
+            background-color: var(--accent-rose);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        .secops-command .pill:hover {
+            background-color: rgba(255, 69, 139, 0.8);
+        }
+        .secops-command .pill.active {
+            background-color: var(--accent-rose) !important;
+        }
+        .critical-banner {
+            background-color: hsl(347, 60%, 25%);
+            color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .critical-banner h2, .critical-banner p {
+            font-size: 1.2rem;
+        }
+        .telemetry-section {
+            background-color: var(--accent-cyan);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .telemetry-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .telemetry-status {
+            list-style: none;
+            padding-left: 0;
+        }
+        .telemetry-status li {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+        .telemetry-status li .severity-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        .telemetry-status li .critical-dot {
+            background-color: var(--accent-rose);
+        }
+        .telemetry-status li .high-dot {
+            background-color: var(--accent-amber);
+        }
+        .telemetry-status li .medium-dot {
+            background-color: var(--accent-cyan);
+        }
+        .telemetry-status li .low-dot {
+            background-color: var(--accent-emerald);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--accent-blue);
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Variables */
+        :root {
+            --text-primary: hsl(235, 18%, 9%);
+            --text-secondary: hsl(235, 18%, 40%);
+            --accent-cyan: hsl(176, 53%, 51%);
+            --accent-blue: hsl(211, 54%, 47%);
+            --accent-rose: hsl(349, 100%, 63%);
+            --accent-amber: hsl(43, 100%, 68%);
+            --accent-cyan: hsl(176, 53%, 51%);
+            --accent-emerald: hsl(125, 93%, 42%);
+            --border-focus: hsl(223, 23%, 53%);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <span class="header-breadcrumbs">Organization / SecOps / Zero-Trust Command</span>
+            <input type="text" class="search-input" placeholder="Search Incursions...">
+            <button class="search-icon">&#xF002;</button>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="secops-command">
+        <h1>SecOps Command Section</h1>
+        <p class="pill active">Zero-Trust</p>
+        <p class="pill">Threat Detection</p>
+        <p class="pill">Incident Response</p>
+    </section>
+
+    <div class="critical-banner">
+        <h2>Active Remote Code Execution Exploit Detected (CVE-2026-9812)</h2>
+        <p>Ingress Gateway edge-gw-frankfurt-04 is dropping anomalous serialized payloads targeting port 8443. Autonomous micro-segmentation applied.</p>
+    </div>
+
+    <section class="telemetry-section">
+        <h3>Real-Time Incursion Telemetry</h3>
+        <ul class="telemetry-status">
+            <li><span class="critical-dot"></span>284 Active Threat Incursions</li>
+            <li><span class="high-dot"></span>AUTO-MITIGATION RATE: 99.82%</li>
+            <li><span class="medium-dot"></span>ACTIVE ZT TUNNELS: 14,920</li>
+            <li><span class="low-dot"></span>Anomalous Identities: 12</li>
+        </ul>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2023 CloudShield Enterprise. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    // Interactive Actions
+    document.querySelectorAll('.pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+            if (pill.classList.contains('active')) return;
+            document.querySelector('.secops-command .pill.active').classList.remove('active');
+            pill.classList.add('active');
+        });
+    });
+
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', function() {
+        // Placeholder for live search functionality
+        console.log(`Searching for: ${this.value}`);
+    });
+
+    document.querySelectorAll('.critical-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+            alert('Live notifications view requested.');
+        });
+    });
+
+    document.querySelectorAll('.high-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+            alert('Global mesh status check requested.');
+        });
+    });
+
+    document.querySelector('.low-dot').addEventListener('click', () => {
+        alert('Quarantine enforcement requested on targeted workload.');
+    });
+</script>
+</body>
+</html>
+```
+
+This HTML+CSS file provides a novel and premium UI implementation for the CloudShield Enterprise - Zero-Trust SecOps Command Center. The design is asymmetrical, with a focus on sleek HSL dark mode colors and custom typography scales. Micro-interactions are added to enhance user experience, such as active pill highlighting and live notification views.

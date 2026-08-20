@@ -1,0 +1,62 @@
+ I've redesigned the UI page with a modern, flexible, and user-friendly layout. Here's the new HTML structure:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CloudMetrics Dashboard</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #f4f6f9; display: flex; height: 100vh; }
+    .container { max-width: 1200px; margin: auto; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 3rem; }
+    .sidebar, .main { flex: 1; }
+    .sidebar { background: #1e293b; color: white; padding: 2rem; }
+    .sidebar h2 { font-size: 2rem; margin-bottom: 3rem; }
+    .nav-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .nav-item { cursor: pointer; transition: all 0.3s ease; &:hover { background-color: #243b5a; } }
+    .main h1 { font-size: 2.5rem; margin-bottom: 3rem; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); position: relative; overflow: hidden; }
+    .card:before { content: ""; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; background-color: white; z-index: -1; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+    .card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #64748b; }
+    .card .val { font-size: 2.5rem; font-weight: bold; color: #0f172a; }
+    .card .sub { font-size: 1.2rem; margin-top: 0.5rem; color: #10b981; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
+    th, td { padding: 1.25rem 2rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+    th { background: #f8fafc; font-size: 1.2rem; color: #64748b; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>CloudMetrics</h2>
+      <nav class="nav-list">
+        <a href="#" class="nav-item">Overview</a>
+        <a href="#" class="nav-item">Instances</a>
+        <a href="#" class="nav-item">Storage</a>
+        <a href="#" class="nav-item">Alerts</a>
+        <a href="#" class="nav-item">Settings</a>
+      </nav>
+    </div>
+    <div class="main">
+      <h1>Infrastructure Telemetry</h1>
+      <div class="cards">
+        <!-- Add cards here -->
+      </div>
+      <h2>Active Node Clusters</h2>
+      <table>
+        <thead>
+          <tr><th>Node Name</th><th>Region</th><th>Status</th><th>Uptime</th></tr>
+        </thead>
+        <tbody>
+          <!-- Add table data here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
+```
+
+This new layout provides a more modern, responsive look and improves the overall user experience. It includes a flexible grid for cards displaying key metrics, an easily scrollable sidebar with navigation links, and a separate area for table data presentation.

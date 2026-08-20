@@ -1,0 +1,10 @@
+{
+  "condition": "C",
+  "mode": "design",
+  "subject": "subject_2",
+  "model": "qwen2.5-7b-deanchor-Q4_K_M.gguf",
+  "system_prompt": false,
+  "elapsed_s": 13.89,
+  "output_chars": 4139,
+  "timestamp": "2026-08-20T03:06:30"
+}

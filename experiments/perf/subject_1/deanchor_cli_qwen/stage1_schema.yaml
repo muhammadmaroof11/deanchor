@@ -1,0 +1,16 @@
+```yaml
+algorithmic_task: Match buy and sell orders in a limit order book
+input_datastream: 
+  - order: { id, price, size, timestamp, side }
+output_contract: 
+  - tradeHistory: [ { tradeId: string, price: number, size: number, time: number } ]
+  - bidsDepth: [ [price: number, size: number] * levels ]
+  - asksDepth: [ [price: number, size: number] * levels ]
+performance_bottleneck_target: O(N log N) per order insertion and O(N^2) per matching iteration
+invariants: 
+  - bids are always sorted in descending price order
+  - asks are always sorted in ascending price order
+edge_case_rules: 
+  - If bid.price < ask.price, no trade is made
+  - If bid.size == 0 or ask.size == 0 after a trade, the corresponding order is removed from its list
+```

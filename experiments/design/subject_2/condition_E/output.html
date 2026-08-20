@@ -1,0 +1,113 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroSound Nova Pro Wireless Headphones</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1e1e1e;
+            color: white;
+            margin: 0;
+            padding: 2rem;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .product-card {
+            background-color: #3a3a3a;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            max-width: 900px;
+            flex-direction: column;
+        }
+        .product-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .tag {
+            background-color: #4d567e;
+            padding: 0.5rem 2rem;
+            border-radius: 8px;
+            display: inline-block;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .product-description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .spec-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .spec-item {
+            margin-bottom: 0.5rem;
+        }
+        .spec-item::before {
+            content: "\2022";
+            color: #ff7e5f;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        .action-button {
+            background-color: #ff7e5f;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .action-button:hover {
+            background-color: #e64a19;
+        }
+        @media (min-width: 768px) {
+            .product-card {
+                flex-direction: row;
+                align-items: stretch;
+            }
+            .spec-list {
+                width: calc(100% - 520px);
+                margin-left: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-card" id="aerosound-nova-pro">
+            <h1 class="product-title">AeroSound Nova Pro Wireless Headphones</h1>
+            <p class="tag">Studio Reference Series</p>
+            <p class="product-description">Precision-engineered acoustic planar drivers delivering uncompromising spatial clarity, 42-hour battery life, and military-grade adaptive noise cancellation.</p>
+            <ul class="spec-list">
+                <li class="spec-item">Frequency Response: 5Hz - 48,000Hz</li>
+                <li class="spec-item">Driver Size: 50mm Custom Beryllium</li>
+                <li class="spec-item">Connectivity: Bluetooth 5.4 Ultra-Low Latency / Lossless USB-C</li>
+                <li class="spec-item">Battery Life: 42h with ANC active</li>
+            </ul>
+            <button class="action-button" onclick="addToCart()">Add to Cart &bull; Express Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        function addToCart() {
+            alert("Item added to cart!");
+            // Add your actual cart addition logic here
+        }
+    </script>
+</body>
+</html>
+```
+```

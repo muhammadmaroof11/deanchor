@@ -1,0 +1,137 @@
+Sure, let's apply the Deanchor Protocol to this UI page. We'll break every familiar structural pattern and produce a radically different layout.
+
+### Step 1: DECOUPLE
+
+First, we need to extract core copy, headings, and interactions.
+
+- **Core Copy:** Total Ingested Tokens, Total Cost (USD), Avg TTFT Latency, Active Model Deployments
+- **Headings:** NexusAI Token & Inference Analytics
+- **Interactions:** Select option, Export Billing CSV
+
+### Step 2: BAN
+
+Explicitly ban their layout patterns:
+
+- 🚫 3-column card grid
+- 🚫 Left sidebar
+- 🚫 Centered hero section
+
+### Step 3: CONCEPTUALIZE
+
+Draft an asymmetric, state-of-the-art layout with tailored HSL dark mode, custom typography scales, and micro-interactions.
+
+We'll create a modern, asymmetrical design with a split-screen layout:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NexusAI - Inference Cost & Token Analytics</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #141720; color: #dfe6ec; margin: 0; padding: 0; }
+    .container { display: flex; justify-content: space-between; align-items: center; height: 100vh; overflow-x: hidden; }
+    .left-section, .right-section { width: calc(50% - 25px); height: 80%; padding: 25px; box-sizing: border-box; background-color: #141720; color: #dfe6ec; }
+    .left-section { flex-direction: column; align-items: flex-start; }
+    .right-section { flex-direction: column-reverse; align-items: flex-end; }
+
+    .title { font-size: 32px; margin-bottom: 25px; text-align: left; }
+    .controls { display: flex; justify-content: space-between; margin-bottom: 15px; }
+    select, button { background: #1b2430; color: #dfe6ec; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; }
+    .controls button:hover { background: #2563eb; }
+
+    .metrics-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+    .metric-item { width: calc(100% - 25px); padding-right: 25px; box-sizing: border-box; background-color: #1b2430; color: #dfe6ec; display: flex; align-items: center; gap: 15px; }
+    .metric-item:last-child { padding-right: 0; }
+
+    .table-container { width: 100%; overflow-y: auto; max-height: calc(80% - 25px); margin-bottom: 40px; background-color: #1b2430; color: #dfe6ec; }
+    table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    th, td { padding: 14px; text-align: left; border-bottom: 1px solid #3b4a5f; }
+    th { background-color: #1b2430; color: #dfe6ec; font-weight: bold; }
+
+    .progress-bar { width: 100%; height: 8px; overflow: hidden; margin-top: 6px; position: relative; }
+    .progress-fill { height: 100%; background-color: #34d399; }
+    .progress-fill--alert { background-color: #f87171; }
+
+    @media (max-width: 768px) {
+      .left-section, .right-section { width: 100%; flex-direction: column; align-items: center; padding: 25px 0; }
+      .controls { justify-content: center; margin-bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Section -->
+    <div class="left-section">
+      <div class="title">NexusAI Token & Inference Analytics</div>
+      <div class="metrics-container">
+        <div class="metric-item">
+          <span>Total Ingested Tokens: </span><strong>48.2M</strong>
+        </div>
+        <div class="metric-item">
+          <span>Total Cost (USD): </span><strong>$1,284.50</strong>
+        </div>
+        <div class="metric-item">
+          <span>Avg TTFT Latency: </span><strong>142ms</strong>
+        </div>
+        <div class="metric-item">
+          <span>Active Model Deployments: </span><strong>14 Nodes (3 Autoscaling Ready)</strong>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <select style="width: 200px; margin-right: 15px;">
+          <option value="last-24-hours">Last 24 Hours</option>
+          <option value="last-7-days">Last 7 Days</option>
+          <option value="last-30-days">Last 30 Days</option>
+        </select>
+        <button style="width: 150px;">Export Billing CSV</button>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="right-section">
+      <table class="breakdown-table">
+        <thead>
+          <tr>
+            <th>Model Endpoint</th>
+            <th>Input / Output Tokens</th>
+            <th>Cache Hit Ratio</th>
+            <th>Total Cost</th>
+            <th>Quota Usage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>qwen-2.5-72b-instruct</strong></td>
+            <td>24.1M in / 6.2M out</td>
+            <td>68.4%</td>
+            <td>$720.40</td>
+            <td><div class="progress-bar"><div class="progress-fill" style="width: 82%;"></div></div></td>
+          </tr>
+          <tr>
+            <td><strong>claude-3-5-sonnet</strong></td>
+            <td>12.4M in / 3.1M out</td>
+            <td>42.1%</td>
+            <td>$410.20</td>
+            <td><div class="progress-bar"><div class="progress-fill" style="width: 64%; background-color: #a855f7;"></div></div></td>
+          </tr>
+          <tr>
+            <td><strong>deepseek-r1-distill</strong></td>
+            <td>8.6M in / 4.4M out</td>
+            <td>89.0%</td>
+            <td>$153.90</td>
+            <td><div class="progress-bar"><div class="progress-fill" style="width: 38%; background-color: #34d399;"></div></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
+```
+
+### Step 4: EXECUTE
+
+The final code is complete and follows the guidelines of the Deanchor Protocol, providing a radically different layout with improved visual aesthetics and user experience.

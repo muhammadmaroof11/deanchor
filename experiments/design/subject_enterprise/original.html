@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudShield Enterprise - Zero-Trust SecOps Command Center</title>
+  <style>
+    :root {
+      --bg-primary: #090d16;
+      --bg-secondary: #0f172a;
+      --bg-card: #131c31;
+      --bg-card-hover: #18233d;
+      --border-color: #1e293b;
+      --border-focus: #38bdf8;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #0284c7;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #8b5cf6;
+      --sidebar-width: 260px;
+      --header-height: 64px;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-full: 9999px;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* ── LAYOUT CONTAINERS ── */
+    .app-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR NAVIGATION ── */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 40;
+    }
+
+    .sidebar-brand {
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .brand-text {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .nav-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0 8px 6px 8px;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+    }
+
+    .nav-item.active {
+      background-color: rgba(2, 132, 199, 0.15);
+      color: var(--border-focus);
+      font-weight: 600;
+      border-left: 3px solid var(--border-focus);
+    }
+
+    .nav-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+    }
+
+    .nav-pill {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+    }
+
+    .pill-danger {
+      background-color: rgba(244, 63, 94, 0.2);
+      color: var(--accent-rose);
+    }
+
+    .pill-warning {
+      background-color: rgba(245, 158, 11, 0.2);
+      color: var(--accent-amber);
+    }
+
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-full);
+      background-color: var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--accent-cyan);
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .user-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── MAIN CONTENT AREA ── */
+    .main-wrapper {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* ── TOP HEADER ── */
+    .top-header {
+      height: var(--header-height);
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .crumb-divider {
+      color: var(--text-muted);
+    }
+
+    .crumb-current {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .header-search {
+      position: relative;
+      width: 320px;
+    }
+
+    .header-search input {
+      width: 100%;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 8px 12px 8px 36px;
+      color: var(--text-primary);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .header-search input:focus {
+      border-color: var(--border-focus);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      width: 16px;
+      height: 16px;
+    }
+
+    .search-shortcut {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 2px 6px;
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .icon-btn:hover {
+      background-color: var(--bg-card-hover);
+      color: var(--text-primary);
+    }
+
+    .btn-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background-color: var(--accent-rose);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      width: 16px;
+      height: 16px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--bg-secondary);
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+
+    .primary-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* ── VIEWPORT CONTENT ── */
+    .content-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ── ALERT BANNER ── */
+    .alert-banner {
+      background: linear-gradient(90deg, rgba(244, 63, 94, 0.12), rgba(15, 23, 42, 0.8));
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      border-left: 4px solid var(--accent-rose);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .alert-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .alert-icon-box {
+      width: 36px;
+      height: 36px;
+      background-color: rgba(244, 63, 94, 0.2);
+      color: var(--accent-rose);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .alert-text-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .alert-text-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .alert-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-secondary-sm {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-danger-sm {
+      background-color: var(--accent-rose);
+      border: none;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ── METRICS GRID ── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .metric-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: transparent;
+    }
+
+    .metric-card.card-cyan::before { background: var(--accent-cyan); }
+    .metric-card.card-emerald::before { background: var(--accent-emerald); }
+    .metric-card.card-amber::before { background: var(--accent-amber); }
+    .metric-card.card-rose::before { background: var(--accent-rose); }
+
+    .card-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .metric-icon-small {
+      width: 20px;
+      height: 20px;
+      color: var(--text-muted);
+    }
+
+    .metric-main-value {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 12px 0 6px 0;
+      font-family: var(--font-mono);
+      letter-spacing: -1px;
+    }
+
+    .metric-sub-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .trend-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: var(--radius-sm);
+    }
+
+    .trend-up-danger {
+      background-color: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+    }
+
+    .trend-down-good {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+    }
+
+    .trend-neutral {
+      background-color: rgba(148, 163, 184, 0.15);
+      color: var(--text-secondary);
+    }
+
+    /* ── DUAL PANE SECTION ── */
+    .dual-pane {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .panel-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .panel-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .panel-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .segmented-control {
+      display: flex;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+    }
+
+    .segment-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    .segment-btn.active {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+    }
+
+    .panel-body {
+      padding: 20px;
+      flex: 1;
+    }
+
+    /* ── INCIDENT FEED LIST ── */
+    .incident-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .incident-item {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .incident-item:hover {
+      border-color: var(--text-muted);
+      transform: translateX(2px);
+    }
+
+    .incident-item-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .severity-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--radius-full);
+      flex-shrink: 0;
+    }
+
+    .dot-critical { background-color: var(--accent-rose); box-shadow: 0 0 8px var(--accent-rose); }
+    .dot-high { background-color: var(--accent-amber); box-shadow: 0 0 6px var(--accent-amber); }
+    .dot-medium { background-color: var(--accent-cyan); }
+    .dot-low { background-color: var(--accent-emerald); }
+
+    .incident-info h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .incident-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .incident-item-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+    }
+
+    .badge-mitigated { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); }
+    .badge-investigating { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+    .badge-blocked { background: rgba(2, 132, 199, 0.15); color: var(--accent-cyan); }
+
+    /* ── RADAR / TARGET STATS ── */
+    .stats-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .stat-progress-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+
+    .stat-title {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .stat-value {
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+
+    .bar-track {
+      height: 6px;
+      background-color: var(--bg-secondary);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+    }
+
+    .fill-cyan { background-color: var(--accent-cyan); }
+    .fill-emerald { background-color: var(--accent-emerald); }
+    .fill-amber { background-color: var(--accent-amber); }
+    .fill-purple { background-color: var(--accent-purple); }
+
+    /* ── FULL DATA TABLE ── */
+    .table-container {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .table-toolbar {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .table-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .table-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .table-count-badge {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .table-toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-input {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      font-size: 12px;
+      color: var(--text-primary);
+      outline: none;
+    }
+
+    .sec-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .sec-table th {
+      background-color: var(--bg-secondary);
+      padding: 12px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sec-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    .sec-table tr:hover td {
+      background-color: rgba(255, 255, 255, 0.02);
+      color: var(--text-primary);
+    }
+
+    .table-pagination {
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .pagination-buttons {
+      display: flex;
+      gap: 6px;
+    }
+
+    .page-btn {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    .page-btn.active {
+      background-color: var(--accent-blue);
+      color: #fff;
+      border-color: var(--accent-blue);
+    }
+
+    /* ── MODAL OVERLAY ── */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .modal-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 520px;
+      overflow: hidden;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .modal-close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .modal-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      background-color: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    /* ── FORM ELEMENTS ── */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .form-input, .form-select {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      color: var(--text-primary);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--border-focus);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-layout">
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo">CS</div>
+      <div class="brand-text">CloudShield</div>
+      <span class="brand-badge">PRO</span>
+    </div>
+
+    <div class="sidebar-content">
+      <div>
+        <div class="nav-section-title">Core Operations</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#overview" class="nav-item active">
+              <div class="nav-item-left">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                <span>SecOps Command</span>
+              </div>
+              <span class="nav-pill pill-danger">3 Critical</span>
+            </a>
+          </li>
+          <li>
+            <a href="#threats" class="nav-item">
+              <div class="nav-item-left">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Threat Vectors</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#zerotrust" class="nav-item">
+              <div class="nav-item-left">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                <span>Zero-Trust Mesh</span>
+              </div>
+              <span class="nav-pill pill-warning">Syncing</span>
+            </a>
+          </li>
+          <li>
+            <a href="#observability" class="nav-item">
+              <div class="nav-item-left">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                <span>Telemetry Streams</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="nav-section-title">Identity & Access</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#iam" class="nav-item">
+              <div class="nav-item-left">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>IAM & Tokens</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#policies" class="nav-item">
+              <div class="nav-item-left">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span>ABAC Policies</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#assets" class="nav-item">
+              <div class="nav-item-left">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                <span>Cloud Workloads</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="nav-section-title">Compliance & Audits</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#soc2" class="nav-item">
+              <div class="nav-item-left">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span>SOC2 Compliance</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#auditlog" class="nav-item">
+              <div class="nav-item-left">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <span>Immutable Logs</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        <div class="avatar">SM</div>
+        <div class="user-info">
+          <span class="user-name">Samir Maroof</span>
+          <span class="user-role">SecOps Lead</span>
+        </div>
+      </div>
+      <button class="icon-btn" title="Settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEWPORT WRAPPER -->
+  <div class="main-wrapper">
+    <!-- TOP HEADER -->
+    <header class="top-header">
+      <div class="header-left">
+        <div class="breadcrumbs">
+          <span>Organization</span>
+          <span class="crumb-divider">/</span>
+          <span>SecOps</span>
+          <span class="crumb-divider">/</span>
+          <span class="crumb-current">Zero-Trust Command</span>
+        </div>
+      </div>
+
+      <div class="header-search">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Search CVEs, IP addresses, workloads, or identities...">
+        <span class="search-shortcut">⌘K</span>
+      </div>
+
+      <div class="header-actions">
+        <button class="icon-btn" title="Live Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="btn-badge">4</span>
+        </button>
+        <button class="icon-btn" title="Global Mesh Status">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </button>
+        <button class="primary-btn" onclick="document.getElementById('quarantineModal').style.display='flex'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Enforce Quarantine</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT BODY -->
+    <main class="content-body">
+      <!-- CRITICAL INCIDENT BANNER -->
+      <div class="alert-banner">
+        <div class="alert-content">
+          <div class="alert-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div>
+            <div class="alert-text-title">Active Remote Code Execution Exploit Detected (CVE-2026-9812)</div>
+            <div class="alert-text-desc">Ingress Gateway <span style="font-family: var(--font-mono); color: #fff;">edge-gw-frankfurt-04</span> is dropping anomalous serialized payloads targeting port 8443. Autonomous micro-segmentation applied.</div>
+          </div>
+        </div>
+        <div class="alert-actions">
+          <button class="btn-secondary-sm">Inspect Trace</button>
+          <button class="btn-danger-sm">Isolate Node</button>
+        </div>
+      </div>
+
+      <!-- KEY PERFORMANCE METRICS GRID -->
+      <div class="metrics-grid">
+        <div class="metric-card card-rose">
+          <div class="card-header-row">
+            <span class="metric-label">Active Threat Incursions</span>
+            <svg class="metric-icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="metric-main-value">284</div>
+          <div class="metric-sub-row">
+            <span class="trend-pill trend-up-danger">↑ +18.4%</span>
+            <span style="color: var(--text-muted);">vs previous 6 hours</span>
+          </div>
+        </div>
+
+        <div class="metric-card card-emerald">
+          <div class="card-header-row">
+            <span class="metric-label">Auto-Mitigation Rate</span>
+            <svg class="metric-icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="metric-main-value">99.82%</div>
+          <div class="metric-sub-row">
+            <span class="trend-pill trend-down-good">9.2ms MTTD</span>
+            <span style="color: var(--text-muted);">Zero-bypass SLA</span>
+          </div>
+        </div>
+
+        <div class="metric-card card-cyan">
+          <div class="card-header-row">
+            <span class="metric-label">Active Zero-Trust Tunnels</span>
+            <svg class="metric-icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+          </div>
+          <div class="metric-main-value">14,920</div>
+          <div class="metric-sub-row">
+            <span class="trend-pill trend-neutral">48 Regions</span>
+            <span style="color: var(--text-muted);">WireGuard mTLS Mesh</span>
+          </div>
+        </div>
+
+        <div class="metric-card card-amber">
+          <div class="card-header-row">
+            <span class="metric-label">Anomalous Identities</span>
+            <svg class="metric-icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
+          </div>
+          <div class="metric-main-value">12</div>
+          <div class="metric-sub-row">
+            <span class="trend-pill trend-up-danger">Flagged by AI</span>
+            <span style="color: var(--text-muted);">Step-up MFA enforced</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DUAL PANE: LIVE INCIDENT STREAM & VECTOR CLASSIFICATION -->
+      <div class="dual-pane">
+        <!-- LEFT: INCIDENT STREAM -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-title">Real-Time Incursion Telemetry</span>
+              <span class="table-count-badge">Live WebSocket Feed</span>
+            </div>
+            <div class="panel-controls">
+              <div class="segmented-control">
+                <button class="segment-btn active">All</button>
+                <button class="segment-btn">Critical</button>
+                <button class="segment-btn">DDoS</button>
+                <button class="segment-btn">Auth</button>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="incident-feed">
+              <div class="incident-item">
+                <div class="incident-item-left">
+                  <div class="severity-dot dot-critical"></div>
+                  <div class="incident-info">
+                    <h4>SQLi Pattern Injection on GraphQL Gateway</h4>
+                    <div class="incident-meta">
+                      <span>IP: 185.220.101.42 (Tor Exit)</span>
+                      <span>•</span>
+                      <span>Target: /v2/api/graphql</span>
+                      <span>•</span>
+                      <span>2 mins ago</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="incident-item-right">
+                  <span class="status-badge badge-mitigated">WAF Blocked</span>
+                  <button class="icon-btn" style="width: 28px; height: 28px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="incident-item">
+                <div class="incident-item-left">
+                  <div class="severity-dot dot-high"></div>
+                  <div class="incident-info">
+                    <h4>Excessive Failed JWT Signature Verification</h4>
+                    <div class="incident-meta">
+                      <span>IP: 104.244.76.13</span>
+                      <span>•</span>
+                      <span>Target: /auth/v1/token/refresh</span>
+                      <span>•</span>
+                      <span>8 mins ago</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="incident-item-right">
+                  <span class="status-badge badge-investigating">Rate Limited</span>
+                  <button class="icon-btn" style="width: 28px; height: 28px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="incident-item">
+                <div class="incident-item-left">
+                  <div class="severity-dot dot-medium"></div>
+                  <div class="incident-info">
+                    <h4>BGP Hijack Anomaly on Frankfurt Ingress</h4>
+                    <div class="incident-meta">
+                      <span>ASN: AS48218</span>
+                      <span>•</span>
+                      <span>Route: 194.28.112.0/24</span>
+                      <span>•</span>
+                      <span>15 mins ago</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="incident-item-right">
+                  <span class="status-badge badge-blocked">Rerouted</span>
+                  <button class="icon-btn" style="width: 28px; height: 28px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="incident-item">
+                <div class="incident-item-left">
+                  <div class="severity-dot dot-critical"></div>
+                  <div class="incident-info">
+                    <h4>Privilege Escalation Attempt on Kubernetes API Server</h4>
+                    <div class="incident-meta">
+                      <span>ServiceAccount: prod-billing-agent</span>
+                      <span>•</span>
+                      <span>Namespace: kube-system</span>
+                      <span>•</span>
+                      <span>22 mins ago</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="incident-item-right">
+                  <span class="status-badge badge-mitigated">RBAC Denied</span>
+                  <button class="icon-btn" style="width: 28px; height: 28px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: VECTOR POLICY BREAKDOWN -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-title">Policy Enforcement Matrix</span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="stats-stack">
+              <div class="stat-progress-block">
+                <div class="stat-header">
+                  <span class="stat-title">DDoS & Layer 7 Scrubbing</span>
+                  <span class="stat-value">94.8% (4.2 TB)</span>
+                </div>
+                <div class="bar-track"><div class="bar-fill fill-cyan" style="width: 94.8%;"></div></div>
+              </div>
+
+              <div class="stat-progress-block">
+                <div class="stat-header">
+                  <span class="stat-title">Zero-Trust mTLS Compliance</span>
+                  <span class="stat-value">99.1% (14.7k nodes)</span>
+                </div>
+                <div class="bar-track"><div class="bar-fill fill-emerald" style="width: 99.1%;"></div></div>
+              </div>
+
+              <div class="stat-progress-block">
+                <div class="stat-header">
+                  <span class="stat-title">Adaptive Credential Challenge</span>
+                  <span class="stat-value">12.4% (Step-up MFA)</span>
+                </div>
+                <div class="bar-track"><div class="bar-fill fill-amber" style="width: 12.4%;"></div></div>
+              </div>
+
+              <div class="stat-progress-block">
+                <div class="stat-header">
+                  <span class="stat-title">Container Sandbox Isolation</span>
+                  <span class="stat-value">100.0% (gVisor Active)</span>
+                </div>
+                <div class="bar-track"><div class="bar-fill fill-purple" style="width: 100%;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENTERPRISE INFRASTRUCTURE SECURITY WORKLOADS TABLE -->
+      <div class="table-container">
+        <div class="table-toolbar">
+          <div class="table-toolbar-left">
+            <span class="table-title">Monitored Cloud Infrastructure Nodes</span>
+            <span class="table-count-badge">6 Active Clusters</span>
+          </div>
+          <div class="table-toolbar-right">
+            <input type="text" class="filter-input" placeholder="Filter nodes...">
+            <button class="btn-secondary-sm">Export Audit Report</button>
+          </div>
+        </div>
+
+        <table class="sec-table">
+          <thead>
+            <tr>
+              <th>Node Identifier</th>
+              <th>Geographic Region</th>
+              <th>Mesh Identity IP</th>
+              <th>Zero-Trust Tunnel</th>
+              <th>Threat Classification</th>
+              <th>Last Attestation</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family: var(--font-mono); font-weight: 700; color: #fff;">k8s-node-us-east-prod-01</td>
+              <td>us-east-1 (N. Virginia)</td>
+              <td style="font-family: var(--font-mono);">10.240.12.4</td>
+              <td><span class="status-badge badge-mitigated">Connected (mTLS)</span></td>
+              <td><span style="color: var(--accent-emerald);">CLEAN (0 Alerts)</span></td>
+              <td>12s ago</td>
+              <td><button class="btn-secondary-sm">Inspect</button></td>
+            </tr>
+            <tr>
+              <td style="font-family: var(--font-mono); font-weight: 700; color: #fff;">edge-gw-frankfurt-04</td>
+              <td>eu-central-1 (Frankfurt)</td>
+              <td style="font-family: var(--font-mono);">10.240.88.92</td>
+              <td><span class="status-badge badge-investigating">Quarantined</span></td>
+              <td><span style="color: var(--accent-rose); font-weight: 700;">CVE-2026-9812 (CRITICAL)</span></td>
+              <td>3s ago</td>
+              <td><button class="btn-danger-sm">Revoke Key</button></td>
+            </tr>
+            <tr>
+              <td style="font-family: var(--font-mono); font-weight: 700; color: #fff;">db-primary-tokyo-02</td>
+              <td>ap-northeast-1 (Tokyo)</td>
+              <td style="font-family: var(--font-mono);">10.240.44.11</td>
+              <td><span class="status-badge badge-mitigated">Connected (mTLS)</span></td>
+              <td><span style="color: var(--accent-emerald);">CLEAN (0 Alerts)</span></td>
+              <td>28s ago</td>
+              <td><button class="btn-secondary-sm">Inspect</button></td>
+            </tr>
+            <tr>
+              <td style="font-family: var(--font-mono); font-weight: 700; color: #fff;">ingress-lb-sydney-01</td>
+              <td>ap-southeast-2 (Sydney)</td>
+              <td style="font-family: var(--font-mono);">10.240.102.8</td>
+              <td><span class="status-badge badge-blocked">L7 Shield Active</span></td>
+              <td><span style="color: var(--accent-amber);">DDoS Probe Flag</span></td>
+              <td>45s ago</td>
+              <td><button class="btn-secondary-sm">Inspect</button></td>
+            </tr>
+            <tr>
+              <td style="font-family: var(--font-mono); font-weight: 700; color: #fff;">redis-cache-sao-paulo-01</td>
+              <td>sa-east-1 (São Paulo)</td>
+              <td style="font-family: var(--font-mono);">10.240.19.74</td>
+              <td><span class="status-badge badge-mitigated">Connected (mTLS)</span></td>
+              <td><span style="color: var(--accent-emerald);">CLEAN (0 Alerts)</span></td>
+              <td>1m ago</td>
+              <td><button class="btn-secondary-sm">Inspect</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="table-pagination">
+          <span>Showing 1 to 5 of 1,420 Protected Workload Nodes</span>
+          <div class="pagination-buttons">
+            <button class="page-btn">Previous</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">Next</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ENFORCE QUARANTINE MODAL DIALOG -->
+<div id="quarantineModal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">Enforce Cryptographic Quarantine</div>
+      <button class="modal-close-btn" onclick="document.getElementById('quarantineModal').style.display='none'">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 13px; color: var(--text-secondary);">
+        Immediately terminate all active WireGuard mTLS sessions, revoke issued short-lived tokens, and isolate the targeted workload inside an egress-blocking network namespace.
+      </p>
+
+      <div class="form-group">
+        <label class="form-label">Target Workload Identifier</label>
+        <select class="form-select">
+          <option>edge-gw-frankfurt-04 (eu-central-1)</option>
+          <option>k8s-node-us-east-prod-01 (us-east-1)</option>
+          <option>ingress-lb-sydney-01 (ap-southeast-2)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Quarantine Protocol Level</label>
+        <select class="form-select">
+          <option>Level 3: Full Network Air-Gap & Memory Snapshot</option>
+          <option>Level 2: Egress Filtered & Token Invalidation</option>
+          <option>Level 1: Read-Only Audit Mirroring</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Justification Ticket / SOC Ref</label>
+        <input type="text" class="form-input" placeholder="e.g. SEC-2026-INC-9481">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary-sm" onclick="document.getElementById('quarantineModal').style.display='none'">Cancel</button>
+      <button class="btn-danger-sm" onclick="alert('Quarantine order executed'); document.getElementById('quarantineModal').style.display='none'">Confirm Isolation Order</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

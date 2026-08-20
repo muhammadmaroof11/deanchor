@@ -1,0 +1,21 @@
+```yaml
+algorithmic_task: Match buy and sell orders in a limit order book.
+
+input_datastream: Individual buy and sell orders, each containing price, size, and timestamp.
+
+output_contract:  For every incoming buy order, find the highest matching sell order (price >= ask price) and execute a trade up to the minimum of the remaining sizes on both sides. Update the order book with the remaining quantities and record the executed trade details. 
+
+performance_bottleneck_target: Reduce matching time from O(N^2) to O(log N).
+
+invariants:  
+- Order prices in bids are non-decreasing.
+- Order prices in asks are non-increasing.
+
+edge_case_rules: 
+- Handle cases where there are no matching orders.
+- Handle cases where a buy order fully consumes a sell order (remove the sell order from the book).
+- Handle cases where a sell order fully consumes a buy order (remove the buy order from the book).
+
+
+
+```

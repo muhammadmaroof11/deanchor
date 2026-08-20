@@ -1,0 +1,12 @@
+ ```yaml
+security_boundary: API Endpoint /api (login and profile)
+principals_and_roles: ["user"]
+protected_resources: ["/api/profile"]
+authentication_flows: ["POST /api/login", "GET /api/profile"]
+threat_vectors_to_eliminate:
+  - SQL Injection via concatenation (VULNERABILITY 1)
+  - Weak JWT decoding and generation (VULNERABILITY 2)
+  - SQL Injection via decoded token parameter (VULNERABILITY 4)
+edge_case_rules:
+  - Hardcoded fallback secrets (JWT_SECRET)
+```

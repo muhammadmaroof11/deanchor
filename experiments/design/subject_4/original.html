@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NexusAI - Inference Cost & Token Analytics</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0b0f19; color: #e2e8f0; margin: 0; padding: 25px; }
+    .top-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 15px; margin-bottom: 25px; }
+    .title { font-size: 24px; font-weight: bold; color: #60a5fa; }
+    .controls { display: flex; gap: 10px; }
+    .controls select, .controls button { background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 8px 14px; border-radius: 6px; }
+    .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 25px; }
+    .metric-box { background: #131b2e; border: 1px solid #1e293b; padding: 18px; border-radius: 8px; }
+    .metric-box .label { font-size: 12px; color: #94a3b8; text-transform: uppercase; }
+    .metric-box .value { font-size: 28px; font-weight: 700; color: #f8fafc; margin: 8px 0; }
+    .metric-box .delta { font-size: 13px; color: #34d399; }
+    .breakdown-table { width: 100%; border-collapse: collapse; background: #131b2e; border-radius: 8px; overflow: hidden; border: 1px solid #1e293b; }
+    .breakdown-table th, .breakdown-table td { padding: 14px; text-align: left; border-bottom: 1px solid #1e293b; font-size: 14px; }
+    .breakdown-table th { background: #1e293b; color: #94a3b8; font-weight: 600; }
+    .progress-bar { background: #1e293b; border-radius: 4px; height: 8px; width: 100%; overflow: hidden; margin-top: 6px; }
+    .progress-fill { height: 100%; background: #60a5fa; }
+  </style>
+</head>
+<body>
+  <div class="top-nav">
+    <div class="title">NexusAI Token & Inference Analytics</div>
+    <div class="controls">
+      <select><option>Last 24 Hours</option><option>Last 7 Days</option><option>Last 30 Days</option></select>
+      <button style="background: #2563eb; border: none; cursor: pointer;">Export Billing CSV</button>
+    </div>
+  </div>
+
+  <div class="summary-grid">
+    <div class="metric-box">
+      <div class="label">Total Ingested Tokens</div>
+      <div class="value">48.2M</div>
+      <div class="delta">+14.2% vs yesterday</div>
+    </div>
+    <div class="metric-box">
+      <div class="label">Total Cost (USD)</div>
+      <div class="value">$1,284.50</div>
+      <div class="delta" style="color: #f87171;">+$184.20 over budget threshold</div>
+    </div>
+    <div class="metric-box">
+      <div class="label">Avg TTFT Latency</div>
+      <div class="value">142ms</div>
+      <div class="delta">-18ms optimization</div>
+    </div>
+    <div class="metric-box">
+      <div class="label">Active Model Deployments</div>
+      <div class="value">14 Nodes</div>
+      <div class="delta">3 Autoscaling Ready</div>
+    </div>
+  </div>
+
+  <table class="breakdown-table">
+    <thead>
+      <tr>
+        <th>Model Endpoint</th>
+        <th>Input / Output Tokens</th>
+        <th>Cache Hit Ratio</th>
+        <th>Total Cost</th>
+        <th>Quota Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>qwen-2.5-72b-instruct</strong></td>
+        <td>24.1M in / 6.2M out</td>
+        <td>68.4% Cached</td>
+        <td>$720.40</td>
+        <td><div class="progress-bar"><div class="progress-fill" style="width: 82%;"></div></div></td>
+      </tr>
+      <tr>
+        <td><strong>claude-3-5-sonnet</strong></td>
+        <td>12.4M in / 3.1M out</td>
+        <td>42.1% Cached</td>
+        <td>$410.20</td>
+        <td><div class="progress-bar"><div class="progress-fill" style="width: 64%; background: #a855f7;"></div></div></td>
+      </tr>
+      <tr>
+        <td><strong>deepseek-r1-distill</strong></td>
+        <td>8.6M in / 4.4M out</td>
+        <td>89.0% Cached</td>
+        <td>$153.90</td>
+        <td><div class="progress-bar"><div class="progress-fill" style="width: 38%; background: #34d399;"></div></div></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

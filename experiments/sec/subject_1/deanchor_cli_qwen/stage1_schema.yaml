@@ -1,0 +1,16 @@
+```yaml
+security_boundary: User Authentication and Profile Lookup API
+principals_and_roles:
+  - User
+protected_resources:
+  - /api/login
+  - /api/profile
+authentication_flows:
+  - POST /api/login with username and password
+threat_vectors_to_eliminate:
+  - SQL Injection in login query (VULNERABILITY 1)
+  - JWT token decoding without verification (VULNERABILITY 3)
+  - SQL Injection via decoded token parameter (VULNERABILITY 4)
+edge_case_rules:
+  - No token provided in authorization header results in 401 Unauthorized
+```

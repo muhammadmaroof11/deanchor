@@ -1,0 +1,48 @@
+Based on the provided HTML file, we can extract relevant domain information and semantic data. The output will be in a clean YAML format.
+
+Here is the extracted data:
+
+```yml
+page_title: CloudMetrics System Dashboard
+core_entities:
+  - name: CPU Utilization
+    data_fields:
+      value: 68.4%
+      delta: ↑ 4.2% from last hour
+  - name: Memory Allocation
+    data_fields:
+      current_value: 24.8 / 32 GB
+      capacity: 77.5%
+  - name: Active I/O Operations
+    data_fields:
+      operations_per_second: 1,420 ops/s
+      latency: 1.8ms
+  - name: Active Node Clusters
+    data_fields:
+      - node_name: prod-cluster-us-east-1
+        region: us-east-1a
+        status: HEALTHY
+        uptime: 99.98%
+      - node_name: prod-cluster-eu-central-1
+        region: eu-central-1
+        status: DEGRADED
+        uptime: 98.40%
+      - node_name: prod-cluster-ap-southeast-1
+        region: ap-southeast-1
+        status: HEALTHY
+        uptime: 100.0%
+interactive_actions:
+  - action_name: Refresh Data
+    intent: refresh_page
+content_copy:
+  - section: Overview
+    text: Monitor your cloud infrastructure for critical resources.
+  - section: Instances
+    text: Get a list of running VMs and their resource utilization in real-time.
+  - section: Storage
+    text: Check storage utilization across all nodes.
+  - section: Alerts
+    text: Monitor alerts in this dashboard to minimize downtime.
+  - section: Settings
+    text: Change settings for the best user experience.
+```

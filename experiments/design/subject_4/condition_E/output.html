@@ -1,0 +1,136 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusAI Token & Inference Analytics</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #242424;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+  }
+  .control-panel {
+    width: 30%;
+    text-align: right;
+  }
+  .controls {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+  }
+  .card {
+    background-color: #363636;
+    color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .card-header {
+    font-size: 2rem;
+    flex: 1;
+  }
+  .data-value {
+    font-size: 3rem;
+    margin-top: -0.5rem;
+  }
+  .data-delta {
+    font-size: 1.2rem;
+    opacity: 0.8;
+  }
+  .controls button {
+    background-color: #4a90e2;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .controls button:hover {
+    background-color: #3b82d6;
+  }
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+    .control-panel {
+      width: 100%;
+      text-align: center;
+    }
+    .card {
+      margin-bottom: 2rem;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="control-panel">
+    <span class="controls">Last 24 Hours, Last 7 Days, Last 30 Days</span>
+  </div>
+  <div class="card">
+    <div class="card-header">Total Ingested Tokens</div>
+    <div class="data-value">48.2M</div>
+    <div class="data-delta">+14.2% vs yesterday</div>
+  </div>
+  <div class="card">
+    <div class="card-header">Total Cost (USD)</div>
+    <div class="data-value">$1,284.50</div>
+    <div class="data-delta">+$184.20 over budget threshold</div>
+  </div>
+  <div class="card">
+    <div class="card-header">Avg TTFT Latency</div>
+    <div class="data-value">142ms</div>
+    <div class="data-delta">-18ms optimization</div>
+  </div>
+  <div class="card" id="model-deployments">
+    <div class="card-header">Active Model Deployments (14 Nodes)</div>
+    <div class="data-value">3 Autoscaling Ready</div>
+  </div>
+  <div class="card qwen-2.5-72b-instruct">
+    <div class="card-header">qwen-2.5-72b-instruct</div>
+    <div class="input-output-tokens">24.1M in / 6.2M out</div>
+    <div class="cache-hit-ratio">68.4% Cached</div>
+    <div class="total-cost">$720.40</div>
+    <div class="quota-usage" style="width: 82%; background-color: #60a5fa;"></div>
+  </div>
+  <div class="card claude-3-5-sonnet">
+    <div class="card-header">claude-3-5-sonnet</div>
+    <div class="input-output-tokens">12.4M in / 3.1M out</div>
+    <div class="cache-hit-ratio">42.1% Cached</div>
+    <div class="total-cost">$410.20</div>
+    <div class="quota-usage" style="width: 64%; background-color: #a855f7;"></div>
+  </div>
+  <div class="card deepseek-r1-distill">
+    <div class="card-header">deepseek-r1-distill</div>
+    <div class="input-output-tokens">8.6M in / 4.4M out</div>
+    <div class="cache-hit-ratio">89.0% Cached</div>
+    <div class="total-cost">$153.90</div>
+    <div class="quota-usage" style="width: 38%; background-color: #34d399;"></div>
+  </div>
+</div>
+<div class="controls">
+  <button onclick="exportCSV()">Export Billing CSV</button>
+</div>
+
+<script>
+function exportCSV() {
+  alert("Billing CSV exported!");
+}
+</script>
+</body>
+</html>
+```
+```

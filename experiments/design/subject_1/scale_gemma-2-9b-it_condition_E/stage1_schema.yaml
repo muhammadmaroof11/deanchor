@@ -1,0 +1,43 @@
+```yaml
+page_title: CloudMetrics System Dashboard
+core_entities:
+  - name: Overview
+    data_fields:
+      status: HEALTHY 
+  - name: Instances
+    data_fields:
+      count: 5
+  - name: Storage
+    data_fields:
+      total_capacity: 32GB
+      used_capacity: 24.8GB
+  - name: Alerts
+    data_fields:
+      active_alerts: 0
+  - name: Settings
+    data_fields:
+      last_updated: 2023-10-26T10:00:00Z
+interactive_actions:
+  - action_name: Refresh Data
+    intent: data_refresh
+content_copy:
+  - section: Infrastructure Telemetry
+    text: H1: Infrastructure Telemetry
+  - section: CPU Utilization
+    text: 68.4%
+  - section: Memory Allocation
+    text: 24.8 / 32 GB
+  - section: Active I/O Operations
+    text: 1,420 ops/s
+  - section: Active Node Clusters
+    text: H2: Active Node Clusters
+```
+
+**Important Notes:**
+
+* **Assumptions:** The provided HTML does not explicitly state values for some entities (e.g., Instance count, Storage used). I've made reasonable assumptions based on common web dashboard conventions. 
+* **Context is Key:**  Extracted data lacks full context. For accurate interpretation, you need to consider the surrounding webpage design and user interactions.
+
+
+
+

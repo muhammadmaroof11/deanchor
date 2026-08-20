@@ -1,0 +1,81 @@
+ For a radically different layout, let's introduce a card-based, grid-centric design that prioritizes content organization and flexibility. Here is the redesigned HTML page with a new layout and structural pattern:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ... Your existing head tags here ... -->
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <!-- Header content goes here -->
+    </header>
+
+    <main class="grid-container">
+      <section id="overview" class="grid-item overview">
+        <!-- Overview content goes here -->
+      </section>
+
+      <section id="recent-activities" class="grid-item recent-activities">
+        <!-- Recent Activities content goes here -->
+      </section>
+
+      <section id="alerts" class="grid-item alerts">
+        <!-- Alerts content goes here -->
+      </section>
+
+      <section id="metrics" class="grid-item metrics">
+        <!-- Metrics content goes here -->
+      </section>
+    </main>
+  </div>
+</body>
+</html>
+```
+
+Now, let's define the new CSS styles for this layout:
+
+```css
+/* ... Your existing root variables and reset styles here ... */
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(20rem, 1fr));
+  gap: 2rem;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.header {
+  background-color: var(--bg-secondary);
+  padding: 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(20rem, 1fr));
+  gap: 2rem;
+}
+
+.grid-item {
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+}
+
+/* ... Your existing styles for components and layout containers can be reused here ... */
+```
+
+This new design introduces a responsive grid layout with four main sections (overview, recent activities, alerts, and metrics). Each section has its unique content, which can be customized as needed. The header remains at the top with the breadcrumbs and search bar.

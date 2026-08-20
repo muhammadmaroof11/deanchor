@@ -1,0 +1,44 @@
+Based on the provided code snippet, we can extract domain information and extract relevant data. 
+
+Extracted Core Entities:
+
+*   `OrderBook`: represents a collection of buy/sell orders with price, size, timestamp fields.
+
+Extracted Domain Insights:
+
+*   The 'OrderBook' class implements inefficient algorithms to match orders and perform trade history operations.
+*   Some inefficiencies include:
+    *   Quadratic nested scanning for order matching.
+    *   Full linear scans or sorting on every insert.
+    *   Deep cloning of objects in hot path functions.
+    *   Synchronous garbage allocations.
+
+Extracted Content Strings:
+
+*   'Legacy Inefficiencies' section highlights the problems with current implementation (e.g., time complexity of operations).
+*   Comments explaining inefficiency in 'addOrder', 'matchOrders', and 'getDepth' methods. 
+
+Here is how we can transform the extracted data into a valid YAML schema.
+
+```yml
+page_title: High-Frequency Limit Order Book & Trade Matching Engine
+
+core_entities:
+  - name: OrderBook
+    data_fields:
+      bids: Array of { id, price, size, timestamp }
+      asks: Array of { id, price, size, timestamp }
+      tradeHistory: Array of { tradeId, price, size, time }
+
+interactive_actions:
+  - action_name: addOrder
+    intent: Add a buy or sell order to the OrderBook.
+  - action_name: matchOrders
+    intent: Match all possible bids and asks in the OrderBook.
+
+content_copy:
+  - section: Legacy Inefficiencies
+    text: O(N^2) full linear scans, JSON deep-cloning in hot path, unindexed searches, synchronous garbage allocations.
+```
+
+Note that I did not extract specific prices or timestamps as they are part of private data fields.

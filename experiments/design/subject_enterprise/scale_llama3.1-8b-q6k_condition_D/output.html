@@ -1,0 +1,136 @@
+Here is an entirely new layout that breaks all familiar patterns:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudShield Enterprise - Zero-Trust SecOps Command Center</title>
+  <style>
+    :root {
+      --bg-primary: #090d16;
+      --bg-secondary: #0f172a;
+      --border-color: #1e293b;
+      --text-primary: #f8fafc;
+      --accent-blue: #0284c7;
+    }
+
+    body {
+      font-family: monospace;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: calc(100vh - 64px);
+    }
+
+    .sidebar {
+      width: 300px;
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 24px;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .nav-item {
+      font-size: 18px;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    .nav-item.active {
+      text-decoration: underline;
+    }
+
+    .main-content {
+      width: calc(100% - 300px);
+      padding: 24px;
+    }
+
+    .header {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .search {
+      width: 300px;
+      background-color: var(--bg-card);
+      padding: 8px 12px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .icon-btn {
+      width: 24px;
+      height: 24px;
+      color: var(--text-secondary);
+      font-size: 18px;
+      background-color: var(--bg-card);
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Navigation</h2>
+      <ul class="nav-list">
+        <li class="nav-item active">Home</li>
+        <li class="nav-item">Security Overview</li>
+        <li class="nav-item">Threat Detection</li>
+        <li class="nav-item">Incident Response</li>
+        <li class="nav-item">Settings</li>
+      </ul>
+    </div>
+    <div class="main-content">
+      <h2>CloudShield Enterprise - Zero-Trust SecOps Command Center</h2>
+      <div class="header">
+        <span class="logo"></span>
+        <input type="search" placeholder="Search...">
+        <button class="icon-btn">!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content goes here -->
+  <h1>CloudShield Enterprise - Zero-Trust SecOps Command Center</h1>
+
+  <p>Welcome to CloudShield Enterprise! This is your command center for all security-related activity. From threat detection to incident response, everything you need will be displayed right here.</p>
+</body>
+</html>
+```

@@ -1,0 +1,46 @@
+```yaml
+page_title: NexusAI Token & Inference Analytics
+core_entities:
+  - name: Total Ingested Tokens
+    data_fields:
+      value: "48.2M"
+      delta: "+14.2% vs yesterday"
+  - name: Total Cost (USD)
+    data_fields:
+      value: "$1,284.50"
+      delta: "+$184.20 over budget threshold"
+  - name: Avg TTFT Latency
+    data_fields:
+      value: "142ms"
+      delta: "-18ms optimization"
+  - name: Active Model Deployments
+    data_fields:
+      value: "14 Nodes"
+      delta: "3 Autoscaling Ready"
+  - name: qwen-2.5-72b-instruct
+    data_fields:
+      input_output_tokens: "24.1M in / 6.2M out"
+      cache_hit_ratio: "68.4% Cached"
+      total_cost: "$720.40"
+      quota_usage: "width: 82%; background: #60a5fa;"
+  - name: claude-3-5-sonnet
+    data_fields:
+      input_output_tokens: "12.4M in / 3.1M out"
+      cache_hit_ratio: "42.1% Cached"
+      total_cost: "$410.20"
+      quota_usage: "width: 64%; background: #a855f7;"
+  - name: deepseek-r1-distill
+    data_fields:
+      input_output_tokens: "8.6M in / 4.4M out"
+      cache_hit_ratio: "89.0% Cached"
+      total_cost: "$153.90"
+      quota_usage: "width: 38%; background: #34d399;"
+interactive_actions:
+  - action_name: Export Billing CSV
+    intent: export_csv
+content_copy:
+  - section: Title
+    text: NexusAI Token & Inference Analytics
+  - section: Controls
+    text: "Last 24 Hours, Last 7 Days, Last 30 Days"
+```

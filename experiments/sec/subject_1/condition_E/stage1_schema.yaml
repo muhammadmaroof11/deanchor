@@ -1,0 +1,28 @@
+```yaml
+page_title: User Authentication and Profile Lookup Endpoint
+
+core_entities:
+  - name: users
+    data_fields:
+      id: integer
+      username: string
+      role: string
+  - name: profiles
+    data_fields:
+      user_id: integer
+interactive_actions:
+  - action_name: POST /api/login
+    intent: authenticate_user
+  - action_name: GET /api/profile
+    intent: retrieve_profile
+
+content_copy:
+  - section: Vulnerability Description
+    text: Direct SQL Injection concatenation
+  - section: Vulnerability Description
+    text: Generating token with none algorithm or weak expiration
+  - section: Vulnerability Description
+    text: Insecure decoding without signature verification
+  - section: Vulnerability Description
+    text: SQL Injection via decoded token parameter
+```

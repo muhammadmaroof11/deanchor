@@ -1,0 +1,40 @@
+```yaml
+page_title: High-Frequency Limit Order Book & Trade Matching Engine
+core_entities:
+  - name: OrderBook
+    data_fields:
+      bids:
+        type: array
+        items:
+          type: object
+          properties:
+            id: string
+            price: number
+            size: number
+            timestamp: number
+      asks:
+        type: array
+        items:
+          type: object
+          properties:
+            id: string
+            price: number
+            size: number
+            timestamp: number
+      tradeHistory:
+        type: array
+        items:
+          type: object
+          properties:
+            tradeId: string
+            price: number
+            size: number
+            time: number
+interactive_actions: []
+content_copy:
+  - section: Legacy Inefficiencies
+    text: O(N^2) full linear scans, JSON deep-cloning in hot path, unindexed searches, synchronous garbage allocations
+```
+
+
+

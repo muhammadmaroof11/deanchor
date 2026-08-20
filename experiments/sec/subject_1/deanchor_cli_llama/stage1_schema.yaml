@@ -1,0 +1,44 @@
+Based on the provided input code, here's a breakdown of the extracted security requirements and threat vector mitigations in YAML format:
+
+```yaml
+security_boundary:
+  - Zero-Trust Network Access (ZTNA)
+  - Least Privilege Principle
+  - Data-in-Motion Encryption
+principals_and_roles:
+  - User
+  - Administrator
+protected_resources:
+  - /api/login
+  - /api/profile
+authentication_flows:
+  - JWT-based Authentication
+  - Token-Based Authorization
+threat_vectors_to_eliminate:
+  - SQL Injection (SQLi)
+  - Unvalidated Input
+  - Insecure Decoding without Signature Verification
+  - Weak Expiration in Tokens
+edge_case_rules:
+  - Validate User Credentials before Database Query
+  - Use Prepared Statements for Database Queries
+  - Verify Token Signature before Decoding
+  - Implement Rate Limiting and IP Blocking for Login Attempts
+```
+
+In this output, I've extracted the following security requirements:
+
+1. **Security Boundary**: The zero-trust network access (ZTNA) model ensures that all traffic is encrypted and authenticated.
+2. **Principals and Roles**: Users are identified by their username, and administrators have elevated privileges for managing users and profiles.
+3. **Protected Resources**: The `/api/login` and `/api/profile` endpoints require authentication and authorization to access protected resources.
+4. **Authentication Flows**: JWT-based authentication is used for secure token generation and validation.
+5. **Threat Vectors to Eliminate**:
+	* SQL Injection (SQLi): Avoid direct concatenation of user input into database queries.
+	* Unvalidated Input: Ensure all inputs are validated before processing.
+	* Insecure Decoding without Signature Verification: Verify token signatures before decoding.
+	* Weak Expiration in Tokens: Implement secure token expiration and renewal mechanisms.
+6. **Edge Case Rules**:
+	* Validate User Credentials before Database Query: Ensure user credentials are valid before querying the database.
+	* Use Prepared Statements for Database Queries: Prevent SQL injection attacks by using prepared statements.
+	* Verify Token Signature before Decoding: Ensure tokens are signed with a secure algorithm and verified before decoding.
+	* Implement Rate Limiting and IP Blocking for Login Attempts: Prevent brute-force attacks by limiting login attempts and blocking suspicious IP addresses.
