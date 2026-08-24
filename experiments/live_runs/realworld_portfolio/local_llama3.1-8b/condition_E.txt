@@ -1,0 +1,146 @@
+Based on the provided semantic domain YAML contract, I will synthesize a brand new modern implementation from first principles.
+
+**Project Structure**
+```markdown
+public
+├── index.html
+├── assets
+│   ├── images
+│   │   ├── banner.webp
+│   │   └── vj.webp
+│   └── fonts
+│       └── Rubik
+├── js
+│   ├── scripts.js
+│   ├── aos.js
+│   ├── owl.carousel.js
+│   ├── bootstrap.js
+│   └── bootstrap-icons.js
+└── styles
+    ├── aos.css
+    ├── owl.carousel.min.css
+    ├── bootstrap.min.css
+    ├── bootstrap-icons.min.css
+    └── style.css
+```
+
+**index.html**
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vijay Singh - Frontend Web Developer</title>
+    <meta property="og:title" content="Vijay Singh - Frontend Web Developer">
+    <meta property="og:description" content="Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights.">
+    <meta property="og:image" content="assets/images/banner.webp">
+    <meta property="og:url" content="/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vijay Singh - Frontend Web Developer">
+    <meta name="twitter:description" content="Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights.">
+    <meta name="twitter:image" content="assets/images/banner.webp">
+    <link rel="icon" href="assets/images/vj.webp">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles/owl.carousel.min.css">
+    <link rel="stylesheet" href="styles/aos.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2? family=Rubik&display=swap&version=v18" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <!-- Header content -->
+    </header>
+    <main>
+        <!-- Main content -->
+    </main>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap-icons.js"></script>
+    <script src="js/owl.carousel.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/scripts.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=phycesbqlg"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'phycesbqlg');
+    </script>
+</body>
+</html>
+```
+
+**scripts.js** (in js/scripts.js file)
+```javascript
+import $ from 'jquery';
+import 'aos';
+
+$(document).ready(function() {
+    // Initialize AOS
+    AOS.init({
+        easing: 'ease-in-out',
+        duration: 600
+    });
+
+    // Initialize Owl Carousel
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 20,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 1
+            }
+        }
+    });
+
+    // Initialize Bootstrap
+    new bootstrap.Carousel(document.getElementById('carousel'), {
+        interval: 5000
+    });
+});
+```
+
+**style.css** (in styles/style.css file)
+```css
+body {
+    font-family: 'Rubik', sans-serif;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+main h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+

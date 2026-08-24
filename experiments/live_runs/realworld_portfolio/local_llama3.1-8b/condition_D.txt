@@ -1,0 +1,132 @@
+**Modern Refactored Code**
+
+**HTML Structure**
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vijay Singh - Passionate Frontend Web Developer creating beautiful and responsive websites. Explore my portfolio and blog for tech insights.">
+    <meta name="keywords" content="Vijay Singh, Web Developer, Frontend Developer, Portfolio, Blog, Tech Insights">
+
+    <title>Vijay Singh - Frontend Web Developer</title>
+
+    <!-- Open Graph Meta Tags / Facebook -->
+    <meta property="og:title" content="Vijay Singh - Frontend Web Developer">
+    <meta property="og:description" content="Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights.">
+    <meta property="og:image" content="assets/images/banner.webp">
+    <meta property="og:url" content="/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vijay Singh - Frontend Web Developer">
+    <meta name="twitter:description" content="Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights.">
+    <meta name="twitter:image" content="assets/images/banner.webp">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/vj.webp" type="image/x-icon">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preload" href="styles.css" as="style" />
+</head>
+
+<body data-theme="dark" data-spy="scroll" data-target="#navbar">
+    <div id="preloader"></div>
+
+    <header id="navbar">
+        <!-- Navigation menu -->
+    </header>
+
+    <main>
+        <!-- Main content -->
+    </main>
+
+    <script src="script.js" defer></script>
+    <script src="https://www.clarity.ms/tag/phycesbqlg" async></script>
+</body>
+</html>
+```
+
+**CSS Structure**
+
+```css
+/* styles.css */
+:root {
+    --primary-color: #333;
+    --secondary-color: #666;
+    --background-color: #f7f7f7;
+}
+
+body {
+    font-family: 'Rubik', sans-serif;
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    overflow-x: hidden;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+main {
+    padding: 2rem;
+}
+
+/* Rest of the styles */
+```
+
+**JavaScript Structure**
+
+```javascript
+// script.js
+// Import dependencies
+import './styles.css';
+
+// Set up Clarity Analytics
+window.clarity = window.clarity || function() {
+    (window.clarity.q = window.clarity.q || []).push(arguments);
+};
+
+// Initialize Clarity Analytics
+window.clarity('track', 'PageView');
+
+// Add event listeners for preloader
+document.getElementById('preloader').addEventListener('load', () => {
+    document.getElementById('preloader').style.display = 'none';
+});
+
+// Add event listeners for navigation menu
+document.addEventListener('DOMContentLoaded', () => {
+    const navbar = document.getElementById('navbar');
+    const links = navbar.querySelectorAll('a');
+
+    links.forEach((link) => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.querySelector(link.href);
+            target.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+});
+```
+
+**Modern Architecture**
+
+This refactored code follows a modern architecture that separates concerns and uses modern web development techniques. Here are some key changes:
+
+1.  **Separation of Concerns**: The HTML, CSS, and JavaScript code are separated into different files, making it easier to maintain and update each component individually.
+2.  **CSS-in-JS**: The CSS code is written in a CSS-in-JS style, using a CSS file to define the styles. This approach makes it easier to manage complex styles and layouts.
+3.  **JavaScript Modules**: The JavaScript code is written using ES6 modules, which allows for a more modular and maintainable codebase.
+4.  **Clarity Analytics**: The Clarity Analytics script is added to the HTML file, and the JavaScript code sets up the analytics using the Clarity API.
+5.  **Preloader**: The preloader is added to the HTML file, and the JavaScript code adds event listeners to hide the preloader when it finishes loading.
+6.  **

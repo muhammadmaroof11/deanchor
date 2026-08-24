@@ -1,0 +1,54 @@
+ Based on the provided HTML code, I will extract the domain entities, business logic, and represent them in a clean YAML contract.
+
+```yaml
+dashboard:
+  title: CloudMetrics System Dashboard
+  entities:
+    - name: Overview
+      type: page
+    - name: Instances
+      type: page
+    - name: Storage
+      type: page
+    - name: Alerts
+      type: page
+    - name: Settings
+      type: page
+
+  metrics:
+    - name: CPU Utilization
+      unit: %
+      trend:
+        - name: Increased
+        value: 4.2
+        direction: up
+    - name: Memory Allocation
+      unit: GB
+      capacity: 32
+      trend:
+        - name: Normal
+        value: 24.8
+        direction: none
+    - name: Active I/O Operations
+      unit: ops/s
+      trend:
+        - name: Normal
+        value: 1420
+        direction: none
+
+  cluster_nodes:
+    - name: prod-cluster-us-east-1
+      region: us-east-1a
+      status: HEALTHY
+      uptime: 99.98%
+    - name: prod-cluster-eu-central-1
+      region: eu-central-1
+      status: DEGRADED
+      uptime: 98.40%
+    - name: prod-cluster-ap-southeast-1
+      region: ap-southeast-1
+      status: HEALTHY
+      uptime: 100.0%
+```
+
+In this YAML contract, I have defined the entities, which are the pages or sections of the dashboard, and the metrics that are displayed on the dashboard. Additionally, I have included information about the active node clusters. The YAML contract does not include any layout tags or CSS classes.

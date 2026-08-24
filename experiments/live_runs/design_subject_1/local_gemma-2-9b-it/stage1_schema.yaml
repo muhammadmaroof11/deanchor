@@ -1,0 +1,18 @@
+```yaml
+domain:
+  entities:
+    - Dashboard
+    - Overview
+    - Instances
+    - Storage
+    - Alerts
+    - Settings
+    - Infrastructure
+    - NodeCluster
+    - CPUUtilization
+    - MemoryAllocation
+    - ActiveIOOperations
+    - Region
+    - Status
+    - Uptime
+```

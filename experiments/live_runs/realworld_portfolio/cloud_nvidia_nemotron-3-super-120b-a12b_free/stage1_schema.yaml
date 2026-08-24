@@ -1,0 +1,25 @@
+We need to output YAML representing domain entities, logic, and copy. Exclude layout/styling. So we need to extract: title, meta description, keywords, author, OG tags, Twitter tags, favicon, fonts, preloaded resources, analytics script, maybe body attributes? The instruction: Extract ONLY entities, logic, and copy into YAML. DO NOT include layout/styling.
+
+Thus we need to produce YAML with keys like page: title, description, keywords, author, og:title, og:description, og:image, og:url, og:type, twitter:card, twitter:title, twitter:description, twitter:image, favicon, fonts (maybe list), preload (list of href), analytics (script content). Also body attributes: data-bs-theme, data-bs-spy, data-bs-target.
+
+We need to output only YAML, no extra text.
+
+Let's craft:
+
+page:
+  title: "Vijay Singh - Frontend Web Developer"
+  description: "Vijay Singh - Passionate Frontend Web Developer creating beautiful and responsive websites. Explore my portfolio and blog for tech insights."
+  keywords: ["Vijay Singh", "Web Developer", "Frontend Developer", "Portfolio", "Blog", "Tech Insights"]
+  author: "Vijay Singh"
+  open_graph:
+    title: "Vijay Singh - Frontend Web Developer"
+    description: "Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights."
+    image: "assets/images/banner.webp"
+    url: "/"
+    type: "website"
+  twitter:
+    card: "summary_large_image"
+    title: "Vijay Singh - Frontend Web Developer"
+    description: "Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights."
+    image: "assets/images/banner.webp"
+ 

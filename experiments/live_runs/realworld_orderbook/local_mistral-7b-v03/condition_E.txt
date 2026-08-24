@@ -1,0 +1,160 @@
+ Based on the provided YAML contract, I'll outline a modern PHP implementation using the Symfony framework for a clean, object-oriented design.
+
+First, let's create the required interfaces, classes, and services:
+
+```yaml
+# src/Ordering/Entity/ILimitOrder.php
+
+namespace App\Ordering\Entity;
+
+interface ILimitOrder
+{
+    public function getType(): OrderType;
+    public function getSide(): Side;
+    public function getSize(): float;
+    public function getPrice(): float;
+}
+
+# src/Ordering/Entity/IStopLimitOrder.php
+
+namespace App\Ordering\Entity;
+
+interface IStopLimitOrder extends ILimitOrder
+{
+    public function getStopPrice(): float;
+}
+
+# src/Ordering/Entity/IStopMarketOrder.php
+
+namespace App\Ordering\Entity;
+
+interface IStopMarketOrder extends IMarketOrder
+{
+    public function getStopPrice(): float;
+}
+
+# src/Ordering/Entity/IMarketOrder.php
+
+namespace App\Ordering\Entity;
+
+interface IMarketOrder
+{
+    public function getSide(): Side;
+    public function getSize(): float;
+}
+
+# src/Ordering/Entity/Order.php
+
+namespace App\Ordering\Entity;
+
+use App\Ordering\Entity\ILimitOrder;
+use App\Ordering\Entity\IStopLimitOrder;
+use App\Ordering\Entity\IStopMarketOrder;
+use App\Ordering\Entity\OrderSide;
+
+abstract class Order implements ILimitOrder, IMarketOrder
+{
+    protected OrderSide $side;
+    protected float $size;
+
+    public function __construct(OrderSide $side, float $size)
+    {
+        $this->side = $side;
+        $this->size = $size;
+    }
+
+    public function getSide(): OrderSide
+    {
+        return $this->side;
+    }
+
+    public function getSize(): float
+    {
+        return $this->size;
+    }
+}
+
+# src/Ordering/Entity/LimitOrder.php
+
+namespace App\Ordering\Entity;
+
+use App\Ordering\Entity\ILimitOrder;
+
+class LimitOrder extends Order implements ILimitOrder
+{
+    protected float $price;
+
+    public function __construct(OrderSide $side, float $size, float $price)
+    {
+        parent::__construct($side, $size);
+        $this->price = $price;
+    }
+
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+}
+
+# src/Ordering/Entity/StopLimitOrder.php
+
+namespace App\Ordering\Entity;
+
+use App\Ordering\Entity\IStopLimitOrder;
+
+class StopLimitOrder extends LimitOrder implements IStopLimitOrder
+{
+    protected float $stopPrice;
+
+    public function __construct(OrderSide $side, float $size, float $price, float $stopPrice)
+    {
+        parent::__construct($side, $size, $price);
+        $this->stopPrice = $stopPrice;
+    }
+
+    public function getStopPrice(): float
+    {
+        return $this->stopPrice;
+    }
+}
+
+# src/Ordering/Entity/StopMarketOrder.php
+
+namespace App\Ordering\Entity;
+
+use App\Ordering\Entity\IStopMarketOrder;
+
+class StopMarketOrder implements IStopMarketOrder
+{
+    protected OrderSide $side;
+    protected float $size;
+    protected float $stopPrice;
+
+    public function __construct(OrderSide $side, float $size, float $stopPrice)
+    {
+        $this->side = $side;
+        $this->size = $size;
+        $this->stopPrice = $stopPrice;
+    }
+
+    public function getSide(): OrderSide
+    {
+        return $this->side;
+    }
+
+    public function getSize(): float
+    {
+        return $this->size;
+    }
+
+    public function getStopPrice(): float
+    {
+        return $this->stopPrice;
+    }
+}
+
+# src/Ordering/Entity/OrderSide.php
+
+namespace App\Ordering\Entity;
+
+use App\Ordering\Entity\OrderSide as BaseOrderSide

@@ -1,0 +1,193 @@
+**Refactored Code with Modern Architecture**
+=====
+
+### Directory Structure
+
+```bash
+github-webhook-dispatcher/
+app/
+__main__.py
+config.py
+lib/
+__init__.py
+webhook_handler.py
+route_handler.py
+openapi_handler.py
+models/
+__init__.py
+route.py
+requirements.txt
+Dockerfile
+docker-compose.yml
+```
+
+### `app/__main__.py`
+
+```python
+# Import required libraries
+from fastapi import FastAPI, Depends
+from fastapi.responses import JSONResponse
+from fastapi_limiter import Limiter
+from fastapi_limiter.depends import RateLimitDepends
+from starlette.requests import Request
+from config import config
+from lib.webhook_handler import webhook_handler
+from lib.route_handler import list_routes_handler
+from lib.openapi_handler import openapi_handler
+from lib.route import Route
+
+# Initialize the FastAPI application
+app = FastAPI(
+    title="GitHub Webhook Dispatcher",
+    description="Dispatches GitHub webhook payload events to downstream services",
+    version="1.0.0",
+)
+
+# Initialize the rate limiter
+limiter = Limiter(
+    key_func=get_request_ip,
+    default_limits=[RateLimitDepends("60/minute")],
+)
+
+# Define a dependency to handle rate limiting
+def get_rate_limit():
+    return Depends(limiter)
+
+# Define the routes
+@app.post("/", dependencies=[get_rate_limit])
+async def webhook_handler(request: Request):
+    return await webhook_handler(request)
+
+@app.get("/routes")
+async def list_routes_handler(request: Request):
+    return await list_routes_handler(request)
+
+@app.get("/openapi.json", dependencies=[get_rate_limit])
+async def openapi_handler(request: Request):
+    return await openapi_handler(request)
+
+# Dummy routes for health checks
+@app.post("/health")
+async def health_check():
+    return JSONResponse(status_code=200, content={"message": "alive"})
+
+@app.post("/dummy1")
+async def dummy1():
+    return JSONResponse(status_code=200, content={"message": "dummy1"})
+
+@app.post("/dummy2")
+async def dummy2():
+    return JSONResponse(status_code=200, content={"message": "dummy2"})
+
+# Start the server
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=config.port)
+```
+
+### `app/config.py`
+
+```python
+# Import required libraries
+import os
+
+# Define the configuration class
+class Config:
+    port = int(os.environ.get("PORT", 8000))
+    debug = os.environ.get("DEBUG", "false") == "true"
+
+# Initialize the configuration instance
+config = Config()
+```
+
+### `app/lib/webhook_handler.py`
+
+```python
+# Import required libraries
+from fastapi import Request
+from fastapi.responses import JSONResponse
+from config import config
+
+# Define the webhook handler function
+async def webhook_handler(request: Request):
+    # Handle the webhook payload here
+    # For example, dispatch the event to a downstream service
+    return JSONResponse(status_code=200, content={"message": "Webhook received"})
+```
+
+### `app/lib/route_handler.py`
+
+```python
+# Import required libraries
+from fastapi import Request
+from fastapi.responses import JSONResponse
+from config import config
+
+# Define the list routes handler function
+async def list_routes_handler(request: Request):
+    # Return a list of all configured routes
+    return JSONResponse(status_code=200, content=[{"path": "/health", "method": "POST"}, {"path": "/dummy1", "method": "POST"}, {"path": "/dummy2", "method": "POST"}])
+```
+
+### `app/lib/openapi_handler.py`
+
+```python
+# Import required libraries
+from fastapi import Request
+from fastapi.responses import JSONResponse
+from fastapi.openapi import OpenAPI
+from config import config
+
+# Define the OpenAPI handler function
+async def openapi_handler(request: Request):
+    # Return the OpenAPI specification
+    return JSONResponse(status_code=200, content=OpenAPI().schema)
+```
+
+### `app/models/route.py`
+
+```python
+# Import required libraries
+from pydantic import BaseModel
+
+# Define the Route model
+class Route(BaseModel):
+    path: str
+    method: str
+```
+
+### `requirements.txt`
+
+```
+fastapi
+fastapi_limiter
+starlette
+uvicorn
+pydantic
+```
+
+### `Dockerfile`
+
+```dockerfile
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install -r requirements.txt
+
+COPY . .
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+### `docker-compose.yml`
+
+```yml
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:

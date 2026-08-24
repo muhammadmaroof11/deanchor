@@ -1,0 +1,150 @@
+Certainly! Let's refactor the `OrderBook` class into a more modular and modern architecture. We'll use TypeScript classes and interfaces to ensure type safety and maintainability. We'll also use TypeScript's modern features like decorators and utilities to improve code readability and maintainability.
+
+Here's the refactored code:
+
+```typescript
+import { CustomError, ERROR, type OrderBookError } from "./errors";
+import {
+	type LimitOrder,
+	OrderFactory,
+	type StopLimitOrder,
+	type StopMarketOrder,
+} from "./order";
+import type { OrderQueue } from "./orderqueue";
+import { OrderSide } from "./orderside";
+import { StopBook } from "./stopbook";
+import {
+	type CreateOrderOptions,
+	type ICancelOrder,
+	type ILimitOrder,
+	type IOrder,
+	type IProcessOrder,
+	type JournalLog,
+	type LimitOrderOptions,
+	type MarketOrderOptions,
+	type OCOOrderOptions,
+	type OrderBookOptions,
+	OrderType,
+	type OrderUpdatePrice,
+	type OrderUpdateSize,
+	SelfTradePreventionMode,
+	Side,
+	type Snapshot,
+	type StopLimitOrderOptions,
+	type StopMarketOrderOptions,
+	type StopOrder,
+	TimeInForce,
+} from "./types";
+
+export class OrderBook {
+	private orders: Map<string, IOrder> = new Map();
+	private readonly bids: OrderSide = new OrderSide(Side.BUY);
+	private readonly asks: OrderSide = new OrderSide(Side.SELL);
+	private readonly enableJournaling: boolean;
+	private readonly stopBook: StopBook = new StopBook();
+	private _lastOp: number = 0;
+	private _marketPrice: number = 0;
+
+	constructor({
+		snapshot,
+		journal,
+		enableJournaling = false,
+	}: OrderBookOptions) {
+		this.enableJournaling = enableJournaling;
+
+		// Initialize order sides
+		this.bids = new OrderSide(Side.BUY);
+		this.asks = new OrderSide(Side.SELL);
+		this.stopBook = new StopBook();
+
+		// Restore from snapshot if available
+		if (snapshot) {
+			this.restoreSnapshot(snapshot);
+		}
+
+		// Replay from journal log if available
+		if (journal && Array.isArray(journal)) {
+			this.replayJournal(journal);
+		}
+	}
+
+	// Getter for the market price
+	get marketPrice(): number {
+		return this._marketPrice;
+	}
+
+	// Getter for the last operation ID
+	get lastOp(): number {
+		return this._lastOp;
+	}
+
+	/**
+	 * Create a new order based on the provided options.
+	 * @param options - Options for creating the order.
+	 * @returns The created order.
+	 */
+	createOrder(options: CreateOrderOptions): IOrder {
+		const order = OrderFactory.createOrder(options);
+		if (order) {
+			this.orders.set(order.id, order);
+			if (order.side === Side.BUY) {
+				this.bids.addOrder(order);
+			} else {
+				this.asks.addOrder(order);
+			}
+			this._lastOp = order.id;
+			return order;
+		}
+		throw new CustomError(ERROR.INVALID_ORDER);
+	}
+
+	/**
+	 * Process a journal log to update the order book.
+	 * @param log - The journal log to process.
+	 */
+	processJournalLog(log: JournalLog) {
+		if (log.opType === "create") {
+			this.createOrder(log.order);
+		} else if (log.opType === "cancel") {
+			const order = this.orders.get(log.orderId);
+			if (order) {
+				this.orders.delete(order.id);
+				if (order.side === Side.BUY) {
+					this.bids.removeOrder(order);
+				} else {
+					this.asks.removeOrder(order);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Restore the order book from a snapshot.
+	 * @param snapshot - The snapshot to restore from.
+	 */
+	private restoreSnapshot(snapshot: Snapshot) {
+		this._marketPrice = snapshot.marketPrice;
+		this._lastOp = snapshot.lastOp;
+		this.orders = new Map(snapshot.orders);
+		this.bids = new OrderSide(Side.BUY);
+		this.asks = new OrderSide(Side.SELL);
+		snapshot.bids.forEach((order) => this.bids.addOrder(order));
+		snapshot.asks.forEach((order) => this.asks.addOrder(order));
+	}
+
+	/**
+	 * Replay journal logs to update the order book.
+	 * @param journal - The journal logs to replay.
+	 */
+	private replayJournal(journal: JournalLog[]) {
+		journal.forEach((log) => {
+			this.processJournalLog(log);
+		});
+	}
+}
+```
+
+### Key Changes and Improvements:
+1. **Modular Design**: The `OrderBook` class is now more modular with clear separation of concerns.
+2. **Type Safety**: Using TypeScript interfaces and types for better type safety.
+3. **Encapsulation**: Encapsulated internal state with

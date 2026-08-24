@@ -1,0 +1,172 @@
+Based on the provided semantic domain contract, I'll synthesize a modern, clean-slate UI implementation using HTML and CSS. The structure will be aligned with the domain contract, ensuring a consistent and responsive design.
+
+### HTML
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Metrics System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Navigation</h2>
+        <ul>
+            <li>Dashboard</li>
+            <li>Reports</li>
+            <li>Settings</li>
+        </ul>
+    </div>
+    <main class="main-content">
+        <div class="header">
+            <h1>Cloud Metrics System</h1>
+            <button class="header-button">Settings</button>
+        </div>
+        <div class="cards">
+            <div class="card">
+                <h3>Users</h3>
+                <div class="val">500</div>
+                <div class="sub">Active</div>
+            </div>
+            <div class="card">
+                <h3>Projects</h3>
+                <div class="val">100</div>
+                <div class="sub">Completed</div>
+            </div>
+            <div class="card">
+                <h3>API Calls</h3>
+                <div class="val">25000</div>
+                <div class="sub">Today</div>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Project ID</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>12345</td>
+                    <td>Project A</td>
+                    <td>Active</td>
+                    <td>Details</td>
+                </tr>
+                <tr>
+                    <td>67890</td>
+                    <td>Project B</td>
+                    <td>Inactive</td>
+                    <td>Details</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
+```
+
+### CSS (styles.css)
+
+```css
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 220px;
+    background-color: #1e293b;
+    color: white;
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 10px 0;
+    border-bottom: 1px solid #334155;
+    cursor: pointer;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.header .header-button {
+    background-color: #1e293b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Cards Styles */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+    margin: 0 0 10px 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.card .val {
+    font-size: 28px;
+    font-weight: bold;
+    color: #0f172a;
+}
+
+.card .sub {
+   

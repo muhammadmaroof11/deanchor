@@ -1,0 +1,148 @@
+**CloudMetrics System Dashboard Refactored**
+
+### Architecture Overview
+
+The refactored code will be based on a modern web development architecture that separates concerns into smaller, independent components. This approach will make it easier to maintain, update, and scale the application.
+
+**Components**
+
+1. **Frontend**: Written in HTML, CSS, and JavaScript, using a framework like React or Vue.js for building reusable UI components.
+2. **Backend**: Built using a Node.js server, with Express.js as the web framework, and a database like MongoDB or PostgreSQL for storing data.
+3. **API Gateway**: Handles incoming requests, authenticates users, and routes requests to the appropriate backend services.
+4. **Data Services**: Responsible for fetching and processing data from various sources, such as AWS CloudWatch or Prometheus.
+
+### Code Structure
+
+```bash
+cloudmetrics-dashboard/
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Sidebar.js
+│   │   │   ├── Card.js
+│   │   │   ├── Table.js
+│   │   │   └── ...
+│   │   ├── pages/
+│   │   │   ├── Dashboard.js
+│   │   │   └── ...
+│   │   └── index.js
+│   └── package.json
+├── backend/
+│   ├── src/
+│   │   ├── api/
+│   │   │   ├── dashboard.js
+│   │   │   └── ...
+│   │   ├── services/
+│   │   │   ├── dataServices.js
+│   │   │   └── ...
+│   │   └── index.js
+│   └── package.json
+├── apiGateway/
+│   ├── src/
+│   │   ├── api.js
+│   │   └── index.js
+│   └── package.json
+└── dataServices/
+    ├── src/
+    │   ├── cloudwatch.js
+    │   └── prometheus.js
+    └── package.json
+```
+
+### Frontend (React)
+
+**Sidebar.js**
+```jsx
+import React from 'react';
+import './Sidebar.css';
+
+const Sidebar = () => {
+  return (
+    <div className="sidebar">
+      <h2>CloudMetrics</h2>
+      <ul>
+        <li>Overview</li>
+        <li>Instances</li>
+        <li>Storage</li>
+        <li>Alerts</li>
+        <li>Settings</li>
+      </ul>
+    </div>
+  );
+};
+
+export default Sidebar;
+```
+
+**Card.js**
+```jsx
+import React from 'react';
+import './Card.css';
+
+const Card = ({ title, value, subtitle }) => {
+  return (
+    <div className="card">
+      <h3>{title}</h3>
+      <div className="val">{value}</div>
+      <div className="sub">{subtitle}</div>
+    </div>
+  );
+};
+
+export default Card;
+```
+
+**Dashboard.js**
+```jsx
+import React, { useState, useEffect } from 'react';
+import Sidebar from './Sidebar';
+import Card from './Card';
+import Table from './Table';
+
+const Dashboard = () => {
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    // Fetch data from API
+    fetch('/api/dashboard')
+      .then(response => response.json())
+      .then(data => setData(data));
+  }, []);
+
+  return (
+    <div className="main">
+      <div className="header">
+        <h1>Infrastructure Telemetry</h1>
+        <button style={{ background: '#2563eb', color: 'white', padding: '8px 16px', border: 'none', borderRadius: '4px' }}>
+          Refresh Data
+        </button>
+      </div>
+      <div className="cards">
+        <Card title="CPU Utilization" value="68.4%" subtitle="↑ 4.2% from last hour" />
+        <Card title="Memory Allocation" value="24.8 / 32 GB" subtitle="77.5% capacity" />
+        <Card title="Active I/O Operations" value="1,420 ops/s" subtitle="Normal latency 1.8ms" />
+      </div>
+      <h2>Active Node Clusters</h2>
+      <Table data={data} />
+    </div>
+  );
+};
+
+export default Dashboard;
+```
+
+### Backend (Express.js)
+
+**dashboard.js**
+```javascript
+const express = require('express');
+const router = express.Router();
+const dataServices = require('../services/dataServices');
+
+router.get('/dashboard', async (req, res) => {
+  try {
+    const data = await dataServices.getDashboardData();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching dashboard data'

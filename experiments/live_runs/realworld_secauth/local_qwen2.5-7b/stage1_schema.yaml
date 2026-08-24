@@ -1,0 +1,15 @@
+```yaml
+domain:
+  entities:
+    - User
+    - Role
+  relationships:
+    - User.hasMany(Role)
+    - User.belongsToMany(Role, through: 'UserRoles')
+  business_logic:
+    - User.create(password: bcrypt.hashSync(password, 8))
+    - User.setRoles(roles)
+    - Role.findAll(where: { name: { [Op.or]: roles } })
+    - jwt.sign({ id: user.id }, config.secret, algorithm: 'HS256', allowInsecureKeySizes: true, expiresIn: 86400)
+    - bcrypt.compareSync(password, user.password)
+```

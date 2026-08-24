@@ -1,0 +1,159 @@
+Rewriting the provided code from scratch with a modern architecture involves several steps. We'll use modern practices such as modularizing the code, using a more robust routing system, and incorporating better error handling and logging. We'll also use TypeScript for better type safety, although the code provided is in JavaScript, and we'll refactor it to be cleaner and more maintainable.
+
+Here's a refactored version of the code:
+
+1. **Modularize the code**: Separate concerns into different modules.
+2. **Use a modern web framework**: Use `fastify` instead of `express` for better performance and modern features.
+3. **Use a configuration management tool**: Use `dotenv` for environment variables.
+4. **Enhance error handling and logging**: Use `winston` for logging.
+5. **Implement rate limiting with a more robust approach**: Use `fastify-rate-limit`.
+
+### Refactored Code
+
+#### `app.ts`
+
+```typescript
+import fastify from 'fastify';
+import fastifyRateLimit from 'fastify-rate-limit';
+import { config } from './config';
+import { webhookHandler, listRouteHandler, openapiHandler } from './lib';
+import { logger } from './lib/logger';
+
+const app = fastify({ logger: logger.child({ service: 'app' }) });
+
+// Apply rate limiting to the openapi.json route
+const rateLimiter = fastifyRateLimit({
+  max: 60,
+  windowMS: 60000, // 1 minute
+  message: 'Too many requests, please try again later.',
+});
+
+app.register(rateLimiter, { prefix: '/openapi.json' });
+
+// Parse the request body as JSON
+app.register(require('fastify-bodyparser'));
+
+// Set options for Express
+app.register(require('fastify-helmet'));
+
+// Create a route for the GitHub webhook
+app.post('/', async (req, res) => {
+  try {
+    await webhookHandler(req, res);
+  } catch (error) {
+    logger.error('Error handling webhook', error);
+    res.statusCode = 500;
+    res.send('Error handling webhook');
+  }
+});
+
+// Create a route to get a list of all the configured routes
+app.get('/routes', async (req, res) => {
+  try {
+    await listRouteHandler(req, res);
+  } catch (error) {
+    logger.error('Error listing routes', error);
+    res.statusCode = 500;
+    res.send('Error listing routes');
+  }
+});
+
+// Create a route to serve the openapi spec
+app.get('/openapi.json', async (req, res) => {
+  try {
+    await openapiHandler(req, res);
+  } catch (error) {
+    logger.error('Error handling openapi request', error);
+    res.statusCode = 500;
+    res.send('Error handling openapi request');
+  }
+});
+
+// Create a dummy route for health checks
+app.post('/health', async (req, res) => {
+  res.statusCode = 200;
+  res.send('alive');
+});
+
+// Start the server
+app.listen({ port: config.port }, (err, address) => {
+  if (err) {
+    logger.error('Failed to start the server', err);
+    process.exit(1);
+  }
+  logger.info(`GitHub webhook dispatcher listening on ${address}`);
+});
+
+export default app;
+```
+
+#### `config.ts`
+
+```typescript
+import { config as dotEnvConfig } from 'dotenv';
+
+dotEnvConfig();
+
+const PORT = process.env.PORT || 3000;
+const DEBUG = process.env.DEBUG === 'true';
+
+export const config = {
+  port: PORT,
+  debug: DEBUG,
+};
+```
+
+#### `lib/logger.ts`
+
+```typescript
+import winston from 'winston';
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.Console(),
+  ],
+});
+
+export default logger;
+```
+
+#### `lib/webhookHandler.ts`
+
+```typescript
+export async function webhookHandler(req, res) {
+  // Process the GitHub webhook payload
+  const payload = req.body;
+  // Example processing logic
+  res.send('Webhook received');
+}
+```
+
+#### `lib/listRouteHandler.ts`
+
+```typescript
+export async function listRouteHandler(req, res) {
+  // List all configured routes
+  const routes = app.routeHandler.list();
+  res.send(routes);
+}
+```
+
+#### `lib/openapiHandler.ts`
+
+```typescript
+export async function openapiHandler(req, res) {
+  // Serve the openapi spec
+  const openapiSpec = {
+    // OpenAPI spec content
+  };
+  res.send(openapiSpec);
+}
+```
+
+### Explanation
+
+1. **Modularization**: The code is split into different files for better organization.
+2. **Fastify**: Using `fastify` for a more modern and efficient web framework.
+3. **Rate Limiting**:

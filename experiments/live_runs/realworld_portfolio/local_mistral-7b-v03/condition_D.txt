@@ -1,0 +1,111 @@
+ I've redesigned the HTML structure using modern practices and a modular approach. I've separated the metadata, scripts, and styles into separate components. Here's the rewritten code:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <TitleComponent />
+    <MetaTagsComponent />
+    <OpenGraphMetaTagsComponent />
+    <TwitterCardMetaTagsComponent />
+    <FaviconComponent />
+    <GoogleFontsComponent />
+
+</head>
+
+<body data-bs-theme="dark" data-bs-spy="scroll" data-bs-target="#navbar">
+
+    <Preloader />
+
+    <MainContent />
+
+    <ScriptsComponent />
+
+</body>
+</html>
+
+// Custom React Components
+
+const TitleComponent = () => {
+    return (
+        <title>Vijay Singh - Frontend Web Developer</title>
+    );
+};
+
+const MetaTagsComponent = () => {
+    return (
+        <>
+            <meta name="title" content="Vijay Singh - Frontend Web Developer" />
+            <meta name="description" content="Vijay Singh - Passionate Frontend Web Developer creating beautiful and responsive websites. Explore my portfolio and blog for tech insights." />
+            <meta name="keywords" content="Vijay Singh, Web Developer, Frontend Developer, Portfolio, Blog, Tech Insights" />
+            <meta name="author" content="Vijay Singh" />
+        </>
+    );
+};
+
+const OpenGraphMetaTagsComponent = () => {
+    return (
+        <>
+            <meta property="og:title" content="Vijay Singh - Frontend Web Developer" />
+            <meta property="og:description" content="Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights." />
+            <meta property="og:image" content="/assets/images/banner.webp" />
+            <meta property="og:url" content="/" />
+            <meta property="og:type" content="website" />
+        </>
+    );
+};
+
+const TwitterCardMetaTagsComponent = () => {
+    return (
+        <>
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content="Vijay Singh - Frontend Web Developer" />
+            <meta name="twitter:description" content="Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights." />
+            <meta name="twitter:image" content="/assets/images/banner.webp" />
+        </>
+    );
+};
+
+const FaviconComponent = () => {
+    return (
+        <link rel="icon" href="/assets/images/vj.webp" type="image/x-icon" />
+    );
+};
+
+const GoogleFontsComponent = () => {
+    return (
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik&amp;display=swap" />
+    );
+};
+
+const Preloader = () => {
+    // Preloader component implementation
+};
+
+const MainContent = () => {
+    // Main content component implementation
+};
+
+const ScriptsComponent = () => {
+    return (
+        <>
+            <link rel="preload" href="/assets/css/aos.css" as="style" />
+            <link rel="preload" href="/assets/css/owl.carousel.min.css" as="style" />
+            <link rel="preload" href="/assets/css/bootstrap.min.css" as="style" />
+            <link rel="preload" href="/assets/css/bootstrap-icons.min.css" as="style" />
+            <link rel="preload" href="/assets/css/style.css" as="style" />
+            <Scripts />
+        </>
+    );
+};
+
+const Scripts = () => {
+    return (
+        <>
+            <script type="text/javascript">
+                // MS-Clarity Analytics script
+            </script>
+        </>

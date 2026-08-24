@@ -1,0 +1,88 @@
+ Here's a clean YAML representation of the domain entities, business logic, and interfaces extracted from the provided code:
+
+```yaml
+OrderBook:
+  class:
+    - name: OrderBook
+      functions:
+        - name: __construct
+          parameters:
+            - name: options
+              type: OrderBookOptions
+              properties:
+                - name: snapshot
+                  type: JournalLog
+                - name: journal
+                  type: JournalLog
+                - name: enableJournaling
+                  type: boolean
+                  default: false
+        - name: restoreSnapshot
+          parameters:
+            - name: snapshot
+              type: Snapshot
+        - name: replayJournal
+          parameters:
+            - name: journal
+              type: JournalLog
+    fields:
+      - name: orders
+        type: { key: string, value: LimitOrder }
+      - name: _lastOp
+        type: number
+      - name: _marketPrice
+        type: number
+      - name: bids
+        type: OrderSide
+        value:
+          side: BUY
+      - name: asks
+        type: OrderSide
+        value:
+          side: SELL
+      - name: enableJournaling
+        type: boolean
+      - name: stopBook
+        type: StopBook
+
+LimitOrder:
+  interface:
+    - name: ILimitOrder
+      properties:
+        - name: type
+          type: OrderType
+          value: limit
+        - name: side
+          type: Side
+        - name: size
+          type: number
+        - name: price
+          type: number
+
+StopLimitOrder:
+  interface:
+    - name: IStopLimitOrder
+      extends:
+        - ILimitOrder
+      properties:
+        - name: stopPrice
+          type: number
+
+StopMarketOrder:
+  interface:
+    - name: IStopMarketOrder
+      extends:
+        - IMarketOrder
+      properties:
+        - name: stopPrice
+          type: number
+
+OrderQueue:
+  type:
+    - name: OrderQueue
+
+OrderSide:
+  class:
+    - name: OrderSide
+      parameters:
+        - name

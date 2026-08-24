@@ -1,0 +1,229 @@
+Based on the provided domain contract, I'll synthesize a brand new modern implementation from first principles with zero legacy layout. 
+
+### Language and Framework
+
+For this implementation, I'll use TypeScript and a modern web framework, specifically Express.js, to handle the backend. For the frontend, I'll use React and a library like Redux for state management.
+
+### Entities and Models
+
+Let's start by creating the entities and models based on the domain contract.
+
+```typescript
+// entities.ts
+export interface OrderSide {
+  side: string;
+}
+
+export interface StopBook {
+  // empty interface for now
+}
+
+export interface JournalLog {
+  opId: number;
+}
+
+export interface LimitOrder {
+  size: number;
+  price: number;
+}
+
+export interface StopLimitOrder {
+  size: number;
+  price: number;
+  stopPrice: number;
+}
+
+export interface StopMarketOrder {
+  size: number;
+}
+
+export interface Order {
+  // empty interface for now
+}
+
+export interface OrderFactory {
+  // empty interface for now
+}
+
+export interface OrderUpdatePrice {
+  price: number;
+}
+
+export interface OrderUpdateSize {
+  size: number;
+}
+
+export interface TimeInForce {
+  // empty interface for now
+}
+
+export interface OrderType {
+  // empty interface for now
+}
+
+export interface Side {
+  // empty interface for now
+}
+
+export interface SelfTradePreventionMode {
+  // empty interface for now
+}
+
+export interface OrderUpdate {
+  // empty interface for now
+}
+
+export interface MarketOrderOptions {
+  size: number;
+}
+
+export interface StopLimitOrderOptions {
+  size: number;
+  price: number;
+  stopPrice: number;
+}
+
+export interface StopMarketOrderOptions {
+  size: number;
+}
+
+export interface OrderBookOptions {
+  snapshot: JournalLog;
+  journal: JournalLog[];
+  enableJournaling: boolean;
+}
+
+export interface CreateOrderOptions {
+  type: string;
+  side: string;
+  size: number;
+  price: number;
+}
+
+export interface ICancelOrder {
+  // empty interface for now
+}
+
+export interface ILimitOrder {
+  // empty interface for now
+}
+
+export interface IOrder {
+  // empty interface for now
+}
+
+export interface IProcessOrder {
+  // empty interface for now
+}
+
+export interface LimitOrderOptions {
+  size: number;
+  price: number;
+}
+
+export interface OCOOrderOptions {
+  // empty interface for now
+}
+
+export interface OrderBookError {
+  // empty interface for now
+}
+
+export interface OrderUpdatePrice {
+  price: number;
+}
+
+export interface OrderUpdateSize {
+  size: number;
+}
+
+export interface Snapshot {
+  // empty interface for now
+}
+
+export class OrderBook {
+  orders: OrderSide[];
+  lastOp: number;
+  marketPrice: number;
+  bids: OrderSide[];
+  asks: OrderSide[];
+  enableJournaling: boolean;
+  stopBook: StopBook;
+  constructor(
+    orders: OrderSide[],
+    lastOp: number,
+    marketPrice: number,
+    bids: OrderSide[],
+    asks: OrderSide[],
+    enableJournaling: boolean,
+    stopBook: StopBook,
+  ) {
+    this.orders = orders;
+    this.lastOp = lastOp;
+    this.marketPrice = marketPrice;
+    this.bids = bids;
+    this.asks = asks;
+    this.enableJournaling = enableJournaling;
+    this.stopBook = stopBook;
+  }
+}
+
+export class OrderQueue {
+  // empty class for now
+}
+```
+
+### Business Logic
+
+Next, let's implement the business logic methods as specified in the domain contract.
+
+```typescript
+// business_logic.ts
+import { OrderBook } from './entities';
+
+export function restoreSnapshot(snapshot: JournalLog) {
+  // TO DO: Implement restore snapshot logic
+  console.log(`Restoring snapshot: ${snapshot.opId}`);
+  return new OrderBook([], 0, 0, [], [], false, {});
+}
+```
+
+### Order Factory and Order Processing
+
+Let's create an order factory and an order processing logic.
+
+```typescript
+// order_factory.ts
+import { OrderBook } from './entities';
+
+export class OrderFactory {
+  private orderBook: OrderBook;
+
+  constructor(orderBook: OrderBook) {
+    this.orderBook = orderBook;
+  }
+
+  createOrder(options: CreateOrderOptions) {
+    const { type, side, size, price } = options;
+    let order: LimitOrder | StopLimitOrder | StopMarketOrder;
+
+    if (type === 'LIMIT') {
+      order = new LimitOrder(size, price);
+    } else if (type === 'STOP_LIMIT') {
+      order = new StopLimitOrder(size, price, price);
+    } else if (type === 'STOP_MARKET') {
+      order = new StopMarketOrder(size);
+    }
+
+    this.orderBook.orders.push(order);
+    return order;
+  }
+}
+
+// order_processor.ts
+import { OrderBook } from './entities';
+
+export class OrderProcessor {
+  private orderBook: OrderBook;
+
+  constructor(orderBook: Order

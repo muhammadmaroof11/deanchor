@@ -1,0 +1,145 @@
+Based on the provided domain contract, here is a modern implementation in TypeScript with a clean-slate approach, leveraging modern JavaScript libraries and patterns:
+
+```typescript
+import bcrypt from 'bcrypt';
+import { NextFunction, Request, Response } from 'express';
+import { Sequelize, Model, HasManyGetAssociationsMixin, BelongsToManyAddAssociationMixin } from 'sequelize-typescript';
+import { Op } from 'sequelize';
+import jwt from 'jsonwebtoken';
+
+interface UserAttributes {
+  id: number;
+  username: string;
+  password: string;
+  roles: Role[];
+}
+
+interface UserCreationAttributes {
+  username: string;
+  password: string;
+}
+
+interface RoleAttributes {
+  id: number;
+  name: string;
+}
+
+interface UserRoleAttributes {
+  userId: number;
+  roleId: number;
+}
+
+class User extends Model<UserAttributes, UserCreationAttributes> {
+  public id!: number;
+  public username!: string;
+  public password!: string;
+
+  public roles!: Role[];
+
+  public async hasRoles(): Promise<Role[]> {
+    return this.getRoles();
+  }
+
+  public async setRoles(roles: Role[]): Promise<void> {
+    await this.setRoles(roles);
+  }
+
+  public async addRole(role: Role): Promise<void> {
+    await this.addRole(role);
+  }
+
+  public async removeRole(role: Role): Promise<void> {
+    await this.removeRole(role);
+  }
+}
+
+class Role extends Model<RoleAttributes> {
+  public id!: number;
+  public name!: string;
+}
+
+class UserRole extends Model<UserRoleAttributes> {
+  public userId!: number;
+  public roleId!: number;
+}
+
+const UserHasManyUserRoles = User.hasMany(UserRole, { as: 'userRoles' });
+const RoleBelongsToManyUserRoles = Role.belongsToMany(User, { through: UserRole, as: 'users' });
+
+export const createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { username, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 8);
+    const user = await User.create({ username, password: hashedPassword });
+
+    res.status(201).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const authenticateUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ where: { username } });
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) {
+      throw new Error('Invalid password');
+    }
+
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, {
+      algorithm: 'HS256',
+      expiresIn: '24h'
+    });
+
+    res.status(200).json({ token });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const setRoles = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const { roles } = req.body;
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const foundRoles = await Role.findAll({ where: { name: { [Op.or]: roles } } });
+
+    if (foundRoles.length !== roles.length) {
+      throw new Error('Some roles not found');
+    }
+
+    await user.setRoles(foundRoles);
+
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+```
+
+### Explanation:
+1. **Models and Associations**: 
+   - `User` and `Role` models are defined with attributes and associations.
+   - `UserRole` is the through model for the many-to-many relationship.
+   
+2. **Business Logic**:
+   - `createUser`: Creates a new user with hashed password.
+   - `authenticateUser`: Authenticates a user and generates a JWT token.
+   - `setRoles`: Sets roles for a user based on the provided role names.
+
+3. **Dependencies**:
+   - `bcrypt` for password hashing.
+   - `express` for handling HTTP requests.
+   - `sequelize` for database interactions.
+   - `jsonwebtoken` for generating JWT tokens.
+
+This implementation is modern, clean, and adheres to the provided domain contract.

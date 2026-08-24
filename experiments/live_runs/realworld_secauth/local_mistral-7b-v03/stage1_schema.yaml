@@ -1,0 +1,75 @@
+ Here is a simplified YAML representation of the given code, focusing on the domain entities, business logic, and omitting layout tags, CSS classes, and other non-essential details:
+
+```yaml
+SignupContract:
+  Request:
+    Properties:
+      username: string
+      email: string
+      password: string
+      roles: list[string]
+
+  Response:
+    Properties:
+      message: string
+
+  BusinessLogic:
+    Steps:
+      - Step: SaveUser
+          Input:
+            - username: req.body.username
+            - email: req.body.email
+            - password: bcrypt.hashSync(req.body.password, 8)
+          Output: user
+          Actions:
+            - CreateUser:
+                Model: User
+                Parameters:
+                  - username
+                  - email
+                  - password
+              - IfRoleExists:
+                  Condition: req.body.roles
+                  Then:
+                    - GetRoles:
+                        Model: Role
+                        Condition: name: {[Op.or]: req.body.roles}
+                        Parameters: None
+                    - AssignRolesToUser:
+                        Model: User
+                        Parameters: roles
+                        Actions: user.setRoles(roles)
+                    - SendResponse:
+                        Response:
+                          Properties:
+                            message: "User registered successfully!"
+              - Else:
+                - GetRole:
+                    Model: Role
+                    Condition: id = 1
+                    Parameters: None
+                - AssignRoleToUser:
+                    Model: User
+                    Parameters: [1]
+                    Actions: user.setRoles([1])
+                - SendResponse:
+                    Response:
+                      Properties:
+                        message: "User registered successfully!"
+
+SigninContract:
+  Request:
+    Properties:
+      username: string
+      password: string
+
+  Response:
+    Properties:
+      id: integer
+      username: string
+      email: string
+      roles: list[string]
+      accessToken: string
+
+  BusinessLogic:
+    Steps

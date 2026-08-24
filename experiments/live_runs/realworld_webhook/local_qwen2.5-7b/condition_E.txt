@@ -1,0 +1,83 @@
+Based on the provided semantic domain contract, here is a clean-slate modern implementation in JavaScript using Express.js and some additional modern libraries for rate limiting and configuration handling:
+
+```javascript
+const express = require('express');
+const RateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const openapiHandler = require('./openapiHandler'); // Assuming you have this handler implemented
+const webhookHandler = require('./webhookHandler'); // Assuming you have this handler implemented
+const listRouteHandler = require('./listRouteHandler'); // Assuming you have this handler implemented
+
+// Configuration
+const config = {
+  port: 3000,
+  debug: true,
+};
+
+// Rate Limiter
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 60, // limit each IP to 60 requests per windowMs
+});
+
+// Express Application
+const app = express();
+
+// Middleware
+app.use(express.json()); // Body parser
+app.use(helmet()); // Security middleware
+app.use(morgan('tiny')); // Logging middleware
+
+// Webhook Handler
+app.post('/webhook', webhookHandler);
+
+// List Route Handler
+app.get('/list', listRouteHandler);
+
+// OpenAPI Handler
+app.get('/openapi', openapiHandler);
+
+// Health Check Routes
+const healthCheckRoutes = ['/health', '/dummy1', '/dummy2'];
+healthCheckRoutes.forEach(route => {
+  app.get(route, (req, res) => {
+    res.status(200).send(`Healthy: ${route}`);
+  });
+});
+
+// Apply Rate Limiter
+app.use(limiter);
+
+// Start Server
+const server = app.listen(config.port, () => {
+  if (config.debug) {
+    console.log(`GitHub webhook dispatcher listening on port ${config.port}!`);
+  }
+});
+```
+
+### Explanation:
+
+1. **Configuration**: The configuration is handled using an object `config` which contains `port` and `debug` settings.
+
+2. **Rate Limiter**: The `RateLimit` middleware is configured to limit each IP to 60 requests per minute.
+
+3. **Express Application**: An instance of `express.Application` is created.
+
+4. **Middleware**:
+   - `express.json()` is used to parse incoming JSON requests.
+   - `helmet` is used for security purposes.
+   - `morgan` is used for logging.
+
+5. **Route Handlers**:
+   - `/webhook`: Handled by `webhookHandler`.
+   - `/list`: Handled by `listRouteHandler`.
+   - `/openapi`: Handled by `openapiHandler`.
+   - Health check routes (`/health`, `/dummy1`, `/dummy2`): Simple GET routes that return a 200 status.
+
+6. **Rate Limiter Application**: The rate limiter is applied globally using `app.use(limiter)`.
+
+7. **Server Start**: The server starts listening on the specified port and logs a message if `debug` is enabled.
+
+This implementation adheres to the provided domain contract and is designed to be modern and maintainable.

@@ -1,0 +1,26 @@
+```yml
+domain_entities:
+  User:
+    attributes:
+      - id
+      - username
+      - email
+      - password
+      - roles
+
+  Role:
+    attributes:
+      - id
+      - name
+
+business_logic:
+  User:
+    - create: Creates a new User
+    - setRoles: Assigns roles to a User
+  Role:
+    - findAll: Retrieves a list of all Roles
+    - find: Retrieves a Role by name
+  Authentication:
+    - signin: Authenticates a User and returns an access token
+    - signup: Creates a new User and assigns a default role
+```

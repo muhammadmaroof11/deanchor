@@ -1,0 +1,151 @@
+ Based on the provided YAML contract, I'll create a modern Node.js implementation using TypeScript and Express.js. Please note that this is a high-level implementation and doesn't include error handling, middleware, or database connection setup.
+
+```typescript
+import bcrypt from 'bcryptjs';
+import express from 'express';
+import { Model, DataTypes } from 'sequelize';
+
+interface SignupRequest {
+  username: string;
+  email: string;
+  password: string;
+  roles?: string[];
+}
+
+interface SignupResponse {
+  message: string;
+}
+
+interface SigninRequest {
+  username: string;
+  password: string;
+}
+
+interface SigninResponse {
+  id: number;
+  username: string;
+  email: string;
+  roles: string[];
+  accessToken: string;
+}
+
+class User extends Model implements UserModel {
+  public id!: number;
+  public username!: string;
+  public email!: string;
+  public password!: string;
+  public roles!: string[];
+
+  // Setter for roles
+  public setRoles(roles: string[]): void {
+    this.setData('roles', roles);
+  }
+}
+
+class Role extends Model {
+  public id!: number;
+  public name!: string;
+}
+
+const app = express();
+const sequelize = new Sequelize({
+  // Database connection details
+});
+
+User.init(
+  {
+    username: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    roles: DataTypes.ARRAY(DataTypes.STRING),
+  },
+  {
+    sequelize,
+    modelName: 'User',
+  }
+);
+
+Role.init(
+  {
+    name: DataTypes.STRING,
+  },
+  {
+    sequelize,
+    modelName: 'Role',
+  }
+);
+
+User.belongsToMany(Role, { through: 'UserRole' });
+Role.belongsToMany(User, { through: 'UserRole' });
+
+app.post('/signup', async (req, res) => {
+  const { username, email, password, roles } = req.body;
+
+  try {
+    const hashedPassword = await bcrypt.hashSync(password, 8);
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+      roles: roles || [],
+    });
+
+    if (roles) {
+      const rolesFromDb = await Role.findAll({
+        where: {
+          name: {
+            [Op.or]: roles,
+          },
+        },
+      });
+
+      user.setRoles(rolesFromDb.map((role) => role.id));
+    } else {
+      const defaultRole = await Role.findOne({
+        where: { id: 1 },
+      });
+
+      if (defaultRole) {
+        user.setRoles([defaultRole.id]);
+      }
+    }
+
+    res.json({ message: 'User registered successfully!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error registering user' });
+  }
+});
+
+app.post('/signin', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await User.findOne({
+      where: { username },
+      include: Role,
+    });
+
+    if (user && await bcrypt.compareSync(password, user.password)) {
+      res.json({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        roles: user.roles.map((role) => role.name),
+        accessToken: generateAccessToken(user),
+      });
+    } else {
+      res.status(401).json({ message: 'Invalid username or password' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error signing in user' });
+  }
+});
+
+function generateAccessToken(user: User) {
+  // Implement JWT generation logic here
+}
+
+// Start the server
+app

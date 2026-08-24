@@ -1,0 +1,470 @@
+{
+  "local_qwen2.5-7b_design_subject_1": {
+    "subject": "design_subject_1",
+    "model": "qwen2.5-7b",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.7619,
+      "embedding_distance": 0.8224,
+      "syntax_valid": true,
+      "latency_sec": 13.2,
+      "speed_tok_s": 77.6
+    },
+    "condition_E": {
+      "ast_divergence": 0.2714,
+      "embedding_distance": 0.8108,
+      "syntax_valid": true,
+      "stage1_latency_sec": 6.09,
+      "stage2_latency_sec": 12.3,
+      "noise_filtered_pct": 41.3,
+      "speed_tok_s": 83.2
+    },
+    "ast_delta": -0.4905
+  },
+  "local_qwen2.5-7b_realworld_portfolio": {
+    "subject": "realworld_portfolio",
+    "model": "qwen2.5-7b",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.7109,
+      "embedding_distance": 0.5015,
+      "syntax_valid": true,
+      "latency_sec": 11.51,
+      "speed_tok_s": 88.9
+    },
+    "condition_E": {
+      "ast_divergence": 0.7837,
+      "embedding_distance": 0.6878,
+      "syntax_valid": true,
+      "stage1_latency_sec": 3.94,
+      "stage2_latency_sec": 11.16,
+      "noise_filtered_pct": 96.0,
+      "speed_tok_s": 91.8
+    },
+    "ast_delta": 0.0728
+  },
+  "local_qwen2.5-7b_realworld_orderbook": {
+    "subject": "realworld_orderbook",
+    "model": "qwen2.5-7b",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.7047,
+      "embedding_distance": 0.5328,
+      "syntax_valid": true,
+      "latency_sec": 11.45,
+      "speed_tok_s": 89.5
+    },
+    "condition_E": {
+      "ast_divergence": 1.0,
+      "embedding_distance": 0.6606,
+      "syntax_valid": true,
+      "stage1_latency_sec": 5.57,
+      "stage2_latency_sec": 8.66,
+      "noise_filtered_pct": 95.0,
+      "speed_tok_s": 91.1
+    },
+    "ast_delta": 0.2953
+  },
+  "local_mistral-7b-v03_design_subject_1": {
+    "subject": "design_subject_1",
+    "model": "mistral-7b-v03",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.5096,
+      "embedding_distance": 0.323,
+      "syntax_valid": true,
+      "latency_sec": 10.53,
+      "speed_tok_s": 88.7
+    },
+    "condition_E": {
+      "ast_divergence": 0.9783,
+      "embedding_distance": 0.5845,
+      "syntax_valid": true,
+      "stage1_latency_sec": 5.07,
+      "stage2_latency_sec": 7.52,
+      "noise_filtered_pct": 49.4,
+      "speed_tok_s": 92.6
+    },
+    "ast_delta": 0.4686
+  },
+  "local_mistral-7b-v03_realworld_portfolio": {
+    "subject": "realworld_portfolio",
+    "model": "mistral-7b-v03",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.9125,
+      "embedding_distance": 0.7283,
+      "syntax_valid": true,
+      "latency_sec": 11.7,
+      "speed_tok_s": 87.5
+    },
+    "condition_E": {
+      "ast_divergence": 0.8833,
+      "embedding_distance": 0.5931,
+      "syntax_valid": true,
+      "stage1_latency_sec": 5.62,
+      "stage2_latency_sec": 8.58,
+      "noise_filtered_pct": 95.8,
+      "speed_tok_s": 93.1
+    },
+    "ast_delta": -0.0292
+  },
+  "local_mistral-7b-v03_realworld_orderbook": {
+    "subject": "realworld_orderbook",
+    "model": "mistral-7b-v03",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.9357,
+      "embedding_distance": 0.3931,
+      "syntax_valid": true,
+      "latency_sec": 8.31,
+      "speed_tok_s": 88.3
+    },
+    "condition_E": {
+      "ast_divergence": 1.0,
+      "embedding_distance": 0.7767,
+      "syntax_valid": true,
+      "stage1_latency_sec": 5.58,
+      "stage2_latency_sec": 11.05,
+      "noise_filtered_pct": 94.6,
+      "speed_tok_s": 92.7
+    },
+    "ast_delta": 0.0643
+  },
+  "local_gemma-2-9b-it_design_subject_1": {
+    "subject": "design_subject_1",
+    "model": "gemma-2-9b-it",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.9808,
+      "embedding_distance": 0.5434,
+      "syntax_valid": true,
+      "latency_sec": 60.75,
+      "speed_tok_s": 13.2
+    },
+    "condition_E": {
+      "ast_divergence": 1.0,
+      "embedding_distance": 0.7254,
+      "syntax_valid": false,
+      "stage1_latency_sec": 5.39,
+      "stage2_latency_sec": 50.72,
+      "noise_filtered_pct": 90.6,
+      "speed_tok_s": 13.8
+    },
+    "ast_delta": 0.0192
+  },
+  "local_gemma-2-9b-it_realworld_portfolio": {
+    "subject": "realworld_portfolio",
+    "model": "gemma-2-9b-it",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.9545,
+      "embedding_distance": 0.6443,
+      "syntax_valid": true,
+      "latency_sec": 43.09,
+      "speed_tok_s": 12.9
+    },
+    "condition_E": {
+      "ast_divergence": 0.8226,
+      "embedding_distance": 0.4814,
+      "syntax_valid": true,
+      "stage1_latency_sec": 24.95,
+      "stage2_latency_sec": 73.55,
+      "noise_filtered_pct": 96.4,
+      "speed_tok_s": 13.9
+    },
+    "ast_delta": -0.132
+  },
+  "local_gemma-2-9b-it_realworld_orderbook": {
+    "subject": "realworld_orderbook",
+    "model": "gemma-2-9b-it",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.9397,
+      "embedding_distance": 0.4419,
+      "syntax_valid": true,
+      "latency_sec": 60.49,
+      "speed_tok_s": 13.5
+    },
+    "condition_E": {
+      "ast_divergence": 1.0,
+      "embedding_distance": 0.4956,
+      "syntax_valid": true,
+      "stage1_latency_sec": 36.47,
+      "stage2_latency_sec": 67.94,
+      "noise_filtered_pct": 94.7,
+      "speed_tok_s": 13.7
+    },
+    "ast_delta": 0.0603
+  },
+  "local_llama3.1-8b_design_subject_1": {
+    "subject": "design_subject_1",
+    "model": "llama3.1-8b",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.8,
+      "embedding_distance": 0.4894,
+      "syntax_valid": true,
+      "latency_sec": 147.42,
+      "speed_tok_s": 6.9
+    },
+    "condition_E": {
+      "ast_divergence": 0.7903,
+      "embedding_distance": 0.577,
+      "syntax_valid": true,
+      "stage1_latency_sec": 49.61,
+      "stage2_latency_sec": 130.9,
+      "noise_filtered_pct": 50.4,
+      "speed_tok_s": 7.8
+    },
+    "ast_delta": -0.0097
+  },
+  "local_llama3.1-8b_realworld_portfolio": {
+    "subject": "realworld_portfolio",
+    "model": "llama3.1-8b",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.8548,
+      "embedding_distance": 0.7128,
+      "syntax_valid": true,
+      "latency_sec": 142.12,
+      "speed_tok_s": 7.2
+    },
+    "condition_E": {
+      "ast_divergence": 0.871,
+      "embedding_distance": 0.6274,
+      "syntax_valid": true,
+      "stage1_latency_sec": 39.23,
+      "stage2_latency_sec": 1706.24,
+      "noise_filtered_pct": 96.7,
+      "speed_tok_s": 0.6
+    },
+    "ast_delta": 0.0161
+  },
+  "local_llama3.1-8b_realworld_orderbook": {
+    "subject": "realworld_orderbook",
+    "model": "llama3.1-8b",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 1.0,
+      "embedding_distance": 0.6577,
+      "syntax_valid": false,
+      "latency_sec": 111.77,
+      "speed_tok_s": 9.2
+    },
+    "condition_E": {
+      "ast_divergence": 0.9967,
+      "embedding_distance": 0.7398,
+      "syntax_valid": false,
+      "stage1_latency_sec": 52.37,
+      "stage2_latency_sec": 104.64,
+      "noise_filtered_pct": 93.6,
+      "speed_tok_s": 9.8
+    },
+    "ast_delta": -0.0033
+  },
+  "cloud_nvidia_nemotron-3-super-120b-a12b_free_design_subject_1": {
+    "subject": "design_subject_1",
+    "model": "nvidia/nemotron-3-super-120b-a12b:free",
+    "type": "cloud_openrouter",
+    "condition_E": {
+      "ast_divergence": 1.0,
+      "embedding_distance": 0.8542,
+      "syntax_valid": false,
+      "stage1_latency_sec": 2.5,
+      "stage2_latency_sec": 13.62,
+      "noise_filtered_pct": 98.5,
+      "speed_tok_s": 75.2
+    }
+  },
+  "cloud_nvidia_nemotron-3-super-120b-a12b_free_realworld_portfolio": {
+    "subject": "realworld_portfolio",
+    "model": "nvidia/nemotron-3-super-120b-a12b:free",
+    "type": "cloud_openrouter",
+    "condition_E": {
+      "ast_divergence": 1.0,
+      "embedding_distance": 0.3594,
+      "syntax_valid": false,
+      "stage1_latency_sec": 2.9,
+      "stage2_latency_sec": 5.5,
+      "noise_filtered_pct": 95.5,
+      "speed_tok_s": 110.9
+    }
+  },
+  "local_qwen2.5-7b_realworld_webhook": {
+    "subject": "realworld_webhook",
+    "model": "qwen2.5-7b",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.962,
+      "embedding_distance": 0.4581,
+      "syntax_valid": true,
+      "latency_sec": 11.36,
+      "speed_tok_s": 90.2
+    },
+    "condition_E": {
+      "ast_divergence": 0.7944,
+      "embedding_distance": 0.2654,
+      "syntax_valid": true,
+      "stage1_latency_sec": 5.41,
+      "stage2_latency_sec": 7.17,
+      "noise_filtered_pct": 0.0,
+      "speed_tok_s": 91.6
+    },
+    "ast_delta": -0.1677
+  },
+  "local_qwen2.5-7b_realworld_secauth": {
+    "subject": "realworld_secauth",
+    "model": "qwen2.5-7b",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.8343,
+      "embedding_distance": 0.2509,
+      "syntax_valid": true,
+      "latency_sec": 9.11,
+      "speed_tok_s": 91.1
+    },
+    "condition_E": {
+      "ast_divergence": 0.9932,
+      "embedding_distance": 0.2798,
+      "syntax_valid": true,
+      "stage1_latency_sec": 1.53,
+      "stage2_latency_sec": 10.49,
+      "noise_filtered_pct": 79.7,
+      "speed_tok_s": 89.6
+    },
+    "ast_delta": 0.1589
+  },
+  "local_mistral-7b-v03_realworld_webhook": {
+    "subject": "realworld_webhook",
+    "model": "mistral-7b-v03",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.863,
+      "embedding_distance": 0.2507,
+      "syntax_valid": true,
+      "latency_sec": 7.73,
+      "speed_tok_s": 92.9
+    },
+    "condition_E": {
+      "ast_divergence": 0.7541,
+      "embedding_distance": 0.2656,
+      "syntax_valid": true,
+      "stage1_latency_sec": 5.46,
+      "stage2_latency_sec": 11.01,
+      "noise_filtered_pct": 0.0,
+      "speed_tok_s": 89.7
+    },
+    "ast_delta": -0.1089
+  },
+  "local_mistral-7b-v03_realworld_secauth": {
+    "subject": "realworld_secauth",
+    "model": "mistral-7b-v03",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.9625,
+      "embedding_distance": 0.214,
+      "syntax_valid": true,
+      "latency_sec": 9.73,
+      "speed_tok_s": 91.6
+    },
+    "condition_E": {
+      "ast_divergence": 0.9867,
+      "embedding_distance": 0.2312,
+      "syntax_valid": true,
+      "stage1_latency_sec": 5.46,
+      "stage2_latency_sec": 11.04,
+      "noise_filtered_pct": 7.6,
+      "speed_tok_s": 92.7
+    },
+    "ast_delta": 0.0242
+  },
+  "local_gemma-2-9b-it_realworld_webhook": {
+    "subject": "realworld_webhook",
+    "model": "gemma-2-9b-it",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.7637,
+      "embedding_distance": 0.159,
+      "syntax_valid": true,
+      "latency_sec": 43.56,
+      "speed_tok_s": 13.9
+    },
+    "condition_E": {
+      "ast_divergence": 1.0,
+      "embedding_distance": 0.518,
+      "syntax_valid": true,
+      "stage1_latency_sec": 6.49,
+      "stage2_latency_sec": 57.37,
+      "noise_filtered_pct": 76.9,
+      "speed_tok_s": 14.1
+    },
+    "ast_delta": 0.2363
+  },
+  "local_gemma-2-9b-it_realworld_secauth": {
+    "subject": "realworld_secauth",
+    "model": "gemma-2-9b-it",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.9679,
+      "embedding_distance": 0.2369,
+      "syntax_valid": true,
+      "latency_sec": 63.46,
+      "speed_tok_s": 13.7
+    },
+    "condition_E": {
+      "ast_divergence": 0.9865,
+      "embedding_distance": 0.395,
+      "syntax_valid": true,
+      "stage1_latency_sec": 6.88,
+      "stage2_latency_sec": 48.02,
+      "noise_filtered_pct": 83.9,
+      "speed_tok_s": 14.2
+    },
+    "ast_delta": 0.0185
+  },
+  "local_llama3.1-8b_realworld_webhook": {
+    "subject": "realworld_webhook",
+    "model": "llama3.1-8b",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 1.0,
+      "embedding_distance": 0.5001,
+      "syntax_valid": true,
+      "latency_sec": 101.67,
+      "speed_tok_s": 10.1
+    },
+    "condition_E": {
+      "ast_divergence": 1.0,
+      "embedding_distance": 0.6112,
+      "syntax_valid": false,
+      "stage1_latency_sec": 26.21,
+      "stage2_latency_sec": 98.14,
+      "noise_filtered_pct": 23.6,
+      "speed_tok_s": 10.4
+    },
+    "ast_delta": 0.0
+  },
+  "local_llama3.1-8b_realworld_secauth": {
+    "subject": "realworld_secauth",
+    "model": "llama3.1-8b",
+    "type": "local_gpu",
+    "condition_D": {
+      "ast_divergence": 0.9942,
+      "embedding_distance": 0.4105,
+      "syntax_valid": false,
+      "latency_sec": 12.08,
+      "speed_tok_s": 84.8
+    },
+    "condition_E": {
+      "ast_divergence": 0.9943,
+      "embedding_distance": 0.4893,
+      "syntax_valid": false,
+      "stage1_latency_sec": 1.54,
+      "stage2_latency_sec": 11.21,
+      "noise_filtered_pct": 78.4,
+      "speed_tok_s": 91.4
+    },
+    "ast_delta": 0.0001
+  }
+}

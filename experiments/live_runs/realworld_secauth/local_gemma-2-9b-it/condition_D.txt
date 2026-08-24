@@ -1,0 +1,91 @@
+```typescript
+import { Request, Response } from 'express';
+import { User } from '../models/user';
+import { Role } from '../models/role';
+import { config } from '../config/auth';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
+interface JwtPayload {
+  id: number;
+}
+
+export const signup = async (req: Request, res: Response) => {
+  try {
+    const { username, email, password, roles } = req.body;
+
+    const hashedPassword = await bcrypt.hash(password, 8);
+    const user = await User.create({ username, email, password: hashedPassword });
+
+    if (roles) {
+      const existingRoles = await Role.findAll({ where: { name: { [Op.or]: roles } } });
+      await user.setRoles(existingRoles);
+    } else {
+      // Assign default role if not specified
+      await user.setRoles([1]); // Assuming role 1 is the default
+    }
+
+    res.status(201).json({ message: 'User registered successfully!' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const signin = async (req: Request, res: Response) => {
+  try {
+    const { username, password } = req.body;
+
+    const user = await User.findOne({ where: { username } });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User Not found.' });
+    }
+
+    const passwordValid = await bcrypt.compare(password, user.password);
+
+    if (!passwordValid) {
+      return res.status(401).json({ message: 'Invalid Password!' });
+    }
+
+    const token = jwt.sign({ id: user.id }, config.secret, {
+      algorithm: 'HS256',
+      expiresIn: '24h',
+    });
+
+    const roles = await user.getRoles();
+    const authorities: string[] = roles.map((role) => `ROLE_${role.name.toUpperCase()}`);
+
+    res.status(200).json({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      roles: authorities,
+      accessToken: token,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+```
+
+**Modern Architecture Improvements:**
+
+- **Async/Await:** Utilizes async/await for cleaner and more readable asynchronous code.
+- **Type Annotations:**  Uses TypeScript type annotations for better code readability, maintainability, and static type checking.
+- **Interfaces:** Defines an interface `JwtPayload` to specify the structure of the JWT payload.
+- **Error Handling:**  Wraps the code in `try...catch` blocks to handle potential errors gracefully and return appropriate status codes.
+- **Explicit Role Assignment:**  Clearly defines how roles are assigned to users, both during signup with specified roles and with a default role if none are provided.
+- **JWT Best Practices:**  Uses best practices for JWT generation, including a secure algorithm (`HS256`) and a reasonable expiration time (`24 hours`).
+- **Code Organization:**  Organizes the code into separate functions for signup and signin, making it more modular and reusable.
+
+**Additional Considerations:**
+
+- **Database Access:** This example assumes you have a database setup and models defined for User and Role.
+- **Authentication Middleware:** You'll likely want to create authentication middleware to protect routes requiring user authentication.
+- **Security:**
+    -  Sanitize user input to prevent vulnerabilities like SQL injection.
+    -  Implement rate limiting to protect against brute-force attacks.
+    -  Consider using a more robust password hashing algorithm than bcrypt (e.g., Argon2).
+
+
+
