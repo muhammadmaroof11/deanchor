@@ -17,6 +17,13 @@ import argparse
 import pathlib
 import time
 
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 ROOT    = pathlib.Path(__file__).parent.parent
 SCRIPTS = ROOT / "scripts"
 PYTHON  = sys.executable

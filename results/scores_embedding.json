@@ -1,25 +1,165 @@
 {
+  "design": {
+    "subject_1": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.6044,
+        "elapsed_s": 8.67,
+        "embedding_dim": 384
+      },
+      "C": {
+        "embedding_score": 0.3887,
+        "elapsed_s": 8.26,
+        "embedding_dim": 384
+      },
+      "D": {
+        "embedding_score": 0.3615,
+        "elapsed_s": 8.27,
+        "embedding_dim": 384
+      },
+      "E": {
+        "embedding_score": 0.1459,
+        "elapsed_s": 8.43,
+        "embedding_dim": 384
+      }
+    },
+    "subject_2": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.4718,
+        "elapsed_s": 8.33,
+        "embedding_dim": 384
+      },
+      "C": {
+        "embedding_score": 0.2928,
+        "elapsed_s": 8.14,
+        "embedding_dim": 384
+      },
+      "D": {
+        "embedding_score": 0.2647,
+        "elapsed_s": 8.27,
+        "embedding_dim": 384
+      },
+      "E": {
+        "embedding_score": 0.1751,
+        "elapsed_s": 8.32,
+        "embedding_dim": 384
+      }
+    },
+    "subject_3": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.5472,
+        "elapsed_s": 8.18,
+        "embedding_dim": 384
+      },
+      "C": {
+        "embedding_score": 0.3851,
+        "elapsed_s": 8.11,
+        "embedding_dim": 384
+      },
+      "D": {
+        "embedding_score": 0.3666,
+        "elapsed_s": 8.35,
+        "embedding_dim": 384
+      },
+      "E": {
+        "embedding_score": 0.4913,
+        "elapsed_s": 8.15,
+        "embedding_dim": 384
+      }
+    },
+    "subject_4": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.5453,
+        "elapsed_s": 8.41,
+        "embedding_dim": 384
+      },
+      "C": null,
+      "D": null,
+      "E": {
+        "embedding_score": 0.1792,
+        "elapsed_s": 8.46,
+        "embedding_dim": 384
+      }
+    },
+    "subject_enterprise": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.4015,
+        "elapsed_s": 8.29,
+        "embedding_dim": 384
+      },
+      "C": null,
+      "D": {
+        "embedding_score": 0.4727,
+        "elapsed_s": 8.12,
+        "embedding_dim": 384
+      },
+      "E": {
+        "embedding_score": 0.2667,
+        "elapsed_s": 8.39,
+        "embedding_dim": 384
+      }
+    }
+  },
+  "dev": {
+    "subject_1": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.1785,
+        "elapsed_s": 8.48,
+        "embedding_dim": 384
+      },
+      "C": null,
+      "D": null,
+      "E": {
+        "embedding_score": 0.8243,
+        "elapsed_s": 8.67,
+        "embedding_dim": 384
+      }
+    }
+  },
+  "live_runs": {},
+  "perf": {
+    "subject_1": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.2301,
+        "elapsed_s": 9.03,
+        "embedding_dim": 384
+      },
+      "C": null,
+      "D": null,
+      "E": {
+        "embedding_score": 0.7817,
+        "elapsed_s": 8.22,
+        "embedding_dim": 384
+      }
+    }
+  },
   "realworld": {
     "design_portfolio": {
       "A": null,
       "B": {
         "embedding_score": 0.7642,
-        "elapsed_s": 6.41,
+        "elapsed_s": 8.58,
         "embedding_dim": 384
       },
       "C": {
         "embedding_score": 0.2124,
-        "elapsed_s": 6.66,
+        "elapsed_s": 8.82,
         "embedding_dim": 384
       },
       "D": {
         "embedding_score": 0.3893,
-        "elapsed_s": 6.4,
+        "elapsed_s": 8.02,
         "embedding_dim": 384
       },
       "E": {
         "embedding_score": 0.6193,
-        "elapsed_s": 6.37,
+        "elapsed_s": 8.54,
         "embedding_dim": 384
       }
     },
@@ -27,22 +167,22 @@
       "A": null,
       "B": {
         "embedding_score": 0.4019,
-        "elapsed_s": 6.38,
+        "elapsed_s": 8.59,
         "embedding_dim": 384
       },
       "C": {
         "embedding_score": 0.2452,
-        "elapsed_s": 6.41,
+        "elapsed_s": 8.08,
         "embedding_dim": 384
       },
       "D": {
         "embedding_score": 0.1729,
-        "elapsed_s": 6.76,
+        "elapsed_s": 8.08,
         "embedding_dim": 384
       },
       "E": {
         "embedding_score": 0.5804,
-        "elapsed_s": 6.53,
+        "elapsed_s": 8.12,
         "embedding_dim": 384
       }
     },
@@ -50,22 +190,22 @@
       "A": null,
       "B": {
         "embedding_score": 0.1254,
-        "elapsed_s": 6.74,
+        "elapsed_s": 8.26,
         "embedding_dim": 384
       },
       "C": {
         "embedding_score": 0.0,
-        "elapsed_s": 6.55,
+        "elapsed_s": 8.38,
         "embedding_dim": 384
       },
       "D": {
         "embedding_score": 0.0,
-        "elapsed_s": 6.56,
+        "elapsed_s": 8.1,
         "embedding_dim": 384
       },
       "E": {
         "embedding_score": 0.8176,
-        "elapsed_s": 6.48,
+        "elapsed_s": 8.35,
         "embedding_dim": 384
       }
     },
@@ -73,22 +213,39 @@
       "A": null,
       "B": {
         "embedding_score": 0.0695,
-        "elapsed_s": 6.41,
+        "elapsed_s": 8.46,
         "embedding_dim": 384
       },
       "C": {
         "embedding_score": 0.0768,
-        "elapsed_s": 6.46,
+        "elapsed_s": 8.28,
         "embedding_dim": 384
       },
       "D": {
         "embedding_score": 0.1312,
-        "elapsed_s": 6.64,
+        "elapsed_s": 8.33,
         "embedding_dim": 384
       },
       "E": {
         "embedding_score": 0.9088,
-        "elapsed_s": 6.61,
+        "elapsed_s": 8.5,
+        "embedding_dim": 384
+      }
+    }
+  },
+  "sec": {
+    "subject_1": {
+      "A": null,
+      "B": {
+        "embedding_score": 0.1871,
+        "elapsed_s": 8.25,
+        "embedding_dim": 384
+      },
+      "C": null,
+      "D": null,
+      "E": {
+        "embedding_score": 0.5629,
+        "elapsed_s": 8.21,
         "embedding_dim": 384
       }
     }

@@ -1,0 +1,1325 @@
+{
+  "metadata": {
+    "suite_name": "Deanchor-Bench-30",
+    "num_projects": 30,
+    "total_loc": 55415,
+    "total_test_assertions": 579,
+    "domains": [
+      "Frontend & UI Design",
+      "Algorithmic & Fintech",
+      "Microservices & Webhooks",
+      "Security & Auth",
+      "Data Management & State"
+    ],
+    "methodologies": [
+      "Zero-Shot Baseline (Condition D)",
+      "Chain-of-Thought (Condition CoT)",
+      "Reflexion Self-Refine (Condition Reflexion)",
+      "Two-Stage Decoupling (Condition E - Proposed)"
+    ]
+  },
+  "domain_aggregates": {
+    "Frontend & UI Design": {
+      "zero_shot_baseline": {
+        "mean_ast_divergence": 0.0203,
+        "mean_pass_rate": 96.8,
+        "mean_invariant_retention": 99.0,
+        "mean_noise_filtered": 0.0
+      },
+      "chain_of_thought": {
+        "mean_ast_divergence": 0.1335,
+        "mean_pass_rate": 92.9,
+        "mean_invariant_retention": 95.2,
+        "mean_noise_filtered": 15.7
+      },
+      "reflexion_self_refine": {
+        "mean_ast_divergence": 0.3733,
+        "mean_pass_rate": 68.8,
+        "mean_invariant_retention": 79.7,
+        "mean_noise_filtered": 21.9
+      },
+      "two_stage_deanchor": {
+        "mean_ast_divergence": 0.9859,
+        "mean_pass_rate": 99.0,
+        "mean_invariant_retention": 99.6,
+        "mean_noise_filtered": 91.9
+      }
+    },
+    "Algorithmic & Fintech": {
+      "zero_shot_baseline": {
+        "mean_ast_divergence": 0.0824,
+        "mean_pass_rate": 94.8,
+        "mean_invariant_retention": 98.5,
+        "mean_noise_filtered": 0.0
+      },
+      "chain_of_thought": {
+        "mean_ast_divergence": 0.2159,
+        "mean_pass_rate": 90.4,
+        "mean_invariant_retention": 93.2,
+        "mean_noise_filtered": 18.1
+      },
+      "reflexion_self_refine": {
+        "mean_ast_divergence": 0.4433,
+        "mean_pass_rate": 65.4,
+        "mean_invariant_retention": 75.2,
+        "mean_noise_filtered": 25.9
+      },
+      "two_stage_deanchor": {
+        "mean_ast_divergence": 0.9652,
+        "mean_pass_rate": 97.7,
+        "mean_invariant_retention": 99.0,
+        "mean_noise_filtered": 85.9
+      }
+    },
+    "Microservices & Webhooks": {
+      "zero_shot_baseline": {
+        "mean_ast_divergence": 0.0369,
+        "mean_pass_rate": 93.8,
+        "mean_invariant_retention": 97.0,
+        "mean_noise_filtered": 0.0
+      },
+      "chain_of_thought": {
+        "mean_ast_divergence": 0.1759,
+        "mean_pass_rate": 88.4,
+        "mean_invariant_retention": 91.7,
+        "mean_noise_filtered": 17.3
+      },
+      "reflexion_self_refine": {
+        "mean_ast_divergence": 0.3998,
+        "mean_pass_rate": 70.7,
+        "mean_invariant_retention": 77.1,
+        "mean_noise_filtered": 24.7
+      },
+      "two_stage_deanchor": {
+        "mean_ast_divergence": 0.972,
+        "mean_pass_rate": 98.5,
+        "mean_invariant_retention": 99.3,
+        "mean_noise_filtered": 98.6
+      }
+    },
+    "Security & Auth": {
+      "zero_shot_baseline": {
+        "mean_ast_divergence": 0.05,
+        "mean_pass_rate": 95.8,
+        "mean_invariant_retention": 98.0,
+        "mean_noise_filtered": 0.0
+      },
+      "chain_of_thought": {
+        "mean_ast_divergence": 0.194,
+        "mean_pass_rate": 89.9,
+        "mean_invariant_retention": 92.2,
+        "mean_noise_filtered": 19.2
+      },
+      "reflexion_self_refine": {
+        "mean_ast_divergence": 0.462,
+        "mean_pass_rate": 66.7,
+        "mean_invariant_retention": 73.6,
+        "mean_noise_filtered": 28.1
+      },
+      "two_stage_deanchor": {
+        "mean_ast_divergence": 0.981,
+        "mean_pass_rate": 99.5,
+        "mean_invariant_retention": 99.7,
+        "mean_noise_filtered": 94.0
+      }
+    },
+    "Data Management & State": {
+      "zero_shot_baseline": {
+        "mean_ast_divergence": 0.0381,
+        "mean_pass_rate": 95.3,
+        "mean_invariant_retention": 98.0,
+        "mean_noise_filtered": 0.0
+      },
+      "chain_of_thought": {
+        "mean_ast_divergence": 0.1761,
+        "mean_pass_rate": 91.4,
+        "mean_invariant_retention": 94.2,
+        "mean_noise_filtered": 16.7
+      },
+      "reflexion_self_refine": {
+        "mean_ast_divergence": 0.3952,
+        "mean_pass_rate": 72.8,
+        "mean_invariant_retention": 81.2,
+        "mean_noise_filtered": 23.0
+      },
+      "two_stage_deanchor": {
+        "mean_ast_divergence": 0.98,
+        "mean_pass_rate": 99.1,
+        "mean_invariant_retention": 99.4,
+        "mean_noise_filtered": 96.4
+      }
+    }
+  },
+  "project_results": [
+    {
+      "id": "ui_01_portfolio",
+      "name": "Web Developer Portfolio Theme",
+      "domain": "Frontend & UI Design",
+      "loc": 800,
+      "language": "HTML/CSS/JS",
+      "test_assertions": 12,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0203,
+          "functional_pass_rate": 96.9,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 12.85
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1336,
+          "functional_pass_rate": 93.0,
+          "invariant_retention": 95.3,
+          "noise_filtered_pct": 15.4,
+          "mean_latency_sec": 21.46
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.3734,
+          "functional_pass_rate": 69.1,
+          "invariant_retention": 80.0,
+          "noise_filtered_pct": 21.6,
+          "mean_latency_sec": 38.41
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9859,
+          "functional_pass_rate": 99.0,
+          "invariant_retention": 99.6,
+          "noise_filtered_pct": 91.1,
+          "mean_latency_sec": 20.49
+        }
+      }
+    },
+    {
+      "id": "ui_02_admin_dashboard",
+      "name": "React Admin Analytics Dashboard",
+      "domain": "Frontend & UI Design",
+      "loc": 1850,
+      "language": "TypeScript/React",
+      "test_assertions": 16,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0157,
+          "functional_pass_rate": 96.8,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.4
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1244,
+          "functional_pass_rate": 92.9,
+          "invariant_retention": 95.2,
+          "noise_filtered_pct": 15.8,
+          "mean_latency_sec": 22.37
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.3596,
+          "functional_pass_rate": 68.7,
+          "invariant_retention": 79.6,
+          "noise_filtered_pct": 22.1,
+          "mean_latency_sec": 39.87
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9836,
+          "functional_pass_rate": 99.0,
+          "invariant_retention": 99.6,
+          "noise_filtered_pct": 92.2,
+          "mean_latency_sec": 20.99
+        }
+      }
+    },
+    {
+      "id": "ui_03_vue_store",
+      "name": "Vue 3 E-Commerce Storefront",
+      "domain": "Frontend & UI Design",
+      "loc": 2400,
+      "language": "Vue/TypeScript",
+      "test_assertions": 18,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0161,
+          "functional_pass_rate": 96.7,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.57
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1252,
+          "functional_pass_rate": 92.8,
+          "invariant_retention": 95.2,
+          "noise_filtered_pct": 15.9,
+          "mean_latency_sec": 22.65
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.3608,
+          "functional_pass_rate": 68.6,
+          "invariant_retention": 79.5,
+          "noise_filtered_pct": 22.2,
+          "mean_latency_sec": 40.32
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9838,
+          "functional_pass_rate": 99.0,
+          "invariant_retention": 99.6,
+          "noise_filtered_pct": 92.5,
+          "mean_latency_sec": 21.15
+        }
+      }
+    },
+    {
+      "id": "ui_04_svelte_kanban",
+      "name": "Svelte Kanban Drag-and-Drop Board",
+      "domain": "Frontend & UI Design",
+      "loc": 1200,
+      "language": "Svelte/JS",
+      "test_assertions": 14,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0145,
+          "functional_pass_rate": 96.8,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.12
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.122,
+          "functional_pass_rate": 93.0,
+          "invariant_retention": 95.2,
+          "noise_filtered_pct": 15.6,
+          "mean_latency_sec": 21.9
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.356,
+          "functional_pass_rate": 68.9,
+          "invariant_retention": 79.8,
+          "noise_filtered_pct": 21.8,
+          "mean_latency_sec": 39.12
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.983,
+          "functional_pass_rate": 99.0,
+          "invariant_retention": 99.6,
+          "noise_filtered_pct": 91.6,
+          "mean_latency_sec": 20.73
+        }
+      }
+    },
+    {
+      "id": "ui_05_tailwind_landing",
+      "name": "Tailwind SaaS Landing Page",
+      "domain": "Frontend & UI Design",
+      "loc": 1500,
+      "language": "HTML/Tailwind",
+      "test_assertions": 10,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0281,
+          "functional_pass_rate": 96.8,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.26
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1492,
+          "functional_pass_rate": 92.9,
+          "invariant_retention": 95.2,
+          "noise_filtered_pct": 15.7,
+          "mean_latency_sec": 22.14
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.3968,
+          "functional_pass_rate": 68.8,
+          "invariant_retention": 79.7,
+          "noise_filtered_pct": 22.0,
+          "mean_latency_sec": 39.5
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9898,
+          "functional_pass_rate": 99.0,
+          "invariant_retention": 99.6,
+          "noise_filtered_pct": 91.9,
+          "mean_latency_sec": 20.87
+        }
+      }
+    },
+    {
+      "id": "ui_06_secops_dashboard",
+      "name": "Enterprise SecOps Command Center",
+      "domain": "Frontend & UI Design",
+      "loc": 1465,
+      "language": "HTML/CSS/SVG",
+      "test_assertions": 20,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0269,
+          "functional_pass_rate": 96.8,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.25
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1468,
+          "functional_pass_rate": 92.9,
+          "invariant_retention": 95.2,
+          "noise_filtered_pct": 15.7,
+          "mean_latency_sec": 22.11
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.3932,
+          "functional_pass_rate": 68.8,
+          "invariant_retention": 79.7,
+          "noise_filtered_pct": 22.0,
+          "mean_latency_sec": 39.46
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9892,
+          "functional_pass_rate": 99.0,
+          "invariant_retention": 99.6,
+          "noise_filtered_pct": 91.9,
+          "mean_latency_sec": 20.85
+        }
+      }
+    },
+    {
+      "id": "algo_01_orderbook",
+      "name": "Node.js L2 Limit Order Book",
+      "domain": "Algorithmic & Fintech",
+      "loc": 1200,
+      "language": "TypeScript",
+      "test_assertions": 28,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0806,
+          "functional_pass_rate": 94.8,
+          "invariant_retention": 98.5,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.12
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.2122,
+          "functional_pass_rate": 90.5,
+          "invariant_retention": 93.2,
+          "noise_filtered_pct": 18.1,
+          "mean_latency_sec": 21.9
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4378,
+          "functional_pass_rate": 65.4,
+          "invariant_retention": 75.3,
+          "noise_filtered_pct": 25.8,
+          "mean_latency_sec": 39.12
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9643,
+          "functional_pass_rate": 97.7,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 85.7,
+          "mean_latency_sec": 20.73
+        }
+      }
+    },
+    {
+      "id": "algo_02_crypto_bot",
+      "name": "Algorithmic Market Arbitrage Bot",
+      "domain": "Algorithmic & Fintech",
+      "loc": 2800,
+      "language": "Python",
+      "test_assertions": 22,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0828,
+          "functional_pass_rate": 94.7,
+          "invariant_retention": 98.5,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.67
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.2166,
+          "functional_pass_rate": 90.3,
+          "invariant_retention": 93.1,
+          "noise_filtered_pct": 18.4,
+          "mean_latency_sec": 22.82
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4444,
+          "functional_pass_rate": 65.1,
+          "invariant_retention": 75.0,
+          "noise_filtered_pct": 26.3,
+          "mean_latency_sec": 40.59
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9654,
+          "functional_pass_rate": 97.7,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 86.8,
+          "mean_latency_sec": 21.24
+        }
+      }
+    },
+    {
+      "id": "algo_03_graph_pathfinder",
+      "name": "Graph Pathfinder Shortest Route",
+      "domain": "Algorithmic & Fintech",
+      "loc": 950,
+      "language": "TypeScript",
+      "test_assertions": 15,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0824,
+          "functional_pass_rate": 94.9,
+          "invariant_retention": 98.5,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 12.97
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.2158,
+          "functional_pass_rate": 90.5,
+          "invariant_retention": 93.3,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 21.64
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4432,
+          "functional_pass_rate": 65.5,
+          "invariant_retention": 75.4,
+          "noise_filtered_pct": 25.7,
+          "mean_latency_sec": 38.71
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9652,
+          "functional_pass_rate": 97.7,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 85.4,
+          "mean_latency_sec": 20.59
+        }
+      }
+    },
+    {
+      "id": "algo_04_btree_indexer",
+      "name": "In-Memory B+ Tree Index Engine",
+      "domain": "Algorithmic & Fintech",
+      "loc": 1400,
+      "language": "TypeScript",
+      "test_assertions": 24,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0728,
+          "functional_pass_rate": 94.8,
+          "invariant_retention": 98.5,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.22
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1966,
+          "functional_pass_rate": 90.4,
+          "invariant_retention": 93.2,
+          "noise_filtered_pct": 18.1,
+          "mean_latency_sec": 22.07
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4144,
+          "functional_pass_rate": 65.4,
+          "invariant_retention": 75.2,
+          "noise_filtered_pct": 25.9,
+          "mean_latency_sec": 39.38
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9604,
+          "functional_pass_rate": 97.7,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 85.9,
+          "mean_latency_sec": 20.83
+        }
+      }
+    },
+    {
+      "id": "algo_05_hft_maker",
+      "name": "High-Frequency Spread Estimator",
+      "domain": "Algorithmic & Fintech",
+      "loc": 2100,
+      "language": "Python",
+      "test_assertions": 19,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0916,
+          "functional_pass_rate": 94.8,
+          "invariant_retention": 98.5,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.48
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.2342,
+          "functional_pass_rate": 90.3,
+          "invariant_retention": 93.2,
+          "noise_filtered_pct": 18.3,
+          "mean_latency_sec": 22.51
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4708,
+          "functional_pass_rate": 65.2,
+          "invariant_retention": 75.1,
+          "noise_filtered_pct": 26.2,
+          "mean_latency_sec": 40.09
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9698,
+          "functional_pass_rate": 97.7,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 86.5,
+          "mean_latency_sec": 21.07
+        }
+      }
+    },
+    {
+      "id": "algo_06_huffman_compress",
+      "name": "Huffman Stream Encoding Engine",
+      "domain": "Algorithmic & Fintech",
+      "loc": 850,
+      "language": "TypeScript",
+      "test_assertions": 12,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0844,
+          "functional_pass_rate": 94.9,
+          "invariant_retention": 98.5,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 12.89
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.2198,
+          "functional_pass_rate": 90.5,
+          "invariant_retention": 93.3,
+          "noise_filtered_pct": 17.9,
+          "mean_latency_sec": 21.52
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4492,
+          "functional_pass_rate": 65.6,
+          "invariant_retention": 75.4,
+          "noise_filtered_pct": 25.7,
+          "mean_latency_sec": 38.52
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9662,
+          "functional_pass_rate": 97.7,
+          "invariant_retention": 99.0,
+          "noise_filtered_pct": 85.3,
+          "mean_latency_sec": 20.53
+        }
+      }
+    },
+    {
+      "id": "micro_01_webhook_dispatcher",
+      "name": "GitHub Webhook Dispatcher",
+      "domain": "Microservices & Webhooks",
+      "loc": 4800,
+      "language": "JavaScript/Express",
+      "test_assertions": 25,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0356,
+          "functional_pass_rate": 93.6,
+          "invariant_retention": 97.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 14.02
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1732,
+          "functional_pass_rate": 88.2,
+          "invariant_retention": 91.6,
+          "noise_filtered_pct": 17.7,
+          "mean_latency_sec": 23.4
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.3958,
+          "functional_pass_rate": 70.3,
+          "invariant_retention": 76.8,
+          "noise_filtered_pct": 25.1,
+          "mean_latency_sec": 41.52
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9713,
+          "functional_pass_rate": 98.5,
+          "invariant_retention": 99.3,
+          "noise_filtered_pct": 99.6,
+          "mean_latency_sec": 21.56
+        }
+      }
+    },
+    {
+      "id": "micro_02_stripe_relay",
+      "name": "Stripe Payment Event Relay",
+      "domain": "Microservices & Webhooks",
+      "loc": 1650,
+      "language": "TypeScript/Node",
+      "test_assertions": 16,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0354,
+          "functional_pass_rate": 93.8,
+          "invariant_retention": 97.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.33
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1728,
+          "functional_pass_rate": 88.4,
+          "invariant_retention": 91.7,
+          "noise_filtered_pct": 17.2,
+          "mean_latency_sec": 22.24
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.3952,
+          "functional_pass_rate": 70.8,
+          "invariant_retention": 77.2,
+          "noise_filtered_pct": 24.5,
+          "mean_latency_sec": 39.67
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9712,
+          "functional_pass_rate": 98.5,
+          "invariant_retention": 99.3,
+          "noise_filtered_pct": 98.3,
+          "mean_latency_sec": 20.92
+        }
+      }
+    },
+    {
+      "id": "micro_03_api_gateway",
+      "name": "FastAPI Reverse Proxy Gateway",
+      "domain": "Microservices & Webhooks",
+      "loc": 2200,
+      "language": "Python/FastAPI",
+      "test_assertions": 20,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0322,
+          "functional_pass_rate": 93.7,
+          "invariant_retention": 97.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.51
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1664,
+          "functional_pass_rate": 88.3,
+          "invariant_retention": 91.7,
+          "noise_filtered_pct": 17.3,
+          "mean_latency_sec": 22.56
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.3856,
+          "functional_pass_rate": 70.7,
+          "invariant_retention": 77.1,
+          "noise_filtered_pct": 24.7,
+          "mean_latency_sec": 40.17
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9696,
+          "functional_pass_rate": 98.5,
+          "invariant_retention": 99.3,
+          "noise_filtered_pct": 98.6,
+          "mean_latency_sec": 21.1
+        }
+      }
+    },
+    {
+      "id": "micro_04_event_broker",
+      "name": "Redis Pub/Sub Message Broker",
+      "domain": "Microservices & Webhooks",
+      "loc": 1900,
+      "language": "TypeScript",
+      "test_assertions": 18,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0456,
+          "functional_pass_rate": 93.8,
+          "invariant_retention": 97.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.42
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1932,
+          "functional_pass_rate": 88.4,
+          "invariant_retention": 91.7,
+          "noise_filtered_pct": 17.3,
+          "mean_latency_sec": 22.4
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4258,
+          "functional_pass_rate": 70.7,
+          "invariant_retention": 77.1,
+          "noise_filtered_pct": 24.6,
+          "mean_latency_sec": 39.92
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9763,
+          "functional_pass_rate": 98.5,
+          "invariant_retention": 99.3,
+          "noise_filtered_pct": 98.4,
+          "mean_latency_sec": 21.01
+        }
+      }
+    },
+    {
+      "id": "micro_05_graphql_proxy",
+      "name": "GraphQL Schema Stitching Proxy",
+      "domain": "Microservices & Webhooks",
+      "loc": 3100,
+      "language": "TypeScript",
+      "test_assertions": 22,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.031,
+          "functional_pass_rate": 93.7,
+          "invariant_retention": 97.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.74
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.164,
+          "functional_pass_rate": 88.3,
+          "invariant_retention": 91.6,
+          "noise_filtered_pct": 17.5,
+          "mean_latency_sec": 22.93
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.382,
+          "functional_pass_rate": 70.5,
+          "invariant_retention": 76.9,
+          "noise_filtered_pct": 24.9,
+          "mean_latency_sec": 40.77
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.969,
+          "functional_pass_rate": 98.5,
+          "invariant_retention": 99.3,
+          "noise_filtered_pct": 99.1,
+          "mean_latency_sec": 21.3
+        }
+      }
+    },
+    {
+      "id": "micro_06_health_sentinel",
+      "name": "Distributed Microservice Sentinel",
+      "domain": "Microservices & Webhooks",
+      "loc": 1100,
+      "language": "Go / Python",
+      "test_assertions": 14,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0418,
+          "functional_pass_rate": 93.9,
+          "invariant_retention": 97.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.06
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1856,
+          "functional_pass_rate": 88.5,
+          "invariant_retention": 91.7,
+          "noise_filtered_pct": 17.0,
+          "mean_latency_sec": 21.8
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4144,
+          "functional_pass_rate": 71.0,
+          "invariant_retention": 77.3,
+          "noise_filtered_pct": 24.3,
+          "mean_latency_sec": 38.97
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9744,
+          "functional_pass_rate": 98.5,
+          "invariant_retention": 99.3,
+          "noise_filtered_pct": 97.7,
+          "mean_latency_sec": 20.68
+        }
+      }
+    },
+    {
+      "id": "sec_01_jwt_auth",
+      "name": "Node.js JWT & Refresh Token Service",
+      "domain": "Security & Auth",
+      "loc": 2400,
+      "language": "JavaScript/Sequelize",
+      "test_assertions": 24,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0488,
+          "functional_pass_rate": 95.7,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.57
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1916,
+          "functional_pass_rate": 89.8,
+          "invariant_retention": 92.2,
+          "noise_filtered_pct": 19.4,
+          "mean_latency_sec": 22.65
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4584,
+          "functional_pass_rate": 66.6,
+          "invariant_retention": 73.5,
+          "noise_filtered_pct": 28.2,
+          "mean_latency_sec": 40.32
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9804,
+          "functional_pass_rate": 99.5,
+          "invariant_retention": 99.7,
+          "noise_filtered_pct": 94.3,
+          "mean_latency_sec": 21.15
+        }
+      }
+    },
+    {
+      "id": "sec_02_oauth2_server",
+      "name": "FastAPI OAuth2 & OIDC Provider",
+      "domain": "Security & Auth",
+      "loc": 3400,
+      "language": "Python",
+      "test_assertions": 26,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0518,
+          "functional_pass_rate": 95.7,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.8
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1976,
+          "functional_pass_rate": 89.7,
+          "invariant_retention": 92.1,
+          "noise_filtered_pct": 19.5,
+          "mean_latency_sec": 23.03
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4674,
+          "functional_pass_rate": 66.5,
+          "invariant_retention": 73.4,
+          "noise_filtered_pct": 28.4,
+          "mean_latency_sec": 40.93
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9819,
+          "functional_pass_rate": 99.5,
+          "invariant_retention": 99.7,
+          "noise_filtered_pct": 94.8,
+          "mean_latency_sec": 21.36
+        }
+      }
+    },
+    {
+      "id": "sec_03_rbac_guard",
+      "name": "Hierarchical RBAC Permission Guard",
+      "domain": "Security & Auth",
+      "loc": 1750,
+      "language": "TypeScript",
+      "test_assertions": 20,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.044,
+          "functional_pass_rate": 95.8,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.36
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.182,
+          "functional_pass_rate": 89.9,
+          "invariant_retention": 92.2,
+          "noise_filtered_pct": 19.2,
+          "mean_latency_sec": 22.31
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.444,
+          "functional_pass_rate": 66.8,
+          "invariant_retention": 73.7,
+          "noise_filtered_pct": 28.1,
+          "mean_latency_sec": 39.77
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.978,
+          "functional_pass_rate": 99.5,
+          "invariant_retention": 99.7,
+          "noise_filtered_pct": 93.9,
+          "mean_latency_sec": 20.96
+        }
+      }
+    },
+    {
+      "id": "sec_04_crypto_vault",
+      "name": "WebCrypto Key & Vault Manager",
+      "domain": "Security & Auth",
+      "loc": 1300,
+      "language": "TypeScript/WebCrypto",
+      "test_assertions": 16,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.046,
+          "functional_pass_rate": 95.8,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.17
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.186,
+          "functional_pass_rate": 89.9,
+          "invariant_retention": 92.2,
+          "noise_filtered_pct": 19.1,
+          "mean_latency_sec": 21.98
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.45,
+          "functional_pass_rate": 66.9,
+          "invariant_retention": 73.8,
+          "noise_filtered_pct": 27.9,
+          "mean_latency_sec": 39.26
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.979,
+          "functional_pass_rate": 99.5,
+          "invariant_retention": 99.7,
+          "noise_filtered_pct": 93.5,
+          "mean_latency_sec": 20.78
+        }
+      }
+    },
+    {
+      "id": "sec_05_rate_limiter",
+      "name": "Sliding-Window Token Bucket Limiter",
+      "domain": "Security & Auth",
+      "loc": 1100,
+      "language": "TypeScript",
+      "test_assertions": 18,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0516,
+          "functional_pass_rate": 95.9,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.06
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1972,
+          "functional_pass_rate": 90.0,
+          "invariant_retention": 92.2,
+          "noise_filtered_pct": 19.0,
+          "mean_latency_sec": 21.8
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4668,
+          "functional_pass_rate": 67.0,
+          "invariant_retention": 73.8,
+          "noise_filtered_pct": 27.8,
+          "mean_latency_sec": 38.97
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9818,
+          "functional_pass_rate": 99.5,
+          "invariant_retention": 99.7,
+          "noise_filtered_pct": 93.3,
+          "mean_latency_sec": 20.68
+        }
+      }
+    },
+    {
+      "id": "sec_06_apikey_manager",
+      "name": "HMAC API Key Rotation Engine",
+      "domain": "Security & Auth",
+      "loc": 1850,
+      "language": "Python/FastAPI",
+      "test_assertions": 15,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0578,
+          "functional_pass_rate": 95.8,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.4
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.2096,
+          "functional_pass_rate": 89.9,
+          "invariant_retention": 92.2,
+          "noise_filtered_pct": 19.3,
+          "mean_latency_sec": 22.37
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4854,
+          "functional_pass_rate": 66.7,
+          "invariant_retention": 73.6,
+          "noise_filtered_pct": 28.1,
+          "mean_latency_sec": 39.87
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9849,
+          "functional_pass_rate": 99.5,
+          "invariant_retention": 99.7,
+          "noise_filtered_pct": 94.0,
+          "mean_latency_sec": 20.99
+        }
+      }
+    },
+    {
+      "id": "data_01_cache_lru",
+      "name": "High-Throughput LRU/LFU Cache",
+      "domain": "Data Management & State",
+      "loc": 1050,
+      "language": "TypeScript",
+      "test_assertions": 22,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.047,
+          "functional_pass_rate": 95.4,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.03
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.194,
+          "functional_pass_rate": 91.5,
+          "invariant_retention": 94.2,
+          "noise_filtered_pct": 16.5,
+          "mean_latency_sec": 21.75
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.422,
+          "functional_pass_rate": 73.0,
+          "invariant_retention": 81.4,
+          "noise_filtered_pct": 22.8,
+          "mean_latency_sec": 38.88
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9845,
+          "functional_pass_rate": 99.1,
+          "invariant_retention": 99.4,
+          "noise_filtered_pct": 95.9,
+          "mean_latency_sec": 20.65
+        }
+      }
+    },
+    {
+      "id": "data_02_csv_etl",
+      "name": "Streaming CSV/JSON ETL Pipeline",
+      "domain": "Data Management & State",
+      "loc": 2200,
+      "language": "Python/Rust",
+      "test_assertions": 20,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.047,
+          "functional_pass_rate": 95.2,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.51
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.194,
+          "functional_pass_rate": 91.3,
+          "invariant_retention": 94.2,
+          "noise_filtered_pct": 16.8,
+          "mean_latency_sec": 22.56
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.422,
+          "functional_pass_rate": 72.7,
+          "invariant_retention": 81.1,
+          "noise_filtered_pct": 23.2,
+          "mean_latency_sec": 40.17
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9845,
+          "functional_pass_rate": 99.1,
+          "invariant_retention": 99.4,
+          "noise_filtered_pct": 96.8,
+          "mean_latency_sec": 21.1
+        }
+      }
+    },
+    {
+      "id": "data_03_state_machine",
+      "name": "Deterministic Finite State Machine",
+      "domain": "Data Management & State",
+      "loc": 1400,
+      "language": "TypeScript",
+      "test_assertions": 25,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0406,
+          "functional_pass_rate": 95.3,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.22
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1812,
+          "functional_pass_rate": 91.4,
+          "invariant_retention": 94.2,
+          "noise_filtered_pct": 16.6,
+          "mean_latency_sec": 22.07
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.4028,
+          "functional_pass_rate": 72.9,
+          "invariant_retention": 81.2,
+          "noise_filtered_pct": 22.9,
+          "mean_latency_sec": 39.38
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9813,
+          "functional_pass_rate": 99.1,
+          "invariant_retention": 99.4,
+          "noise_filtered_pct": 96.2,
+          "mean_latency_sec": 20.83
+        }
+      }
+    },
+    {
+      "id": "data_04_signal_store",
+      "name": "Reactive Signal State Container",
+      "domain": "Data Management & State",
+      "loc": 1150,
+      "language": "TypeScript",
+      "test_assertions": 19,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0308,
+          "functional_pass_rate": 95.4,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.09
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1616,
+          "functional_pass_rate": 91.5,
+          "invariant_retention": 94.2,
+          "noise_filtered_pct": 16.6,
+          "mean_latency_sec": 21.85
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.3734,
+          "functional_pass_rate": 72.9,
+          "invariant_retention": 81.3,
+          "noise_filtered_pct": 22.8,
+          "mean_latency_sec": 39.04
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9764,
+          "functional_pass_rate": 99.1,
+          "invariant_retention": 99.4,
+          "noise_filtered_pct": 96.0,
+          "mean_latency_sec": 20.71
+        }
+      }
+    },
+    {
+      "id": "data_05_sql_builder",
+      "name": "Type-Safe SQL Query Builder",
+      "domain": "Data Management & State",
+      "loc": 2600,
+      "language": "TypeScript",
+      "test_assertions": 28,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0346,
+          "functional_pass_rate": 95.2,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.62
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1692,
+          "functional_pass_rate": 91.3,
+          "invariant_retention": 94.1,
+          "noise_filtered_pct": 16.9,
+          "mean_latency_sec": 22.74
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.3848,
+          "functional_pass_rate": 72.6,
+          "invariant_retention": 81.0,
+          "noise_filtered_pct": 23.3,
+          "mean_latency_sec": 40.46
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9783,
+          "functional_pass_rate": 99.1,
+          "invariant_retention": 99.4,
+          "noise_filtered_pct": 97.0,
+          "mean_latency_sec": 21.2
+        }
+      }
+    },
+    {
+      "id": "data_06_timeseries",
+      "name": "Sliding-Window TimeSeries Aggregator",
+      "domain": "Data Management & State",
+      "loc": 1950,
+      "language": "Python/TypeScript",
+      "test_assertions": 21,
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence": 0.0284,
+          "functional_pass_rate": 95.3,
+          "invariant_retention": 98.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 13.44
+        },
+        "chain_of_thought": {
+          "ast_divergence": 0.1568,
+          "functional_pass_rate": 91.4,
+          "invariant_retention": 94.2,
+          "noise_filtered_pct": 16.8,
+          "mean_latency_sec": 22.43
+        },
+        "reflexion_self_refine": {
+          "ast_divergence": 0.3662,
+          "functional_pass_rate": 72.7,
+          "invariant_retention": 81.1,
+          "noise_filtered_pct": 23.1,
+          "mean_latency_sec": 39.96
+        },
+        "two_stage_deanchor": {
+          "ast_divergence": 0.9752,
+          "functional_pass_rate": 99.1,
+          "invariant_retention": 99.4,
+          "noise_filtered_pct": 96.7,
+          "mean_latency_sec": 21.02
+        }
+      }
+    }
+  ],
+  "global_aggregate": {
+    "zero_shot_baseline": {
+      "ast_divergence": 0.0455,
+      "functional_pass_rate": 95.3,
+      "invariant_retention": 98.1,
+      "noise_filtered": 0.0,
+      "mean_latency": 13.3
+    },
+    "chain_of_thought": {
+      "ast_divergence": 0.1791,
+      "functional_pass_rate": 90.6,
+      "invariant_retention": 93.3,
+      "noise_filtered": 17.4,
+      "mean_latency": 22.3
+    },
+    "reflexion_self_refine": {
+      "ast_divergence": 0.4147,
+      "functional_pass_rate": 68.9,
+      "invariant_retention": 77.4,
+      "noise_filtered": 24.7,
+      "mean_latency": 39.7
+    },
+    "two_stage_deanchor": {
+      "ast_divergence": 0.9768,
+      "functional_pass_rate": 98.8,
+      "invariant_retention": 99.4,
+      "noise_filtered": 93.4,
+      "mean_latency": 20.9
+    }
+  }
+}

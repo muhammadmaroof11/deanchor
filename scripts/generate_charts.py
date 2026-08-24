@@ -16,6 +16,7 @@ Usage:
   python scripts/generate_charts.py --scores-dir results/
 """
 
+import sys
 import json
 import pathlib
 import argparse
@@ -24,6 +25,13 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import seaborn as sns
 from typing import Dict, Optional
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 ROOT    = pathlib.Path(__file__).parent.parent
 RESULTS = ROOT / "results"
