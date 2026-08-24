@@ -1,0 +1,12 @@
+{
+  "id": "data_04_signal_store",
+  "name": "Reactive Signal State Container",
+  "domain": "Data Management & State",
+  "repo_origin": "preactjs/signals",
+  "loc": 1150,
+  "language": "TypeScript",
+  "legacy_paradigm": "Observer pattern with array push/splice on listeners array",
+  "deanchored_target": "Dependency graph topological sorting with automatic batching",
+  "test_type": "Jest Reactivity & Batch Tests",
+  "test_assertions": 19
+}

@@ -1,0 +1,12 @@
+{
+  "id": "micro_06_health_sentinel",
+  "name": "Distributed Microservice Sentinel",
+  "domain": "Microservices & Webhooks",
+  "repo_origin": "healthchecks/sentinel",
+  "loc": 1100,
+  "language": "Go / Python",
+  "legacy_paradigm": "Sequential for-loop HTTP pinging, stdout console logging",
+  "deanchored_target": "Concurrent worker pool with exponential backoff and Prometheus metrics",
+  "test_type": "Pytest Health Status Verification",
+  "test_assertions": 14
+}

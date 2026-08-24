@@ -1,0 +1,12 @@
+{
+  "id": "algo_05_hft_maker",
+  "name": "High-Frequency Spread Estimator",
+  "domain": "Algorithmic & Fintech",
+  "repo_origin": "hft-research/spread-estimator",
+  "loc": 2100,
+  "language": "Python",
+  "legacy_paradigm": "Pandas dataframe iterrows, non-vectorized rolling window scans",
+  "deanchored_target": "NumPy/Numba C-extension, vectorized exponential decay moving variance",
+  "test_type": "Pytest Spread Accuracy Tests",
+  "test_assertions": 19
+}

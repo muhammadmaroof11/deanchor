@@ -1,0 +1,12 @@
+{
+  "id": "algo_04_btree_indexer",
+  "name": "In-Memory B+ Tree Index Engine",
+  "domain": "Algorithmic & Fintech",
+  "repo_origin": "jayb/btree-js",
+  "loc": 1400,
+  "language": "TypeScript",
+  "legacy_paradigm": "Object pointer linked nodes, deep recursive node splitting",
+  "deanchored_target": "Contiguous memory buffer blocks, SIMD binary search vectorization",
+  "test_type": "Jest Key-Value CRUD Tests",
+  "test_assertions": 24
+}

@@ -1,0 +1,12 @@
+{
+  "id": "ui_03_vue_store",
+  "name": "Vue 3 E-Commerce Storefront",
+  "domain": "Frontend & UI Design",
+  "repo_origin": "vuejs/pinia-store-example",
+  "loc": 2400,
+  "language": "Vue/TypeScript",
+  "legacy_paradigm": "Fixed left filter drawer, 4x4 product image card matrix",
+  "deanchored_target": "Interactive canvas visualizer, fluid faceted filter pills, bottom sheet",
+  "test_type": "Vitest Store & Interaction Tests",
+  "test_assertions": 18
+}

@@ -1,0 +1,12 @@
+{
+  "id": "algo_02_crypto_bot",
+  "name": "Algorithmic Market Arbitrage Bot",
+  "domain": "Algorithmic & Fintech",
+  "repo_origin": "crypto-charlie/arbitrage-engine",
+  "loc": 2800,
+  "language": "Python",
+  "legacy_paradigm": "Synchronous polling loop, global shared state locks, linear price scan",
+  "deanchored_target": "Asyncio event stream, lock-free circular ring buffer, Bellman-Ford graph",
+  "test_type": "Pytest Arbitrage Detection Tests",
+  "test_assertions": 22
+}

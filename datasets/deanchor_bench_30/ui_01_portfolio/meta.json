@@ -1,0 +1,12 @@
+{
+  "id": "ui_01_portfolio",
+  "name": "Web Developer Portfolio Theme",
+  "domain": "Frontend & UI Design",
+  "repo_origin": "itsvijaysingh/My-Portfolio",
+  "loc": 800,
+  "language": "HTML/CSS/JS",
+  "legacy_paradigm": "Bootstrap 3-column card grid, fixed 220px sidebar, Owl Carousel",
+  "deanchored_target": "CSS Subgrid, dynamic fluid typography, reactive theme tokens",
+  "test_type": "DOM & Theme Assertion Suite",
+  "test_assertions": 12
+}

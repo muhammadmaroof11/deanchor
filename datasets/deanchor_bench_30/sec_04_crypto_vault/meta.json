@@ -1,0 +1,12 @@
+{
+  "id": "sec_04_crypto_vault",
+  "name": "WebCrypto Key & Vault Manager",
+  "domain": "Security & Auth",
+  "repo_origin": "diafygi/webcrypto-examples",
+  "loc": 1300,
+  "language": "TypeScript/WebCrypto",
+  "legacy_paradigm": "Deprecated Math.random IV generation, raw unpadded AES keys",
+  "deanchored_target": "AES-256-GCM authenticated cipher with PBKDF2 salt derivation",
+  "test_type": "Jest Encryption Integrity Tests",
+  "test_assertions": 16
+}

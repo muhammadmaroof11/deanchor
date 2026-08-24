@@ -1,0 +1,12 @@
+{
+  "id": "sec_05_rate_limiter",
+  "name": "Sliding-Window Token Bucket Limiter",
+  "domain": "Security & Auth",
+  "repo_origin": "jhurliman/node-rate-limiter",
+  "loc": 1100,
+  "language": "TypeScript",
+  "legacy_paradigm": "In-memory setInterval timer, locking global counter variable",
+  "deanchored_target": "Lock-free atomic timestamp calculation with Redis Lua script",
+  "test_type": "Jest Rate Limit Threshold Tests",
+  "test_assertions": 18
+}

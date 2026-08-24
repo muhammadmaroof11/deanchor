@@ -1,0 +1,12 @@
+{
+  "id": "algo_01_orderbook",
+  "name": "Node.js L2 Limit Order Book",
+  "domain": "Algorithmic & Fintech",
+  "repo_origin": "fasenderos/nodejs-order-book",
+  "loc": 1200,
+  "language": "TypeScript",
+  "legacy_paradigm": "Nested while loops, mutable Map price bins, linear order search",
+  "deanchored_target": "Red-Black tree matching, atomic ring buffers, zero-copy FIFO queues",
+  "test_type": "Jest Engine Matching & STP Tests",
+  "test_assertions": 28
+}

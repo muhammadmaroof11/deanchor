@@ -1,0 +1,12 @@
+{
+  "id": "ui_04_svelte_kanban",
+  "name": "Svelte Kanban Drag-and-Drop Board",
+  "domain": "Frontend & UI Design",
+  "repo_origin": "sveltejs/svelte-dnd-action",
+  "loc": 1200,
+  "language": "Svelte/JS",
+  "legacy_paradigm": "3 rigid vertical column lists with fixed pixel height",
+  "deanchored_target": "Spatial node-graph canvas, collapsible swimlanes, zoomable workspace",
+  "test_type": "Vitest DnD Event Handlers",
+  "test_assertions": 14
+}

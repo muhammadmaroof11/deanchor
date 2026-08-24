@@ -1,0 +1,12 @@
+{
+  "id": "micro_04_event_broker",
+  "name": "Redis Pub/Sub Message Broker",
+  "domain": "Microservices & Webhooks",
+  "repo_origin": "redis-developer/node-pubsub",
+  "loc": 1900,
+  "language": "TypeScript",
+  "legacy_paradigm": "Single Redis channel subscriber with unbounded consumer queues",
+  "deanchored_target": "Consumer group partitions, backpressure flow controller, DLQ retry",
+  "test_type": "Jest Queue Delivery Tests",
+  "test_assertions": 18
+}

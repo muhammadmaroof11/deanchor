@@ -1,0 +1,12 @@
+{
+  "id": "data_06_timeseries",
+  "name": "Sliding-Window TimeSeries Aggregator",
+  "domain": "Data Management & State",
+  "repo_origin": "timescale/timeseries-tools",
+  "loc": 1950,
+  "language": "Python/TypeScript",
+  "legacy_paradigm": "Full dataset scan on every window query, high memory footprint",
+  "deanchored_target": "Ring buffer time buckets with incremental running sum & variance",
+  "test_type": "Jest/Pytest Aggregation Tests",
+  "test_assertions": 21
+}

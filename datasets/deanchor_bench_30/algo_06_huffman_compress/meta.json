@@ -1,0 +1,12 @@
+{
+  "id": "algo_06_huffman_compress",
+  "name": "Huffman Stream Encoding Engine",
+  "domain": "Algorithmic & Fintech",
+  "repo_origin": "node-modules/huffman-stream",
+  "loc": 850,
+  "language": "TypeScript",
+  "legacy_paradigm": "String concatenation bit-building, tree traversal recursion",
+  "deanchored_target": "Uint8Array bitwise byte packing, canonical table lookups",
+  "test_type": "Jest Lossless Roundtrip Tests",
+  "test_assertions": 12
+}

@@ -1,0 +1,12 @@
+{
+  "id": "sec_06_apikey_manager",
+  "name": "HMAC API Key Rotation Engine",
+  "domain": "Security & Auth",
+  "repo_origin": "stripe/api-key-auth",
+  "loc": 1850,
+  "language": "Python/FastAPI",
+  "legacy_paradigm": "Plaintext API key comparison, single global secret key",
+  "deanchored_target": "Constant-time HMAC-SHA256 signature check with dual-key rotation",
+  "test_type": "Pytest Key Verification Tests",
+  "test_assertions": 15
+}

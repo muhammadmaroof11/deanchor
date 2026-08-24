@@ -1,0 +1,12 @@
+{
+  "id": "micro_01_webhook_dispatcher",
+  "name": "GitHub Webhook Dispatcher",
+  "domain": "Microservices & Webhooks",
+  "repo_origin": "octocat/webhook-dispatcher",
+  "loc": 4800,
+  "language": "JavaScript/Express",
+  "legacy_paradigm": "Monolithic Express router file, callback-based HMAC checks",
+  "deanchored_target": "Pipeline middleware with async generators and typed event bus",
+  "test_type": "Jest Webhook Delivery Tests",
+  "test_assertions": 25
+}

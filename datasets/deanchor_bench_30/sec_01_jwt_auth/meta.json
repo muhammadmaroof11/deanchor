@@ -1,0 +1,12 @@
+{
+  "id": "sec_01_jwt_auth",
+  "name": "Node.js JWT & Refresh Token Service",
+  "domain": "Security & Auth",
+  "repo_origin": "bezkoder/node-js-jwt-auth",
+  "loc": 2400,
+  "language": "JavaScript/Sequelize",
+  "legacy_paradigm": "Stateful database session lookups, callback-based jwt.verify",
+  "deanchored_target": "Stateless asymmetric RSA token registry with WebCrypto verification",
+  "test_type": "Jest Auth Token Lifecycle Tests",
+  "test_assertions": 24
+}

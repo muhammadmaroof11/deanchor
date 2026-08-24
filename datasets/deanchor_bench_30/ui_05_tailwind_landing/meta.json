@@ -1,0 +1,12 @@
+{
+  "id": "ui_05_tailwind_landing",
+  "name": "Tailwind SaaS Landing Page",
+  "domain": "Frontend & UI Design",
+  "repo_origin": "tailwindlabs/hero-patterns",
+  "loc": 1500,
+  "language": "HTML/Tailwind",
+  "legacy_paradigm": "Centered hero headline, 3-tier pricing cards, standard footer links",
+  "deanchored_target": "Asymmetric editorial typography, interactive 3D WebGL hero background",
+  "test_type": "HTML Linter & Responsive Checks",
+  "test_assertions": 10
+}

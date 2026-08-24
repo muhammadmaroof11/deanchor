@@ -1,0 +1,12 @@
+{
+  "id": "sec_03_rbac_guard",
+  "name": "Hierarchical RBAC Permission Guard",
+  "domain": "Security & Auth",
+  "repo_origin": "casbin/node-casbin",
+  "loc": 1750,
+  "language": "TypeScript",
+  "legacy_paradigm": "Linear string comparison of role names, nested if-else statements",
+  "deanchored_target": "Bitmask permission matrix, inheritance tree graph evaluation",
+  "test_type": "Jest RBAC Enforcement Tests",
+  "test_assertions": 20
+}

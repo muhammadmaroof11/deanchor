@@ -1,0 +1,12 @@
+{
+  "id": "data_03_state_machine",
+  "name": "Deterministic Finite State Machine",
+  "domain": "Data Management & State",
+  "repo_origin": "statelyai/xstate",
+  "loc": 1400,
+  "language": "TypeScript",
+  "legacy_paradigm": "Giant switch statement on action types, mutable context mutations",
+  "deanchored_target": "Immutable transition table with pure state transition reducers",
+  "test_type": "Jest State Transition Tests",
+  "test_assertions": 25
+}

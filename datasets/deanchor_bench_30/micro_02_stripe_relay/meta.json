@@ -1,0 +1,12 @@
+{
+  "id": "micro_02_stripe_relay",
+  "name": "Stripe Payment Event Relay",
+  "domain": "Microservices & Webhooks",
+  "repo_origin": "stripe-samples/webhook-relay",
+  "loc": 1650,
+  "language": "TypeScript/Node",
+  "legacy_paradigm": "Procedural switch-case event handlers, inline database updates",
+  "deanchored_target": "Domain event dispatcher with idempotent deduplication ledger",
+  "test_type": "Jest Signature & Idempotency Tests",
+  "test_assertions": 16
+}

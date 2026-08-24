@@ -1,0 +1,12 @@
+{
+  "id": "data_02_csv_etl",
+  "name": "Streaming CSV/JSON ETL Pipeline",
+  "domain": "Data Management & State",
+  "repo_origin": "mafintosh/csv-parser",
+  "loc": 2200,
+  "language": "Python/Rust",
+  "legacy_paradigm": "Line-by-line string split with high garbage collection overhead",
+  "deanchored_target": "Zero-copy byte buffer chunk parser with schema validation generators",
+  "test_type": "Pytest Data Transformation Tests",
+  "test_assertions": 20
+}

@@ -1,0 +1,12 @@
+{
+  "id": "micro_03_api_gateway",
+  "name": "FastAPI Reverse Proxy Gateway",
+  "domain": "Microservices & Webhooks",
+  "repo_origin": "tiangolo/fastapi-gateway",
+  "loc": 2200,
+  "language": "Python/FastAPI",
+  "legacy_paradigm": "Hardcoded path regex matching, synchronous HTTP client calls",
+  "deanchored_target": "Async trie router, circuit breaker state machine, token bucket limiter",
+  "test_type": "Pytest Route & Timeout Tests",
+  "test_assertions": 20
+}

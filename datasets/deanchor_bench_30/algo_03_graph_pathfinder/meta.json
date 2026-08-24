@@ -1,0 +1,12 @@
+{
+  "id": "algo_03_graph_pathfinder",
+  "name": "Graph Pathfinder Shortest Route",
+  "domain": "Algorithmic & Fintech",
+  "repo_origin": "anvaka/ngraph.path",
+  "loc": 950,
+  "language": "TypeScript",
+  "legacy_paradigm": "Standard recursive Dijkstra with adjacency matrix allocations",
+  "deanchored_target": "Bi-directional A* with typed flat array heaps and bitset visited masks",
+  "test_type": "Jest Route Verification Tests",
+  "test_assertions": 15
+}

@@ -1,0 +1,12 @@
+{
+  "id": "ui_06_secops_dashboard",
+  "name": "Enterprise SecOps Command Center",
+  "domain": "Frontend & UI Design",
+  "repo_origin": "grafana/grafana-security-panel",
+  "loc": 1465,
+  "language": "HTML/CSS/SVG",
+  "legacy_paradigm": "Dense tabular log dump, monochrome alert boxes, fixed header",
+  "deanchored_target": "Radial incident radar, live heatmap HUD, prioritized stream cards",
+  "test_type": "SVG Chart & DOM Event Tests",
+  "test_assertions": 20
+}

@@ -1,0 +1,12 @@
+{
+  "id": "ui_02_admin_dashboard",
+  "name": "React Admin Analytics Dashboard",
+  "domain": "Frontend & UI Design",
+  "repo_origin": "marmelab/react-admin",
+  "loc": 1850,
+  "language": "TypeScript/React",
+  "legacy_paradigm": "Nested Material-UI card containers, table prop drilling",
+  "deanchored_target": "Radial metric widgets, decoupled signal feeds, Bento Grid layout",
+  "test_type": "Jest Component Render & State Tests",
+  "test_assertions": 16
+}

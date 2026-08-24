@@ -1,0 +1,12 @@
+{
+  "id": "data_01_cache_lru",
+  "name": "High-Throughput LRU/LFU Cache",
+  "domain": "Data Management & State",
+  "repo_origin": "isaacs/node-lru-cache",
+  "loc": 1050,
+  "language": "TypeScript",
+  "legacy_paradigm": "Doubly linked list with individual JS object allocation overhead",
+  "deanchored_target": "Flat TypedArray indices (Uint32Array) with O(1) eviction hashing",
+  "test_type": "Jest LRU Eviction Tests",
+  "test_assertions": 22
+}

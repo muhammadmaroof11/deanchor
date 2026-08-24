@@ -1,0 +1,12 @@
+{
+  "id": "data_05_sql_builder",
+  "name": "Type-Safe SQL Query Builder",
+  "domain": "Data Management & State",
+  "repo_origin": "knex/knex",
+  "loc": 2600,
+  "language": "TypeScript",
+  "legacy_paradigm": "Imperative string concatenation with potential SQL injection traps",
+  "deanchored_target": "AST query tree compiler with parameterized AST node visitors",
+  "test_type": "Jest SQL Compilation Tests",
+  "test_assertions": 28
+}

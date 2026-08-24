@@ -1,0 +1,12 @@
+{
+  "id": "sec_02_oauth2_server",
+  "name": "FastAPI OAuth2 & OIDC Provider",
+  "domain": "Security & Auth",
+  "repo_origin": "lepture/authlib-fastapi",
+  "loc": 3400,
+  "language": "Python",
+  "legacy_paradigm": "Monolithic auth view functions, hardcoded client validation",
+  "deanchored_target": "Pluggable grant type strategies, PKCE cryptographic verifiers",
+  "test_type": "Pytest OIDC Grant Tests",
+  "test_assertions": 26
+}
