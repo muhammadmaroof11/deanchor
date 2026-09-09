@@ -8,5 +8,8 @@
   "legacy_paradigm": "Object pointer linked nodes, deep recursive node splitting",
   "deanchored_target": "Contiguous memory buffer blocks, SIMD binary search vectorization",
   "test_type": "Jest Key-Value CRUD Tests",
-  "test_assertions": 24
+  "test_assertions": 24,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

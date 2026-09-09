@@ -8,5 +8,8 @@
   "legacy_paradigm": "Pandas dataframe iterrows, non-vectorized rolling window scans",
   "deanchored_target": "NumPy/Numba C-extension, vectorized exponential decay moving variance",
   "test_type": "Pytest Spread Accuracy Tests",
-  "test_assertions": 19
+  "test_assertions": 19,
+  "test_provenance": "author_created",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

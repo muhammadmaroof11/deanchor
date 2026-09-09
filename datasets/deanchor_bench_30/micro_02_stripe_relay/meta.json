@@ -8,5 +8,8 @@
   "legacy_paradigm": "Procedural switch-case event handlers, inline database updates",
   "deanchored_target": "Domain event dispatcher with idempotent deduplication ledger",
   "test_type": "Jest Signature & Idempotency Tests",
-  "test_assertions": 16
+  "test_assertions": 16,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

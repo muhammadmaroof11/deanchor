@@ -8,5 +8,8 @@
   "legacy_paradigm": "In-memory setInterval timer, locking global counter variable",
   "deanchored_target": "Lock-free atomic timestamp calculation with Redis Lua script",
   "test_type": "Jest Rate Limit Threshold Tests",
-  "test_assertions": 18
+  "test_assertions": 18,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

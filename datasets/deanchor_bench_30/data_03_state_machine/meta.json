@@ -8,5 +8,8 @@
   "legacy_paradigm": "Giant switch statement on action types, mutable context mutations",
   "deanchored_target": "Immutable transition table with pure state transition reducers",
   "test_type": "Jest State Transition Tests",
-  "test_assertions": 25
+  "test_assertions": 25,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": true
 }

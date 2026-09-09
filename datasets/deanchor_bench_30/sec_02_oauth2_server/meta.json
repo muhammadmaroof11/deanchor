@@ -8,5 +8,8 @@
   "legacy_paradigm": "Monolithic auth view functions, hardcoded client validation",
   "deanchored_target": "Pluggable grant type strategies, PKCE cryptographic verifiers",
   "test_type": "Pytest OIDC Grant Tests",
-  "test_assertions": 26
+  "test_assertions": 26,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

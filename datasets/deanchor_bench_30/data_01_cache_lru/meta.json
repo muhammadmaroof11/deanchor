@@ -8,5 +8,8 @@
   "legacy_paradigm": "Doubly linked list with individual JS object allocation overhead",
   "deanchored_target": "Flat TypedArray indices (Uint32Array) with O(1) eviction hashing",
   "test_type": "Jest LRU Eviction Tests",
-  "test_assertions": 22
+  "test_assertions": 22,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": true
 }

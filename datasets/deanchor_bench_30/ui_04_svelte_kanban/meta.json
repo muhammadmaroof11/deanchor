@@ -8,5 +8,8 @@
   "legacy_paradigm": "3 rigid vertical column lists with fixed pixel height",
   "deanchored_target": "Spatial node-graph canvas, collapsible swimlanes, zoomable workspace",
   "test_type": "Vitest DnD Event Handlers",
-  "test_assertions": 14
+  "test_assertions": 14,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

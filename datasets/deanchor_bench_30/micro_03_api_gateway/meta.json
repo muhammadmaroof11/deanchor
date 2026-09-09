@@ -8,5 +8,8 @@
   "legacy_paradigm": "Hardcoded path regex matching, synchronous HTTP client calls",
   "deanchored_target": "Async trie router, circuit breaker state machine, token bucket limiter",
   "test_type": "Pytest Route & Timeout Tests",
-  "test_assertions": 20
+  "test_assertions": 20,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": true
 }

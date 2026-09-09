@@ -8,5 +8,8 @@
   "legacy_paradigm": "Single Redis channel subscriber with unbounded consumer queues",
   "deanchored_target": "Consumer group partitions, backpressure flow controller, DLQ retry",
   "test_type": "Jest Queue Delivery Tests",
-  "test_assertions": 18
+  "test_assertions": 18,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

@@ -8,5 +8,8 @@
   "legacy_paradigm": "Imperative string concatenation with potential SQL injection traps",
   "deanchored_target": "AST query tree compiler with parameterized AST node visitors",
   "test_type": "Jest SQL Compilation Tests",
-  "test_assertions": 28
+  "test_assertions": 28,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

@@ -8,5 +8,8 @@
   "legacy_paradigm": "Standard recursive Dijkstra with adjacency matrix allocations",
   "deanchored_target": "Bi-directional A* with typed flat array heaps and bitset visited masks",
   "test_type": "Jest Route Verification Tests",
-  "test_assertions": 15
+  "test_assertions": 15,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": true
 }

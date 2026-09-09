@@ -8,5 +8,8 @@
   "legacy_paradigm": "Observer pattern with array push/splice on listeners array",
   "deanchored_target": "Dependency graph topological sorting with automatic batching",
   "test_type": "Jest Reactivity & Batch Tests",
-  "test_assertions": 19
+  "test_assertions": 19,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

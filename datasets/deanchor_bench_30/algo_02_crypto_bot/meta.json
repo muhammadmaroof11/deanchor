@@ -8,5 +8,8 @@
   "legacy_paradigm": "Synchronous polling loop, global shared state locks, linear price scan",
   "deanchored_target": "Asyncio event stream, lock-free circular ring buffer, Bellman-Ford graph",
   "test_type": "Pytest Arbitrage Detection Tests",
-  "test_assertions": 22
+  "test_assertions": 22,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

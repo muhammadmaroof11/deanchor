@@ -8,5 +8,8 @@
   "legacy_paradigm": "Line-by-line string split with high garbage collection overhead",
   "deanchored_target": "Zero-copy byte buffer chunk parser with schema validation generators",
   "test_type": "Pytest Data Transformation Tests",
-  "test_assertions": 20
+  "test_assertions": 20,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

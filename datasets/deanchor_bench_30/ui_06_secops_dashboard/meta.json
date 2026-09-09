@@ -8,5 +8,8 @@
   "legacy_paradigm": "Dense tabular log dump, monochrome alert boxes, fixed header",
   "deanchored_target": "Radial incident radar, live heatmap HUD, prioritized stream cards",
   "test_type": "SVG Chart & DOM Event Tests",
-  "test_assertions": 20
+  "test_assertions": 20,
+  "test_provenance": "author_created",
+  "upstream_verified": true,
+  "is_core_subset": true
 }

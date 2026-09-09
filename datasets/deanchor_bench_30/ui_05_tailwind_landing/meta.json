@@ -8,5 +8,8 @@
   "legacy_paradigm": "Centered hero headline, 3-tier pricing cards, standard footer links",
   "deanchored_target": "Asymmetric editorial typography, interactive 3D WebGL hero background",
   "test_type": "HTML Linter & Responsive Checks",
-  "test_assertions": 10
+  "test_assertions": 10,
+  "test_provenance": "author_created",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

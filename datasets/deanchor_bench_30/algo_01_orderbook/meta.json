@@ -8,5 +8,8 @@
   "legacy_paradigm": "Nested while loops, mutable Map price bins, linear order search",
   "deanchored_target": "Red-Black tree matching, atomic ring buffers, zero-copy FIFO queues",
   "test_type": "Jest Engine Matching & STP Tests",
-  "test_assertions": 28
+  "test_assertions": 28,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": true
 }

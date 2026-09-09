@@ -8,5 +8,8 @@
   "legacy_paradigm": "Stateful database session lookups, callback-based jwt.verify",
   "deanchored_target": "Stateless asymmetric RSA token registry with WebCrypto verification",
   "test_type": "Jest Auth Token Lifecycle Tests",
-  "test_assertions": 24
+  "test_assertions": 24,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": true
 }

@@ -8,5 +8,8 @@
   "legacy_paradigm": "String concatenation bit-building, tree traversal recursion",
   "deanchored_target": "Uint8Array bitwise byte packing, canonical table lookups",
   "test_type": "Jest Lossless Roundtrip Tests",
-  "test_assertions": 12
+  "test_assertions": 12,
+  "test_provenance": "upstream",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

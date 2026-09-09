@@ -8,5 +8,8 @@
   "legacy_paradigm": "Sequential for-loop HTTP pinging, stdout console logging",
   "deanchored_target": "Concurrent worker pool with exponential backoff and Prometheus metrics",
   "test_type": "Pytest Health Status Verification",
-  "test_assertions": 14
+  "test_assertions": 14,
+  "test_provenance": "author_created",
+  "upstream_verified": true,
+  "is_core_subset": false
 }

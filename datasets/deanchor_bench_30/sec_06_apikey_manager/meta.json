@@ -8,5 +8,8 @@
   "legacy_paradigm": "Plaintext API key comparison, single global secret key",
   "deanchored_target": "Constant-time HMAC-SHA256 signature check with dual-key rotation",
   "test_type": "Pytest Key Verification Tests",
-  "test_assertions": 15
+  "test_assertions": 15,
+  "test_provenance": "author_created",
+  "upstream_verified": true,
+  "is_core_subset": false
 }
