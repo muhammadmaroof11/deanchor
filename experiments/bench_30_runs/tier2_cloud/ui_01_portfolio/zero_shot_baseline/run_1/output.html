@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+
+    <!-- Primary Meta Tags -->
+    <title>Vijay Singh - Frontend Web Developer</title>
+    <meta name="title" content="Vijay Singh - Frontend Web Developer">
+    <meta name="description" content="Vijay Singh - Passionate Frontend Web Developer creating beautiful and responsive websites. Explore my portfolio and blog for tech insights.">
+    <meta name="keywords" content="Vijay Singh, Web Developer, Frontend Developer, Portfolio, Blog, Tech Insights">
+    <meta name="author" content="Vijay Singh">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Vijay Singh - Frontend Web Developer">
+    <meta property="og:description" content="Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights.">
+    <meta property="og:image" content="assets/images/banner.webp">
+    <meta property="og:url" content="/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vijay Singh - Frontend Web Developer">
+    <meta name="twitter:description" content="Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights.">
+    <meta name="twitter:image" content="assets/images/banner.webp">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/vj.webp" type="image/webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+
+    <!-- MS-Clarity Analytics -->
+    <script defer data-domain="phycesbqlg" src="https://www.clarity.ms/tag/phycesbqlg"></script>
+
+    <style>
+        /* ==========================================================================
+           CSS Custom Properties & Design Tokens
+           ========================================================================== */
+        :root {
+            /* Colors - Dark Theme (Default) */
+            --color-bg-primary: #0d1117;
+            --color-bg-secondary: #161b22;
+            --color-bg-tertiary: #21262d;
+            --color-bg-card: #161b22;
+            --color-border: #30363d;
+            --color-border-hover: #484f58;
+            
+            --color-text-primary: #f0f6fc;
+            --color-text-secondary: #8b949e;
+            --color-text-muted: #6e7681;
+            
+            --color-accent-primary: #58a6ff;
+            --color-accent-secondary: #a371f7;
+            --color-accent-tertiary: #f78166;
+            --color-accent-success: #3fb950;
+            --color-accent-warning: #d29922;
+            --color-accent-error: #f85149;
+            
+            --color-heart: #ff6b6b;
+            
+            /* Typography */
+            --font-family-base: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-family-mono: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, monospace;
+            
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 2rem;
+            --font-size-4xl: 2.5rem;
+            --font-size-5xl: 3.5rem;
+            
+            --font-weight-light: 300;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            
+            --line-height-tight: 1.1;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.75;
+            
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.5rem;
+            --space-6: 2rem;
+            --space-8: 3rem;
+            --space-10: 4rem;
+            --space-12: 5rem;
+            --space-16: 6rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-full: 9999px;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+            
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-normal: 250ms ease;
+            --transition-slow: 350ms ease;
+            
+            /* Z-Index */
+            --z-dropdown: 100;
+            --z-sticky: 200;
+            --z-fixed: 3

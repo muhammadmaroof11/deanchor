@@ -1,0 +1,175 @@
+domain_entities:
+  - name: ThreatAlert
+    fields:
+      - name: alert_id
+        type: string
+        description: Unique identifier for the threat alert
+      - name: timestamp
+        type: datetime
+        description: When the threat was detected
+      - name: threat_type
+        type: enum
+        values: [C2 Beaconing, Credential Stuffing, SQL Injection Attempt, Lateral Movement, Privilege Escalation, DDoS Probe]
+        description: Classification of the threat
+      - name: severity
+        type: enum
+        values: [CRITICAL, HIGH, MEDIUM, LOW]
+        description: Severity level of the threat
+      - name: source
+        type: string
+        description: Source identifier (IP, workload, user)
+      - name: target
+        type: string
+        description: Target workload or resource
+      - name: status
+        type: enum
+        values: [Blocked, Investigating, Mitigated, Quarantined]
+        description: Current remediation status
+      - name: indicators
+        type: array<string>
+        description: Associated IOCs (hashes, IPs, domains)
+
+  - name: WorkloadNode
+    fields:
+      - name: node_identifier
+        type: string
+        description: Unique workload identifier (e.g., k8s-node-us-east-prod-01)
+      - name: geographic_region
+        type: string
+        description: Cloud region and availability zone
+      - name: mesh_identity_ip
+        type: ipv4_address
+        description: Zero-trust mesh identity IP address
+      - name: tunnel_status
+        type: enum
+        values: [Connected (mTLS), Quarantined, L7 Shield Active, Disconnected]
+        description: Current zero-trust tunnel state
+      - name: threat_classification
+        type: enum
+        values: [CLEAN, CVE_CRITICAL, DDoS_Probe, Suspicious]
+        description: Current threat assessment
+      - name: threat_details
+        type: string
+        description: Specific CVE or threat identifier if applicable
+      - name: last_attestation
+        type: duration
+        description: Time since last cryptographic attestation
+      - name: cluster_id
+        type: string
+        description: Parent cluster identifier
+
+  - name: QuarantineOrder
+    fields:
+      - name: order_id
+        type: string
+        description: Unique quarantine order identifier
+      - name: target_workload
+        type: string
+        description: Reference to WorkloadNode.node_identifier
+      - name: protocol_level
+        type: enum
+        values: [Level_1_ReadOnly_Audit, Level_2_Egress_Filtered, Level_3_Full_AirGap_Memory_Snapshot]
+        description: Quarantine enforcement level
+      - name: justification_ticket
+        type: string
+        description: SOC incident reference (e.g., SEC-2026-INC-9481)
+      - name: issued_at
+        type: datetime
+        description: Order issuance timestamp
+      - name: issued_by
+        type: string
+        description: Operator identity
+      - name: status
+        type: enum
+        values: [Pending, Executing, Completed, Failed, Rolled_Back]
+        description: Execution state
+
+  - name: SecurityMetric
+    fields:
+      - name: metric_name
+        type: enum
+        values: [Active_Threats, Protected_Workloads, Policy_Violations, Mean_Time_To_Respond]
+        description: Metric identifier
+      - name: current_value
+        type: integer|duration
+        description: Current metric value
+      - name: trend_direction
+        type: enum
+        values: [increasing, decreasing, stable]
+        description: Trend over time window
+      - name: trend_magnitude
+        type: integer|percentage
+        description: Change magnitude
+      - name: time_window
+        type: duration
+        description: Measurement window (e.g., 24h)
+
+  - name: PolicyViolation
+    fields:
+      - name: violation_id
+        type: string
+        description: Unique violation identifier
+      - name: policy_name
+        type: string
+        description: Violated policy rule name
+      - name: workload_ref
+        type: string
+        description: Reference to WorkloadNode
+      - name: severity
+        type: enum
+        values: [CRITICAL, HIGH, MEDIUM, LOW]
+      - name: detected_at
+        type: datetime
+      - name: status
+        type: enum
+        values: [Open, Investigating, Remediated, Accepted_Risk]
+
+  - name: Cluster
+    fields:
+      - name: cluster_id
+        type: string
+      - name: region
+        type: string
+      - name: node_count
+        type: integer
+      - name: health_status
+        type: enum
+        values: [Healthy, Degraded, Critical]
+
+  - name: Operator
+    fields:
+      - name: operator_id
+        type: string
+      - name: display_name
+        type: string
+      - name: role
+        type: enum
+        values: [Security_Analyst, SOC_Manager, Platform_Engineer, Admin]
+      - name: permissions
+        type: array<string>
+
+functional_operations:
+  - name: detect_threat
+    inputs:
+      - name: telemetry_stream
+        type: TelemetryEvent
+      - name: detection_rules
+        type: array<DetectionRule>
+    outputs:
+      - name: threat_alert
+        type: ThreatAlert
+    invariants:
+      - "Every threat_alert must have a unique alert_id"
+      - "Severity must be derived from CVSS score and environmental context"
+      - "Source and target must resolve to known WorkloadNode or external entity"
+
+  - name: attest_workload
+    inputs:
+      - name: workload_ref
+        type: string
+      - name: cryptographic_proof
+        type: AttestationEvidence
+    outputs:
+      - name: attestation_result
+        type: enum
+        values: [

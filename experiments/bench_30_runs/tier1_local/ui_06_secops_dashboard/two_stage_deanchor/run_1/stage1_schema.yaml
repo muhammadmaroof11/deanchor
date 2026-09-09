@@ -1,0 +1,106 @@
+```yaml
+domain_entities:
+  - name: WorkloadNode
+    fields:
+      - name: identifier
+        type: string
+      - name: geographicRegion
+        type: string
+      - name: meshIdentityIP
+        type: string
+      - name: zeroTrustTunnelStatus
+        type: string
+      - name: threatClassification
+        type: string
+      - name: lastAttestation
+        type: string
+  - name: SecurityEvent
+    fields:
+      - name: eventId
+        type: string
+      - name: timestamp
+        type: datetime
+      - name: severity
+        type: string
+      - name: description
+        type: string
+  - name: User
+    fields:
+      - name: userId
+        type: string
+      - name: name
+        type: string
+      - name: role
+        type: string
+  - name: QuarantineOrder
+    fields:
+      - name: orderId
+        type: string
+      - name: targetWorkloadIdentifier
+        type: string
+      - name: quarantineLevel
+        type: integer
+      - name: justificationTicket
+        type: string
+      - name: status
+        type: string
+
+functional_operations:
+  - action: inspectNode
+    inputs:
+      - name: nodeIdentifier
+        type: string
+    outputs:
+      - name: nodeDetails
+        type: WorkloadNode
+    invariants:
+      - Node identifier must be unique and valid
+      - Inspection should not alter node state
+  - action: enforceQuarantine
+    inputs:
+      - name: targetWorkloadIdentifier
+        type: string
+      - name: quarantineLevel
+        type: integer
+      - name: justificationTicket
+        type: string
+    outputs:
+      - name: orderConfirmation
+        type: QuarantineOrder
+    invariants:
+      - Target workload must exist and be identifiable
+      - Quarantine level must be within defined range (1-3)
+      - Justification ticket is required for audit trail
+  - action: filterNodes
+    inputs:
+      - name: searchTerm
+        type: string
+    outputs:
+      - name: filteredNodes
+        type: list of WorkloadNode
+    invariants:
+      - Search term should match node identifier or region
+      - Results must be sorted by last attestation time
+
+state_contracts:
+  - event: NodeAttested
+    state_transitions:
+      - from: Unknown
+        to: Clean
+      - from: Unknown
+        to: ThreatDetected
+      - from: ThreatDetected
+        to: Mitigated
+  - event: QuarantineInitiated
+    state_transitions:
+      - from: Connected
+        to: Quarantined
+      - from: Quarantined
+        to: Isolated
+  - event: SecurityAlertTriggered
+    state_transitions:
+      - from: Clean
+        to: ThreatDetected
+      - from: Mitigated
+        to: Reopened
+```

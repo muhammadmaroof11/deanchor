@@ -1,0 +1,179 @@
+domain_entities:
+  - name: OrderBook
+    description: "Central aggregate managing limit order book, stop orders, and order matching"
+    fields:
+      - name: bids
+        type: OrderSide
+        description: "Buy side price levels (price-time priority)"
+      - name: asks
+        type: OrderSide
+        description: "Sell side price levels (price-time priority)"
+      - name: stopBook
+        type: StopBook
+        description: "Manages stop-limit and stop-market orders"
+      - name: orders
+        type: Map<OrderId, LimitOrder>
+        description: "Active limit orders indexed by order ID"
+      - name: marketPrice
+        type: Price
+        description: "Last trade price (updated on each match)"
+      - name: lastOp
+        type: OperationId
+        description: "Monotonically increasing operation sequence number"
+      - name: enableJournaling
+        type: Boolean
+        description: "Whether to emit journal logs for event sourcing"
+
+  - name: OrderSide
+    description: "Price-level tree for one side (BUY/SELL)"
+    fields:
+      - name: side
+        type: Side
+        enum: [BUY, SELL]
+      - name: priceTree
+        type: PriceTree<OrderQueue>
+        description: "Sorted price levels (descending for bids, ascending for asks)"
+      - name: volume
+        type: Quantity
+        description: "Total quantity across all price levels"
+
+  - name: OrderQueue
+    description: "FIFO queue of orders at a single price level"
+    fields:
+      - name: price
+        type: Price
+      - name: orders
+        type: List<LimitOrder>
+        description: "Orders in time priority order"
+      - name: volume
+        type: Quantity
+        description: "Sum of order sizes at this level"
+
+  - name: LimitOrder
+    description: "Resting limit order on the book"
+    fields:
+      - name: id
+        type: OrderId
+      - name: side
+        type: Side
+      - name: price
+        type: Price
+      - name: size
+        type: Quantity
+        description: "Remaining quantity"
+      - name: originalSize
+        type: Quantity
+      - name: timeInForce
+        type: TimeInForce
+        enum: [GTC, FOK, IOC]
+      - name: postOnly
+        type: Boolean
+      - name: accountId
+        type: AccountId
+        description: "For self-trade prevention"
+      - name: ocoStopPrice
+        type: Price?
+        description: "Linked OCO stop order trigger price"
+      - name: timestamp
+        type: Timestamp
+
+  - name: StopOrder
+    description: "Base for stop-market and stop-limit orders"
+    fields:
+      - name: id
+        type: OrderId
+      - name: side
+        type: Side
+      - name: size
+        type: Quantity
+      - name: stopPrice
+        type: Price
+        description: "Trigger price"
+      - name: accountId
+        type: AccountId
+      - name: timeInForce
+        type: TimeInForce
+      - name: ocoLimitPrice
+        type: Price?
+        description: "Linked OCO limit order price"
+
+  - name: StopMarketOrder
+    extends: StopOrder
+    fields:
+      - name: type
+        type: OrderType
+        value: STOP_MARKET
+
+  - name: StopLimitOrder
+    extends: StopOrder
+    fields:
+      - name: type
+        type: OrderType
+        value: STOP_LIMIT
+      - name: limitPrice
+        type: Price
+        description: "Limit price after trigger"
+
+  - name: OCOOrder
+    description: "One-Cancels-Other: limit + stop order pair"
+    fields:
+      - name: limitOrder
+        type: LimitOrder
+      - name: stopOrder
+        type: StopOrder
+      - name: limitOrderId
+        type: OrderId
+      - name: stopOrderId
+        type: OrderId
+
+  - name: Snapshot
+    description: "Point-in-time state for recovery"
+    fields:
+      - name: bids
+        type: List<PriceLevelSnapshot>
+      - name: asks
+        type: List<PriceLevelSnapshot>
+      - name: stopOrders
+        type: List<StopOrderSnapshot>
+      - name: marketPrice
+        type: Price
+      - name: lastOp
+        type: OperationId
+
+  - name: JournalLog
+    description: "Operation log entry for event sourcing"
+    fields:
+      - name: opId
+        type: OperationId
+      - name: ts
+        type: Timestamp
+      - name: op
+        type: OperationCode
+        enum: [m, l, sm, sl, oco, c, u, u_p, u_s]
+      - name: o
+        type: CreateOrderOptions | CancelOrderOptions | UpdateOrderOptions
+
+functional_operations:
+  - name: createOrder
+    description: "Main entry point: dispatches to type-specific handler"
+    inputs:
+      - name: options
+        type: CreateOrderOptions
+        variants:
+          - type: MarketOrderOptions
+            fields: [side, size]
+          - type: LimitOrderOptions
+            fields: [side, size, price, id, postOnly, timeInForce]
+          - type: StopMarketOrderOptions
+            fields: [side, size, stopPrice, id, timeInForce]
+          - type: StopLimitOrderOptions
+            fields: [side, size, stopPrice, limitPrice, id, timeInForce]
+          - type: OCOOrderOptions
+            fields: [side, size, price, stopPrice, stopLimitPrice, limitId, stopId, timeInForce, stopLimitTimeInForce]
+    outputs:
+      - type: ProcessOrderResult
+        fields:
+          - done: List<LimitOrder> # fully filled maker orders
+          - activated: List<StopOrder> # triggered stop orders
+          - partial: LimitOrder? # partially filled maker
+          -

@@ -1,0 +1,117 @@
+I'll analyze the domain, identify architectural flaws, and produce a complete modernized implementation using React 18, TypeScript, Vite, Tailwind CSS, TanStack Query/Table, Recharts, Radix UI, and Zustand.
+
+---
+
+## 🏗️ Architectural Analysis
+
+### Domain Invariants (Business Rules)
+| Invariant | Description |
+|-----------|-------------|
+| **Zero-Trust Attestation** | Every workload node must continuously prove identity via mTLS; stale attestation = implicit compromise |
+| **Quarantine Hierarchy** | Level 3 (Air-Gap) ⊃ Level 2 (Egress Filter) ⊃ Level 1 (Audit Mirror) — irreversible escalation |
+| **Threat Taxonomy** | `CLEAN` → `DDoS_PROBE` → `CVE_CRITICAL` → `ACTIVE_EXPLOIT` — monotonic severity |
+| **Geographic Sovereignty** | Nodes bound to AWS regions; cross-region tunnel requires explicit policy |
+| **Audit Non-Repudiation** | Every quarantine action requires SOC ticket reference (format: `SEC-YYYY-INC-NNNN`) |
+| **Cluster Quorum** | 6 clusters minimum; < 6 triggers `DEGRADED` global posture |
+
+### Current Implementation Flaws
+| Category | Issues |
+|----------|--------|
+| **Architecture** | Monolithic single-file; no separation of concerns; hardcoded data in markup |
+| **State** | No reactive state; inline `onclick` handlers; modal logic in HTML attributes |
+| **Type Safety** | Zero TypeScript; stringly-typed statuses; no domain models |
+| **Accessibility** | Missing ARIA roles; no focus management; modal traps focus poorly |
+| **Performance** | Static SVG charts; no virtualization for 1,420+ rows; no memoization |
+| **Maintainability** | CSS custom properties only; no design token system; duplicate class names |
+| **Testing** | Untestable; no unit/integration test boundaries |
+| **Extensibility** | Adding a column requires HTML + CSS + JS changes in 3 places |
+
+---
+
+## 📁 Modern Project Structure
+
+```
+cloudshield-secops/
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── tailwind.config.ts
+├── postcss.config.js
+├── index.html
+├── src/
+│   ├── main.tsx
+│   ├── App.tsx
+│   ├── styles/
+│   │   └── globals.css
+│   ├── domain/
+│   │   ├── models.ts           # Core domain types
+│   │   ├── invariants.ts       # Business rule validators
+│   │   └── constants.ts        # Enums, lookup tables
+│   ├── tokens/
+│   │   ├── colors.ts           # Design tokens (semantic)
+│   │   ├── spacing.ts
+│   │   ├── typography.ts
+│   │   └── index.ts
+│   ├── state/
+│   │   ├── useSecOpsStore.ts   # Zustand store
+│   │   └── queries.ts          # TanStack Query keys/factories
+│   ├── api/
+│   │   ├── client.ts           # Typed API client (MSW-ready)
+│   │   └── mockData.ts         # Realistic mock data generator
+│   ├── components/
+│   │   ├── ui/                 # Primitive design system
+│   │   │   ├── Button.tsx
+│   │   │   ├── Card.tsx
+│   │   │   ├── Badge.tsx
+│   │   │   ├── Input.tsx
+│   │   │   ├── Select.tsx
+│   │   │   ├── Table.tsx       # TanStack Table wrapper
+│   │   │   ├── Modal.tsx       # Radix Dialog wrapper
+│   │   │   ├── Avatar.tsx
+│   │   │   ├── Tooltip.tsx
+│   │   │   ├── Sparkline.tsx   # Recharts wrapper
+│   │   │   └── index.ts
+│   │   ├── layout/
+│   │   │   ├── Sidebar.tsx
+│   │   │   ├── TopHeader.tsx
+│   │   │   ├── MainLayout.tsx
+│   │   │   └── index.ts
+│   │   ├── dashboard/
+│   │   │   ├── ThreatPostureCard.tsx
+│   │   │   ├── GeographicHeatmap.tsx
+│   │   │   ├── ThreatTimeline.tsx
+│   │   │   ├── ClusterHealthGrid.tsx
+│   │   │   ├── WorkloadNodeTable.tsx
+│   │   │   └── index.ts
+│   │   └── modals/
+│   │       ├── QuarantineModal.tsx
+│   │       └── index.ts
+│   ├── hooks/
+│   │   ├── useDebounce.ts
+│   │   ├── useKeyboard.ts
+│   │   └── index.ts
+│   ├── utils/
+│   │   ├── formatters.ts
+│   │   ├── validators.ts
+│   │   ├── cn.ts               # classNames utility
+│   │   └── index.ts
+│   └── types/
+│       └── global.d.ts
+└── public/
+    └── favicon.svg
+```
+
+---
+
+## 🎯 Core Domain Models (`src/domain/models.ts`)
+
+```typescript
+/**
+ * CloudShield SecOps Domain Models
+ * Immutable, branded types enforcing business invariants at compile-time
+ */
+
+// ──────────────────────────────────────────────
+// Branded Primitives (Nominal Typing)
+// ──────────────────────────────────────────────
+declare const __brand:

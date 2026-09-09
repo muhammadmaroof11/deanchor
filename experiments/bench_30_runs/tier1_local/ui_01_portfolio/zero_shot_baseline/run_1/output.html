@@ -1,0 +1,164 @@
+# Modernized Portfolio Website Implementation
+
+I'll create a completely modern, clean-slate implementation of Vijay Singh's portfolio website using contemporary web development practices. This will include responsive design, modern architecture patterns, and enhanced user experience.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Vijay Singh - Frontend Web Developer</title>
+    <meta name="description" content="Vijay Singh - Passionate Frontend Web Developer creating beautiful and responsive websites. Explore my portfolio and blog for tech insights.">
+    <meta name="keywords" content="Vijay Singh, Web Developer, Frontend Developer, Portfolio, Blog, Tech Insights">
+    <meta name="author" content="Vijay Singh">
+
+    <!-- Open Graph Meta Tags / Facebook -->
+    <meta property="og:title" content="Vijay Singh - Frontend Web Developer">
+    <meta property="og:description" content="Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights.">
+    <meta property="og:image" content="/assets/images/banner.webp">
+    <meta property="og:url" content="/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vijay Singh - Frontend Web Developer">
+    <meta name="twitter:description" content="Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights.">
+    <meta name="twitter:image" content="/assets/images/banner.webp">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/images/vj.webp" type="image/x-icon">
+
+    <!-- Google Fonts: Rubik -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- Preload Important resources -->
+    <link rel="preload" href="/assets/css/bootstrap.min.css" as="style">
+    <link rel="preload" href="/assets/css/bootstrap-icons.min.css" as="style">
+    <link rel="preload" href="/assets/css/style.css" as="style">
+
+    <!-- MS-Clarity Analytics -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "phycesbqlg");
+    </script>
+</head>
+
+<body data-bs-theme="dark" data-bs-spy="scroll" data-bs-target="#navbar">
+    <!-- Preloader -->
+    <div id="preloader"></div>
+    
+    <!-- Header -->
+    <header id="header">
+        <nav id="navbar" class="navbar navbar-expand-md fixed-top">
+            <div class="container">
+                <a href="/" class="navbar-brand logo d-flex align-items-center">
+                    <span class="logo-symbol">&lt;</span>
+                    <span class="logo-name">Vijay Singh</span>
+                    <span class="logo-symbol">/&gt;</span>
+                </a>
+                
+                <!-- Mobile menu toggle -->
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- Offcanvas navigation for mobile -->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarMenu">
+                    <div class="offcanvas-header">
+                        <a href="/" class="offcanvas-title navbar-brand logo d-flex align-items-center" id="offcanvasNavbarMenu">
+                            <span class="logo-symbol">&lt;</span>
+                            <span class="logo-name">Vijay Singh</span>
+                            <span class="logo-symbol">/&gt;</span>
+                        </a>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav nav-underline justify-content-end flex-grow-1">
+                            <li class="nav-item"><a href="#hero" class="nav-link active" aria-current="page">Home</a></li>
+                            <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                            <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
+                            <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
+                            <li class="nav-item"><a href="#blogs" class="nav-link">Blogs</a></li>
+                            <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Theme toggle button -->
+                <button id="switchTheme" class="btn border-0 d-flex align-items-center">
+                    <i class="bi bi-brightness-high-fill"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="container h-100 d-flex flex-column justify-content-center align-items-start">
+            <div class="row w-100">
+                <div class="col-lg-8 col-md-10">
+                    <h1 class="display-4 fw-bold mb-3 hero-title">Frontend Web Developer</h1>
+                    <p class="lead mb-4 hero-subtitle">Creating beautiful, responsive websites with modern technologies</p>
+                    <div class="hero-buttons d-flex gap-3 mt-5">
+                        <a href="#projects" class="btn primary-bg-btn btn-lg px-4 py-2">View My Work</a>
+                        <a href="#contact" class="btn outline-btn btn-lg px-4 py-2">Contact Me</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="about-image-wrapper">
+                        <img src="/assets/images/profile.webp" alt="Vijay Singh" class="img-fluid rounded-circle about-img">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="section-heading mb-4">About Me</h2>
+                    <p class="mb-4">I'm a passionate frontend web developer with expertise in creating responsive, user-friendly websites and applications. With a strong foundation in modern JavaScript frameworks and CSS methodologies, I focus on delivering clean, efficient code that enhances user experience.</p>
+                    <p class="mb-4">My journey in web development began 5 years ago, and since then I've worked with startups and established companies to bring their digital visions to life. I'm constantly learning new technologies and techniques to stay at the forefront of frontend development.</p>
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-3">
+                            <ul class="list-unstyled about-details">
+                                <li><span class="fw-bold">Name:</span> Vijay Singh</li>
+                                <li><span class="fw-bold">Email:</span> vijaysingh@example.com</li>
+                                <li><span class="fw-bold">Location:</span> India</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <ul class="list-unstyled about-details">
+                                <li><span class="fw-bold">Experience:</span> 5+ Years</li>
+                                <li><span class="fw-bold">Education:</span> B.Tech in Computer Science</li>
+                                <li><span class="fw-bold">Availability:</span> Open for Work</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container py-5">
+            <h2 class="section-heading text-center mb-5">My Skills</h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="skill-card text-center p-4 rounded shadow">

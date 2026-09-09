@@ -1,0 +1,261 @@
+# Greenfield Implementation of Zero Trust Workload Management System
+
+## Architecture Overview
+
+This implementation follows a modern, production-grade architecture with clear separation of concerns:
+- **Domain Layer**: Core business entities and logic
+- **Service Layer**: Business operations and workflows  
+- **API Layer**: RESTful interfaces for external interaction
+- **Persistence Layer**: Data storage abstraction
+- **Event Processing**: State transition handling via event-driven architecture
+
+## File Structure
+
+```
+zero-trust-platform/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── zerotrust/
+│   │   │           ├── domain/
+│   │   │           │   ├── entity/
+│   │   │           │   │   ├── WorkloadNode.java
+│   │   │           │   │   ├── SecurityEvent.java
+│   │   │           │   │   ├── User.java
+│   │   │           │   │   └── QuarantineOrder.java
+│   │   │           │   ├── repository/
+│   │   │           │   │   ├── WorkloadNodeRepository.java
+│   │   │           │   │   ├── SecurityEventRepository.java
+│   │   │           │   │   └── QuarantineOrderRepository.java
+│   │   │           │   ├── service/
+│   │   │           │   │   ├── NodeInspectionService.java
+│   │   │           │   │   ├── QuarantineEnforcementService.java
+│   │   │           │   │   └── NodeFilteringService.java
+│   │   │           │   ├── event/
+│   │   │           │   │   ├── StateTransitionEvent.java
+│   │   │           │   │   ├── NodeAttestedEvent.java
+│   │   │           │   │   ├── QuarantineInitiatedEvent.java
+│   │   │           │   │   └── SecurityAlertTriggeredEvent.java
+│   │   │           │   └── exception/
+│   │   │           │       ├── InvalidNodeIdentifierException.java
+│   │   │           │       ├── NodeNotFoundException.java
+│   │   │           │       ├── QuarantineLevelInvalidException.java
+│   │   │           │       └── MissingJustificationTicketException.java
+│   │   │           ├── infrastructure/
+│   │   │           │   ├── persistence/
+│   │   │           │   │   ├── InMemoryWorkloadNodeRepository.java
+│   │   │           │   │   ├── InMemorySecurityEventRepository.java
+│   │   │           │   │   └── InMemoryQuarantineOrderRepository.java
+│   │   │           │   ├── event/
+│   │   │           │   │   └── EventPublisher.java
+│   │   │           │   └── config/
+│   │   │           │       └── ApplicationConfig.java
+│   │   │           └── api/
+│   │   │               ├── controller/
+│   │   │               │   ├── NodeInspectionController.java
+│   │   │               │   ├── QuarantineEnforcementController.java
+│   │   │               │   └── NodeFilteringController.java
+│   │   │               └── dto/
+│   │   │                   ├── WorkloadNodeDTO.java
+│   │   │                   ├── SecurityEventDTO.java
+│   │   │                   ├── UserDTO.java
+│   │   │                   └── QuarantineOrderDTO.java
+│   │   └── resources/
+│   │       ├── application.yml
+│   │       └── logback-spring.xml
+│   └── test/
+│       └── java/
+│           └── com/
+│               └── zerotrust/
+│                   ├── domain/
+│                   │   ├── entity/
+│                   │   ├── service/
+│                   │   └── repository/
+│                   └── api/
+├── docker-compose.yml
+└── README.md
+```
+
+## Core Domain Entities
+
+### WorkloadNode.java
+```java
+package com.zerotrust.domain.entity;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+public class WorkloadNode {
+    private String identifier;
+    private String geographicRegion;
+    private String meshIdentityIP;
+    private String zeroTrustTunnelStatus;
+    private String threatClassification;
+    private LocalDateTime lastAttestation;
+    
+    // Constructors
+    public WorkloadNode() {}
+    
+    public WorkloadNode(String identifier, String geographicRegion, 
+                       String meshIdentityIP, String zeroTrustTunnelStatus,
+                       String threatClassification, LocalDateTime lastAttestation) {
+        this.identifier = identifier;
+        this.geographicRegion = geographicRegion;
+        this.meshIdentityIP = meshIdentityIP;
+        this.zeroTrustTunnelStatus = zeroTrustTunnelStatus;
+        this.threatClassification = threatClassification;
+        this.lastAttestation = lastAttestation;
+    }
+    
+    // Getters and Setters
+    public String getIdentifier() { return identifier; }
+    public void setIdentifier(String identifier) { this.identifier = identifier; }
+    
+    public String getGeographicRegion() { return geographicRegion; }
+    public void setGeographicRegion(String geographicRegion) { this.geographicRegion = geographicRegion; }
+    
+    public String getMeshIdentityIP() { return meshIdentityIP; }
+    public void setMeshIdentityIP(String meshIdentityIP) { this.meshIdentityIP = meshIdentityIP; }
+    
+    public String getZeroTrustTunnelStatus() { return zeroTrustTunnelStatus; }
+    public void setZeroTrustTunnelStatus(String zeroTrustTunnelStatus) { this.zeroTrustTunnelStatus = zeroTrustTunnelStatus; }
+    
+    public String getThreatClassification() { return threatClassification; }
+    public void setThreatClassification(String threatClassification) { this.threatClassification = threatClassification; }
+    
+    public LocalDateTime getLastAttestation() { return lastAttestation; }
+    public void setLastAttestation(LocalDateTime lastAttestation) { this.lastAttestation = lastAttestation; }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof WorkloadNode)) return false;
+        WorkloadNode that = (WorkloadNode) o;
+        return Objects.equals(identifier, that.identifier);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(identifier);
+    }
+}
+```
+
+### SecurityEvent.java
+```java
+package com.zerotrust.domain.entity;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+public class SecurityEvent {
+    private String eventId;
+    private LocalDateTime timestamp;
+    private String severity;
+    private String description;
+    
+    // Constructors
+    public SecurityEvent() {}
+    
+    public SecurityEvent(String eventId, LocalDateTime timestamp, 
+                        String severity, String description) {
+        this.eventId = eventId;
+        this.timestamp = timestamp;
+        this.severity = severity;
+        this.description = description;
+    }
+    
+    // Getters and Setters
+    public String getEventId() { return eventId; }
+    public void setEventId(String eventId) { this.eventId = eventId; }
+    
+    public LocalDateTime getTimestamp() { return timestamp; }
+    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
+    
+    public String getSeverity() { return severity; }
+    public void setSeverity(String severity) { this.severity = severity; }
+    
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SecurityEvent)) return false;
+        SecurityEvent that = (SecurityEvent) o;
+        return Objects.equals(eventId, that.eventId);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventId);
+    }
+}
+```
+
+### User.java
+```java
+package com.zerotrust.domain.entity;
+
+import java.util.Objects;
+
+public class User {
+    private String userId;
+    private String name;
+    private String role;
+    
+    // Constructors
+    public User() {}
+    
+    public User(String userId, String name, String role) {
+        this.userId = userId;
+        this.name = name;
+        this.role = role;
+    }
+    
+    // Getters and Setters
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
+    
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(userId, user.userId);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
+}
+```
+
+### QuarantineOrder.java
+```java
+package com.zerotrust.domain.entity;
+
+import java.util.Objects;
+
+public class QuarantineOrder {
+    private String orderId;
+    private String targetWorkloadIdentifier;
+    private Integer quarantineLevel;
+    private String justificationTicket;
+    private String status;
+    
+    // Constructors
+    public QuarantineOrder() {}
+    
+    public QuarantineOrder(String orderId, String targetWorkloadIdentifier,
+                          Integer quarantineLevel, String justificationTicket,
+                          String status) {
+        this

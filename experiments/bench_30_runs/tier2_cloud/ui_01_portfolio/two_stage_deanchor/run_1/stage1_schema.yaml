@@ -1,0 +1,309 @@
+domain_entities:
+  - name: DeveloperProfile
+    fields:
+      - name: identity
+        type: PersonIdentity
+      - name: role
+        type: string
+      - name: tagline
+        type: string
+      - name: bio
+        type: string
+      - name: resumeUrl
+        type: URI
+      - name: socialLinks
+        type: SocialLink[]
+
+  - name: PersonIdentity
+    fields:
+      - name: fullName
+        type: string
+      - name: professionalTitle
+        type: string
+
+  - name: SocialLink
+    fields:
+      - name: platform
+        type: enum[GitHub, LinkedIn, Twitter, Instagram, Email]
+      - name: url
+        type: URI
+      - name: label
+        type: string
+
+  - name: NavigationSection
+    fields:
+      - name: id
+        type: string
+      - name: label
+        type: string
+      - name: order
+        type: integer
+
+  - name: AboutContent
+    fields:
+      - name: summary
+        type: string
+      - name: experience
+        type: Experience[]
+      - name: education
+        type: Education[]
+      - name: personalDetails
+        type: PersonalDetail[]
+
+  - name: Experience
+    fields:
+      - name: role
+        type: string
+      - name: company
+        type: string
+      - name: period
+        type: string
+      - name: description
+        type: string
+      - name: technologies
+        type: string[]
+
+  - name: Education
+    fields:
+      - name: degree
+        type: string
+      - name: institution
+        type: string
+      - name: period
+        type: string
+      - name: grade
+        type: string
+
+  - name: PersonalDetail
+    fields:
+      - name: label
+        type: string
+      - name: value
+        type: string
+      - name: icon
+        type: string
+
+  - name: Skill
+    fields:
+      - name: name
+        type: string
+      - name: category
+        type: enum[Frontend, Backend, Tools, Database, Other]
+      - name: proficiency
+        type: integer  # 0-100
+      - name: icon
+        type: string
+
+  - name: Project
+    fields:
+      - name: id
+        type: string
+      - name: title
+        type: string
+      - name: description
+        type: string
+      - name: thumbnailUrl
+        type: URI
+      - name: technologies
+        type: string[]
+      - name: liveUrl
+        type: URI
+      - name: sourceUrl
+        type: URI
+      - name: featured
+        type: boolean
+
+  - name: BlogPost
+    fields:
+      - name: id
+        type: string
+      - name: title
+        type: string
+      - name: description
+        type: string
+      - name: thumbnailUrl
+        type: URI
+      - name: category
+        type: string
+      - name: publishDate
+        type: DateTime
+      - name: readTime
+        type: string
+      - name: url
+        type: URI
+      - name: external
+        type: boolean
+
+  - name: ContactFormSubmission
+    fields:
+      - name: name
+        type: string
+      - name: email
+        type: Email
+      - name: subject
+        type: string
+      - name: message
+        type: string
+
+  - name: ThemeMode
+    fields:
+      - name: mode
+        type: enum[dark, light]
+
+functional_operations:
+  - action: navigateToSection
+    inputs:
+      - name: sectionId
+        type: string
+    outputs:
+      - name: scrollPosition
+        type: ViewportPosition
+    invariants:
+      - sectionId must exist in NavigationSection registry
+      - smooth scroll animation completes before focus transfer
+
+  - action: toggleTheme
+    inputs: {}
+    outputs:
+      - name: newMode
+        type: ThemeMode
+    invariants:
+      - persists preference to localStorage
+      - updates CSS custom properties atomically
+      - toggles icon representation synchronously
+
+  - action: submitContactForm
+    inputs:
+      - name: submission
+        type: ContactFormSubmission
+    outputs:
+      - name: result
+        type: FormSubmissionResult
+    invariants:
+      - validates required fields (name, email, subject, message)
+      - email format conforms to RFC 5322
+      - submits via POST to configured endpoint
+      - handles network failure gracefully
+      - prevents duplicate submission during pending state
+
+  - action: scrollToTop
+    inputs: {}
+    outputs:
+      - name: scrollPosition
+        type: ViewportPosition
+    invariants:
+      - only available when scrollY > threshold
+      - smooth scroll animation duration constant
+
+  - action: toggleMobileMenu
+    inputs:
+      - name: open
+        type: boolean
+    outputs:
+      - name: menuState
+        type: MobileMenuState
+    invariants:
+      - traps focus within menu when open
+      - restores focus to trigger on close
+      - closes on navigation link activation
+      - closes on escape key
+
+  - action: advanceCarousel
+    inputs:
+      - name: direction
+        type: enum[next, prev]
+      - name: carouselId
+        type: string
+    outputs:
+      - name: activeIndex
+        type: integer
+    invariants:
+      - loops infinitely
+      - pauses on hover/focus
+      - respects reduced-motion preference
+
+  - action: initializeScrollAnimations
+    inputs: {}
+    outputs:
+      - name: observedElements
+        type: ElementReference[]
+    invariants:
+      - triggers once per element when crossing viewport threshold
+      - respects prefers-reduced-motion
+      - cleans up observers on unmount
+
+state_contracts:
+  - event: ThemeChanged
+    transitions:
+      - from: dark
+        to: light
+      - from: light
+        to: dark
+    payload:
+      - name: mode
+        type: ThemeMode
+
+  - event: SectionActivated
+    transitions:
+      - from: "*"
+        to: NavigationSection.id
+    payload:
+      - name: sectionId
+        type: string
+      - name: scrollDirection
+        type: enum[up, down]
+
+  - event: MobileMenuToggled
+    transitions:
+      - from: closed
+        to: open
+      - from: open
+        to: closed
+    payload:
+      - name: isOpen
+        type: boolean
+
+  - event: FormSubmissionStarted
+    transitions:
+      - from: idle
+        to: submitting
+    payload:
+      - name: submissionId
+        type: string
+
+  - event: FormSubmissionCompleted
+    transitions:
+      - from: submitting
+        to: success
+    payload:
+      - name: submissionId
+        type: string
+      - name: response
+        type: any
+
+  - event: FormSubmissionFailed
+    transitions:
+      - from: submitting
+        to: error
+    payload:
+      - name: submissionId
+        type: string
+      - name: error
+        type: string
+
+  - event: CarouselSlideChanged
+    transitions:
+      - from: integer
+        to: integer
+    payload:
+      - name: carouselId
+        type: string
+      - name: previousIndex
+        type: integer
+      - name: currentIndex
+        type: integer
+
+  - event: ScrollThresholdCrossed
+    transitions:
+      - from: hidden
+        to: visible

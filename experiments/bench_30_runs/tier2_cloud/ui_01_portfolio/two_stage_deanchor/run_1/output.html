@@ -1,0 +1,277 @@
+I'll create a production-grade portfolio implementation based on the domain schema. This will be a modern, accessible, performant vanilla TypeScript application with clean architecture.
+
+## Project Structure
+
+```
+portfolio/
+├── index.html
+├── src/
+│   ├── main.ts
+│   ├── styles/
+│   │   ├── main.css
+│   │   ├── components/
+│   │   │   ├── header.css
+│   │   │   ├── hero.css
+│   │   │   ├── about.css
+│   │   │   ├── skills.css
+│   │   │   ├── projects.css
+│   │   │   ├── blog.css
+│   │   │   ├── contact.css
+│   │   │   ├── footer.css
+│   │   │   └── scroll-to-top.css
+│   │   └── utilities/
+│   │       ├── variables.css
+│   │       ├── reset.css
+│   │       ├── animations.css
+│   │       └── accessibility.css
+│   ├── core/
+│   │   ├── types.ts
+│   │   ├── events.ts
+│   │   ├── state.ts
+│   │   └── utils.ts
+│   ├── components/
+│   │   ├── Header.ts
+│   │   ├── Hero.ts
+│   │   ├── About.ts
+│   │   ├── Skills.ts
+│   │   ├── Projects.ts
+│   │   ├── Blog.ts
+│   │   ├── Contact.ts
+│   │   ├── Footer.ts
+│   │   ├── ScrollToTop.ts
+│   │   └── ThemeToggle.ts
+│   ├── services/
+│   │   ├── NavigationService.ts
+│   │   ├── ThemeService.ts
+│   │   ├── FormService.ts
+│   │   ├── CarouselService.ts
+│   │   └── ScrollAnimationService.ts
+│   └── data/
+│       ├── profile.ts
+│       ├── navigation.ts
+│       ├── about.ts
+│       ├── skills.ts
+│       ├── projects.ts
+│       └── blog.ts
+├── public/
+│   ├── images/
+│   └── fonts/
+└── package.json
+```
+
+## Core Types & Events
+
+```typescript
+// src/core/types.ts
+export interface PersonIdentity {
+  fullName: string;
+  professionalTitle: string;
+}
+
+export interface SocialLink {
+  platform: 'GitHub' | 'LinkedIn' | 'Twitter' | 'Instagram' | 'Email';
+  url: string;
+  label: string;
+}
+
+export interface DeveloperProfile {
+  identity: PersonIdentity;
+  role: string;
+  tagline: string;
+  bio: string;
+  resumeUrl: string;
+  socialLinks: SocialLink[];
+}
+
+export interface NavigationSection {
+  id: string;
+  label: string;
+  order: number;
+}
+
+export interface Experience {
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+  technologies: string[];
+}
+
+export interface Education {
+  degree: string;
+  institution: string;
+  period: string;
+  grade: string;
+}
+
+export interface PersonalDetail {
+  label: string;
+  value: string;
+  icon: string;
+}
+
+export interface AboutContent {
+  summary: string;
+  experience: Experience[];
+  education: Education[];
+  personalDetails: PersonalDetail[];
+}
+
+export type SkillCategory = 'Frontend' | 'Backend' | 'Tools' | 'Database' | 'Other';
+
+export interface Skill {
+  name: string;
+  category: SkillCategory;
+  proficiency: number; // 0-100
+  icon: string;
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  technologies: string[];
+  liveUrl: string;
+  sourceUrl: string;
+  featured: boolean;
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  category: string;
+  publishDate: Date;
+  readTime: string;
+  url: string;
+  external: boolean;
+}
+
+export interface ContactFormSubmission {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+export interface FormSubmissionResult {
+  success: boolean;
+  message: string;
+  submissionId?: string;
+}
+
+export type ThemeMode = 'dark' | 'light';
+
+export interface ViewportPosition {
+  x: number;
+  y: number;
+}
+
+export interface MobileMenuState {
+  isOpen: boolean;
+  focusRestored: boolean;
+}
+```
+
+```typescript
+// src/core/events.ts
+export type DomainEvent =
+  | { type: 'ThemeChanged'; payload: { mode: ThemeMode } }
+  | { type: 'SectionActivated'; payload: { sectionId: string; scrollDirection: 'up' | 'down' } }
+  | { type: 'MobileMenuToggled'; payload: { isOpen: boolean } }
+  | { type: 'FormSubmissionStarted'; payload: { submissionId: string } }
+  | { type: 'FormSubmissionCompleted'; payload: { submissionId: string; response: unknown } }
+  | { type: 'FormSubmissionFailed'; payload: { submissionId: string; error: string } }
+  | { type: 'CarouselSlideChanged'; payload: { carouselId: string; previousIndex: number; currentIndex: number } }
+  | { type: 'ScrollThresholdCrossed'; payload: { elementId: string } };
+
+type EventListener = (event: DomainEvent) => void;
+
+export class EventBus {
+  private listeners: Map<string, EventListener[]> = new Map();
+
+  subscribe(eventType: DomainEvent['type'], listener: EventListener): () => void {
+    const listeners = this.listeners.get(eventType) || [];
+    listeners.push(listener);
+    this.listeners.set(eventType, listeners);
+    return () => this.unsubscribe(eventType, listener);
+  }
+
+  unsubscribe(eventType: DomainEvent['type'], listener: EventListener): void {
+    const listeners = this.listeners.get(eventType) || [];
+    const index = listeners.indexOf(listener);
+    if (index > -1) listeners.splice(index, 1);
+  }
+
+  emit(event: DomainEvent): void {
+    const listeners = this.listeners.get(event.type) || [];
+    listeners.forEach(listener => {
+      try {
+        listener(event);
+      } catch (error) {
+        console.error(`Error in event listener for ${event.type}:`, error);
+      }
+    });
+  }
+}
+
+export const eventBus = new EventBus();
+```
+
+```typescript
+// src/core/state.ts
+import { ThemeMode, DeveloperProfile, NavigationSection, AboutContent, Skill, Project, BlogPost } from './types';
+
+export interface AppState {
+  theme: ThemeMode;
+  activeSection: string;
+  mobileMenuOpen: boolean;
+  scrollPosition: number;
+  formState: 'idle' | 'submitting' | 'success' | 'error';
+  profile: DeveloperProfile | null;
+  navigation: NavigationSection[];
+  about: AboutContent | null;
+  skills: Skill[];
+  projects: Project[];
+  blogPosts: BlogPost[];
+}
+
+export class StateManager {
+  private state: AppState;
+  private subscribers: Set<(state: AppState) => void> = new Set();
+
+  constructor(initialState: Partial<AppState> = {}) {
+    this.state = {
+      theme: 'dark',
+      activeSection: 'hero',
+      mobileMenuOpen: false,
+      scrollPosition: 0,
+      formState: 'idle',
+      profile: null,
+      navigation: [],
+      about: null,
+      skills: [],
+      projects: [],
+      blogPosts: [],
+      ...initialState
+    };
+  }
+
+  getState(): Readonly<AppState> {
+    return Object.freeze({ ...this.state });
+  }
+
+  get<K extends keyof AppState>(key: K): AppState[K] {
+    return this.state[key];
+  }
+
+  set<K extends keyof AppState>(key: K, value: AppState[K]): void {
+    this.state[key] = value;
+    this.notify();
+  }
+
+  update(partial: Partial<AppState>): void {
+    this.state = { ...this.state, ...partial };
+    this.notify();

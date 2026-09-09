@@ -1,0 +1,1173 @@
+{
+  "metadata": {
+    "timestamp": "2026-09-09T21:13:25Z",
+    "runs_per_condition": 1,
+    "completed_evaluations": 20,
+    "tiers": [
+      "tier1_local",
+      "tier2_cloud"
+    ]
+  },
+  "results": [
+    {
+      "id": "ui_01_portfolio",
+      "name": "Web Developer Portfolio Theme",
+      "domain": "Frontend & UI Design",
+      "loc": 800,
+      "tier": "tier1_local",
+      "model": "qwen3-coder-30b-a3b-instruct",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.7203,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.1866,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 240.27,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.386,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.7159,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2269,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 249.92,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.5091,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.8855,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3539,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 422.72,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.98,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.9234,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3416,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 93.0,
+          "mean_latency_sec": 186.67,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.86,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "ui_06_secops_dashboard",
+      "name": "Enterprise SecOps Command Center",
+      "domain": "Frontend & UI Design",
+      "loc": 1465,
+      "tier": "tier1_local",
+      "model": "qwen3-coder-30b-a3b-instruct",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.7351,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.1939,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 230.92,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.6182,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.737,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.1926,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 235.36,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.6,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.8884,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3259,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 472.3,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.9818,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.9762,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.46,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 94.4,
+          "mean_latency_sec": 193.84,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.9636,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "algo_01_orderbook",
+      "name": "Node.js L2 Limit Order Book",
+      "domain": "Algorithmic & Fintech",
+      "loc": 1200,
+      "tier": "tier1_local",
+      "model": "qwen3-coder-30b-a3b-instruct",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.6177,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.0856,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 219.25,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.6724,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.6757,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2733,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 221.43,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.7466,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.275,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 420.61,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.8308,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2887,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 86.5,
+          "mean_latency_sec": 281.49,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "algo_03_graph_pathfinder",
+      "name": "Graph Pathfinder Shortest Route",
+      "domain": "Algorithmic & Fintech",
+      "loc": 950,
+      "tier": "tier1_local",
+      "model": "qwen3-coder-30b-a3b-instruct",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.9847,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2861,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 157.78,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.98,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.9766,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.292,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 176.44,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9773,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.9614,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3309,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 164.08,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.978,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3511,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 208.71,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "micro_01_webhook_dispatcher",
+      "name": "GitHub Webhook Dispatcher",
+      "domain": "Microservices & Webhooks",
+      "loc": 4800,
+      "tier": "tier1_local",
+      "model": "qwen3-coder-30b-a3b-instruct",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.7068,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.1227,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 121.45,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.973,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.821,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.1813,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 128.8,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9615,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.8214,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2996,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 334.21,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9808,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.8828,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3551,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 178.83,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.907,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "micro_03_api_gateway",
+      "name": "FastAPI Reverse Proxy Gateway",
+      "domain": "Microservices & Webhooks",
+      "loc": 2200,
+      "tier": "tier1_local",
+      "model": "qwen3-coder-30b-a3b-instruct",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.9832,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.1849,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 114.21,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.8276,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.9758,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.1826,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 113.04,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9444,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.9853,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2947,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 281.68,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.8837,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.984,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3193,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 174.6,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.8889,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "sec_01_jwt_auth",
+      "name": "Node.js JWT & Refresh Token Service",
+      "domain": "Security & Auth",
+      "loc": 2400,
+      "tier": "tier1_local",
+      "model": "qwen3-coder-30b-a3b-instruct",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.7015,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2302,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 159.21,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9592,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.792,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2672,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 118.15,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.7583,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3207,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 342.69,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.894,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3521,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 174.18,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9184,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "sec_04_crypto_vault",
+      "name": "WebCrypto Key & Vault Manager",
+      "domain": "Security & Auth",
+      "loc": 1300,
+      "tier": "tier1_local",
+      "model": "qwen3-coder-30b-a3b-instruct",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.9698,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3239,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 117.58,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9545,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.9673,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3266,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 115.88,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9545,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.977,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3573,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 301.95,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9787,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.9787,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3763,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 225.2,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "data_01_cache_lru",
+      "name": "High-Throughput LRU/LFU Cache",
+      "domain": "Data Management & State",
+      "loc": 1050,
+      "tier": "tier1_local",
+      "model": "qwen3-coder-30b-a3b-instruct",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.9744,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.361,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 127.61,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9524,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.9734,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2456,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 123.9,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9667,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.9711,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3959,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 276.14,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9756,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.9735,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3686,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 174.27,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.973,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "data_03_state_machine",
+      "name": "Deterministic Finite State Machine",
+      "domain": "Data Management & State",
+      "loc": 1400,
+      "tier": "tier1_local",
+      "model": "qwen3-coder-30b-a3b-instruct",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.9766,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3049,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 144.98,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9756,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5585,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 39.7,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.8333,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.9676,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.4188,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 303.92,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.9786,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.384,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 163.76,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.96,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "ui_01_portfolio",
+      "name": "Web Developer Portfolio Theme",
+      "domain": "Frontend & UI Design",
+      "loc": 800,
+      "tier": "tier2_cloud",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.8898,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.0703,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 22.13,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.6,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.9214,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2653,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 78.32,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.92,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.9224,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3515,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 109.71,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.98,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.9261,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3354,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 81.8,
+          "mean_latency_sec": 95.54,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.98,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "ui_06_secops_dashboard",
+      "name": "Enterprise SecOps Command Center",
+      "domain": "Frontend & UI Design",
+      "loc": 1465,
+      "tier": "tier2_cloud",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.8866,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2669,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 62.19,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.2364,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.9281,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3244,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 68.16,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.9091,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.8995,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3375,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 129.03,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.7818,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.9714,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.4353,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 88.0,
+          "mean_latency_sec": 59.49,
+          "runs_evaluated": 1,
+          "test_provenance": "author_created",
+          "ted_divergence_mean": 0.9636,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "algo_01_orderbook",
+      "name": "Node.js L2 Limit Order Book",
+      "domain": "Algorithmic & Fintech",
+      "loc": 1200,
+      "tier": "tier2_cloud",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.7835,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2827,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 84.1,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.8837,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3639,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 32.83,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9828,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.8596,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2888,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 156.97,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.8376,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.295,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 85.2,
+          "mean_latency_sec": 97.58,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "algo_03_graph_pathfinder",
+      "name": "Graph Pathfinder Shortest Route",
+      "domain": "Algorithmic & Fintech",
+      "loc": 950,
+      "tier": "tier2_cloud",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.9531,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2955,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 35.38,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.7692,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.9264,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2448,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 53.78,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9459,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.9627,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.2767,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 121.65,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.98,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.9257,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.4013,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 56.26,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9744,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "micro_01_webhook_dispatcher",
+      "name": "GitHub Webhook Dispatcher",
+      "domain": "Microservices & Webhooks",
+      "loc": 4800,
+      "tier": "tier2_cloud",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.9113,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3555,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 38.53,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.98,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.8815,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.35,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 46.28,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.8486,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3058,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 120.42,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.913,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.8378,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3188,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 43.04,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "micro_03_api_gateway",
+      "name": "FastAPI Reverse Proxy Gateway",
+      "domain": "Microservices & Webhooks",
+      "loc": 2200,
+      "tier": "tier2_cloud",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.9798,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.1658,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 68.17,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9123,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.9737,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.1763,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 51.9,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9333,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.9675,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.285,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 118.35,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9091,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.9767,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.202,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 70.94,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.8571,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "sec_01_jwt_auth",
+      "name": "Node.js JWT & Refresh Token Service",
+      "domain": "Security & Auth",
+      "loc": 2400,
+      "tier": "tier2_cloud",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.8465,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.388,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 123.05,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.9138,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3218,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 38.46,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 1.0,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.8785,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.3644,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 93.68,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.9844,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 43.15,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "sec_04_crypto_vault",
+      "name": "WebCrypto Key & Vault Manager",
+      "domain": "Security & Auth",
+      "loc": 1300,
+      "tier": "tier2_cloud",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 5.23,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 5.26,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 12.59,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 100.0,
+          "mean_latency_sec": 10.36,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "data_01_cache_lru",
+      "name": "High-Throughput LRU/LFU Cache",
+      "domain": "Data Management & State",
+      "loc": 1050,
+      "tier": "tier2_cloud",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 5.36,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 5.41,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 10.74,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 100.0,
+          "mean_latency_sec": 10.96,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        }
+      }
+    },
+    {
+      "id": "data_03_state_machine",
+      "name": "Deterministic Finite State Machine",
+      "domain": "Data Management & State",
+      "loc": 1400,
+      "tier": "tier2_cloud",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 5.55,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 5.53,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 11.35,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.0,
+          "ast_divergence_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 100.0,
+          "mean_latency_sec": 10.9,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream",
+          "ted_divergence_mean": 0.0,
+          "ted_divergence_std": 0.0
+        }
+      }
+    }
+  ]
+}

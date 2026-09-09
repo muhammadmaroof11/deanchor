@@ -1,0 +1,317 @@
+# Production-Grade Portfolio Website Implementation
+
+I'll design a modern, scalable portfolio website implementation based on the provided YAML schema. This will be a greenfield project with clean architecture and production-ready features.
+
+## Architecture Overview
+
+The system follows a layered architectural pattern:
+- **Presentation Layer**: React-based frontend with TypeScript
+- **Domain Layer**: Core business logic and data models
+- **Infrastructure Layer**: State management, API integrations
+- **Service Layer**: Business operations and validation
+
+## File Structure
+
+```
+src/
+├── app/
+│   ├── components/          # Reusable UI components
+│   │   ├── layout/
+│   │   │   ├── Header.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   └── Navigation.tsx
+│   │   ├── portfolio/
+│   │   │   ├── PortfolioCard.tsx
+│   │   │   └── PortfolioSection.tsx
+│   │   ├── projects/
+│   │   │   ├── ProjectCard.tsx
+│   │   │   └── ProjectGrid.tsx
+│   │   ├── blog/
+│   │   │   ├── BlogPostCard.tsx
+│   │   │   └── BlogSection.tsx
+│   │   └── forms/
+│   │       └── ContactForm.tsx
+│   ├── pages/               # Page-level components
+│   │   ├── Home.tsx
+│   │   ├── Projects.tsx
+│   │   ├── Blog.tsx
+│   │   └── Contact.tsx
+│   ├── services/            # Business logic and operations
+│   │   ├── PortfolioService.ts
+│   │   ├── NavigationService.ts
+│   │   ├── ContactService.ts
+│   │   └── ThemeService.ts
+│   ├── state/               # State management
+│   │   ├── portfolioStore.ts
+│   │   ├── themeStore.ts
+│   │   └── navigationStore.ts
+│   ├── types/               # TypeScript interfaces and types
+│   │   ├── domain/
+│   │   │   ├── Portfolio.ts
+│   │   │   ├── NavigationItem.ts
+│   │   │   ├── Project.ts
+│   │   │   ├── BlogPost.ts
+│   │   │   └── ContactForm.ts
+│   │   └── state/
+│   │       ├── AppState.ts
+│   │       └── ThemeState.ts
+│   └── utils/               # Utility functions and helpers
+│       ├── validators.ts
+│       └── constants.ts
+├── assets/                  # Static assets
+│   ├── images/
+│   └── styles/
+│       ├── global.css
+│       └── theme.css
+└── main.tsx                 # Entry point
+```
+
+## Core Implementation
+
+### 1. Domain Models (src/types/domain)
+
+```typescript
+// Portfolio.ts
+export interface Portfolio {
+  title: string;
+  description: string;
+  author: string;
+  keywords: string[];
+  favicon?: string;
+  theme: string;
+}
+
+// NavigationItem.ts
+export interface NavigationItem {
+  label: string;
+  href: string;
+  order: number;
+}
+
+// Project.ts
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  image_url?: string;
+  link?: string;
+}
+
+// BlogPost.ts
+export interface BlogPost {
+  id: string;
+  title: string;
+  description: string;
+  image_url?: string;
+  link?: string;
+  category: string;
+}
+
+// ContactForm.ts
+export interface ContactForm {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+```
+
+### 2. State Management (src/state)
+
+```typescript
+// AppState.ts
+import { Portfolio } from '../types/domain/Portfolio';
+import { ThemeState } from './ThemeState';
+
+export interface AppState {
+  portfolio: Portfolio | null;
+  theme: ThemeState;
+  currentSection: string | null;
+  contactFormStatus: boolean | null;
+}
+
+// themeStore.ts
+import { create } from 'zustand';
+import { ThemeState } from '../types/state/ThemeState';
+
+interface ThemeStore {
+  currentTheme: ThemeState;
+  toggleTheme: () => void;
+}
+
+export const useThemeStore = create<ThemeStore>((set) => ({
+  currentTheme: ThemeState.LIGHT,
+  toggleTheme: () => set((state) => ({
+    currentTheme: state.currentTheme === ThemeState.LIGHT 
+      ? ThemeState.DARK 
+      : ThemeState.LIGHT
+  })),
+}));
+```
+
+### 3. Service Layer (src/services)
+
+```typescript
+// PortfolioService.ts
+import { Portfolio } from '../types/domain/Portfolio';
+import { AppState } from '../state/AppState';
+
+export class PortfolioService {
+  static renderPortfolio(): Portfolio | null {
+    // In a real implementation, this would fetch data from an API or config file
+    const portfolioData: Portfolio = {
+      title: "My Professional Portfolio",
+      description: "Showcasing my work and projects",
+      author: "John Doe",
+      keywords: ["portfolio", "web development", "design"],
+      favicon: "/favicon.ico",
+      theme: "light"
+    };
+
+    // Validate invariants
+    if (!portfolioData.title) {
+      throw new Error("title_must_be_present");
+    }
+    if (!portfolioData.description) {
+      throw new Error("description_must_be_present");
+    }
+    if (!portfolioData.author) {
+      throw new Error("author_must_be_present");
+    }
+
+    return portfolioData;
+  }
+}
+
+// NavigationService.ts
+export class NavigationService {
+  static navigateToSection(sectionId: string): void {
+    // Validate invariants
+    if (!sectionId || sectionId.trim() === "") {
+      throw new Error("valid_section_id_required");
+    }
+    
+    // Implementation would update state and scroll to section
+    console.log(`Navigating to section: ${sectionId}`);
+  }
+}
+
+// ContactService.ts
+import { ContactForm } from '../types/domain/ContactForm';
+
+export class ContactService {
+  static submitContactForm(contactData: ContactForm): boolean {
+    // Validate invariants
+    if (!contactData.name || !contactData.email || 
+        !contactData.subject || !contactData.message) {
+      throw new Error("all_fields_must_be_filled");
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(contactData.email)) {
+      throw new Error("email_format_validation");
+    }
+
+    // In a real implementation, this would send data to an API
+    console.log("Contact form submitted:", contactData);
+    
+    return true; // Simulate successful submission
+  }
+}
+
+// ThemeService.ts
+import { ThemeState } from '../types/state/ThemeState';
+
+export class ThemeService {
+  static toggleTheme(): string {
+    const validThemes = [ThemeState.LIGHT, ThemeState.DARK];
+    const currentTheme = useThemeStore.getState().currentTheme;
+    
+    if (!validThemes.includes(currentTheme)) {
+      throw new Error("theme_must_be_valid");
+    }
+    
+    // In a real implementation, this would update CSS classes and persist preference
+    return currentTheme === ThemeState.LIGHT ? ThemeState.DARK : ThemeState.LIGHT;
+  }
+}
+```
+
+### 4. UI Components (src/app/components)
+
+```typescript
+// Header.tsx
+import React from 'react';
+import { NavigationItem } from '../../types/domain/NavigationItem';
+import { useThemeStore } from '../../state/themeStore';
+
+interface HeaderProps {
+  navigationItems: NavigationItem[];
+}
+
+const Header: React.FC<HeaderProps> = ({ navigationItems }) => {
+  const currentTheme = useThemeStore(state => state.currentTheme);
+  
+  return (
+    <header className={`header ${currentTheme}`}>
+      <nav>
+        <ul>
+          {navigationItems.map((item, index) => (
+            <li key={index}>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+  );
+};
+
+export default Header;
+
+// ContactForm.tsx
+import React, { useState } from 'react';
+import { ContactForm } from '../../types/domain/ContactForm';
+import { ContactService } from '../../services/ContactService';
+
+const ContactFormComponent: React.FC = () => {
+  const [formData, setFormData] = useState<ContactForm>({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  
+  const [status, setStatus] = useState<boolean | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Clear error when user types
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      ContactService.submitContactForm(formData);
+      setStatus(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      console.error('Submission error:', error);
+      setStatus(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="contact-form">
+      {status === false && <p className="error">Form submission failed.

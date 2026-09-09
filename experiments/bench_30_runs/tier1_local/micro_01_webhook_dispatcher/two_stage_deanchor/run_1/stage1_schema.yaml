@@ -1,0 +1,124 @@
+```yaml
+domain_entities:
+  - name: WebhookEvent
+    fields:
+      - name: payload
+        type: JSON
+      - name: eventType
+        type: String
+      - name: timestamp
+        type: DateTime
+  - name: RouteConfiguration
+    fields:
+      - name: path
+        type: String
+      - name: targetService
+        type: String
+      - name: method
+        type: String
+  - name: OpenAPISpec
+    fields:
+      - name: spec
+        type: JSON
+      - name: version
+        type: String
+  - name: HealthStatus
+    fields:
+      - name: status
+        type: String
+      - name: timestamp
+        type: DateTime
+
+functional_operations:
+  - action: webhookHandler
+    inputs:
+      - name: request
+        type: WebhookEvent
+      - name: response
+        type: HttpResponse
+    outputs:
+      - name: routedToService
+        type: String
+    invariants:
+      - "Request must contain valid GitHub webhook payload"
+      - "Response status code must be 200 or appropriate error code"
+      - "Webhook event type must be recognized and handled"
+  - action: listRouteHandler
+    inputs:
+      - name: request
+        type: HttpRequest
+      - name: response
+        type: HttpResponse
+    outputs:
+      - name: routeList
+        type: List<RouteConfiguration>
+    invariants:
+      - "Response must contain valid list of configured routes"
+      - "All routes must have valid path and target service"
+  - action: openapiHandler
+    inputs:
+      - name: request
+        type: HttpRequest
+      - name: response
+        type: HttpResponse
+    outputs:
+      - name: specContent
+        type: OpenAPISpec
+    invariants:
+      - "Response must contain valid OpenAPI specification"
+      - "Specification version must be consistent"
+  - action: healthCheckHandler
+    inputs:
+      - name: request
+        type: HttpRequest
+      - name: response
+        type: HttpResponse
+    outputs:
+      - name: healthStatus
+        type: HealthStatus
+    invariants:
+      - "Response status code must be 200"
+      - "Health check must return 'alive' message"
+
+state_contracts:
+  - event: WebhookReceived
+    state_transitions:
+      - from: Idle
+        to: ProcessingWebhook
+        conditions:
+          - "Valid GitHub webhook payload received"
+      - from: ProcessingWebhook
+        to: Completed
+        conditions:
+          - "Webhook processed successfully"
+  - event: RouteListRequested
+    state_transitions:
+      - from: Idle
+        to: ServingRouteList
+        conditions:
+          - "Route list endpoint accessed"
+      - from: ServingRouteList
+        to: Idle
+        conditions:
+          - "Route list response sent"
+  - event: OpenAPIRequested
+    state_transitions:
+      - from: Idle
+        to: ServingOpenAPISpec
+        conditions:
+          - "OpenAPI spec endpoint accessed"
+      - from: ServingOpenAPISpec
+        to: Idle
+        conditions:
+          - "OpenAPI specification response sent"
+  - event: HealthCheckRequested
+    state_transitions:
+      - from: Idle
+        to: RespondingToHealthCheck
+        conditions:
+          - "Health check endpoint accessed"
+      - from: RespondingToHealthCheck
+        to: Idle
+        conditions:
+          - "Health check response sent"
+```

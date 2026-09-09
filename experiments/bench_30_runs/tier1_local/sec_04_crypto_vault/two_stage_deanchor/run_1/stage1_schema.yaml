@@ -1,0 +1,163 @@
+```yaml
+domain_entities:
+  Key:
+    fields:
+      id: string
+      name: string
+      type: enum{RSA, ECDSA, AES}
+      size: integer
+      created_at: datetime
+      updated_at: datetime
+      status: enum{active, inactive, expired}
+      metadata: map<string, any>
+    relationships:
+      - vault_id: Vault.id
+
+  Vault:
+    fields:
+      id: string
+      name: string
+      description: string
+      created_at: datetime
+      updated_at: datetime
+      status: enum{open, closed, locked}
+      encryption_key: string
+      access_policy: map<string, any>
+    relationships:
+      - owner_id: User.id
+
+  User:
+    fields:
+      id: string
+      username: string
+      email: string
+      created_at: datetime
+      updated_at: datetime
+      status: enum{active, inactive, suspended}
+      roles: list<string>
+
+  KeyUsageRecord:
+    fields:
+      id: string
+      key_id: string
+      user_id: string
+      operation_type: enum{encrypt, decrypt, sign, verify, generate}
+      timestamp: datetime
+      context: map<string, any>
+      success: boolean
+
+functional_operations:
+  GenerateKeyPair:
+    inputs:
+      - name: string
+      - type: enum{RSA, ECDSA}
+      - size: integer
+    outputs:
+      - key_pair: Key
+    invariants:
+      - Generated keys must be cryptographically secure
+      - Key names must be unique within vault
+      - Key sizes must comply with security standards
+
+  EncryptData:
+    inputs:
+      - data: binary
+      - key_id: string
+    outputs:
+      - encrypted_data: binary
+    invariants:
+      - Must use proper encryption algorithm for key type
+      - Key must exist and be active
+      - Data integrity preserved during operation
+
+  DecryptData:
+    inputs:
+      - encrypted_data: binary
+      - key_id: string
+    outputs:
+      - decrypted_data: binary
+    invariants:
+      - Must use proper decryption algorithm for key type
+      - Key must exist and be active
+      - Decrypted data matches original format
+
+  SignData:
+    inputs:
+      - data: binary
+      - key_id: string
+    outputs:
+      - signature: binary
+    invariants:
+      - Must use appropriate signing algorithm for key type
+      - Key must exist and be active
+      - Signature generation requires private key access only
+
+  VerifySignature:
+    inputs:
+      - data: binary
+      - signature: binary
+      - key_id: string
+    outputs:
+      - valid: boolean
+    invariants:
+      - Must use appropriate verification algorithm for key type
+      - Key must exist and be active
+      - Signature validation requires public key access only
+
+  StoreKey:
+    inputs:
+      - key: Key
+      - vault_id: string
+    outputs:
+      - stored_key: Key
+    invariants:
+      - Vault must exist and be accessible
+      - Key must not already exist in vault
+      - Access control policies must be enforced
+
+  RetrieveKey:
+    inputs:
+      - key_id: string
+      - user_id: string
+    outputs:
+      - key: Key
+    invariants:
+      - User must have proper authorization
+      - Key must exist and be active
+      - Access logging required for retrieval
+
+state_contracts:
+  VaultLifecycle:
+    events:
+      - create_vault: Vault.created_at
+      - open_vault: Vault.status = "open"
+      - close_vault: Vault.status = "closed"
+      - lock_vault: Vault.status = "locked"
+    transitions:
+      - created → open
+      - open → closed
+      - closed → locked
+      - locked → open
+
+  KeyLifecycle:
+    events:
+      - generate_key: Key.created_at
+      - activate_key: Key.status = "active"
+      - deactivate_key: Key.status = "inactive"
+      - expire_key: Key.status = "expired"
+    transitions:
+      - created → active
+      - active → inactive
+      - inactive → expired
+      - active → expired
+
+  UserAccessControl:
+    events:
+      - user_login: User.status = "active"
+      - user_logout: User.status = "inactive"
+      - user_suspend: User.status = "suspended"
+    transitions:
+      - active → suspended
+      - suspended → active
+      - active → inactive
+```

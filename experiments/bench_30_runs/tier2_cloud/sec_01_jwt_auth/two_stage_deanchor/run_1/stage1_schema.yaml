@@ -1,0 +1,118 @@
+domain_entities:
+  - name: User
+    fields:
+      - name: id
+        type: UUID
+        constraints: [primary_key, immutable]
+      - name: username
+        type: String
+        constraints: [unique, not_null]
+      - name: email
+        type: String
+        constraints: [unique, not_null, format:email]
+      - name: passwordHash
+        type: String
+        constraints: [not_null, sensitive]
+      - name: roles
+        type: Set<Role>
+        relation: many_to_many
+        constraints: [non_empty]
+
+  - name: Role
+    fields:
+      - name: id
+        type: Integer
+        constraints: [primary_key]
+      - name: name
+        type: String
+        constraints: [unique, not_null, enum: [user, admin, moderator]]
+
+functional_operations:
+  - name: RegisterUser
+    description: Creates a new user account with hashed credentials and assigned roles.
+    inputs:
+      - name: username
+        type: String
+        constraints: [unique, not_null]
+      - name: email
+        type: String
+        constraints: [unique, not_null, format:email]
+      - name: rawPassword
+        type: String
+        constraints: [not_null, min_length:8]
+      - name: roleNames
+        type: Set<String>
+        constraints: [optional, subset_of: [user, admin, moderator]]
+    outputs:
+      - name: user
+        type: User
+    invariants:
+      - "Password is irreversibly hashed using bcrypt with cost factor 8 before persistence."
+      - "Username and email must be globally unique."
+      - "If roleNames is empty or omitted, the default role 'user' (id=1) is assigned."
+      - "All provided roleNames must exist in the Role registry."
+      - "The created User entity must have at least one Role."
+
+  - name: AuthenticateUser
+    description: Verifies credentials and issues a signed access token with authorization claims.
+    inputs:
+      - name: username
+        type: String
+        constraints: [not_null]
+      - name: rawPassword
+        type: String
+        constraints: [not_null]
+    outputs:
+      - name: authenticationResult
+        type: AuthenticationResult
+        fields:
+          - name: userId
+            type: UUID
+          - name: username
+            type: String
+          - name: email
+            type: String
+          - name: authorities
+            type: Set<String>
+            description: "Role names prefixed with 'ROLE_' and uppercased (e.g., 'ROLE_ADMIN')."
+          - name: accessToken
+            type: JWT
+            constraints: [algorithm:HS256, expiry:24h]
+    invariants:
+      - "Fails if no User exists for the given username."
+      - "Fails if bcrypt comparison of rawPassword against stored passwordHash returns false."
+      - "JWT payload contains only the user identifier (id)."
+      - "JWT is signed with HS256 using the configured secret; insecure key sizes permitted."
+      - "Token expires in 86400 seconds (24 hours)."
+      - "Authorities are derived from the User's current Roles at the moment of authentication."
+
+state_contracts:
+  - event: UserRegistered
+    trigger: RegisterUser
+    transitions:
+      - from: NonExistent
+        to: Active
+        conditions:
+          - "Unique constraints on username and email satisfied."
+          - "Password hash persisted."
+          - "Role associations persisted."
+
+  - event: UserAuthenticated
+    trigger: AuthenticateUser
+    transitions:
+      - from: Active
+        to: Authenticated
+        conditions:
+          - "Credentials valid."
+          - "Token issued."
+        side_effects:
+          - "No persistent state change; ephemeral token generated."
+
+  - event: RoleAssigned
+    trigger: RegisterUser (implicit via setRoles)
+    transitions:
+      - on: User.roles
+        action: add
+        conditions:
+          - "Role entities exist for all requested names."
+          - "Default role 'user' (id=1) assigned if none specified."

@@ -1,0 +1,121 @@
+```yaml
+domain_entities:
+  cache_entry:
+    fields:
+      key: string
+      value: any
+      timestamp: number
+      frequency: number
+      size: number
+    types:
+      key: string
+      value: any
+      timestamp: number
+      frequency: number
+      size: number
+
+  cache_state:
+    fields:
+      entries: list<cache_entry>
+      capacity: number
+      current_size: number
+      eviction_policy: string
+    types:
+      entries: list<cache_entry>
+      capacity: number
+      current_size: number
+      eviction_policy: string
+
+functional_operations:
+  get:
+    inputs:
+      key: string
+    outputs:
+      value: any
+      success: boolean
+    invariants:
+      - "entry must exist in cache"
+      - "access timestamp updated on retrieval"
+      - "frequency counter incremented for LFU"
+
+  put:
+    inputs:
+      key: string
+      value: any
+      size: number
+    outputs:
+      evicted_entries: list<cache_entry>
+      success: boolean
+    invariants:
+      - "cache capacity not exceeded"
+      - "eviction policy applied when necessary"
+      - "size tracking maintained"
+      - "entry timestamp updated"
+
+  remove:
+    inputs:
+      key: string
+    outputs:
+      removed_entry: cache_entry
+      success: boolean
+    invariants:
+      - "entry must exist for removal"
+      - "size accounting adjusted"
+      - "cache state consistency maintained"
+
+  evict:
+    inputs: {}
+    outputs:
+      evicted_entries: list<cache_entry>
+    invariants:
+      - "eviction policy applied correctly"
+      - "entries removed from cache"
+      - "size tracking updated"
+
+state_contracts:
+  events:
+    - name: entry_accessed
+      triggers:
+        - get
+      effects:
+        - "timestamp updated"
+        - "frequency incremented"
+    
+    - name: entry_inserted
+      triggers:
+        - put
+      effects:
+        - "entry added to cache"
+        - "size tracking updated"
+    
+    - name: entry_removed
+      triggers:
+        - remove
+      effects:
+        - "entry removed from cache"
+        - "size tracking adjusted"
+    
+    - name: cache_evicted
+      triggers:
+        - evict
+      effects:
+        - "entries removed based on policy"
+        - "cache size reduced"
+
+  state_transitions:
+    - from: empty_cache
+      to: populated_cache
+      condition: "entry_inserted"
+    
+    - from: populated_cache
+      to: full_cache
+      condition: "capacity_reached"
+    
+    - from: full_cache
+      to: populated_cache
+      condition: "eviction_occurred"
+    
+    - from: populated_cache
+      to: empty_cache
+      condition: "all_entries_removed"
+```

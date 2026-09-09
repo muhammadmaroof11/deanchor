@@ -1,0 +1,199 @@
+# Architectural Critique
+
+## Critical Gaps in Previous Draft
+
+| Area | Original Requirement | Previous Draft Status |
+|------|---------------------|----------------------|
+| **Hero Section** | Typed.js effect, social links, resume CTA, scroll indicator | ❌ Missing entirely |
+| **About Section** | Stats counters (animated), experience timeline, skills tags | ❌ Missing entirely |
+| **Skills Section** | Progress bars (circular/linear), tech stack carousel (Owl Carousel) | ❌ Missing entirely |
+| **Projects Section** | Filter tabs (All/Web/App/Design), project cards with modal/links | ❌ Missing entirely |
+| **Blogs Section** | Blog cards with categories, read more links | ❌ Missing entirely |
+| **Contact Section** | Form with validation, contact info cards, map placeholder | ❌ Missing entirely |
+| **Footer** | Social links, copyright, back-to-top integration | ❌ Missing entirely |
+| **Preloader** | Full-screen loader with animation | ❌ Stub only |
+| **Theme Manager** | Persisted localStorage, Bootstrap `data-bs-theme` sync | ❌ Stub only |
+| **Scroll Spy** | Bootstrap ScrollSpy + active nav highlighting | ❌ Stub only |
+| **Analytics** | MS Clarity integration | ❌ Missing |
+| **Data Layer** | Skills, Projects, Blogs, Navigation data | ❌ Empty files |
+| **AOS Integration** | Scroll animations with custom delays | ❌ Not wired |
+| **Owl Carousel** | Tech stack carousel in Skills | ❌ Not implemented |
+
+---
+
+# Greenfield Implementation
+
+## Project Structure (Complete)
+
+```
+portfolio/
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── index.html
+├── public/
+│   ├── favicon.ico
+│   ├── banner.webp
+│   ├── vj.webp
+│   └── images/
+│       ├── projects/
+│       ├── blogs/
+│       └── skills/
+├── src/
+│   ├── main.ts
+│   ├── styles/
+│   │   ├── main.css
+│   │   ├── _variables.css
+│   │   ├── _reset.css
+│   │   ├── _typography.css
+│   │   ├── _components.css
+│   │   ├── _layout.css
+│   │   ├── _animations.css
+│   │   └── _utilities.css
+│   ├── scripts/
+│   │   ├── core/
+│   │   │   ├── App.ts
+│   │   │   ├── EventBus.ts
+│   │   │   ├── ThemeManager.ts
+│   │   │   └── Preloader.ts
+│   │   ├── components/
+│   │   │   ├── Header.ts
+│   │   │   ├── Hero.ts
+│   │   │   ├── About.ts
+│   │   │   ├── Skills.ts
+│   │   │   ├── Projects.ts
+│   │   │   ├── Blogs.ts
+│   │   │   ├── Contact.ts
+│   │   │   ├── Footer.ts
+│   │   │   └── BackToTop.ts
+│   │   ├── services/
+│   │   │   ├── Analytics.ts
+│   │   │   ├── ScrollSpy.ts
+│   │   │   ├── FormHandler.ts
+│   │   │   └── Carousel.ts
+│   │   └── utils/
+│   │       ├── dom.ts
+│   │       ├── animation.ts
+│   │       ├── constants.ts
+│   │       └── helpers.ts
+│   └── data/
+│       ├── navigation.ts
+│       ├── skills.ts
+│       ├── projects.ts
+│       ├── blogs.ts
+│       └── personal.ts
+└── dist/
+```
+
+---
+
+## Configuration Files
+
+### `package.json`
+```json
+{
+  "name": "vijay-singh-portfolio",
+  "version": "2.0.0",
+  "description": "Modern portfolio built with Vite, TypeScript, and vanilla ES modules",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts",
+    "format": "prettier --write \"src/**/*.{ts,css,html}\""
+  },
+  "dependencies": {
+    "aos": "^2.3.4",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "typed.js": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/aos": "^3.0.7",
+    "@types/typed.js": "^2.0.12",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11",
+    "vite-plugin-html": "^3.2.2",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "prettier": "^3.2.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
+```
+
+### `tsconfig.json`
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@data/*": ["src/data/*"],
+      "@components/*": ["src/scripts/components/*"],
+      "@services/*": ["src/scripts/services/*"],
+      "@core/*": ["src/scripts/core/*"],
+      "@utils/*": ["src/scripts/utils/*"],
+      "@styles/*": ["src/styles/*"]
+    }
+  },
+  "include": ["src/**/*", "vite.config.ts", "index.html"],
+  "exclude": ["node_modules", "dist"]
+}
+```
+
+### `vite.config.ts`
+```typescript
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
+import htmlPlugin from 'vite-plugin-html';
+
+export default defineConfig({
+  root: '.',
+  publicDir: 'public',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    minify: 'esbuild',
+    cssCodeSplit: true,
+    sourcemap: true,
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html')
+      },
+      output: {
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: (assetInfo) => {
+          const ext = assetInfo.name.split('.').pop()?.toLowerCase() || '';
+          if (['css'].includes(ext)) return `assets/css/[name]-[hash].${ext}`;
+          if (['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'ico'].includes(ext)) return `assets/images/[name]-[hash].${ext}`;
+          if (['woff', 'woff2', 'eot', 'ttf', 'otf'].includes(ext)) return `assets/fonts/[name]-[hash].${ext}`;
+          return `assets/[name]-[hash].${ext}`;
+        }
+      }
+    }
+  },
+  plugins: [
+    htmlPlugin({
+      minify: true,
+      inject: {
+        data: {
+          title: 'Vijay Singh - Frontend Web

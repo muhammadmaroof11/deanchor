@@ -1,0 +1,117 @@
+# Architectural Critique
+
+## 1. Legacy Patterns & Structural Deficiencies
+
+| Issue | Original | Draft | Severity |
+|-------|----------|-------|----------|
+| **Incomplete Implementation** | Full working app | ~40% complete (cuts at `--z-modal`) | Critical |
+| **Anchored Class Structures** | Semantic classes (`.sidebar`, `.nav-item`, `.stat-card`) | Token-only, no component classes | High |
+| **Missing Domain Logic** | Chart rendering, real-time feeds, modal state, sidebar collapse, notifications | Zero behavioral code | Critical |
+| **Obsolete Control Flow** | Inline `onclick`, global functions, `setInterval` pollution | Not addressed | High |
+| **No Component Architecture** | Monolithic HTML/JS/CSS | Token system only | High |
+| **Accessibility Gaps** | No ARIA, keyboard nav, focus management | Not addressed | High |
+
+## 2. Domain Function Preservation Audit
+
+| Domain Function | Original | Draft | Status |
+|-----------------|----------|-------|--------|
+| Sidebar navigation & collapse | ✅ | ❌ | Lost |
+| Real-time threat feed (WebSocket simulation) | ✅ | ❌ | Lost |
+| Interactive charts (Canvas) | ✅ | ❌ | Lost |
+| Incident table with actions | ✅ | ❌ | Lost |
+| Workload inventory with status badges | ✅ | ❌ | Lost |
+| Quarantine modal with form validation | ✅ | ❌ | Lost |
+| Notification center with dropdown | ✅ | ❌ | Lost |
+| Theme persistence (localStorage) | ✅ | ❌ | Lost |
+| Keyboard shortcuts (Cmd+K, Escape) | ✅ | ❌ | Lost |
+| Responsive breakpoint handling | ✅ | ❌ | Lost |
+
+## 3. Greenfield Architecture Requirements
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        APPLICATION SHELL                        │
+├─────────────────────────────────────────────────────────────────┤
+│  LayoutController  │  ThemeManager  │  KeyboardRouter          │
+├─────────────────────────────────────────────────────────────────┤
+│  SIDEBAR MODULE                    │  MAIN CONTENT MODULE       │
+│  ├─ NavigationTree                 │  ├─ DashboardView          │
+│  ├─ CollapseController             │  │  ├─ StatsGrid            │
+│  ├─ UserProfile                    │  │  ├─ ThreatChart          │
+│  └─ MobileDrawer                   │  │  ├─ IncidentTable        │
+│                                    │  │  └─ WorkloadInventory    │
+├─────────────────────────────────────────────────────────────────┤
+│  HEADER MODULE                      │  OVERLAY MODULE            │
+│  ├─ BreadcrumbNav                  │  ├─ ModalManager           │
+│  ├─ GlobalSearch                   │  ├─ NotificationCenter     │
+│  ├─ UserMenu                       │  └─ ToastSystem            │
+│  └─ ThemeToggle                    │                            │
+├─────────────────────────────────────────────────────────────────┤
+│                        DATA LAYER                               │
+│  ├─ ThreatFeedStore (WebSocket/EventSource)                    │
+│  ├─ IncidentStore (CRUD + optimistic updates)                  │
+│  ├─ WorkloadStore (polling + cache)                            │
+│  └─ ConfigStore (theme, sidebar, preferences)                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+# Greenfield Implementation
+
+```html
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CloudShield Enterprise - Zero-Trust SecOps Command Center">
+  <title>CloudShield Enterprise - Zero-Trust SecOps Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+/* ==========================================================================
+   DESIGN TOKENS — Single Source of Truth
+   ========================================================================== */
+:root {
+  /* ── Color Primitives ── */
+  --c-space-950: #020617;
+  --c-space-900: #090d16;
+  --c-space-800: #0f172a;
+  --c-space-700: #131c31;
+  --c-space-600: #18233d;
+  --c-space-500: #1e293b;
+  --c-space-400: #334155;
+  --c-space-300: #475569;
+  --c-space-200: #64748b;
+  --c-space-100: #94a3b8;
+  --c-space-50:  #cbd5e1;
+  --c-space-0:   #f8fafc;
+
+  /* ── Semantic Aliases ── */
+  --bg-primary:   var(--c-space-950);
+  --bg-secondary: var(--c-space-900);
+  --bg-tertiary:  var(--c-space-800);
+  --bg-card:      var(--c-space-700);
+  --bg-card-hover:var(--c-space-600);
+  --bg-input:     var(--c-space-800);
+  --bg-overlay:   rgba(2,6,23,.85);
+
+  --border-subtle:  var(--c-space-800);
+  --border-default: var(--c-space-700);
+  --border-strong:  var(--c-space-600);
+  --border-focus:   #06b6d4;
+  --border-danger:  #f43f5e;
+
+  --text-primary:   var(--c-space-0);
+  --text-secondary: var(--c-space-100);
+  --text-muted:     var(--c-space-200);
+  --text-inverse:   var(--c-space-950);
+  --text-disabled:  var(--c-space-400);
+
+  /* ── Brand & Status ── */
+  --brand-cyan:       #06b6d4;  --brand-cyan-dim:  rgba(6,182,212,.15);
+  --brand-blue:       #0284c7;  --brand-blue-dim:  rgba(2,132,199,.15);
+  --brand-purple:     #8b5cf6;  --brand-purple-dim:rgba(139,92,246,.15);
+  --brand-emerald:    #10b981;  --brand-emerald-dim:rgba(16,185,12

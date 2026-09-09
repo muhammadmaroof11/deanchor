@@ -1,0 +1,104 @@
+```yaml
+domain_entities:
+  - name: Node
+    fields:
+      - name: id
+        type: String
+      - name: coordinates
+        type: Tuple[Float, Float]
+      - name: connections
+        type: List[Edge]
+  - name: Edge
+    fields:
+      - name: source
+        type: Node
+      - name: target
+        type: Node
+      - name: weight
+        type: Float
+      - name: is_bidirectional
+        type: Boolean
+  - name: Graph
+    fields:
+      - name: nodes
+        type: Set[Node]
+      - name: edges
+        type: Set[Edge]
+  - name: Path
+    fields:
+      - name: segments
+        type: List[Edge]
+      - name: total_weight
+        type: Float
+  - name: RouteQuery
+    fields:
+      - name: source_node
+        type: Node
+      - name: target_node
+        type: Node
+      - name: constraints
+        type: Map[String, Any]
+
+functional_operations:
+  - action: find_shortest_path
+    inputs:
+      - name: graph
+        type: Graph
+      - name: query
+        type: RouteQuery
+    outputs:
+      - name: result
+        type: Path
+    invariants:
+      - "Path must contain only valid edges from the input graph"
+      - "Path must connect source to target node"
+      - "Total weight represents sum of all edge weights in path"
+      - "Result path is minimal with respect to total_weight"
+
+  - action: add_node
+    inputs:
+      - name: graph
+        type: Graph
+      - name: node
+        type: Node
+    outputs:
+      - name: result
+        type: Graph
+    invariants:
+      - "New node must not already exist in graph"
+      - "Graph maintains valid node set integrity"
+
+  - action: add_edge
+    inputs:
+      - name: graph
+        type: Graph
+      - name: edge
+        type: Edge
+    outputs:
+      - name: result
+        type: Graph
+    invariants:
+      - "Edge source and target must exist in graph nodes"
+      - "Graph maintains valid edge set integrity"
+
+state_contracts:
+  - event: GRAPH_INITIALIZED
+    state_transitions:
+      - from: EMPTY_GRAPH
+        to: INITIALIZED_GRAPH
+
+  - event: NODE_ADDED
+    state_transitions:
+      - from: INITIALIZED_GRAPH
+        to: GRAPH_WITH_NODES
+
+  - event: EDGE_ADDED
+    state_transitions:
+      - from: GRAPH_WITH_NODES
+        to: FULLY_CONNECTED_GRAPH
+
+  - event: PATH_COMPUTED
+    state_transitions:
+      - from: FULLY_CONNECTED_GRAPH
+        to: PATH_FOUND_STATE
+```

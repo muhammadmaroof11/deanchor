@@ -1,0 +1,229 @@
+I'll analyze the legacy codebase, identify domain invariants, and produce a modern, maintainable architecture.
+
+## Architectural Analysis
+
+**Domain Invariants:**
+1. **Personal Brand**: "Vijay Singh - Frontend Web Developer" with code-bracket logo `<Vijay Singh/>`
+2. **Content Sections**: Hero, About, Skills, Projects, Blogs, Contact
+3. **Interactions**: Theme toggle, smooth scroll, scroll-spy, typed animation, project carousel, form submission
+4. **External Dependencies**: Formspree endpoint, Gamesroid blog images, MS Clarity analytics
+5. **Visual Language**: Dark-first theme, Rubik font, Bootstrap spacing/utilities, AOS animations
+
+**Legacy Flaws:**
+- Monolithic HTML with inline data-attributes for behavior
+- jQuery + 3 heavy plugins (Owl, AOS, Bootstrap JS) for trivial interactions
+- No module system, no type safety, no build pipeline
+- Render-blocking CSS, no critical path optimization
+- Accessibility gaps (ARIA, focus management, semantic structure)
+- Hardcoded content mixed with presentation
+
+---
+
+## Modernized Architecture
+
+```
+portfolio/
+├── public/
+│   ├── favicon.ico
+│   ├── banner.webp
+│   └── vj.webp
+├── src/
+│   ├── assets/
+│   │   ├── styles/
+│   │   │   ├── _variables.scss
+│   │   │   ├── _reset.scss
+│   │   │   ├── _typography.scss
+│   │   │   ├── _components.scss
+│   │   │   ├── _utilities.scss
+│   │   │   └── main.scss
+│   │   └── data/
+│   │       ├── projects.ts
+│   │       ├── skills.ts
+│   │       └── blogs.ts
+│   ├── components/
+│   │   ├── base/
+│   │   │   ├── Component.ts
+│   │   │   └── DOMUtils.ts
+│   │   ├── header/
+│   │   │   ├── Header.ts
+│   │   │   ├── Nav.ts
+│   │   │   └── ThemeToggle.ts
+│   │   ├── hero/
+│   │   │   └── Hero.ts
+│   │   ├── about/
+│   │   │   └── About.ts
+│   │   ├── skills/
+│   │   │   └── Skills.ts
+│   │   ├── projects/
+│   │   │   └── Projects.ts
+│   │   ├── blogs/
+│   │   │   └── Blogs.ts
+│   │   ├── contact/
+│   │   │   └── ContactForm.ts
+│   │   ├── footer/
+│   │   │   └── Footer.ts
+│   │   └── ui/
+│   │       ├── BackToTop.ts
+│   │       ├── Preloader.ts
+│   │       └── ScrollSpy.ts
+│   ├── services/
+│   │   ├── ThemeService.ts
+│   │   ├── AnimationService.ts
+│   │   ├── AnalyticsService.ts
+│   │   └── FormService.ts
+│   ├── utils/
+│   │   ├── constants.ts
+│   │   ├── helpers.ts
+│   │   └── types.ts
+│   ├── app.ts
+│   └── main.ts
+├── index.html
+├── vite.config.ts
+├── tsconfig.json
+├── package.json
+└── .eslintrc.cjs
+```
+
+---
+
+## Configuration Files
+
+### `package.json`
+```json
+{
+  "name": "vijay-singh-portfolio",
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vite": "^5.2.0",
+    "sass": "^1.75.0",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "vite-plugin-pwa": "^0.19.0"
+  },
+  "dependencies": {}
+}
+```
+
+### `tsconfig.json`
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*", "vite.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}
+```
+
+### `vite.config.ts`
+```typescript
+import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
+
+export default defineConfig({
+  root: 'src',
+  publicDir: '../public',
+  build: {
+    outDir: '../dist',
+    emptyOutDir: true,
+    minify: 'esbuild',
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: (info) => {
+          const ext = info.name.split('.').pop();
+          if (/\.(css)$/.test(info.name)) return 'assets/css/[name]-[hash].[ext]';
+          if (/\.(woff2?|ttf|eot)$/.test(info.name)) return 'assets/fonts/[name]-[hash].[ext]';
+          return 'assets/[ext]/[name]-[hash].[ext]';
+        }
+      }
+    }
+  },
+  plugins: [
+    VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'Vijay Singh - Frontend Developer',
+        short_name: 'Vijay Singh',
+        theme_color: '#0d6efd',
+        background_color: '#121212',
+        display: 'standalone',
+        icons: [
+          { src: '/vj.webp', sizes: '192x192', type: 'image/webp', purpose: 'any maskable' }
+        ]
+      }
+    })
+  ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+        silenceDeprecations: ['import', 'global-builtin', 'color-functions']
+      }
+    }
+  }
+});
+```
+
+---
+
+## Type Definitions & Data
+
+### `src/utils/types.ts`
+```typescript
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  github?: string;
+  live?: string;
+  featured: boolean;
+}
+
+export interface Skill {
+  category: string;
+  items: { name: string; proficiency: number; icon?: string }[];
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  category: string;
+  url: string;
+  date: string;
+}
+
+export interface NavItem {
+  label: string;
+  href: string;
+  id: string;
+}
+
