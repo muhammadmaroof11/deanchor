@@ -1,0 +1,37 @@
+```yaml
+page_title: User Management API Endpoints
+
+core_entities:
+  - name: User
+    data_fields:
+      username: req.body.username
+      email: req.body.email
+      password: bcrypt.hashSync(req.body.password, 8)
+  - name: Role
+    data_fields:
+      name: req.body.roles
+
+interactive_actions:
+  - action_name: create_user
+    intent: Save User to Database
+  - action_name: find_role_by_name
+    intent: Find Role by Name
+  - action_name: set_user_roles
+    intent: Set User Roles
+  - action_name: compare_passwords
+    intent: Validate Password
+
+content_copy:
+  - section: Sign Up
+    text: User registered successfully!
+  - section: Sign In
+    text: User Not found.
+  - section: Sign In
+    text: Invalid Password!
+  - section: Sign In
+    text: User Not found.
+  - section: Sign In
+    text: Invalid Password!
+  - section: Sign In
+    text: Access Token: null
+```

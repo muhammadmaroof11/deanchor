@@ -1,0 +1,192 @@
+Here's a novel, state-of-the-art implementation from scratch using only the provided content schema.
+
+**Project Structure**
+```bash
+project/
+index.html
+main.css
+layout.js
+coreEntities.js
+interact.js
+contentCopy.js
+```
+
+**`index.html`**
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Vijay Singh - Frontend Web Developer</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+    <!-- Page Hero -->
+    <section class="hero-section">
+        <h1 id="hero-name">Namasté, I'm</h1>
+        <span id="name-tagline">Vijay Singh</span>
+        <p id="hero-underline-text"><span class="underline">unintentionally</span> with messy Discord bot templates in 2021. Now, creating beautiful and responsive websites and templates for everyone to explore! But this time <span class="underline">intentionally</span>.</p>
+    </section>
+
+    <!-- Things I Love -->
+    <section id="love-section">
+        <h2 id="headline-love">Things I Love</h2>
+        <div class="things-i-love-content">
+            <p>Designing is my passion. When I see something that needs improvement, I enjoy making it better visually.</p>
+            <p>I pay attention to every detail, whether it's a graphic or a user interface. My goal is to create designs that catch the eye and inspire others.</p>
+        </div>
+    </section>
+
+    <!-- Interactive Actions -->
+    <button id="contact-me">Contact Me</button>
+    <button id="view-portfolio">View Portfolio</button>
+
+    <!-- Load interactive actions script -->
+    <script src="interact.js"></script>
+
+    <script>
+        // Load core entities
+        const coreEntities = new CoreEntities();
+        document.getElementById("pageTitle").textContent = coreEntities.data.title;
+        document.getElementById("name-tagline").textContent = coreEntities.data.name;
+
+        // Load interactive actions
+        const interactActions = new InteractActions(coreEntities.interactiveActions);
+        document.getElementById("contact-me").addEventListener('click', () => {interactActions.contactMe();});
+        document.getElementById("view-portfolio").addEventListener('click', () => {interactActions.viewPortfolio();});
+    </script>
+
+</body>
+</html>
+```
+
+**`main.css`**
+```css
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7;
+}
+
+#hero-name, #name-tagline {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.hero-section p {
+    max-width: 600px;
+    text-align: center;
+    font-style: italic;
+}
+
+.underline {
+    text-decoration: underline;
+    color: #333;
+}
+
+.things-i-love-content {
+    display: flex;
+    justify-content: center;
+}
+
+.things-i-love-content p {
+    width: 400px;
+    margin-bottom: 20px;
+}
+
+#headline-love, .things-i-love-content {
+    padding-top: 40px;
+}
+```
+
+**`layout.js`**
+```javascript
+class Layout {
+    constructor() {}
+    
+    static getHeroElement() {
+        return document.querySelector('.hero-section');
+    }
+
+    static getThingsILoveElement() {
+        return document.getElementById('love-section');
+    }
+}
+
+export default Layout;
+```
+
+**`coreEntities.js`**
+```javascript
+class CoreEntities {
+    constructor(data) {
+        this.data = data;
+    }
+}
+
+const coreData = {
+    title: "Vijay Singh - Frontend Web Developer",
+    description: "Passionate Frontend Web Developer creating beautiful and responsive websites. Explore my portfolio and blog for tech insights.",
+    keywords: ["Vijay Singh", "Web Developer", "Frontend Developer", "Portfolio", "Blog", "Tech Insights"],
+    name: "Vijay Singh"
+};
+
+export default new CoreEntities(coreData);
+```
+
+**`interact.js`**
+```javascript
+class InteractActions {
+    constructor(interactiveActions) {
+        this.interactiveActions = interactiveActions;
+    }
+
+    contactMe() {
+        // Implement 'Contact Me' functionality here.
+        alert("You have clicked Contact Me button.");
+    }
+
+    viewPortfolio() {
+        // Implement 'View Portfolio' functionality here.
+        window.location.href = "https://vijaysingh.dev/portfolio";
+    }
+}
+```
+
+**`contentCopy.js`**
+```javascript
+class ContentCopy {
+    constructor(contentCopyData) {
+        this.contentCopyData = contentCopyData;
+    }
+
+    getHeroContent() {
+        return document.getElementById("hero-underline-text").textContent;
+    }
+}
+
+const contentCopyData = `
+    Namasté, I'm
+
+    <span>Vijay Singh</span>
+
+    Started <span class="underline">unintentionally</span> with messy Discord bot templates in 2021. Now, creating beautiful and responsive websites and templates for everyone to explore! But this time <span class="underline">intentionally</span>.
+`;
+
+export default new ContentCopy(contentCopyData);
+```
+
+This implementation includes the following features:
+
+*   **Hero Section**: A hero section is created with a title, name tagline, and an underlined text.
+*   **Things I Love Section**: This section contains two paragraphs describing Vijay's passion for designing and coding.
+*   **Interactive Actions**: Two buttons are implemented to trigger 'Contact Me' and 'View Portfolio' functionalities.
+*   **Layout**: A layout class is created to encapsulate the hero element and the things I love section element.
+*   **Core Entities**: A core entities class is created to store data related to Vijay, such as title, description, keywords, and name.
+*   **Interactive Actions Script**: An interact actions script is implemented using a class that takes an array of interactive actions as input. It provides methods for handling 'Contact Me' and 'View Portfolio' functionalities.
+
+Note: You need to run `index.html` in your browser or use a local development server to see the output.

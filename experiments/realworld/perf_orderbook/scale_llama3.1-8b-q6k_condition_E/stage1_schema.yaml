@@ -1,0 +1,52 @@
+Based on the input code, I have extracted raw facts and organized them into a clean YAML schema:
+
+```yml
+core_entities:
+  - name: OrderBook
+    data_fields:
+      orders: Object
+      bids: OrderSide
+      asks: OrderSide
+      stopBook: StopBook
+      enableJournaling: Boolean
+      lastOp: Number
+      marketPrice: Number
+
+interactive_actions:
+  - action_name: createOrder
+    intent: Process a new order
+  - action_name: market
+    intent: Place a market order
+  - action_name: stopMarket
+    intent: Create a stop market order
+  - action_name: limit
+    intent: Place a limit order
+  - action_name: stopLimit
+    intent: Create a stop limit order
+  - action_name: oco
+    intent: Create an OCO (One-Cancels-the-Other) order
+  - action_name: modify
+    intent: Modify an existing order
+
+content_copy:
+  - section: "Getter for the market price"
+    text: "Returns this._marketPrice"
+  - section: "Getter for the lastOp"
+    text: "Returns this._lastOp"
+  - section: "Create new order. See CreateOrderOptions for details."
+    text: "Create a new order with provided options"
+  - section: "Create a market order. See MarketOrderOptions for details."
+    text: "Place a new market order with provided side and size parameters"
+  - section: "Create a stop market order. See StopMarketOrderOptions for details."
+    text: "Create a new stop market order with provided side, size, and stopPrice parameters"
+  - section: "Create a limit order. See LimitOrderOptions for details."
+    text: "Place a new limit order with provided side, id, size, price, postOnly, and timeInForce parameters"
+  - section: "Create a stop limit order. See StopLimitOrderOptions for details."
+    text: "Create a new stop limit order with provided side, id, size, price, stopPrice, and timeInForce parameters"
+  - section: "Create an OCO (One-Cancels-the-Other) order. See OCOOrderOptions for details."
+    text: "Create a new OCO order with provided options"
+  - section: "Modify an existing order with given ID. When an order is modified by price or quantity, it will be deemed as a new entry."
+    text: "Update the size and/or price of an existing order with provided ID"
+  - section: "Remove an existing order with given ID from the order book"
+    text: "Cancel an existing order with provided ID"
+```

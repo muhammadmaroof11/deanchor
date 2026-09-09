@@ -1,0 +1,46 @@
+```yaml
+page_title: Vijay Singh - Frontend Web Developer
+
+core_entities:
+  - name: Vijay Singh
+    data_fields:
+      title: Vijay Singh - Frontend Web Developer
+      description: Passionate Frontend Web Developer creating beautiful and responsive websites. Explore my portfolio and blog for tech insights.
+      keywords: Vijay Singh, Web Developer, Frontend Developer, Portfolio, Blog, Tech Insights
+
+interactive_actions:
+  - action_name: switchTheme
+    intent: Toggle theme between light and dark
+  - action_name: navToggle
+    intent: Open or close navigation menu
+  - action_name: contactMe
+    intent: Contact Vijay Singh via email
+  - action_name: viewPortfolio
+    intent: View Vijay's portfolio
+
+content_copy:
+  - section: Hero
+    text: Namasté, I'm
+  - section: Hero
+    text: Started unintentionally with messy Discord bot templates in 2021. Now, creating beautiful and responsive websites and templates for everyone to explore! But this time intentionally.
+  - section: Things I Love
+    text: Designing
+  - section: Things I Love
+    text: After designing, I dive into development. Coding is where I bring designs to life, turning concepts into digital experiences. Each line of code reflects my vision for functionality and elegance, showcasing my commitment to excellence.
+  - section: Things I Love
+    text: Expanding beyond creation, I optimize. From templates to full websites, I refine post-development. Leveraging blogging and basic SEO, I enhance visibility and impact online. Each step maximizes reach and effectiveness online.
+
+domain_invariants:
+  - Home
+  - About
+  - Skills
+  - Tools
+  - Projects
+  - Testimonials
+  - Blogs
+  - Contact
+
+edge_case_rules:
+  - rule: If the user clicks on a project card that is in progress, it should be disabled and show "In Progress" button.
+  - rule: If the user navigates to the contact section, a form with name, email, subject, and message fields will appear for submission.
+```

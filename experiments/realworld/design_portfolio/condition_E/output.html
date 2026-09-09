@@ -1,0 +1,154 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vijay Singh - Frontend Web Developer</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 16px;
+  }
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  .hero {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .hero-text {
+    font-size: 3rem;
+    letter-spacing: -0.05em;
+    margin-top: 1rem;
+    animation: fadeInDown ease 1s forwards, bounceInUp 1s ease-in-out 0s alternate;
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounceInUp {
+    from { opacity: 0; transform: translateY(3000px); }
+    50% { transform: translateY(-600px); }
+    70% { transform: translateY(400px); }
+    90% { transform: translateY(-200px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .social-icon a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 2rem;
+    transition: color 0.3s ease-in-out;
+  }
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .cta-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #ffffff;
+    border-radius: 24px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  .cta-button:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e1e1e;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: inset 0 -2px rgba(255, 255, 255, 0.1);
+  }
+  nav .brand-name {
+    font-size: 1.5rem;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  nav .toggle-menu {
+    display: none;
+  }
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column-reverse;
+    }
+    nav .toggle-menu {
+      display: block;
+      font-size: 1.2rem;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <nav>
+    <div class="brand-name" onclick="handleToggleNavigationMenu()">Vijay Singh</div>
+    <div class="toggle-menu" id="menu-toggle">&#9776;</div>
+  </nav>
+  <section class="hero">
+    <h1 class="hero-text">Namasté, I'm</h1>
+    <h2>Vijay Singh</h2>
+    <p>Started unintentionally with messy Discord bot templates in 2021. Now, creating beautiful and responsive websites and templates for everyone to explore! But this time intentionally.</p>
+  </section>
+  <div class="social-icons">
+    <a href="https://github.com/itsvijaysingh/" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="https://twitter.com/_itsvj/" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.instagram.com/__itsvj/" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.youtube.com/@VIJAYGAMINGFF/" target="_blank"><i class="fab fa-youtube"></i></a>
+    <a href="https://www.linkedin.com/itsvijaysingh/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://discord.gg/pU4ukuWNBw" target="_blank"><i class="fab fa-discord"></i></a>
+  </div>
+  <section class="cta-buttons">
+    <button class="cta-button" onclick="handleSwitchTheme()">Contact Me</button>
+    <button class="cta-button" onclick="handleViewPortfolio()">View Portfolio</button>
+  </section>
+</div>
+
+<script>
+function handleToggleNavigationMenu() {
+  const menuToggle = document.getElementById('menu-toggle');
+  menuToggle.classList.toggle('active');
+}
+
+function handleSwitchTheme() {
+  document.body.classList.toggle('dark-mode');
+}
+
+function handleViewPortfolio() {
+  alert("View Portfolio button clicked!");
+}
+</script>
+
+</body>
+</html>
+```
+
+This code implements a unique, asymmetric layout with a hero section that introduces Vijay Singh and his journey. The navigation menu is hidden by default but can be toggled on smaller screens. Micro-interactions such as keyframe animations for the hero text and subtle transitions for the CTA buttons enhance the user experience. The design supports a dark mode theme switch, providing a premium look with sleek typography and minimalistic elements.

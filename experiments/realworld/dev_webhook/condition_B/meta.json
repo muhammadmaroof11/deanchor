@@ -1,0 +1,10 @@
+{
+  "condition": "B",
+  "mode": "realworld",
+  "subject": "dev_webhook",
+  "model": "Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+  "system_prompt": false,
+  "elapsed_s": 33.07,
+  "output_chars": 10075,
+  "timestamp": "2026-08-20T03:45:32"
+}

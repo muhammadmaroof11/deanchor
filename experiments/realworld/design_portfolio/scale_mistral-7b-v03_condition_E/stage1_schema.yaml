@@ -1,0 +1,33 @@
+ ```yaml
+page_title: "Vijay Singh - Frontend Web Developer"
+core_entities:
+  - name: Vijay Singh
+data_fields:
+  title: "Passionate Frontend Web Developer creating beautiful and responsive websites. Explore my portfolio and blog for tech insights."
+  description: "Vijay Singh - Frontend Web Developer"
+  keywords: ["Vijay Singh", "Web Developer", "Frontend Developer", "Portfolio", "Blog", "Tech Insights"]
+  author: "Vijay Singh"
+interactive_actions:
+  - action_name: Navigation Menu Click
+    intent: Navigate to a specific section of the page (Home, About, Skills, Projects, Blogs, Contact)
+content_copy:
+  - section: Header Title
+    text: "Vijay Singh - Frontend Web Developer"
+  - section: Navigation Menu Item Content
+    text:
+      - "Home"
+      - "About"
+      - "Skills"
+      - "Projects"
+      - "Blogs"
+      - "Contact"
+  - section: Call to Action Buttons
+    text:
+      - "Contact Me" (leads to Contact Section)
+      - "View Portfolio <i class=\"bi bi-arrow-up-right-circle\">" (leads to Projects Section)
+  - section: Things I Love Cards Text
+    text: |
+      - Designing: I love designing. When I see something that needs improvement, I enjoy making it better visually. I pay attention to every detail, whether it's a graphic or a user interface. My goal is to create designs that catch the eye and inspire others.
+      - Developing: After designing, I dive into development. Coding is where I bring designs to life, turning concepts into digital experiences. Each line of code reflects my vision for functionality and elegance, showcasing my commitment to excellence.
+      - Expanding: Beyond creation, I optimize. From templates to full websites, I refine post-development. Leveraging blogging and basic SEO, I enhance visibility and impact online. Each step maximizes reach and effectiveness online.
+```

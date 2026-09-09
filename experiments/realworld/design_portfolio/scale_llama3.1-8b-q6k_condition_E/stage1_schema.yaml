@@ -1,0 +1,56 @@
+Based on the provided HTML snippet, we can now extract the raw facts, entities, user inputs, buttons/actions, and content copy. We will format the data in a YAML schema for easy interpretation.
+
+### Raw Facts:
+
+1. Author Name: Vijay Singh
+2. Profession: Frontend Web Developer
+3. Primary Meta Tag Title: Vijay Singh - Frontend Web Developer
+4. Description Meta Tag: Passionate Frontend Web Developer creating beautiful and responsive websites. Explore my portfolio and blog for tech insights.
+5. Keywords Meta Tag: Vijay Singh, Web Developer, Frontend Developer, Portfolio, Blog, Tech Insights
+6. Author of the website: Vijay Singh
+
+### Entities:
+
+1. **Name**: Vijay Singh
+2. **Profession**: Frontend Web Developer
+3. **Social Media Profiles**:
+   - GitHub: https://github.com/itsvijaysingh/
+   - Twitter: https://twitter.com/_itsvj/
+   - Instagram: https://www.instagram.com/__itsvj/
+   - LinkedIn: https://www.linkedin.com/itsvijaysingh/
+4. **Discord Server**: https://discord.gg/pU4ukuWNBw
+
+### User Inputs:
+
+1. **Contact Me Button**:
+   Intent: Reach out to the author via a contact form or direct email.
+2. **Portfolio Link**:
+   Intent: Explore Vijay Singh's portfolio and projects.
+3. **Switch Theme Button**:
+   Intent: Switch between light or dark themes for an enhanced user experience.
+4. **Navbar Toggle Icon**:
+   Intent: Expand or collapse the navigation menu on smaller screens.
+
+### Buttons/Actions:
+
+1. **Contact Me** (Button):
+   Action Name: Contact
+   User Input: Clicks the "Contact Me" button in the hero section to reach out directly to Vijay Singh.
+   Intent: Open a contact form, email client, or other suitable interface to facilitate direct communication with the author.
+2. **Switch Theme Button**:
+   Action Name: Switch Theme
+   User Input: Hovers over the switch theme button and clicks it to toggle between light and dark themes.
+   Intent: To improve usability for visually impaired users or personal preference.
+3. **GitHub** (Button):
+   Action Name: GitHub Profile
+   User Input: Clicks on Vijay Singh's GitHub profile link in his social media section.
+   Intent: Navigate directly to the GitHub repository or profile of Vijay Singh.
+
+### Content Copy:
+
+1. Tagline:
+   This is where Vijay Singh describes himself in a short phrase with an undertone of humor, which adds personality and friendliness to the website.
+2. Hero Section Headings:
+   They are used to describe the author's background and name in detail. For instance, <span class="h3">Namasté, I'm</span> Vijay Singh is a brief introduction for Vijay Singh and <h1 class="name"><span>Vijay Singh</h1> is his full name. Similarly, <p class="tagline mb-3"><span class="underline">unintentionally</span></p><span> with messy Discord bot templates in 2021 and Now creating beautiful and responsive websites and templates for everyone to explore!</p> is Vijay Singh's bio information in detail.
+3. About Section Headings:
+   In this section, the author provides a brief description of his background and skillset using headings such as <h6 class="text-center"><span class="btn btn-sm theme-button theme-text">Interests</span></h6>, <h2 class="section-heading text-center">About Me</h2>.

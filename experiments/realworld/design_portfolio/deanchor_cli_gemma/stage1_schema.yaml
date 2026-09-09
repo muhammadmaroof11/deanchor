@@ -1,0 +1,36 @@
+```yaml
+page_title: Vijay Singh's Portfolio
+
+core_entities:
+  - name: "Vijay"
+    data_fields:
+      name: Vijay
+      role: Frontend Developer
+      skills: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'Bootstrap']
+      projects: [
+        {
+          title: "PfpFinder",
+          description: "Find the best profile pictures and banners for your social media accounts"
+        },
+        {
+          title: "BikeKart",
+          description: "A simple bike store website template"
+        }
+      ]
+
+interactive_actions:
+  - action_name: "Contact Vijay"
+    intent: "contact"
+content_copy:
+  - section: "About Me"
+    text: |
+      My name is Vijay Singh, a frontend web developer.
+      I am passionate about building user-friendly and visually appealing websites. 
+
+domain_invariants:
+  - I am a skilled developer with expertise in HTML, CSS, JavaScript, Node.js, Express.js, Bootstrap
+  - My goal is to create beautiful and functional websites.
+edge_case_rules:
+  - If you have any questions or want to collaborate, please use the contact form on this page.
+
+```

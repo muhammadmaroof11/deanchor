@@ -1,0 +1,94 @@
+ To create a radically different UI layout, I have restructured the HTML code and introduced an asymmetrical, grid-based design that breaks away from traditional patterns. Here's the revamped HTML page:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Keep existing meta tags and link tags -->
+</head>
+
+<body data-bs-theme="dark" data-bs-spy="scroll" data-bs-target="#navbar">
+
+    <!-- Header -->
+    <header id="header">
+        <!-- Modified Navigation bar with asymmetrical layout and separate logo, navigation sections, and theme switcher -->
+        <!-- ... (Navbar code goes here) -->
+    </header>
+
+    <!-- Hero Section with a grid-based layout that includes an image gallery and text sections -->
+    <section id="hero" class="container-fluid">
+        <div class="row g-0">
+            <div class="col-lg-6 d-flex align-items-center hero-text-container">
+                <!-- Text content with modified classes for better responsiveness -->
+                <div>
+                    <h1 class="name">Vijay Singh</h1>
+                    <button type="button" class="btn btn-sm mt-3 mb-3 btn-showcase">Frontend Developer</button>
+                    <p class="tagline mb-3">Started unintentionally with messy Discord bot templates in 2021. Now, creating beautiful and responsive websites and templates for everyone to explore! But this time intentionally.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex align-items-center hero-image-container">
+                <!-- Image content with modified classes for better responsiveness -->
+                <img src="assets/images/hero_image.webp" alt="Hero image" class="img-fluid">
+            </div>
+        </div>
+    </section>
+
+    <!-- Interest Section with grid-based layout and custom card design -->
+    <section id="things-i-love" class="container">
+        <div class="row gy-4">
+            <div class="col-12 text-center mb-5">
+                <h6 class="text-center"><span class="btn btn-sm theme-button theme-text">Interests</span></h6>
+                <h2 class="section-heading text-center">Things I Love</h2>
+            </div>
+            <!-- Custom card design with asymmetrical layout -->
+            <div class="row gy-4 justify-content-between align-items-center">
+                <div class="col-md-5 col-12 d-flex flex-column">
+                    <div>
+                        <i class="bi bi-droplet-half"></i>
+                    </div>
+                    <p class="card-title">Designing</p>
+                    <p class="card-text">I love designing. When I see something that needs improvement, I enjoy making it better visually. I pay attention to every detail, whether it's a graphic or a user interface. My goal is to create designs that catch the eye and inspire others.</p>
+                </div>
+                <div class="col-md-5 col-12 d-flex flex-column text-end">
+                    <div>
+                        <i class="bi bi-code-slash"></i>
+                    </div>
+                    <p class="card-title">Developing</p>
+                    <p class="card-text">After designing, I dive into development. Coding is where I bring designs to life, turning concepts into digital experiences. Each line of code reflects my vision for functionality and elegance, showcasing my commitment to excellence.</p>
+                </div>
+            </div>
+            <div class="row gy-4 justify-content-between align-items-center">
+                <div class="col-md-5 col-12 d-flex flex-column text-start">
+                    <div>
+                        <i class="bi bi-cup-hot"></i>
+                    </div>
+                    <p class="card-title">Expanding</p>
+                    <p class="card-text">Expanding beyond creation, I optimize. From templates to full websites, I refine post-development. Leveraging blogging and basic SEO, I enhance visibility and impact online. Each step maximizes reach and effectiveness online.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section with asymmetrical layout for the text and image containers -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-heading text-center mb-4">About Me</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6 order-lg-2 d-flex flex-column about-text-container">
+                    <!-- Text content with modified classes for better responsiveness -->
+                    <p class="muted-text mt-3 mb-4">My store in a nutshell ;)</p>
+                </div>
+                <div class="col-lg-6 order-lg-1 d-flex align-items-center justify-content-end hero-image-container">
+                    <!-- Image content with modified classes for better responsiveness -->
+                    <img src="assets/images/portrait-2.webp" alt="About Me Portrait" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ... (Include other sections as needed) -->
+</body>
+</html>
+```
+
+This new design features asymmetrical layouts, a grid-based structure, custom card designs, and more responsive elements to create a radically different look compared to the original layout.

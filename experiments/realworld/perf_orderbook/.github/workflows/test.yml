@@ -1,0 +1,43 @@
+name: Test
+
+on:
+  push:
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/PULL_REQUEST_TEMPLATE.md'
+      - 'CODE_OF_CONDUCT.md'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - 'README.md'
+      - 'SECURITY.md'
+    branches:
+      - main
+  pull_request:
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/PULL_REQUEST_TEMPLATE.md'
+      - 'CODE_OF_CONDUCT.md'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - 'README.md'
+      - 'SECURITY.md'
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20.x, 22.x]
+
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: Set up Node.js
+        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install modules
+        run: npm install
+      - name: Run tests
+        run: npm run test:ci

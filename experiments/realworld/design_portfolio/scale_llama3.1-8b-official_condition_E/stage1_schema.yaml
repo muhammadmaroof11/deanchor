@@ -1,0 +1,33 @@
+Based on the provided HTML file, here is the extracted data in YAML format:
+
+```yml
+page_title: Vijay Singh - Frontend Web Developer
+core_entities:
+  - name: Vijay Singh
+    data_fields:
+      title: Vijay Singh - Frontend Web Developer
+      description: Passionate Frontend Web Developer creating beautiful and responsive websites. Explore my portfolio and blog for tech insights.
+      keywords: Vijay Singh, Web Developer, Frontend Developer, Portfolio, Blog, Tech Insights
+      name: Vijay Singh
+interactive_actions:
+  - action_name: Contact Me
+    intent: contact_me
+  - action_name: View Portfolio
+    intent: view_portfolio
+content_copy:
+  - section: Hero
+    text: |-
+      Namasté, I'm
+
+      <span>Vijay Singh</span>
+
+      Started <span class="underline">unintentionally</span> with messy Discord bot templates in 2021. Now, creating beautiful and responsive websites and templates for everyone to explore! But this time <span class="underline">intentionally</span>.
+  - section: Things I Love
+    text: |-
+      I love designing. When I see something that needs improvement, I enjoy making it better visually. I pay attention to every detail, whether it's a graphic or a user interface. My goal is to create designs that catch the eye and inspire others.
+
+      After designing, I dive into development. Coding is where I bring designs to life, turning concepts into digital experiences. Each line of code reflects my vision for functionality and elegance, showcasing my commitment to excellence.
+
+      Expanding beyond creation, I optimize. From templates to full websites, I refine post-development. Leveraging blogging and basic SEO, I enhance visibility and impact online. Each step maximizes reach and effectiveness online.
+```
+This YAML output includes the extracted page title, core entities, interactive actions, and content copy from the provided HTML file. Note that I've kept the original text formatting for the content copy section to preserve the style of the original website.

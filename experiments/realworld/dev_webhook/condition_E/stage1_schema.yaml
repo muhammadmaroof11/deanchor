@@ -1,0 +1,45 @@
+```yaml
+page_title: GitHub webhook dispatcher
+
+core_entities:
+  - name: express
+    data_fields:
+      app_use_bodyParser_json: true
+      app_disable_x_powered_by: true
+      app_use_helmet: true
+      app_post_webhookHandler: lib.webhookHandler
+      app_get_routes_handler: lib.listRouteHandler
+      app_get_openapiJson_limiter: limiter
+      app_get_openapiJson_handler: lib.openapiHandler
+      app_post_health_response: res.statusCode = 200; res.send('alive')
+      app_post_dummy1_response: res.statusCode = 200; res.send('dummy1')
+      app_post_dummy2_response: res.statusCode = 200; res.send('dummy2')
+
+interactive_actions:
+  - action_name: post
+    intent: handle_webhook_event
+  - action_name: get
+    intent: list_routes
+  - action_name: get
+    intent: serve_openapi_spec
+
+content_copy:
+  - section: app.post('/')
+    text: |
+      Create a route for the GitHub webhook
+  - section: app.get('/routes')
+    text: |
+      Create a route to get a list of all the configured routes
+  - section: app.use('/openapi.json', limiter)
+    text: |
+      Apply rate limiting to this route
+  - section: app.post('/health')
+    text: |
+      Create a dummy route for health checks
+  - section: app.post('/dummy1')
+    text: |
+      Create a dummy route
+  - section: app.post('/dummy2')
+    text: |
+      Create another dummy route
+```

@@ -1,0 +1,45 @@
+```yaml
+page_title: Vijay Singh - Frontend Web Developer
+
+core_entities:
+  - name: Vijay Singh
+    data_fields:
+      title: Vijay Singh - Frontend Web Developer
+      description: Passionate about crafting beautiful and responsive websites. Explore my portfolio and blog for tech insights.
+      keywords: Vijay Singh, Web Developer, Frontend Developer, Portfolio, Blog, Tech Insights
+  - name: navbar
+    data_fields:
+      brand_name: Vijay Singh
+
+interactive_actions:
+  - action_name: click_on_logo
+    intent: navigate_to_home
+  - action_name: toggle_navigation_menu
+    intent: open_offcanvas_navigation_menu
+  - action_name: switch_theme
+    intent: change_theme
+
+content_copy:
+  - section: Hero Section
+    text: Namasté, I'm
+  - section: Hero Section
+    text: Vijay Singh
+  - section: Hero Section
+    text: Started unintentionally with messy Discord bot templates in 2021. Now, creating beautiful and responsive websites and templates for everyone to explore! But this time intentionally.
+  - section: Social Icons
+    text: https://github.com/itsvijaysingh/
+  - section: Social Icons
+    text: https://twitter.com/_itsvj/
+  - section: Social Icons
+    text: https://www.instagram.com/__itsvj/
+  - section: Social Icons
+    text: https://www.youtube.com/@VIJAYGAMINGFF/
+  - section: Social Icons
+    text: https://www.linkedin.com/itsvijaysingh/
+  - section: Social Icons
+    text: https://discord.gg/pU4ukuWNBw
+  - section: Call to Action Buttons
+    text: Contact Me
+  - section: Call to Action Buttons
+    text: View Portfolio
+```

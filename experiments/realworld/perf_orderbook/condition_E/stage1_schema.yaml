@@ -1,0 +1,68 @@
+```yaml
+page_title: OrderBook Class
+
+core_entities:
+  - name: OrderBook
+    data_fields:
+      orders: {}
+      _lastOp: 0
+      _marketPrice: 0
+      bids: OrderSide
+      asks: OrderSide
+      enableJournaling: boolean
+      stopBook: StopBook
+interactive_actions:
+  - action_name: createOrder
+    intent: Create new order with specified options.
+  - action_name: market
+    intent: Create a market order.
+  - action_name: stopMarket
+    intent: Create a stop market order.
+  - action_name: limit
+    intent: Create a limit order.
+  - action_name: stopLimit
+    intent: Create a stop limit order.
+  - action_name: oco
+    intent: Create an OCO (One-Cancels-the-Other) order.
+
+content_copy:
+  - section: OrderBook class documentation
+    text: |
+      import { CustomError, ERROR, type OrderBookError } from "./errors";
+      import {
+        type LimitOrder,
+        OrderFactory,
+        type StopLimitOrder,
+        type StopMarketOrder,
+      } from "./order";
+      import type { OrderQueue } from "./orderqueue";
+      import { OrderSide } from "./orderside";
+      import { StopBook } from "./stopbook";
+      import {
+        type CreateOrderOptions,
+        type ICancelOrder,
+        type ILimitOrder,
+        type IOrder,
+        type IProcessOrder,
+        JournalLog,
+        type LimitOrderOptions,
+        type MarketOrderOptions,
+        type OCOOrderOptions,
+        type OrderBookOptions,
+        OrderType,
+        type OrderUpdatePrice,
+        type OrderUpdateSize,
+        SelfTradePreventionMode,
+        Side,
+        type Snapshot,
+        type StopLimitOrderOptions,
+        type StopMarketOrderOptions,
+        type StopOrder,
+        TimeInForce,
+      } from "./types";
+
+      const validTimeInForce = Object.values(TimeInForce);
+
+      export class OrderBook {
+        // Class body is truncated for context limits
+```

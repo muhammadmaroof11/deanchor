@@ -1,0 +1,10 @@
+{
+  "condition": "D",
+  "mode": "realworld",
+  "subject": "design_portfolio",
+  "model": "Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+  "system_prompt": false,
+  "elapsed_s": 24.85,
+  "output_chars": 7894,
+  "timestamp": "2026-08-20T03:47:50"
+}

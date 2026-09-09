@@ -1,0 +1,29 @@
+```yaml
+page_title: Vijay Singh - Frontend Web Developer
+core_entities:
+  - name: Vijay Singh
+    data_fields:
+      occupation: Frontend Web Developer
+interactive_actions:
+  - action_name: Contact Me
+    intent: contact
+  - action_name: View Portfolio
+    intent: view_portfolio
+content_copy:
+  - section: Hero
+    text: <span class="h3">Namasté, I'm</span>
+      <h1 class="name"><span>Vijay Singh</h1> 
+      <button type="button" class="btn btn-sm mt-3 mb-3 btn-showcase"><i class="bi bi-stars"></i> Frontend Developer</button> 
+      <p class="tagline mb-3">Started <span class="underline">unintentionally</span> with messy Discord bot templates in 2021. Now, creating beautiful and responsive websites and templates for everyone to explore! But this time <span class="underline">intentionally</span>.</p>
+  - section: Things I Love
+    text: <h6 class="text-center"><span class="btn btn-sm theme-button theme-text">Interests</span></h6>
+      <h2 class="section-heading text-center">Things I Love</h2>
+      <div class="row justify-content-center pt-3 gy-4">
+
+  - section: About Me
+    text: <h6 class="text-center"><span class="btn btn-sm theme-button theme-text">But who am I?</span></h6>
+      <h2 class="section-heading text-center">About Me</h2> 
+
+
+
+```

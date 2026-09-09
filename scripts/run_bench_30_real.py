@@ -73,7 +73,7 @@ def parse_args():
     p.add_argument("--local-base", default="http://127.0.0.1:1234/v1", help="Local LM Studio base URL")
     p.add_argument("--local-key", default="lm-studio", help="Local API key")
     p.add_argument("--cloud-base", default="https://openrouter.ai/api/v1", help="Cloud API base URL")
-    p.add_argument("--cloud-key", default=os.getenv("OPENROUTER_API_KEY", ""), help="OpenRouter API Key")
+    p.add_argument("--cloud-key", default=os.getenv("OPENROUTER_API_KEY", ""), help="OpenRouter API Key (set OPENROUTER_API_KEY env var)")
     p.add_argument("--embedding-base", default="http://127.0.0.1:1234/v1", help="Base URL for embeddings")
     p.add_argument("--embedding-model", default="text-embedding-nomic-embed-text-v1.5", help="Embedding model ID")
     p.add_argument("--dry-run", action="store_true", help="Validate benchmark configuration without calling inference")

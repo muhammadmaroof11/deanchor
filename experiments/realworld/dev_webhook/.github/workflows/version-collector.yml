@@ -1,0 +1,23 @@
+name: version-collector
+
+on:
+  workflow_call:
+    outputs:
+      package-version:
+        description: 'The package version'
+        value: ${{ jobs.package-version.outputs.version }}
+
+jobs:
+  package-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.pkgversion.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: get package version
+        id: pkgversion
+        run: |
+          export ver=$(cat package.json | jq -r .version)
+          echo "Outputting version: ${ver}"
+          echo "version=${ver}" >> $GITHUB_OUTPUT

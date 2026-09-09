@@ -1,0 +1,10 @@
+{
+  "condition": "B",
+  "mode": "realworld",
+  "subject": "perf_orderbook",
+  "model": "Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+  "system_prompt": false,
+  "elapsed_s": 24.26,
+  "output_chars": 7009,
+  "timestamp": "2026-08-20T03:45:56"
+}

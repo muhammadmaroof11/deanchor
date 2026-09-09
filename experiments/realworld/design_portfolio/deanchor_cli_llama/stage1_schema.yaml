@@ -1,0 +1,56 @@
+Here is the extracted data in YAML format:
+
+```yaml
+page_title: Vijay Singh - Frontend Web Developer
+
+core_entities:
+  - name: Vijay Singh
+    data_fields:
+      bio: "Hey there, I'm Vijay, a 20-year-old coding enthusiast from India. I'm currently doing part-time blogging with my full-time journey as a frontend web developer. My coding journey began with experimenting on Discord bots. Now, I'm pursuing a master's degree in computer applications to deepen my skills and passion for web development."
+      interests: "Designing, Developing, Expanding"
+      skills:
+        - HTML
+        - CSS
+        - JavaScript
+        - NodeJS
+        - ExpressJS
+        - EJS
+        - Bootstrap
+        - C
+        - Python
+        - MongoDB
+
+interactive_actions:
+  - action_name: Contact Me
+    intent: Send message to Vijay Singh
+  - action_name: View Portfolio
+    intent: Open Vijay's portfolio website
+  - action_name: Visit PfpFinder
+    intent: Open PfpFinder website
+  - action_name: Visit BikeKart
+    intent: Open BikeKart website
+
+content_copy:
+  - section: Hero
+    text: "Namasté, I'm Vijay Singh. Started unintentionally with messy Discord bot templates in 2021. Now, creating beautiful and responsive websites and templates for everyone to explore! But this time intentionally."
+  - section: Things I Love
+    text: "Designing, Developing, Expanding"
+  - section: About Me
+    text: "My store in a nutshell ;)"
+  - section: Skills
+    text: "Here are some of the technologies that are part of my current stack:"
+  - section: Tools
+    text: "Tech stack known? Here are tools that I runs:"
+  - section: Projects
+    text: "Find the best profile pictures and banners for all your social media accounts."
+  - section: Blogs
+    text: "From tech tips to gaming guides, here are some written pieces that you can check out if you're interested."
+
+domain_invariants:
+  - Vijay Singh is a frontend web developer.
+  - Vijay Singh has a passion for designing and developing websites.
+
+edge_case_rules:
+  - If user clicks on Contact Me button, send message to Vijay Singh's email address.
+  - If user clicks on View Portfolio button, open Vijay's portfolio website.
+```
