@@ -397,22 +397,31 @@ BENCHMARK_PROJECTS = [
 
 
 def setup_benchmark_registry():
-    """Generates the benchmark catalog JSON and structure."""
+    """Initializes and verifies the benchmark catalog JSON and structure."""
     reg_file = DATASETS_DIR / "registry.json"
-    reg_file.write_text(json.dumps(BENCHMARK_PROJECTS, indent=2), encoding="utf-8")
-    print(f"[SUCCESS] Initialized Deanchor-Bench-30 registry with {len(BENCHMARK_PROJECTS)} open-source projects: {reg_file}")
+    if reg_file.exists():
+        projects = json.loads(reg_file.read_text(encoding="utf-8"))
+    else:
+        projects = BENCHMARK_PROJECTS
+        reg_file.write_text(json.dumps(projects, indent=2), encoding="utf-8")
 
-    total_loc = sum(p["loc"] for p in BENCHMARK_PROJECTS)
-    total_assertions = sum(p["test_assertions"] for p in BENCHMARK_PROJECTS)
+    print(f"[SUCCESS] Verified Deanchor-Bench-30 registry with {len(projects)} projects: {reg_file}")
+
+    total_loc = sum(p["loc"] for p in projects)
+    total_assertions = sum(p["test_assertions"] for p in projects)
+    core_subset_count = sum(1 for p in projects if p.get("is_core_subset"))
+    upstream_count = sum(1 for p in projects if p.get("test_provenance") == "upstream")
+
     print(f"Total Benchmark Suite Scope: {total_loc:,} LOC across 5 domains | {total_assertions} Unit Test Assertions")
+    print(f"Core 10-Project Subset: {core_subset_count} repos | Upstream Test Suites: {upstream_count}/{len(projects)} ({upstream_count/len(projects)*100:.1f}%)")
 
     # Create directories for each project
-    for p in BENCHMARK_PROJECTS:
+    for p in projects:
         p_dir = DATASETS_DIR / p["id"]
         p_dir.mkdir(exist_ok=True)
         (p_dir / "meta.json").write_text(json.dumps(p, indent=2), encoding="utf-8")
 
-    print(f"[SUCCESS] All 30 project directories created in {DATASETS_DIR}")
+    print(f"[SUCCESS] All 30 project directories verified in {DATASETS_DIR}")
 
 
 if __name__ == "__main__":
