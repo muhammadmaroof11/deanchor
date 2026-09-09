@@ -66,10 +66,10 @@ $$A_{t,j} = \frac{\exp\left( \frac{Q_t K_j^T}{\sqrt{d_k}} \right)}{\sum_{k} \exp
 
 Because legacy code $X$ represents 85% to 95% of the total prompt token volume, key vectors corresponding to legacy syntax tokens dominate the softmax denominator. Connecting this with the **Attention Sink phenomenon** discovered by Xiao et al. (ICLR 2024), autoregressive transformers assign massive attention mass to initial prefix tokens regardless of their semantic relevance, turning legacy syntax tokens into immovable topological anchors.
 
-#### How We Perfected It
-We formulated and mathematically proved **Theorem 1 (The Contextual Anchoring Theorem)**:
-> Under single-pass conditioning $Y \sim P(Y \mid X)$, the mutual topological information $I(T_Y ; T_X \mid D) > 0$ is strictly positive. As input sequence length $|X| \to \infty$, the output generative distribution collapses to the legacy topology:
-> $$\lim_{|X| \to \infty} \Pr(T_Y = T_X) = 1.0$$
+#### How We Formulated It
+We formulated **Hypothesis 1 (The Contextual Anchoring Hypothesis)**:
+> Under single-pass conditioning $Y \sim P(Y \mid X)$, the mutual topological information $I(T_Y ; T_X \mid D) > 0$ remains strictly positive due to non-zero attention mass allocated to prompt prefix tokens. In the asymptotic limit of large legacy sequence lengths $|X|$, the output generative distribution exhibits topological inertia:
+> $$\lim_{|X| \to \infty} \Pr(T_Y = T_X) \approx 1.0$$
 
 We established that only by decoupling the input sequence via a strict Markov chain $X \to S \to Y$, where $S = \Psi(D)$ contains zero presentation tokens $T_X$, can we achieve true topological independence:
 $$I(T_Y ; T_X \mid S) = 0$$
@@ -128,7 +128,7 @@ timeline
     title The 4 Epochs of the Deanchor Research Project
     Epoch 1 (Heuristic Persona & Prompt Rules) : "Frowning Sarcastic Expert" Persona : 4-Step Pipeline (DECOUPLE-BAN-CONCEPTUALIZE-EXECUTE) : Failure: Null-Space Collapse & Broken Syntax
     Epoch 2 (Weight-Level QLoRA on RTX 3080) : 4-bit QLoRA on Qwen2.5-7B (models/qwen2.5-7b-deanchor-lora) : Conditions A, B, C, D, E Tested : 10x Structural Gain with 0 Token Overhead
-    Epoch 3 (Two-Tier Scaling & Mathematical Proofs) : Theorem 1 (Contextual Anchoring) & Attention Sinks : RoPE Invariance & Data Processing Inequality : Tier 1 Local Edge (RTX 3080) vs Tier 2 Cloud (OpenRouter) : CodeGraph Dynamic Pruning (14x Context Compression)
+    Epoch 3 (Two-Tier Scaling & Theoretical Framework) : Hypothesis 1 (Contextual Anchoring) & Attention Sinks : RoPE Invariance & Data Processing Inequality : Tier 1 Local Edge (RTX 3080) vs Tier 2 Cloud (OpenRouter) : CodeGraph Dynamic Pruning (14x Context Compression)
     Epoch 4 (Deanchor-Bench-30 Premier Suite) : 30 Open-Source Repositories (55,415 LOC) : Execution-Based Unit Test Verification (npm test / pytest) : Baseline Comparisons (Zero-Shot vs CoT vs Reflexion vs Deanchor) : Pareto Frontier: 0.9768 AST Div with 98.8% Test Pass Rate
 ```
 
@@ -167,7 +167,7 @@ We designed and executed parameter-efficient fine-tuning using 4-bit QLoRA on ou
 - **LoRA Hyperparameters**: Rank $r = 16$, Scaling factor $\alpha = 32$, Dropout $= 0.05$.
 - **Quantization**: 4-bit NormalFloat (NF4) with double quantization and FP16 compute precision.
 - **Optimizer**: Paged AdamW 8-bit (`paged_adamw_8bit`) to prevent CUDA Out-Of-Memory (OOM) spikes.
-- **Training Dataset**: 500 curated, high-complexity multi-file pairs mapping legacy codebases to decoupled semantic contracts and clean-slate modular implementations.
+- **Training Dataset**: 3 curated seed pairs (`datasets/train.jsonl`) mapping legacy codebases to decoupled semantic contracts and clean-slate modular implementations as a preliminary proof-of-concept.
 - **Script**: [`scripts/finetune.py`](file:///e:/Me/JustThinkBro/scripts/finetune.py).
 
 ```python
@@ -193,8 +193,8 @@ peft_config = LoraConfig(
 - **Memory Optimization**: Peak VRAM was constrained to **6.78 GB**, safely beneath the 10.0 GB hardware ceiling.
 - **Checkpoint**: Saved to [`models/qwen2.5-7b-deanchor-lora/adapter_model.safetensors`](file:///e:/Me/JustThinkBro/models/qwen2.5-7b-deanchor-lora/adapter_model.safetensors).
 - **Benchmark Performance (Condition C)**:
-  - On complex enterprise dashboards, Condition C achieved an AST Divergence of **$0.1901$ vs $0.0197$** for the base model—a **nearly 10× structural redesign improvement** with **0 tokens of prompt overhead** and a **98.0% syntax validity rate**.
-- **Scope Boundary**: While Condition C solved on-device open-weights execution, closed-source frontier models (e.g. Claude 3.5 Sonnet, GPT-4o) do not permit weight modification, necessitating a universal inference-time decoupling protocol.
+  - On complex enterprise dashboards, Condition C achieved an AST Divergence of **$0.1901$ vs $0.0197$** for the base model—a **nearly 10× structural redesign improvement** on seen training patterns with **0 tokens of prompt overhead** and a **98.0% syntax validity rate**.
+- **Scope Boundary & Generalization Limits**: While Condition C demonstrated that parameter-efficient fine-tuning can improve structural divergence on seen training distributions with zero prompt token overhead, training on a 3-example seed dataset cannot provide out-of-distribution generalization to arbitrary enterprise software stacks. Crucially, closed-source frontier models (e.g., Claude 3.5 Sonnet, GPT-4o) do not permit arbitrary weight adaptation, and weight-level updates do not eliminate autoregressive attention mass on legacy prefix tokens during inference. This necessitated a universal, inference-time Two-Stage Decoupling Protocol that physically purges legacy presentation tokens from the active context.
 
 ---
 
@@ -508,15 +508,16 @@ All raw code files, fine-tuned LoRA weights, benchmark score registries, publica
 - `experiments/live_runs/realworld_orderbook/`
 - `experiments/live_runs/realworld_webhook/`
 - `experiments/live_runs/realworld_secauth/`
+- `experiments/bench_30_runs/tier1_local/` (10 real evaluated targets × 4 conditions)
+- `experiments/bench_30_runs/tier2_cloud/` (10 real evaluated targets × 4 conditions)
 
 ### 2. Fine-Tuned Model Weights (4-Bit QLoRA on RTX 3080)
 - [`models/qwen2.5-7b-deanchor-lora/adapter_model.safetensors`](file:///e:/Me/JustThinkBro/models/qwen2.5-7b-deanchor-lora/adapter_model.safetensors)
 - [`models/qwen2.5-7b-deanchor-lora/adapter_config.json`](file:///e:/Me/JustThinkBro/models/qwen2.5-7b-deanchor-lora/adapter_config.json)
 
 ### 3. Checkpointed Score Registries (JSON)
+- [`results/bench_30_measured_results.json`](file:///e:/Me/JustThinkBro/results/bench_30_measured_results.json) (100% measured empirical inference data)
 - [`results/live_end_to_end_results.json`](file:///e:/Me/JustThinkBro/results/live_end_to_end_results.json)
-- [`results/all_epochs_benchmark_results.json`](file:///e:/Me/JustThinkBro/results/all_epochs_benchmark_results.json)
-- [`results/deanchor_bench_30_results.json`](file:///e:/Me/JustThinkBro/results/deanchor_bench_30_results.json)
 - [`results/scores_structural.json`](file:///e:/Me/JustThinkBro/results/scores_structural.json)
 - [`results/scores_embedding.json`](file:///e:/Me/JustThinkBro/results/scores_embedding.json)
 
@@ -528,9 +529,8 @@ All raw code files, fine-tuned LoRA weights, benchmark score registries, publica
 
 ### 5. High-Resolution 300 DPI Publication Figures
 - [`paper_figures/fig1_architecture.png`](file:///e:/Me/JustThinkBro/paper_figures/fig1_architecture.png)
-- [`paper_figures/fig2_deanchor_bench_30.png`](file:///e:/Me/JustThinkBro/paper_figures/fig2_deanchor_bench_30.png)
-- [`paper_figures/fig2a_tier1_local_benchmarks.png`](file:///e:/Me/JustThinkBro/paper_figures/fig2a_tier1_local_benchmarks.png)
-- [`paper_figures/fig2b_tier2_cloud_benchmarks.png`](file:///e:/Me/JustThinkBro/paper_figures/fig2b_tier2_cloud_benchmarks.png)
+- [`paper_figures/fig2_grand_benchmark.png`](file:///e:/Me/JustThinkBro/paper_figures/fig2_grand_benchmark.png)
 - [`paper_figures/fig3_noise_reduction.png`](file:///e:/Me/JustThinkBro/paper_figures/fig3_noise_reduction.png)
 - [`paper_figures/fig4_latency_pareto.png`](file:///e:/Me/JustThinkBro/paper_figures/fig4_latency_pareto.png)
+- [`paper_figures/fig5_indexing_impact.png`](file:///e:/Me/JustThinkBro/paper_figures/fig5_indexing_impact.png)
 - [`paper_figures/fig6_ablation_study.png`](file:///e:/Me/JustThinkBro/paper_figures/fig6_ablation_study.png)
