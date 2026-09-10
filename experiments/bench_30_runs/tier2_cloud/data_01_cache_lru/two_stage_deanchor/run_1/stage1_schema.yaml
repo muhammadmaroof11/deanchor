@@ -1,0 +1,129 @@
+```yaml
+domain_entities:
+  CacheKey:
+    fields:
+      id: "string | bytes"
+      namespace: "string"
+    types: "Value Object"
+
+  CacheValue:
+    fields:
+      data: "any"
+      size_bytes: "integer"
+      created_at: "timestamp"
+      accessed_at: "timestamp"
+      access_count: "integer"
+    types: "Value Object"
+
+  CacheNode:
+    fields:
+      key: "CacheKey"
+      value: "CacheValue"
+      prev: "Reference<CacheNode>"
+      next: "Reference<CacheNode>"
+      frequency_node: "Reference<FrequencyNode>"
+    types: "Entity"
+
+  FrequencyNode:
+    fields:
+      frequency: "integer"
+      keys: "DoublyLinkedList<CacheNode>"
+      prev: "Reference<FrequencyNode>"
+      next: "Reference<FrequencyNode>"
+    types: "Entity"
+
+  EvictionPolicy:
+    fields:
+      type: "Enum(LRU, LFU, ARC)"
+      max_capacity_bytes: "integer"
+      max_capacity_items: "integer"
+    types: "Value Object"
+
+  CacheState:
+    fields:
+      items: "Map<CacheKey, CacheNode>"
+      frequencies: "Map<integer, FrequencyNode>"
+      current_capacity_bytes: "integer"
+      current_capacity_items: "integer"
+      eviction_policy: "EvictionPolicy"
+    types: "Aggregate Root"
+
+functional_operations:
+  - action: "Get"
+    inputs:
+      - key: "CacheKey"
+    outputs:
+      - value: "CacheValue | null"
+      - hit_miss_status: "boolean"
+    invariants:
+      - "Successful retrieval must mutate access metadata (timestamp, access_count)."
+      - "If eviction policy is LFU, a successful retrieval must increment the access frequency and adjust frequency bucket positioning."
+      - "If eviction policy is LRU, a successful retrieval must reposition the node to the head of the recency list."
+
+  - action: "Put"
+    inputs:
+      - key: "CacheKey"
+      - value: "CacheValue"
+    outputs:
+      - evicted_items: "List<Pair<CacheKey, CacheValue>>"
+    invariants:
+      - "Total memory consumption (sum of size_bytes) must not exceed max_capacity_bytes after insertion."
+      - "Total item count must not exceed max_capacity_items after insertion."
+      - "If capacity is exceeded, eviction must occur prior to or atomically with insertion according to the configured EvictionPolicy."
+      - "Writing an existing key must update its value, size, and access metadata without violating capacity constraints."
+
+  - action: "Evict"
+    inputs:
+      - target_freed_bytes: "integer"
+      - target_freed_items: "integer"
+    outputs:
+      - evicted_items: "List<Pair<CacheKey, CacheValue>>"
+    invariants:
+      - "LRU eviction must select the least recently accessed item based on access timestamp."
+      - "LFU eviction must select the item with the lowest access frequency, breaking ties using LRU."
+      - "Eviction must completely purge the target node from both the primary index map and any linked list structures."
+
+  - action: "Invalidate"
+    inputs:
+      - key: "CacheKey"
+    outputs:
+      - success: "boolean"
+    invariants:
+      - "Removal must cleanly decrement current capacity metrics (bytes and items)."
+      - "If the key does not exist, state remains completely unmodified."
+
+state_contracts:
+  events:
+    - ItemAccessed
+    - ItemInserted
+    - ItemUpdated
+    - ItemEvicted
+    - ItemInvalidated
+    - CapacityExceeded
+
+  state_transitions:
+    - from: "Empty"
+      event: "ItemInserted"
+      to: "Populated"
+      condition: "current_capacity + item.size <= max_capacity"
+
+    - from: "Populated"
+      event: "CapacityExceeded"
+      to: "Evicting"
+      condition: "current_capacity > max_capacity OR item_count > max_items"
+
+    - from: "Evicting"
+      event: "ItemEvicted"
+      to: "Populated"
+      condition: "current_capacity <= max_capacity AND item_count <= max_items"
+
+    - from: "Populated"
+      event: "ItemInvalidated"
+      to: "Empty"
+      condition: "item_count == 1"
+
+    - from: "Populated"
+      event: "ItemInvalidated"
+      to: "Populated"
+      condition: "item_count > 1"
+```

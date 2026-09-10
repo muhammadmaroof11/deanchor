@@ -1,309 +1,120 @@
+```yaml
 domain_entities:
-  - name: DeveloperProfile
+  Developer:
     fields:
-      - name: identity
-        type: PersonIdentity
-      - name: role
-        type: string
-      - name: tagline
-        type: string
-      - name: bio
-        type: string
-      - name: resumeUrl
-        type: URI
-      - name: socialLinks
-        type: SocialLink[]
+      name: String
+      title: String
+      bio: String
+      skills: List<Skill>
+      projects: List<Project>
+      blogs: List<BlogArticle>
+      social_links: List<SocialLink>
 
-  - name: PersonIdentity
+  Skill:
     fields:
-      - name: fullName
-        type: string
-      - name: professionalTitle
-        type: string
+      name: String
+      category: String
+      proficiency_level: Optional[String]
 
-  - name: SocialLink
+  Project:
     fields:
-      - name: platform
-        type: enum[GitHub, LinkedIn, Twitter, Instagram, Email]
-      - name: url
-        type: URI
-      - name: label
-        type: string
+      title: String
+      description: String
+      banner_url: String
+      repository_url: Optional[String]
+      live_url: Optional[String]
+      tags: List<String>
 
-  - name: NavigationSection
+  BlogArticle:
     fields:
-      - name: id
-        type: string
-      - name: label
-        type: string
-      - name: order
-        type: integer
+      title: String
+      description: String
+      url: String
+      banner_url: String
+      category: String
+      published_date: Optional[String]
 
-  - name: AboutContent
+  ContactMessage:
     fields:
-      - name: summary
-        type: string
-      - name: experience
-        type: Experience[]
-      - name: education
-        type: Education[]
-      - name: personalDetails
-        type: PersonalDetail[]
+      sender_name: String
+      sender_email: String
+      subject: String
+      message: String
+      timestamp: DateTime
 
-  - name: Experience
+  SocialLink:
     fields:
-      - name: role
-        type: string
-      - name: company
-        type: string
-      - name: period
-        type: string
-      - name: description
-        type: string
-      - name: technologies
-        type: string[]
-
-  - name: Education
-    fields:
-      - name: degree
-        type: string
-      - name: institution
-        type: string
-      - name: period
-        type: string
-      - name: grade
-        type: string
-
-  - name: PersonalDetail
-    fields:
-      - name: label
-        type: string
-      - name: value
-        type: string
-      - name: icon
-        type: string
-
-  - name: Skill
-    fields:
-      - name: name
-        type: string
-      - name: category
-        type: enum[Frontend, Backend, Tools, Database, Other]
-      - name: proficiency
-        type: integer  # 0-100
-      - name: icon
-        type: string
-
-  - name: Project
-    fields:
-      - name: id
-        type: string
-      - name: title
-        type: string
-      - name: description
-        type: string
-      - name: thumbnailUrl
-        type: URI
-      - name: technologies
-        type: string[]
-      - name: liveUrl
-        type: URI
-      - name: sourceUrl
-        type: URI
-      - name: featured
-        type: boolean
-
-  - name: BlogPost
-    fields:
-      - name: id
-        type: string
-      - name: title
-        type: string
-      - name: description
-        type: string
-      - name: thumbnailUrl
-        type: URI
-      - name: category
-        type: string
-      - name: publishDate
-        type: DateTime
-      - name: readTime
-        type: string
-      - name: url
-        type: URI
-      - name: external
-        type: boolean
-
-  - name: ContactFormSubmission
-    fields:
-      - name: name
-        type: string
-      - name: email
-        type: Email
-      - name: subject
-        type: string
-      - name: message
-        type: string
-
-  - name: ThemeMode
-    fields:
-      - name: mode
-        type: enum[dark, light]
+      platform: String
+      url: String
+      icon: String
 
 functional_operations:
-  - action: navigateToSection
+  - action: SubmitContactForm
     inputs:
-      - name: sectionId
-        type: string
+      - name: String
+      - email: String
+      - subject: String
+      - message: String
     outputs:
-      - name: scrollPosition
-        type: ViewportPosition
+      - status: Result<Boolean, Error>
     invariants:
-      - sectionId must exist in NavigationSection registry
-      - smooth scroll animation completes before focus transfer
+      - "All required fields (name, email, subject, message) must be non-empty strings."
+      - "The email field must conform to a valid email address format."
+      - "Message delivery must target the configured endpoint securely via POST."
 
-  - action: toggleTheme
-    inputs: {}
-    outputs:
-      - name: newMode
-        type: ThemeMode
-    invariants:
-      - persists preference to localStorage
-      - updates CSS custom properties atomically
-      - toggles icon representation synchronously
-
-  - action: submitContactForm
+  - action: ToggleTheme
     inputs:
-      - name: submission
-        type: ContactFormSubmission
+      - current_theme: String
     outputs:
-      - name: result
-        type: FormSubmissionResult
+      - new_theme: String
     invariants:
-      - validates required fields (name, email, subject, message)
-      - email format conforms to RFC 5322
-      - submits via POST to configured endpoint
-      - handles network failure gracefully
-      - prevents duplicate submission during pending state
+      - "Theme state must strictly alternate between predefined valid themes ('dark', 'light')."
 
-  - action: scrollToTop
-    inputs: {}
-    outputs:
-      - name: scrollPosition
-        type: ViewportPosition
-    invariants:
-      - only available when scrollY > threshold
-      - smooth scroll animation duration constant
-
-  - action: toggleMobileMenu
+  - action: ScrollToTop
     inputs:
-      - name: open
-        type: boolean
+      - current_scroll_position: Float
     outputs:
-      - name: menuState
-        type: MobileMenuState
+      - target_scroll_position: Float
     invariants:
-      - traps focus within menu when open
-      - restores focus to trigger on close
-      - closes on navigation link activation
-      - closes on escape key
-
-  - action: advanceCarousel
-    inputs:
-      - name: direction
-        type: enum[next, prev]
-      - name: carouselId
-        type: string
-    outputs:
-      - name: activeIndex
-        type: integer
-    invariants:
-      - loops infinitely
-      - pauses on hover/focus
-      - respects reduced-motion preference
-
-  - action: initializeScrollAnimations
-    inputs: {}
-    outputs:
-      - name: observedElements
-        type: ElementReference[]
-    invariants:
-      - triggers once per element when crossing viewport threshold
-      - respects prefers-reduced-motion
-      - cleans up observers on unmount
+      - "Target scroll position must resolve to coordinate 0 (top of document)."
 
 state_contracts:
-  - event: ThemeChanged
-    transitions:
-      - from: dark
-        to: light
-      - from: light
-        to: dark
-    payload:
-      - name: mode
-        type: ThemeMode
+  - events:
+      - name: ThemeSwitched
+        payload:
+          theme: String
+    state_transitions:
+      - from: "dark"
+        to: "light"
+        trigger: "ToggleTheme"
+      - from: "light"
+        to: "dark"
+        trigger: "ToggleTheme"
 
-  - event: SectionActivated
-    transitions:
-      - from: "*"
-        to: NavigationSection.id
-    payload:
-      - name: sectionId
-        type: string
-      - name: scrollDirection
-        type: enum[up, down]
+  - events:
+      - name: ContactFormSubmitted
+        payload:
+          message: ContactMessage
+    state_transitions:
+      - from: "Idle"
+        to: "Submitting"
+        trigger: "SubmitContactForm"
+      - from: "Submitting"
+        to: "Success"
+        trigger: "APIResponse200"
+      - from: "Submitting"
+        to: "Error"
+        trigger: "APIResponseError"
 
-  - event: MobileMenuToggled
-    transitions:
-      - from: closed
-        to: open
-      - from: open
-        to: closed
-    payload:
-      - name: isOpen
-        type: boolean
-
-  - event: FormSubmissionStarted
-    transitions:
-      - from: idle
-        to: submitting
-    payload:
-      - name: submissionId
-        type: string
-
-  - event: FormSubmissionCompleted
-    transitions:
-      - from: submitting
-        to: success
-    payload:
-      - name: submissionId
-        type: string
-      - name: response
-        type: any
-
-  - event: FormSubmissionFailed
-    transitions:
-      - from: submitting
-        to: error
-    payload:
-      - name: submissionId
-        type: string
-      - name: error
-        type: string
-
-  - event: CarouselSlideChanged
-    transitions:
-      - from: integer
-        to: integer
-    payload:
-      - name: carouselId
-        type: string
-      - name: previousIndex
-        type: integer
-      - name: currentIndex
-        type: integer
-
-  - event: ScrollThresholdCrossed
-    transitions:
-      - from: hidden
-        to: visible
+  - events:
+      - name: ScrollPositionChanged
+        payload:
+          offset: Float
+    state_transitions:
+      - from: "Hidden"
+        to: "Visible"
+        trigger: "ScrollOffset > Threshold"
+      - from: "Visible"
+        to: "Hidden"
+        trigger: "ScrollOffset <= Threshold"
+```

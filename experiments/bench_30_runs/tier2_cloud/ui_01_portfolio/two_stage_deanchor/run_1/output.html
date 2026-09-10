@@ -1,277 +1,286 @@
-I'll create a production-grade portfolio implementation based on the domain schema. This will be a modern, accessible, performant vanilla TypeScript application with clean architecture.
+### Architectural Blueprint & System Design
 
-## Project Structure
+This greenfield implementation follows a strict **Clean Architecture** (Ports & Adapters) paradigm, separating concerns into three distinct layers:
+1. **Domain Layer**: Pure business entities, value objects, and invariant-enforcing logic. Free from framework dependencies.
+2. **Application Layer**: Use cases, state machines (handling `ThemeSwitched`, `ContactFormSubmitted`, and UI visibility transitions), and operational ports.
+3. **Infrastructure & Presentation Layer**: Modern React 18+ components using TypeScript, Tailwind CSS for styling, Context API for state management, and robust API adapters for secure POST routing.
+
+---
+
+### File Directory Structure
 
 ```
-portfolio/
-├── index.html
-├── src/
-│   ├── main.ts
-│   ├── styles/
-│   │   ├── main.css
-│   │   ├── components/
-│   │   │   ├── header.css
-│   │   │   ├── hero.css
-│   │   │   ├── about.css
-│   │   │   ├── skills.css
-│   │   │   ├── projects.css
-│   │   │   ├── blog.css
-│   │   │   ├── contact.css
-│   │   │   ├── footer.css
-│   │   │   └── scroll-to-top.css
-│   │   └── utilities/
-│   │       ├── variables.css
-│   │       ├── reset.css
-│   │       ├── animations.css
-│   │       └── accessibility.css
-│   ├── core/
-│   │   ├── types.ts
-│   │   ├── events.ts
-│   │   ├── state.ts
-│   │   └── utils.ts
-│   ├── components/
-│   │   ├── Header.ts
-│   │   ├── Hero.ts
-│   │   ├── About.ts
-│   │   ├── Skills.ts
-│   │   ├── Projects.ts
-│   │   ├── Blog.ts
-│   │   ├── Contact.ts
-│   │   ├── Footer.ts
-│   │   ├── ScrollToTop.ts
-│   │   └── ThemeToggle.ts
-│   ├── services/
-│   │   ├── NavigationService.ts
-│   │   ├── ThemeService.ts
-│   │   ├── FormService.ts
-│   │   ├── CarouselService.ts
-│   │   └── ScrollAnimationService.ts
-│   └── data/
-│       ├── profile.ts
-│       ├── navigation.ts
-│       ├── about.ts
-│       ├── skills.ts
-│       ├── projects.ts
-│       └── blog.ts
-├── public/
-│   ├── images/
-│   └── fonts/
-└── package.json
+src/
+├── domain/
+│   ├── entities.ts
+│   └── invariants.ts
+├── application/
+│   ├── state-machine.ts
+│   └── use-cases.ts
+├── infrastructure/
+│   ├── api-client.ts
+│   └── storage.ts
+└── presentation/
+    ├── context/
+    │   └── ThemeContext.tsx
+    ├── components/
+    │   ├── Header.tsx
+    │   ├── Hero.tsx
+    │   ├── SkillsGrid.tsx
+    │   ├── ProjectCard.tsx
+    │   ├── BlogCard.tsx
+    │   ├── ContactForm.tsx
+    │   ├── ScrollToTopButton.tsx
+    │   └── Footer.tsx
+    └── App.tsx
 ```
 
-## Core Types & Events
+---
 
+### Layer 1: Domain Models & Invariants (`src/domain/`)
+
+#### `src/domain/entities.ts`
 ```typescript
-// src/core/types.ts
-export interface PersonIdentity {
-  fullName: string;
-  professionalTitle: string;
-}
-
-export interface SocialLink {
-  platform: 'GitHub' | 'LinkedIn' | 'Twitter' | 'Instagram' | 'Email';
-  url: string;
-  label: string;
-}
-
-export interface DeveloperProfile {
-  identity: PersonIdentity;
-  role: string;
-  tagline: string;
-  bio: string;
-  resumeUrl: string;
-  socialLinks: SocialLink[];
-}
-
-export interface NavigationSection {
-  id: string;
-  label: string;
-  order: number;
-}
-
-export interface Experience {
-  role: string;
-  company: string;
-  period: string;
-  description: string;
-  technologies: string[];
-}
-
-export interface Education {
-  degree: string;
-  institution: string;
-  period: string;
-  grade: string;
-}
-
-export interface PersonalDetail {
-  label: string;
-  value: string;
-  icon: string;
-}
-
-export interface AboutContent {
-  summary: string;
-  experience: Experience[];
-  education: Education[];
-  personalDetails: PersonalDetail[];
-}
-
-export type SkillCategory = 'Frontend' | 'Backend' | 'Tools' | 'Database' | 'Other';
-
 export interface Skill {
   name: string;
-  category: SkillCategory;
-  proficiency: number; // 0-100
-  icon: string;
+  category: string;
+  proficiencyLevel?: string;
 }
 
 export interface Project {
-  id: string;
   title: string;
   description: string;
-  thumbnailUrl: string;
-  technologies: string[];
-  liveUrl: string;
-  sourceUrl: string;
-  featured: boolean;
+  bannerUrl: string;
+  repositoryUrl?: string;
+  liveUrl?: string;
+  tags: string[];
 }
 
-export interface BlogPost {
-  id: string;
+export interface BlogArticle {
   title: string;
   description: string;
-  thumbnailUrl: string;
-  category: string;
-  publishDate: Date;
-  readTime: string;
   url: string;
-  external: boolean;
+  bannerUrl: string;
+  category: string;
+  publishedDate?: string;
 }
 
-export interface ContactFormSubmission {
+export interface SocialLink {
+  platform: string;
+  url: string;
+  icon: string;
+}
+
+export interface Developer {
   name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
-
-export interface FormSubmissionResult {
-  success: boolean;
-  message: string;
-  submissionId?: string;
-}
-
-export type ThemeMode = 'dark' | 'light';
-
-export interface ViewportPosition {
-  x: number;
-  y: number;
-}
-
-export interface MobileMenuState {
-  isOpen: boolean;
-  focusRestored: boolean;
-}
-```
-
-```typescript
-// src/core/events.ts
-export type DomainEvent =
-  | { type: 'ThemeChanged'; payload: { mode: ThemeMode } }
-  | { type: 'SectionActivated'; payload: { sectionId: string; scrollDirection: 'up' | 'down' } }
-  | { type: 'MobileMenuToggled'; payload: { isOpen: boolean } }
-  | { type: 'FormSubmissionStarted'; payload: { submissionId: string } }
-  | { type: 'FormSubmissionCompleted'; payload: { submissionId: string; response: unknown } }
-  | { type: 'FormSubmissionFailed'; payload: { submissionId: string; error: string } }
-  | { type: 'CarouselSlideChanged'; payload: { carouselId: string; previousIndex: number; currentIndex: number } }
-  | { type: 'ScrollThresholdCrossed'; payload: { elementId: string } };
-
-type EventListener = (event: DomainEvent) => void;
-
-export class EventBus {
-  private listeners: Map<string, EventListener[]> = new Map();
-
-  subscribe(eventType: DomainEvent['type'], listener: EventListener): () => void {
-    const listeners = this.listeners.get(eventType) || [];
-    listeners.push(listener);
-    this.listeners.set(eventType, listeners);
-    return () => this.unsubscribe(eventType, listener);
-  }
-
-  unsubscribe(eventType: DomainEvent['type'], listener: EventListener): void {
-    const listeners = this.listeners.get(eventType) || [];
-    const index = listeners.indexOf(listener);
-    if (index > -1) listeners.splice(index, 1);
-  }
-
-  emit(event: DomainEvent): void {
-    const listeners = this.listeners.get(event.type) || [];
-    listeners.forEach(listener => {
-      try {
-        listener(event);
-      } catch (error) {
-        console.error(`Error in event listener for ${event.type}:`, error);
-      }
-    });
-  }
-}
-
-export const eventBus = new EventBus();
-```
-
-```typescript
-// src/core/state.ts
-import { ThemeMode, DeveloperProfile, NavigationSection, AboutContent, Skill, Project, BlogPost } from './types';
-
-export interface AppState {
-  theme: ThemeMode;
-  activeSection: string;
-  mobileMenuOpen: boolean;
-  scrollPosition: number;
-  formState: 'idle' | 'submitting' | 'success' | 'error';
-  profile: DeveloperProfile | null;
-  navigation: NavigationSection[];
-  about: AboutContent | null;
+  title: string;
+  bio: string;
   skills: Skill[];
   projects: Project[];
-  blogPosts: BlogPost[];
+  blogs: BlogArticle[];
+  socialLinks: SocialLink[];
 }
 
-export class StateManager {
-  private state: AppState;
-  private subscribers: Set<(state: AppState) => void> = new Set();
+export interface ContactMessage {
+  senderName: string;
+  senderEmail: string;
+  subject: string;
+  message: string;
+  timestamp: Date;
+}
+```
 
-  constructor(initialState: Partial<AppState> = {}) {
-    this.state = {
-      theme: 'dark',
-      activeSection: 'hero',
-      mobileMenuOpen: false,
-      scrollPosition: 0,
-      formState: 'idle',
-      profile: null,
-      navigation: [],
-      about: null,
-      skills: [],
-      projects: [],
-      blogPosts: [],
-      ...initialState
+#### `src/domain/invariants.ts`
+```typescript
+export class DomainInvariantViolation extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'DomainInvariantViolation';
+  }
+}
+
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export function validateContactFormInput(
+  name: string,
+  email: string,
+  subject: string,
+  message: string
+): void {
+  if (!name.trim() || !email.trim() || !subject.trim() || !message.trim()) {
+    throw new DomainInvariantViolation('All required fields (name, email, subject, message) must be non-empty strings.');
+  }
+  if (!EMAIL_REGEX.test(email)) {
+    throw new DomainInvariantViolation('The email field must conform to a valid email address format.');
+  }
+}
+
+export function validateTheme(theme: string): 'dark' | 'light' {
+  if (theme !== 'dark' && theme !== 'light') {
+    throw new DomainInvariantViolation("Theme state must strictly alternate between predefined valid themes ('dark', 'light').");
+  }
+  return theme as 'dark' | 'light';
+}
+```
+
+---
+
+### Layer 2: Application State Machines & Use Cases (`src/application/`)
+
+#### `src/application/state-machine.ts`
+```typescript
+export type ThemeState = 'dark' | 'light';
+export type ContactFormState = 'Idle' | 'Submitting' | 'Success' | 'Error';
+export type ScrollIndicatorState = 'Hidden' | 'Visible';
+
+export function transitionTheme(currentTheme: string): ThemeState {
+  const validTheme = currentTheme === 'dark' ? 'dark' : 'light';
+  return validTheme === 'dark' ? 'light' : 'dark';
+}
+
+export function transitionContactForm(
+  currentState: ContactFormState,
+  trigger: 'SubmitContactForm' | 'APIResponse200' | 'APIResponseError'
+): ContactFormState {
+  switch (currentState) {
+    case 'Idle':
+      if (trigger === 'SubmitContactForm') return 'Submitting';
+      break;
+    case 'Submitting':
+      if (trigger === 'APIResponse200') return 'Success';
+      if (trigger === 'APIResponseError') return 'Error';
+      break;
+    case 'Error':
+      if (trigger === 'SubmitContactForm') return 'Submitting';
+      break;
+    case 'Success':
+      if (trigger === 'SubmitContactForm') return 'Submitting';
+      break;
+  }
+  return currentState;
+}
+
+export function transitionScrollIndicator(
+  currentState: ScrollIndicatorState,
+  offset: number,
+  threshold: number = 300
+): ScrollIndicatorState {
+  if (offset > threshold) return 'Visible';
+  return 'Hidden';
+}
+```
+
+#### `src/application/use-cases.ts`
+```typescript
+import { validateContactFormInput } from '../domain/invariants';
+import { ContactMessage } from '../domain/entities';
+
+export interface MessageSubmissionPort {
+  postContactMessage(message: ContactMessage): Promise<boolean>;
+}
+
+export class SubmitContactFormUseCase {
+  constructor(private apiPort: MessageSubmissionPort) {}
+
+  async execute(
+    name: string,
+    email: string,
+    subject: string,
+    messageContent: string
+  ): Promise<boolean> {
+    // Enforce Domain Invariants
+    validateContactFormInput(name, email, subject, messageContent);
+
+    const message: ContactMessage = {
+      senderName: name,
+      senderEmail: email,
+      subject,
+      message: messageContent,
+      timestamp: new Date(),
     };
-  }
 
-  getState(): Readonly<AppState> {
-    return Object.freeze({ ...this.state });
+    // Securely target endpoint via POST
+    return await this.apiPort.postContactMessage(message);
   }
+}
+```
 
-  get<K extends keyof AppState>(key: K): AppState[K] {
-    return this.state[key];
+---
+
+### Layer 3: Infrastructure Adapters (`src/infrastructure/`)
+
+#### `src/infrastructure/api-client.ts`
+```typescript
+import { ContactMessage } from '../domain/entities';
+import { MessageSubmissionPort } from '../application/use-cases';
+
+export class HttpMessageSubmissionAdapter implements MessageSubmissionPort {
+  constructor(private endpointUrl: string = '/api/contact') {}
+
+  async postContactMessage(message: ContactMessage): Promise<boolean> {
+    try {
+      const response = await fetch(this.endpointUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sender_name: message.senderName,
+          sender_email: message.senderEmail,
+          subject: message.subject,
+          message: message.message,
+          timestamp: message.timestamp.toISOString(),
+        }),
+      });
+
+      return response.ok;
+    } catch (error) {
+      console.error('Failed to dispatch contact message securely:', error);
+      return false;
+    }
   }
+}
+```
 
-  set<K extends keyof AppState>(key: K, value: AppState[K]): void {
-    this.state[key] = value;
-    this.notify();
-  }
+---
 
-  update(partial: Partial<AppState>): void {
-    this.state = { ...this.state, ...partial };
-    this.notify();
+### Layer 4: Presentation & UI Components (`src/presentation/`)
+
+#### `src/presentation/context/ThemeContext.tsx`
+```typescript
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { transitionTheme, ThemeState } from '../../application/state-machine';
+import { validateTheme } from '../../domain/invariants';
+
+interface ThemeContextType {
+  theme: ThemeState;
+  toggleTheme: () => void;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [theme, setTheme] = useState<ThemeState>(() => {
+    const saved = localStorage.getItem('theme');
+    return saved ? validateTheme(saved) : 'dark';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => transitionTheme(prev));
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error('useTheme

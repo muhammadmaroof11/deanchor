@@ -1,184 +1,83 @@
+```yaml
 domain_entities:
-  - name: WebhookDispatcher
-    description: "HTTP server that receives GitHub webhook events and routes them to downstream services"
+  WebhookEvent:
     fields:
-      - name: port
-        type: integer
-        description: "TCP port the server listens on"
-      - name: debug
-        type: boolean
-        description: "Debug mode flag"
-      - name: rateLimitPolicy
-        type: RateLimitPolicy
-        description: "Rate limiting configuration for OpenAPI endpoint"
+      payload: object
+      headers: object
+    types:
+      payload: JSON
+      headers: Map<string, string>
 
-  - name: RateLimitPolicy
-    description: "Configuration for request rate limiting"
+  RouteConfiguration:
     fields:
-      - name: windowMs
-        type: integer
-        description: "Time window in milliseconds"
-      - name: maxRequests
-        type: integer
-        description: "Maximum requests allowed per window per IP"
+      path: string
+      target_service: string
+    types:
+      path: string
+      target_service: string
 
-  - name: RouteRegistry
-    description: "Registry of configured downstream routes for webhook dispatching"
+  OpenApiSpecification:
     fields:
-      - name: routes
-        type: "Route[]"
-        description: "Collection of configured routes"
+      spec_definition: object
+    types:
+      spec_definition: JSON
 
-  - name: Route
-    description: "A configured downstream route target"
+  HealthStatus:
     fields:
-      - name: pattern
-        type: string
-        description: "Event pattern this route matches"
-      - name: target
-        type: string
-        description: "Downstream service endpoint"
-      - name: secret
-        type: "string?"
-        description: "Optional shared secret for verification"
-
-  - name: WebhookEvent
-    description: "Incoming GitHub webhook payload"
-    fields:
-      - name: headers
-        type: "Record<string, string>"
-        description: "HTTP headers including X-GitHub-Event, X-Hub-Signature"
-      - name: payload
-        type: "object"
-        description: "JSON payload from GitHub"
-      - name: deliveryId
-        type: string
-        description: "Unique GitHub delivery identifier (X-GitHub-Delivery)"
-
-  - name: OpenAPISpec
-    description: "OpenAPI 3.0 specification document for the dispatcher API"
-    fields:
-      - name: spec
-        type: "object"
-        description: "Complete OpenAPI document"
+      status: string
+      code: integer
+    types:
+      status: string
+      code: integer
 
 functional_operations:
-  - action: receiveWebhook
-    description: "Accept and validate incoming GitHub webhook, then dispatch to matching routes"
+  - action: processWebhook
     inputs:
-      - name: event
-        type: WebhookEvent
-        required: true
+      - WebhookEvent
     outputs:
-      - name: dispatchResult
-        type: DispatchResult
-        description: "Result of routing to downstream services"
+      - response: object
     invariants:
-      - "Must verify X-Hub-Signature if route secret configured"
-      - "Must respond 2xx within GitHub timeout (10s) or delivery fails"
-      - "Must not mutate original payload"
-      - "Must log delivery ID for traceability"
-      - "Idempotent with respect to duplicate deliveries (same X-GitHub-Delivery)"
+      - "Payload must be successfully parsed as JSON."
+      - "Incoming requests must satisfy security headers (Helmet)."
 
   - action: listRoutes
-    description: "Return all configured routes in the registry"
     inputs: []
     outputs:
-      - name: routes
-        type: "Route[]"
+      - routes: Array<RouteConfiguration>
     invariants:
-      - "Must not expose secrets in response"
-      - "Read-only operation, no side effects"
+      - "Must return all active downstream route mappings."
 
-  - action: serveOpenAPISpec
-    description: "Return the OpenAPI specification document"
+  - action: getOpenApiSpec
     inputs: []
     outputs:
-      - name: spec
-        type: OpenAPISpec
+      - spec: OpenApiSpecification
     invariants:
-      - "Rate limited to 60 requests/minute per IP"
-      - "Static document, no dynamic generation per request"
+      - "Requests are subject to a rate limit of 60 requests per 1-minute window per IP."
 
-  - action: healthCheck
-    description: "Liveness/readiness probe endpoint"
+  - action: checkHealth
     inputs: []
     outputs:
-      - name: status
-        type: string
-        enum: ["alive"]
+      - HealthStatus
     invariants:
-      - "Always returns 200 OK if process is running"
-      - "No dependency checks (pure liveness)"
-
-  - action: startServer
-    description: "Initialize and start the HTTP server"
-    inputs:
-      - name: config
-        type: WebhookDispatcher
-    outputs:
-      - name: server
-        type: "HttpServer"
-    invariants:
-      - "Binds to configured port"
-      - "Applies security headers (helmet)"
-      - "Disables X-Powered-By header"
-      - "Parses JSON bodies with size limits"
+      - "Must always return HTTP status 200 and body 'alive' when operational."
 
 state_contracts:
-  - event: ServerStarted
-    description: "Server successfully bound to port and accepting connections"
-    transitions:
-      - from: Stopped
-        to: Running
-    payload:
-      - port: integer
-
-  - event: WebhookReceived
-    description: "Incoming webhook request received at POST /"
-    transitions:
-      - from: Running
-        to: Processing
-    payload:
-      - deliveryId: string
-      - eventType: string
-      - sourceIp: string
-
-  - event: WebhookDispatched
-    description: "Webhook successfully forwarded to one or more downstream targets"
-    transitions:
-      - from: Processing
-        to: Running
-    payload:
-      - deliveryId: string
-      - targetsNotified: integer
-      - durationMs: integer
-
-  - event: WebhookFailed
-    description: "Webhook processing failed (validation, routing, or downstream error)"
-    transitions:
-      - from: Processing
-        to: Running
-    payload:
-      - deliveryId: string
-      - errorCode: string
-      - errorMessage: string
-      - retryable: boolean
-
-  - event: RateLimitExceeded
-    description: "Client exceeded rate limit on OpenAPI endpoint"
-    transitions:
-      - from: Running
-        to: Running
-    payload:
-      - sourceIp: string
-      - endpoint: string
-      - limit: integer
-      - windowMs: integer
-
-  - event: ServerStopped
-    description: "Server gracefully shut down"
-    transitions:
-      - from: Running
-        to: Stopped
-    payload: {}
+  events:
+    - ReceiveWebhookPost
+    - RequestRouteListing
+    - RequestOpenApiSpec
+    - RequestHealthCheck
+  state_transitions:
+    - from: Idle
+      to: WebhookProcessed
+      on: ReceiveWebhookPost
+    - from: Idle
+      to: RoutesListed
+      on: RequestRouteListing
+    - from: Idle
+      to: OpenApiServed
+      on: RequestOpenApiSpec
+    - from: Idle
+      to: HealthChecked
+      on: RequestHealthCheck
+```

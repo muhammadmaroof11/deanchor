@@ -1,179 +1,136 @@
+```yaml
 domain_entities:
-  - name: OrderBook
-    description: "Central aggregate managing limit order book, stop orders, and order matching"
+  OrderBook:
     fields:
-      - name: bids
-        type: OrderSide
-        description: "Buy side price levels (price-time priority)"
-      - name: asks
-        type: OrderSide
-        description: "Sell side price levels (price-time priority)"
-      - name: stopBook
-        type: StopBook
-        description: "Manages stop-limit and stop-market orders"
-      - name: orders
-        type: Map<OrderId, LimitOrder>
-        description: "Active limit orders indexed by order ID"
-      - name: marketPrice
-        type: Price
-        description: "Last trade price (updated on each match)"
-      - name: lastOp
-        type: OperationId
-        description: "Monotonically increasing operation sequence number"
-      - name: enableJournaling
-        type: Boolean
-        description: "Whether to emit journal logs for event sourcing"
+      orders: "Map<string, LimitOrder>"
+      lastOp: "number"
+      marketPrice: "number"
+      bids: "OrderSide"
+      asks: "OrderSide"
+      enableJournaling: "boolean"
+      stopBook: "StopBook"
 
-  - name: OrderSide
-    description: "Price-level tree for one side (BUY/SELL)"
+  LimitOrder:
     fields:
-      - name: side
-        type: Side
-        enum: [BUY, SELL]
-      - name: priceTree
-        type: PriceTree<OrderQueue>
-        description: "Sorted price levels (descending for bids, ascending for asks)"
-      - name: volume
-        type: Quantity
-        description: "Total quantity across all price levels"
+      id: "string"
+      side: "Side"
+      size: "number"
+      price: "number"
+      accountId: "string"
+      timeInForce: "TimeInForce"
+      ocoStopPrice: "number"
 
-  - name: OrderQueue
-    description: "FIFO queue of orders at a single price level"
+  OrderQueue:
     fields:
-      - name: price
-        type: Price
-      - name: orders
-        type: List<LimitOrder>
-        description: "Orders in time priority order"
-      - name: volume
-        type: Quantity
-        description: "Sum of order sizes at this level"
+      price: "number"
+      volume: "number"
+      length: "number"
 
-  - name: LimitOrder
-    description: "Resting limit order on the book"
+  OrderSide:
     fields:
-      - name: id
-        type: OrderId
-      - name: side
-        type: Side
-      - name: price
-        type: Price
-      - name: size
-        type: Quantity
-        description: "Remaining quantity"
-      - name: originalSize
-        type: Quantity
-      - name: timeInForce
-        type: TimeInForce
-        enum: [GTC, FOK, IOC]
-      - name: postOnly
-        type: Boolean
-      - name: accountId
-        type: AccountId
-        description: "For self-trade prevention"
-      - name: ocoStopPrice
-        type: Price?
-        description: "Linked OCO stop order trigger price"
-      - name: timestamp
-        type: Timestamp
+      side: "Side"
+      volume: "number"
+      priceTree: "Tree<number, OrderQueue>"
 
-  - name: StopOrder
-    description: "Base for stop-market and stop-limit orders"
+  ProcessOrderResult:
     fields:
-      - name: id
-        type: OrderId
-      - name: side
-        type: Side
-      - name: size
-        type: Quantity
-      - name: stopPrice
-        type: Price
-        description: "Trigger price"
-      - name: accountId
-        type: AccountId
-      - name: timeInForce
-        type: TimeInForce
-      - name: ocoLimitPrice
-        type: Price?
-        description: "Linked OCO limit order price"
-
-  - name: StopMarketOrder
-    extends: StopOrder
-    fields:
-      - name: type
-        type: OrderType
-        value: STOP_MARKET
-
-  - name: StopLimitOrder
-    extends: StopOrder
-    fields:
-      - name: type
-        type: OrderType
-        value: STOP_LIMIT
-      - name: limitPrice
-        type: Price
-        description: "Limit price after trigger"
-
-  - name: OCOOrder
-    description: "One-Cancels-Other: limit + stop order pair"
-    fields:
-      - name: limitOrder
-        type: LimitOrder
-      - name: stopOrder
-        type: StopOrder
-      - name: limitOrderId
-        type: OrderId
-      - name: stopOrderId
-        type: OrderId
-
-  - name: Snapshot
-    description: "Point-in-time state for recovery"
-    fields:
-      - name: bids
-        type: List<PriceLevelSnapshot>
-      - name: asks
-        type: List<PriceLevelSnapshot>
-      - name: stopOrders
-        type: List<StopOrderSnapshot>
-      - name: marketPrice
-        type: Price
-      - name: lastOp
-        type: OperationId
-
-  - name: JournalLog
-    description: "Operation log entry for event sourcing"
-    fields:
-      - name: opId
-        type: OperationId
-      - name: ts
-        type: Timestamp
-      - name: op
-        type: OperationCode
-        enum: [m, l, sm, sl, oco, c, u, u_p, u_s]
-      - name: o
-        type: CreateOrderOptions | CancelOrderOptions | UpdateOrderOptions
+      done: "Array<IOrder>"
+      activated: "Array<IOrder>"
+      partial: "IOrder"
+      partialQuantityProcessed: "number"
+      quantityLeft: "number"
+      stpExpired: "Array<IOrder>"
+      err: "OrderBookError"
+      log: "JournalLog"
 
 functional_operations:
-  - name: createOrder
-    description: "Main entry point: dispatches to type-specific handler"
+  - action: "createOrder"
     inputs:
-      - name: options
-        type: CreateOrderOptions
-        variants:
-          - type: MarketOrderOptions
-            fields: [side, size]
-          - type: LimitOrderOptions
-            fields: [side, size, price, id, postOnly, timeInForce]
-          - type: StopMarketOrderOptions
-            fields: [side, size, stopPrice, id, timeInForce]
-          - type: StopLimitOrderOptions
-            fields: [side, size, stopPrice, limitPrice, id, timeInForce]
-          - type: OCOOrderOptions
-            fields: [side, size, price, stopPrice, stopLimitPrice, limitId, stopId, timeInForce, stopLimitTimeInForce]
+      - "CreateOrderOptions"
     outputs:
-      - type: ProcessOrderResult
-        fields:
-          - done: List<LimitOrder> # fully filled maker orders
-          - activated: List<StopOrder> # triggered stop orders
-          - partial: LimitOrder? # partially filled maker
-          -
+      - "IProcessOrder"
+    invariants:
+      - "Dispatches to specific order execution handlers based on order type (market, limit, stop_market, stop_limit, oco)."
+      - "Returns invalid order type error if order type is unsupported."
+
+  - action: "market"
+    inputs:
+      - "MarketOrderOptions"
+    outputs:
+      - "IProcessOrder"
+    invariants:
+      - "Appends a journal log entry upon successful execution if journaling is enabled."
+
+  - action: "processQueue"
+    inputs:
+      - "OrderQueue"
+      - "number"
+      - "string"
+      - "SelfTradePreventionMode"
+    outputs:
+      - "IProcessOrder"
+    invariants:
+      - "Evaluates Self-Trade Prevention (STP) rules when taker account matches maker account."
+      - "STP EXPIRE_MAKER cancels the maker order and continues execution."
+      - "STP EXPIRE_TAKER terminates execution, yields STP error, and restores original quantity left."
+      - "STP EXPIRE_BOTH cancels maker, terminates execution, and yields STP error."
+      - "Handles partial fills by updating maker order size and adjusting queue volume."
+      - "Handles full fills by removing maker order from the order book and recording it in 'done'."
+      - "Removes linked OCO stop orders from the stop book upon execution."
+      - "Updates the order book market price to the executed trade price."
+
+  - action: "canFillOrder"
+    inputs:
+      - "OrderSide"
+      - "Side"
+      - "number"
+      - "number"
+    outputs:
+      - "boolean"
+    invariants:
+      - "Verifies aggregate liquidity volume meets or exceeds requested order size across price levels before matching."
+
+  - action: "validateMarketOrder"
+    inputs:
+      - "MarketOrderOptions | StopMarketOrderOptions"
+    outputs:
+      - "IProcessOrder"
+    invariants:
+      - "Order side must be explicitly SELL or BUY."
+      - "Order size must be a strictly positive number."
+
+  - action: "validateLimitOrder"
+    inputs:
+      - "LimitOrderOptions | StopLimitOrderOptions"
+    outputs:
+      - "IProcessOrder"
+    invariants:
+      - "Order side must be explicitly SELL or BUY."
+      - "Order ID must not already exist in the order book."
+      - "Order size and price must be strictly positive numbers."
+      - "TimeInForce must conform to supported domain enums (GTC, FOK, IOC)."
+
+state_contracts:
+  - events:
+      - "OrderSubmitted"
+      - "OrderMatched"
+      - "OrderPartiallyFilled"
+      - "OrderCanceled"
+      - "SelfTradePreventionTriggered"
+    state_transitions:
+      - from: "Uninitialized"
+        to: "SnapshotRestored"
+        trigger: "Initialization with Snapshot"
+      - from: "SnapshotRestored"
+        to: "JournalReplayed"
+        trigger: "Initialization with Journal Log"
+      - from: "Active"
+        to: "PartiallyFilled"
+        trigger: "Incoming quantity < Maker order size"
+      - from: "Active"
+        to: "Filled"
+        trigger: "Incoming quantity >= Maker order size"
+      - from: "Active"
+        to: "Canceled"
+        trigger: "Explicit cancellation or STP Maker Expiration"
+```

@@ -1,0 +1,3 @@
+Based on the provided decoupled semantic YAML schema, the domain specification is currently empty (`domain_entities: {}`, `functional_operations: {}`, `state_contracts: {}`). 
+
+To synthesize a production-grade, state-of-the-art greenfield implementation, please provide the populated semantic YAML schema containing your domain entities, state contracts, and functional operations. Once provided, I will architect a clean, robust, and idiomatic codebase adhering to strict architectural paradigms.

@@ -1,118 +1,69 @@
+```yaml
 domain_entities:
-  - name: User
+  User:
     fields:
-      - name: id
-        type: UUID
-        constraints: [primary_key, immutable]
-      - name: username
-        type: String
-        constraints: [unique, not_null]
-      - name: email
-        type: String
-        constraints: [unique, not_null, format:email]
-      - name: passwordHash
-        type: String
-        constraints: [not_null, sensitive]
-      - name: roles
-        type: Set<Role>
-        relation: many_to_many
-        constraints: [non_empty]
+      id: "UniqueIdentifier"
+      username: "String"
+      email: "String"
+      password: "HashedString"
+    relationships:
+      roles: "List[Role]"
 
-  - name: Role
+  Role:
     fields:
-      - name: id
-        type: Integer
-        constraints: [primary_key]
-      - name: name
-        type: String
-        constraints: [unique, not_null, enum: [user, admin, moderator]]
+      id: "UniqueIdentifier"
+      name: "String"
+
+  AuthenticationToken:
+    fields:
+      token: "String"
+      expires_in: "Integer" # 86400 seconds
+      algorithm: "String" # HS256
 
 functional_operations:
-  - name: RegisterUser
-    description: Creates a new user account with hashed credentials and assigned roles.
+  - action: "signup"
     inputs:
-      - name: username
-        type: String
-        constraints: [unique, not_null]
-      - name: email
-        type: String
-        constraints: [unique, not_null, format:email]
-      - name: rawPassword
-        type: String
-        constraints: [not_null, min_length:8]
-      - name: roleNames
-        type: Set<String>
-        constraints: [optional, subset_of: [user, admin, moderator]]
+      username: "String"
+      email: "String"
+      password: "PlaintextString"
+      roles: "List[String] (Optional)"
     outputs:
-      - name: user
-        type: User
+      success: "Boolean"
+      message: "String"
     invariants:
-      - "Password is irreversibly hashed using bcrypt with cost factor 8 before persistence."
-      - "Username and email must be globally unique."
-      - "If roleNames is empty or omitted, the default role 'user' (id=1) is assigned."
-      - "All provided roleNames must exist in the Role registry."
-      - "The created User entity must have at least one Role."
+      - "Password must be cryptographically hashed using bcrypt with salt rounds of 8 before persistence."
+      - "If specific roles are provided in the input, the user must be associated with the subset of existing roles matching those names."
+      - "If no roles are provided, the user must default to the base role identifier (id: 1)."
+      - "Persistence failures must result in a system error boundary catch."
 
-  - name: AuthenticateUser
-    description: Verifies credentials and issues a signed access token with authorization claims.
+  - action: "signin"
     inputs:
-      - name: username
-        type: String
-        constraints: [not_null]
-      - name: rawPassword
-        type: String
-        constraints: [not_null]
+      username: "String"
+      password: "PlaintextString"
     outputs:
-      - name: authenticationResult
-        type: AuthenticationResult
-        fields:
-          - name: userId
-            type: UUID
-          - name: username
-            type: String
-          - name: email
-            type: String
-          - name: authorities
-            type: Set<String>
-            description: "Role names prefixed with 'ROLE_' and uppercased (e.g., 'ROLE_ADMIN')."
-          - name: accessToken
-            type: JWT
-            constraints: [algorithm:HS256, expiry:24h]
+      id: "UniqueIdentifier"
+      username: "String"
+      email: "String"
+      roles: "List[String] (Prefixed with 'ROLE_')"
+      accessToken: "String"
     invariants:
-      - "Fails if no User exists for the given username."
-      - "Fails if bcrypt comparison of rawPassword against stored passwordHash returns false."
-      - "JWT payload contains only the user identifier (id)."
-      - "JWT is signed with HS256 using the configured secret; insecure key sizes permitted."
-      - "Token expires in 86400 seconds (24 hours)."
-      - "Authorities are derived from the User's current Roles at the moment of authentication."
+      - "Authentication fails if the username does not resolve to an existing User entity."
+      - "Authentication fails if the provided plaintext password does not match the stored cryptographic hash via verification."
+      - "Upon successful authentication, a JWT must be generated containing the user's identifier, signed with the configured secret, using the HS256 algorithm, with an expiration time of 24 hours."
+      - "Associated user roles must be resolved, normalized to uppercase, and prefixed with 'ROLE_' in the output payload."
 
 state_contracts:
-  - event: UserRegistered
-    trigger: RegisterUser
-    transitions:
-      - from: NonExistent
-        to: Active
-        conditions:
-          - "Unique constraints on username and email satisfied."
-          - "Password hash persisted."
-          - "Role associations persisted."
+  - events:
+      - "SIGNUP_INITIATED"
+    state_transitions:
+      - from: "Unregistered"
+        to: "RegisteredWithRoles"
+        condition: "User creation succeeds and role assignment completes successfully."
 
-  - event: UserAuthenticated
-    trigger: AuthenticateUser
-    transitions:
-      - from: Active
-        to: Authenticated
-        conditions:
-          - "Credentials valid."
-          - "Token issued."
-        side_effects:
-          - "No persistent state change; ephemeral token generated."
-
-  - event: RoleAssigned
-    trigger: RegisterUser (implicit via setRoles)
-    transitions:
-      - on: User.roles
-        action: add
-        conditions:
-          - "Role entities exist for all requested names."
-          - "Default role 'user' (id=1) assigned if none specified."
+  - events:
+      - "SIGNIN_INITIATED"
+    state_transitions:
+      - from: "Unauthenticated"
+        to: "Authenticated"
+        condition: "User is found and password verification succeeds, yielding a valid JWT and role set."
+```

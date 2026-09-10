@@ -58,22 +58,32 @@ RESULTS_DIR = ROOT / "results"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 BENCH_RUNS_DIR.mkdir(parents=True, exist_ok=True)
 
+# Load .env if present
+env_file = ROOT / ".env"
+if env_file.exists():
+    for line in env_file.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line and not line.startswith("#") and "=" in line:
+            k, v = line.split("=", 1)
+            os.environ.setdefault(k.strip(), v.strip())
+
 
 def parse_args():
     p = argparse.ArgumentParser(description="Deanchor Bench-30 Real Inference & Evaluation Runner")
-    p.add_argument("--tier", choices=["1", "2", "both"], default="1", help="1 = Local Edge (LM Studio), 2 = Cloud Frontier (OpenRouter)")
+    p.add_argument("--tier", choices=["1", "2", "both"], default="1", help="1 = Local Edge (LM Studio), 2 = Cloud Frontier (Gemini/OpenRouter)")
     p.add_argument("--registry", default=str(REGISTRY_FILE), help="Path to registry.json")
     p.add_argument("--core-subset", action="store_true", default=True, help="Run on the 10 core verified benchmark projects")
     p.add_argument("--all-projects", action="store_true", help="Run on all 30 benchmark projects")
     p.add_argument("--project", help="Run on a specific project ID (e.g., ui_01_portfolio)")
     p.add_argument("--runs", type=int, default=1, help="Number of evaluation runs per condition (for mean ± std)")
+    p.add_argument("--force", action="store_true", help="Force re-run and overwrite existing entries in results")
     
     # Model configuration
-    p.add_argument("--model", help="Model ID (defaults based on tier: Tier 1 -> qwen3.5-9b / qwen3-coder-30b; Tier 2 -> OpenRouter model)")
+    p.add_argument("--model", help="Model ID (defaults based on tier: Tier 1 -> qwen3-coder-30b-a3b-instruct; Tier 2 -> gemini-3.5-flash-lite)")
     p.add_argument("--local-base", default="http://127.0.0.1:1234/v1", help="Local LM Studio base URL")
     p.add_argument("--local-key", default="lm-studio", help="Local API key")
-    p.add_argument("--cloud-base", default="https://openrouter.ai/api/v1", help="Cloud API base URL")
-    p.add_argument("--cloud-key", default=os.getenv("OPENROUTER_API_KEY", ""), help="OpenRouter API Key (set OPENROUTER_API_KEY env var)")
+    p.add_argument("--cloud-base", default="https://generativelanguage.googleapis.com/v1beta/openai/", help="Cloud API base URL")
+    p.add_argument("--cloud-key", default=os.getenv("GEMINI_API_KEY", os.getenv("OPENROUTER_API_KEY", "")), help="Cloud API Key")
     p.add_argument("--embedding-base", default="http://127.0.0.1:1234/v1", help="Base URL for embeddings")
     p.add_argument("--embedding-model", default="text-embedding-nomic-embed-text-v1.5", help="Embedding model ID")
     p.add_argument("--dry-run", action="store_true", help="Validate benchmark configuration without calling inference")
@@ -150,7 +160,7 @@ def truncate_for_context(prompt: str, max_chars: int = 12000) -> str:
 
 
 def call_llm(base_url: str, api_key: str, model: str, system_prompt: str, user_prompt: str, dry_run: bool = False) -> Tuple[str, float]:
-    """Invoke LLM with context window safety and latency measurement."""
+    """Invoke LLM with context window safety, rate-limit backoff, and latency measurement."""
     start_t = time.time()
     
     if dry_run:
@@ -162,7 +172,8 @@ def call_llm(base_url: str, api_key: str, model: str, system_prompt: str, user_p
     
     safe_user_prompt = truncate_for_context(user_prompt)
     
-    for attempt in range(1, 4):
+    max_attempts = 5
+    for attempt in range(1, max_attempts + 1):
         try:
             response = client.chat.completions.create(
                 model=model,
@@ -180,22 +191,33 @@ def call_llm(base_url: str, api_key: str, model: str, system_prompt: str, user_p
             else:
                 content = ""
                 
-            if not content.strip() and attempt < 3:
-                print(f"    [RETRY] Empty response received on attempt {attempt}. Retrying in 4s...")
-                time.sleep(4.0)
+            if not content.strip() and attempt < max_attempts:
+                print(f"    [RETRY] Empty response received on attempt {attempt}. Retrying in 5s...")
+                time.sleep(5.0)
                 continue
                 
+            # Inter-call pacing to respect free-tier per-minute quotas
+            time.sleep(3.0)
             return content, latency
         except Exception as e:
-            err_msg = str(e)
-            if "exceed" in err_msg.lower() or "context" in err_msg.lower():
-                print(f"    [RETRY] Context size exceeded. Retrying with compact 6,000 char prompt...")
+            err_msg = str(e).lower()
+            
+            # Check for Rate Limit / Quota Exceeded (429)
+            if "429" in err_msg or "quota" in err_msg or "resource_exhausted" in err_msg or "rate limit" in err_msg:
+                wait_sec = 25.0 + (5.0 * attempt)
+                print(f"    [RATE LIMIT 429] Quota / Rate limit reached on attempt {attempt}. Backing off {wait_sec:.0f}s before retry...")
+                time.sleep(wait_sec)
+            # Check for actual Context Window Size errors
+            elif "maximum context" in err_msg or "context length" in err_msg or "prompt too long" in err_msg or "context size" in err_msg:
+                print(f"    [CONTEXT EXCEEDED] Prompt size exceeded context. Retrying with compact 6,000 char prompt...")
                 safe_user_prompt = truncate_for_context(user_prompt, max_chars=6000)
-            elif attempt < 3:
-                wait_sec = 4.0 * attempt
-                print(f"    [RETRY] API error on attempt {attempt} ({err_msg[:60]}...). Backing off {wait_sec}s...")
+                time.sleep(2.0)
+            elif attempt < max_attempts:
+                wait_sec = 6.0 * attempt
+                print(f"    [API RETRY] Attempt {attempt} error ({str(e)[:60]}...). Backing off {wait_sec:.0f}s...")
                 time.sleep(wait_sec)
             else:
+                print(f"    [ERROR] All {max_attempts} attempts failed: {e}")
                 raise e
     return "", time.time() - start_t
 
@@ -428,7 +450,7 @@ def main():
         local_model = args.model or "qwen3-coder-30b-a3b-instruct"
         tiers_to_run.append(("tier1_local", args.local_base, args.local_key, local_model))
     if args.tier in ["2", "both"]:
-        cloud_model = args.model or "nvidia/nemotron-3-ultra-550b-a55b:free"
+        cloud_model = args.model or "gemini-3.5-flash-lite"
         tiers_to_run.append(("tier2_cloud", args.cloud_base, args.cloud_key, cloud_model))
 
     print("═════════════════════════════════════════════════════════════════════════")
@@ -468,11 +490,20 @@ def main():
         print(f" Starting Execution for: {tier_label.upper()} ({model_id})")
         print(f"=========================================================================")
         for project in selected_projects:
-            if (tier_label, project["id"]) in completed_keys:
+            if not args.force and (tier_label, project["id"]) in completed_keys:
                 print(f"[{project['id']}] ── Already completed in {tier_label}. Skipping.")
                 continue
             res = run_project_evaluation(project, args, base_url, api_key, model_id, tier_label)
-            all_results.append(res)
+            
+            # Replace existing or append
+            replaced = False
+            for idx, r in enumerate(all_results):
+                if r.get("tier") == tier_label and r.get("id") == project["id"]:
+                    all_results[idx] = res
+                    replaced = True
+                    break
+            if not replaced:
+                all_results.append(res)
             completed_keys.add((tier_label, project["id"]))
             
             # Incremental save after each project

@@ -1,130 +1,202 @@
-### Architectural Analysis & Domain Invariants
+### Step 1: Architectural Analysis & Identification of Flaws
 
-#### 1. Fundamental Domain Invariants
-*   **Identity Uniqueness**: `username` and `email` must be globally unique.
-*   **Credential Integrity**: Passwords **never** stored in plaintext; must use memory-hard KDF (Argon2id).
-*   **Authorization Baseline**: Every `User` *must* possess at least one `Role` (Default: `ROLE_USER`).
-*   **Token Integrity**: JWTs must be signed with strong keys (HS256 min 256-bit entropy or RS256), short expiry, and strict validation (aud/iss).
-*   **Atomicity**: User creation + Role assignment is a single atomic transaction.
+The legacy implementation exhibits several critical architectural antipatterns and security risks:
 
-#### 2. Critical Flaws in Source Implementation
-| Category | Flaw | Risk |
-| :--- | :--- | :--- |
-| **Security** | `bcryptjs` (CPU-hard only), `allowInsecureKeySizes: true`, 24h token expiry, hardcoded Role ID `1` | Brute-force feasible, Key confusion attacks, Long credential theft window, DB coupling |
-| **Architecture** | Anemic Controller, ORM leakage (`db.Sequelize.Op`), Callback/Promise Hell, No Validation Layer | Untestable, Unmaintainable, SQL Injection surface (via `Op.or` misuse), Tight Coupling |
-| **Resilience** | No Transaction boundary, Generic `500` errors leaking stack traces, No Idempotency | Partial writes (User w/o Role), Info Leakage, Duplicate submissions |
-| **Modernity** | CommonJS, `var`, No Type Safety, Manual Dependency Resolution | Developer Experience, Runtime Errors, Supply Chain Risk |
+1. **Callback Hell / Promise Chaining Anti-Patterns**: The code relies on nested `.then()` blocks instead of modern `async/await`, making error handling brittle and execution flow difficult to reason about.
+2. **Lack of Transactional Integrity**: In `signup`, creating a user and assigning roles occur as separate operations without a database transaction. If role assignment fails, an orphan user record remains in the database.
+3. **Implicit State / Magic Numbers**: Default role assignment falls back to a hardcoded primary key (`1`), which violates domain encapsulation and fails if database seeds change.
+4. **Synchronous Cryptography on the Event Loop**: Operations like `bcrypt.hashSync` and `bcrypt.compareSync` block the Node.js event loop, severely degrading throughput under concurrent load.
+5. **Coupled Express Controllers**: Business logic, data access, cryptography, and HTTP transport handling are tightly coupled inside Express controller functions. There is no separation of concerns (e.g., Services vs. Controllers vs. Repositories).
+6. **Information Leakage & Weak Validation**: Error messages leak internal exception structures (`err.message`), and input payloads are used directly without structural validation or sanitization.
 
 ---
 
-### Modernized Greenfield Architecture
+### Step 2: Domain Invariants & Modern Design Goals
 
-**Stack**: Node 20+, TypeScript (Strict), **Fastify** (Performance/Schema-first), **Zod** (Validation), **Argon2** (Hashing), **Jose** (JWT), **Sequelize** (Repository Pattern), **TSyringe** (DI).
-
-#### Project Structure
-```text
-src/
-├── domain/                 # Pure Business Logic (Zero Dependencies)
-│   ├── entities/
-│   ├── value-objects/
-│   ├── repositories/       # Interfaces (Ports)
-│   ├── errors/
-│   └── events/
-├── application/            # Use Cases (Orchestration)
-│   ├── dtos/
-│   ├── ports/              # Interfaces for Infra (Crypto, Token, Tx)
-│   └── use-cases/
-├── infrastructure/         # Adapters (Implement Ports)
-│   ├── persistence/sequelize/
-│   ├── security/
-│   └── config/
-├── presentation/           # HTTP Layer
-│   ├── routes/
-│   ├── schemas/            # Zod Schemas (OpenAPI Gen)
-│   └── hooks/
-└── main.ts                 # Composition Root
-```
+To resolve these flaws, we establish the following design goals and domain invariants:
+* **Atomic Registration**: User creation and role assignment must execute within a strict ACID database transaction.
+* **Non-Blocking Cryptography**: All hashing and comparison operations must use asynchronous `bcrypt` APIs.
+* **Strict Separation of Concerns**: 
+  * *Repository/Data Layer*: Encapsulates Sequelize queries.
+  * *Service Layer*: Encapsulates core business logic (hashing, transaction management, token issuance, role resolution).
+  * *Transport/Controller Layer*: Handles HTTP semantics (status codes, request parsing, response formatting).
+* **Defensive Error Handling**: Domain errors must be explicitly typed, mapped cleanly to HTTP status codes, and devoid of internal stack traces or raw database exceptions.
 
 ---
 
-### 1. Domain Layer (`src/domain`)
+### Step 3: Complete Modernized Greenfield Implementation
 
-#### `value-objects/Email.ts`
-```typescript
-export class Email {
-  private constructor(public readonly value: string) {
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      throw new InvalidEmailError(value);
+Below is a clean-slate, production-grade Node.js/TypeScript-ready architecture utilizing modern ES modules, `async/await`, explicit transactions, and proper layering.
+
+#### 1. Domain & Infrastructure Setup (`services/auth.service.js`)
+
+```javascript
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
+export class AuthenticationError extends Error {
+  constructor(message, statusCode = 401) {
+    super(message);
+    this.name = 'AuthenticationError';
+    this.statusCode = statusCode;
+  }
+}
+
+export class AuthService {
+  /**
+   * @param {Object} db - Sequelize database context containing models and sequelize instance
+   * @param {Object} config - Auth configuration containing secrets and policies
+   */
+  constructor(db, config) {
+    this.User = db.user;
+    this.Role = db.role;
+    this.sequelize = db.sequelize;
+    this.Op = db.Sequelize.Op;
+    this.config = config;
+    this.SALT_ROUNDS = 12; // Increased security factor over legacy '8'
+  }
+
+  /**
+   * Registers a new user atomically within a database transaction.
+   * Enforces default role fallback if none are provided.
+   */
+  async register({ username, email, password, roles: requestedRoles }) {
+    const transaction = await this.sequelize.transaction();
+
+    try {
+      const passwordHash = await bcrypt.hash(password, this.SALT_ROUNDS);
+
+      const user = await this.User.create(
+        { username, email, password: passwordHash },
+        { transaction }
+      );
+
+      let targetRoles;
+      if (requestedRoles && requestedRoles.length > 0) {
+        targetRoles = await this.Role.findAll({
+          where: {
+            name: { [this.Op.or]: requestedRoles }
+          },
+          transaction
+        });
+
+        if (targetRoles.length === 0) {
+          throw new AuthenticationError('Specified roles do not exist.', 400);
+        }
+      } else {
+        // Resolve default user role dynamically rather than relying on magic ID '1'
+        const defaultRole = await this.Role.findOne({
+          where: { name: 'user' },
+          transaction
+        });
+
+        if (!defaultRole) {
+          throw new AuthenticationError('Default system role not configured.', 500);
+        }
+        targetRoles = [defaultRole];
+      }
+
+      await user.setRoles(targetRoles, { transaction });
+      await transaction.commit();
+
+      return { message: 'User registered successfully!' };
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
     }
   }
-  static create(value: string): Email { return new Email(value.toLowerCase().trim()); }
-  equals(other: Email): boolean { return this.value === other.value; }
-  toString(): string { return this.value; }
-}
-export class InvalidEmailError extends Error { constructor(v: string) { super(`Invalid email format: ${v}`); this.name = 'InvalidEmailError'; } }
-```
 
-#### `value-objects/Password.ts`
-```typescript
-// Represents the *policy*, not the hash. Hashing is infra concern.
-export class PlainPassword {
-  private constructor(public readonly value: string) {
-    if (value.length < 12) throw new WeakPasswordError('Min 12 chars');
-    if (!/[A-Z]/.test(value)) throw new WeakPasswordError('Requires uppercase');
-    if (!/[a-z]/.test(value)) throw new WeakPasswordError('Requires lowercase');
-    if (!/[0-9]/.test(value)) throw new WeakPasswordError('Requires number');
-    if (!/[^A-Za-z0-9]/.test(value)) throw new WeakPasswordError('Requires special char');
-  }
-  static create(value: string): PlainPassword { return new PlainPassword(value); }
-}
-export class WeakPasswordError extends Error { constructor(msg: string) { super(msg); this.name = 'WeakPasswordError'; } }
-```
-
-#### `entities/User.ts`
-```typescript
-import { Email } from '../value-objects/Email';
-import { Role } from './Role';
-
-export class User {
-  public readonly id: string; // UUID
-  public readonly username: string;
-  public readonly email: Email;
-  private readonly _passwordHash: string; // Encapsulated
-  private readonly _roles: Role[] = [];
-  public readonly createdAt: Date;
-  public readonly updatedAt: Date;
-
-  private constructor(props: User.Props) {
-    Object.assign(this, props);
-  }
-
-  static create(props: User.CreateProps): User {
-    return new User({
-      ...props,
-      id: crypto.randomUUID(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      _roles: [],
+  /**
+   * Authenticates user credentials and issues a signed JWT with associated roles.
+   */
+  async authenticate({ username, password }) {
+    const user = await this.User.findOne({
+      where: { username }
     });
+
+    if (!user) {
+      throw new AuthenticationError('Invalid credentials.', 401);
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new AuthenticationError('Invalid credentials.', 401);
+    }
+
+    const token = jwt.sign(
+      { id: user.id },
+      this.config.secret,
+      {
+        algorithm: 'HS256',
+        expiresIn: this.config.jwtExpiration || '24h'
+      }
+    );
+
+    const roles = await user.getRoles();
+    const authorities = roles.map(role => `ROLE_${role.name.toUpperCase()}`);
+
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      roles: authorities,
+      accessToken: token
+    };
   }
-
-  static reconstitute(props: User.Props): User { return new User(props); }
-
-  assignRole(role: Role): void {
-    if (!this._roles.some(r => r.id === role.id)) this._roles.push(role);
-  }
-  get roles(): ReadonlyArray<Role> { return [...this._roles]; }
-  verifyPassword(hash: string): boolean { return this._passwordHash === hash; } // Used by repo for hydration check
-  
-  // Domain Event emission logic would go here
-}
-
-export namespace User {
-  export interface Props { id: string; username: string; email: Email; _passwordHash: string; _roles: Role[]; createdAt: Date; updatedAt: Date; }
-  export interface CreateProps { username: string; email: Email; passwordHash: string; }
 }
 ```
 
-#### `entities/Role.ts`
-```typescript
-export class
+#### 2. HTTP Transport Layer (`controllers/auth.controller.js`)
+
+```javascript
+import { AuthService, AuthenticationError } from '../services/auth.service.js';
+import db from '../models/index.js';
+import config from '../config/auth.config.js';
+
+// Instantiate service with dependency injection
+const authService = new AuthService(db, config);
+
+/**
+ * Express Controller handling Signup requests.
+ */
+export const signup = async (req, res, next) => {
+  try {
+    const { username, email, password, roles } = req.body;
+    
+    // Basic structural payload guard
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: 'Username, email, and password are required.' });
+    }
+
+    const result = await authService.register({ username, email, password, roles });
+    return res.status(201).json(result);
+  } catch (err) {
+    if (err instanceof AuthenticationError) {
+      return res.status(err.statusCode).json({ message: err.message });
+    }
+    // Pass unexpected errors to global Express error handler
+    return next(err);
+  }
+};
+
+/**
+ * Express Controller handling Signin requests.
+ */
+export const signin = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Username and password are required.' });
+    }
+
+    const authResult = await authService.authenticate({ username, password });
+    return res.status(200).json(authResult);
+  } catch (err) {
+    if (err instanceof AuthenticationError) {
+      return res.status(err.statusCode).json({ message: err.message });
+    }
+    return next(err);
+  }
+};
+```

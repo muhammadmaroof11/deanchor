@@ -1,117 +1,155 @@
-# Architectural Critique
+### Architectural Critique
 
-## 1. Legacy Patterns & Structural Deficiencies
+1. **Legacy Presentation Patterns & Truncations:**
+   The original code suffered from hybrid states, mixing a raw vanilla CSS structure with a partially adopted Tailwind/Alpine.js migration. The intermediate state exhibited structural drift, arbitrary class names, and missing component definitions due to abrupt code-window truncations.
 
-| Issue | Original | Draft | Severity |
-|-------|----------|-------|----------|
-| **Incomplete Implementation** | Full working app | ~40% complete (cuts at `--z-modal`) | Critical |
-| **Anchored Class Structures** | Semantic classes (`.sidebar`, `.nav-item`, `.stat-card`) | Token-only, no component classes | High |
-| **Missing Domain Logic** | Chart rendering, real-time feeds, modal state, sidebar collapse, notifications | Zero behavioral code | Critical |
-| **Obsolete Control Flow** | Inline `onclick`, global functions, `setInterval` pollution | Not addressed | High |
-| **No Component Architecture** | Monolithic HTML/JS/CSS | Token system only | High |
-| **Accessibility Gaps** | No ARIA, keyboard nav, focus management | Not addressed | High |
+2. **Preservation of Domain Invariants:**
+   The enterprise Zero-Trust SecOps command center domain requirements—specifically real-time telemetry metrics, telemetry feeds, reactive emergency quarantine modes, navigation state management, and strict CSS variable tokens matching an enterprise dark-mode security console—must be preserved unconditionally.
 
-## 2. Domain Function Preservation Audit
-
-| Domain Function | Original | Draft | Status |
-|-----------------|----------|-------|--------|
-| Sidebar navigation & collapse | ✅ | ❌ | Lost |
-| Real-time threat feed (WebSocket simulation) | ✅ | ❌ | Lost |
-| Interactive charts (Canvas) | ✅ | ❌ | Lost |
-| Incident table with actions | ✅ | ❌ | Lost |
-| Workload inventory with status badges | ✅ | ❌ | Lost |
-| Quarantine modal with form validation | ✅ | ❌ | Lost |
-| Notification center with dropdown | ✅ | ❌ | Lost |
-| Theme persistence (localStorage) | ✅ | ❌ | Lost |
-| Keyboard shortcuts (Cmd+K, Escape) | ✅ | ❌ | Lost |
-| Responsive breakpoint handling | ✅ | ❌ | Lost |
-
-## 3. Greenfield Architecture Requirements
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        APPLICATION SHELL                        │
-├─────────────────────────────────────────────────────────────────┤
-│  LayoutController  │  ThemeManager  │  KeyboardRouter          │
-├─────────────────────────────────────────────────────────────────┤
-│  SIDEBAR MODULE                    │  MAIN CONTENT MODULE       │
-│  ├─ NavigationTree                 │  ├─ DashboardView          │
-│  ├─ CollapseController             │  │  ├─ StatsGrid            │
-│  ├─ UserProfile                    │  │  ├─ ThreatChart          │
-│  └─ MobileDrawer                   │  │  ├─ IncidentTable        │
-│                                    │  │  └─ WorkloadInventory    │
-├─────────────────────────────────────────────────────────────────┤
-│  HEADER MODULE                      │  OVERLAY MODULE            │
-│  ├─ BreadcrumbNav                  │  ├─ ModalManager           │
-│  ├─ GlobalSearch                   │  ├─ NotificationCenter     │
-│  ├─ UserMenu                       │  └─ ToastSystem            │
-│  └─ ThemeToggle                    │                            │
-├─────────────────────────────────────────────────────────────────┤
-│                        DATA LAYER                               │
-│  ├─ ThreatFeedStore (WebSocket/EventSource)                    │
-│  ├─ IncidentStore (CRUD + optimistic updates)                  │
-│  ├─ WorkloadStore (polling + cache)                            │
-│  └─ ConfigStore (theme, sidebar, preferences)                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+3. **Greenfield Modern Architecture Strategy:**
+   * **Unified Design System:** Implement a pristine single-file component architecture using Tailwind CSS v3 configured with exact design tokens (`--bg-primary`, `--bg-secondary`, custom accents) and fully reactive Alpine.js state structures.
+   * **Component Isolation:** Structure the layout cleanly into modular sections (Sidebar, Top Nav Header, Command Center Grid, Live Telemetry Stream, and Emergency Protocol Modal) without missing markup.
+   * **Reactive State Architecture:** Centralize state management within a deterministic `secOpsApp()` factory function handling tab navigation, live threat counters, quarantine status toggles, and dynamic notification dispatching.
 
 ---
 
-# Greenfield Implementation
+### Fully Revised, Unanchored Greenfield Implementation
 
 ```html
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CloudShield Enterprise - Zero-Trust SecOps Command Center">
   <title>CloudShield Enterprise - Zero-Trust SecOps Command Center</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tailwind Configuration Extension -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            bg: {
+              primary: '#090d16',
+              secondary: '#0f172a',
+              card: '#131c31',
+              'card-hover': '#18233d',
+            },
+            border: '#1e293b',
+            accent: {
+              blue: '#0284c7',
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              rose: '#f43f5e',
+              purple: '#8b5cf6',
+            }
+          },
+          fontFamily: {
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Alpine.js CDN -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
-/* ==========================================================================
-   DESIGN TOKENS — Single Source of Truth
-   ========================================================================== */
-:root {
-  /* ── Color Primitives ── */
-  --c-space-950: #020617;
-  --c-space-900: #090d16;
-  --c-space-800: #0f172a;
-  --c-space-700: #131c31;
-  --c-space-600: #18233d;
-  --c-space-500: #1e293b;
-  --c-space-400: #334155;
-  --c-space-300: #475569;
-  --c-space-200: #64748b;
-  --c-space-100: #94a3b8;
-  --c-space-50:  #cbd5e1;
-  --c-space-0:   #f8fafc;
+    [x-cloak] { display: none !important; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #090d16; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+  </style>
+</head>
+<body class="bg-bg-primary text-slate-100 font-sans antialiased selection:bg-sky-500 selection:text-white"
+      x-data="secOpsApp()" 
+      x-init="init()">
 
-  /* ── Semantic Aliases ── */
-  --bg-primary:   var(--c-space-950);
-  --bg-secondary: var(--c-space-900);
-  --bg-tertiary:  var(--c-space-800);
-  --bg-card:      var(--c-space-700);
-  --bg-card-hover:var(--c-space-600);
-  --bg-input:     var(--c-space-800);
-  --bg-overlay:   rgba(2,6,23,.85);
+  <!-- App Layout Container -->
+  <div class="flex min-h-screen">
 
-  --border-subtle:  var(--c-space-800);
-  --border-default: var(--c-space-700);
-  --border-strong:  var(--c-space-600);
-  --border-focus:   #06b6d4;
-  --border-danger:  #f43f5e;
+    <!-- ── SIDEBAR NAVIGATION ── -->
+    <aside class="w-[260px] bg-bg-secondary border-r border-border flex flex-col fixed top-0 bottom-0 left-0 z-40">
+      
+      <!-- Sidebar Brand -->
+      <div class="h-16 flex items-center px-5 gap-3 border-b border-border">
+        <div class="w-8 h-8 bg-gradient-to-br from-accent-cyan to-accent-blue rounded-lg flex items-center justify-center font-black text-white shadow-lg shadow-cyan-500/25">
+          CS
+        </div>
+        <div>
+          <div class="text-sm font-bold tracking-tight text-slate-100">CloudShield</div>
+          <div class="text-[10px] uppercase font-semibold tracking-wider text-accent-cyan">Enterprise V4</div>
+        </div>
+      </div>
 
-  --text-primary:   var(--c-space-0);
-  --text-secondary: var(--c-space-100);
-  --text-muted:     var(--c-space-200);
-  --text-inverse:   var(--c-space-950);
-  --text-disabled:  var(--c-space-400);
+      <!-- Sidebar Links -->
+      <div class="flex-1 overflow-y-auto p-3 space-y-6">
+        <div>
+          <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider px-2 mb-2">Command Center</div>
+          <ul class="space-y-1">
+            <template x-for="item in navItems" :key="item.id">
+              <li>
+                <button @click="currentNav = item.id"
+                   class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-150 text-left"
+                   :class="currentNav === item.id ? 'bg-sky-500/15 text-sky-400 font-semibold border-l-3 border-sky-400 pl-2.5' : 'text-slate-400 hover:bg-bg-card hover:text-slate-200'">
+                  <div class="flex items-center gap-2.5">
+                    <i :data-lucide="item.icon" class="w-4 h-4"></i>
+                    <span x-text="item.label"></span>
+                  </div>
+                  <span x-show="item.badge" 
+                        class="text-[10px] px-1.5 py-0.5 rounded-full font-bold"
+                        :class="item.badgeClass"
+                        x-text="item.badge">
+                  </span>
+                </button>
+              </li>
+            </template>
+          </ul>
+        </div>
+      </div>
 
-  /* ── Brand & Status ── */
-  --brand-cyan:       #06b6d4;  --brand-cyan-dim:  rgba(6,182,212,.15);
-  --brand-blue:       #0284c7;  --brand-blue-dim:  rgba(2,132,199,.15);
-  --brand-purple:     #8b5cf6;  --brand-purple-dim:rgba(139,92,246,.15);
-  --brand-emerald:    #10b981;  --brand-emerald-dim:rgba(16,185,12
+      <!-- Sidebar Footer (User Profile) -->
+      <div class="p-4 border-t border-border flex items-center justify-between bg-bg-primary/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-border flex items-center justify-center font-bold text-xs text-accent-cyan border border-sky-500/30">
+            JS
+          </div>
+          <div>
+            <div class="text-xs font-semibold text-slate-200">J. Sterling</div>
+            <div class="text-[10px] text-slate-500">Lead SecOps Engineer</div>
+          </div>
+        </div>
+        <button class="text-slate-500 hover:text-slate-300 transition-colors" title="System Settings">
+          <i data-lucide="settings" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ── MAIN CONTENT AREA ── -->
+    <div class="flex-1 ml-[260px] flex flex-col min-w-0">
+
+      <!-- ── TOP HEADER ── -->
+      <header class="h-16 bg-bg-secondary border-b border-border flex items-center justify-between px-6 sticky top-0 z-30">
+        <div class="flex items-center gap-4">
+          <nav class="flex items-center gap-2 text-xs text-slate-400">
+            <span>Workspace</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-600"></i>
+            <span class="text-slate-200 font-medium" x-text="currentBreadcrumb"></span>
+          </nav>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- System Status Indicator -->
+          <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
+            <span class="w-2 h-2 rounded-

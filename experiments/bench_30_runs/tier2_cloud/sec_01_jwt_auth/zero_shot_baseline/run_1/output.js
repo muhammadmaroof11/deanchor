@@ -1,209 +1,147 @@
-Here is a complete, production-ready rewrite using **TypeScript**, **ES Modules**, **Clean Architecture** (Controller → Service → Repository), **Zod** for validation, and modern security practices.
+Here is a complete greenfield rewrite and modernization of the authentication controller. 
 
-### Project Structure
-```text
-src/
-├── config/
-│   └── env.ts                 # Validated environment configuration
-├── core/
-│   ├── errors/
-│   │   ├── AppError.ts        # Base operational error class
-│   │   └── index.ts           # Specific error subclasses (AuthError, ValidationError, NotFoundError)
-│   ├── middleware/
-│   │   ├── errorHandler.ts    # Centralized error handling
-│   │   └── validate.ts        # Zod validation middleware
-│   └── utils/
-│       ├── jwt.ts             # JWT wrapper (sign/verify)
-│       └── password.ts        # Bcrypt wrapper (hash/verify)
-├── modules/
-│   └── auth/
-│       ├── dto/
-│       │   ├── signup.dto.ts
-│       │   └── signin.dto.ts
-│       ├── repositories/
-│       │   ├── user.repository.ts
-│       │   └── role.repository.ts
-│       ├── services/
-│       │   └── auth.service.ts
-│       ├── controllers/
-│       │   └── auth.controller.ts
-│       └── routes/
-│           └── auth.routes.ts
-├── database/
-│   ├── models/
-│   │   ├── user.model.ts
-│   │   └── role.model.ts
-│   └── sequelize.ts           # Sequelize initialization
-└── app.ts                     # Express app setup
-```
+### Architectural Improvements & Modernization
+
+1. **Async/Await & Native Promises**: Eliminated deeply nested callback/promise chains (`.then().then()`) in favor of clean, readable `async/await` syntax.
+2. **Robust Error Handling**: Centralized error management using structured try-catch blocks and appropriate HTTP status codes, preventing unhandled promise rejections.
+3. **Security Enhancements**: 
+   - Uses `bcrypt.hash` (asynchronous) rather than the blocking synchronous version to prevent event loop starvation under high concurrency.
+   - Preserved explicit JWT parameters (`HS256`, 24-hour expiration, `allowInsecureKeySizes`).
+4. **Separation of Concerns (Service-Controller Pattern)**: Logic is partitioned into a dedicated `AuthService` handling database transactions, password hashing, role resolution, and JWT creation, leaving the controller thin and purely responsible for HTTP handling.
+5. **Modern JavaScript/Node Idioms**: Applied ES modules (or modern CommonJS layout), destructuring, and functional array transformations (`map` instead of imperative `for` loops).
 
 ---
 
-### 1. Configuration & Core Utilities
+### Implementation
 
-#### `src/config/env.ts`
-```typescript
-import { z } from 'zod';
+#### 1. Service Layer (`services/auth.service.js`)
+```javascript
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const db = require('../models');
+const config = require('../config/auth.config');
 
-const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  PORT: z.coerce.number().default(3000),
-  JWT_SECRET: z.string().min(32, 'JWT_SECRET must be at least 32 characters'),
-  JWT_EXPIRES_IN: z.string().default('24h'), // e.g., '24h', '7d'
-  JWT_ISSUER: z.string().default('clean-architecture-api'),
-  JWT_AUDIENCE: z.string().default('clean-architecture-client'),
-  BCRYPT_SALT_ROUNDS: z.coerce.number().min(10).max(15).default(12),
-  DB_DIALECT: z.enum(['mysql', 'postgres', 'sqlite', 'mariadb']).default('mysql'),
-  DB_HOST: z.string().default('localhost'),
-  DB_PORT: z.coerce.number().default(3306),
-  DB_NAME: z.string().default('app_db'),
-  DB_USER: z.string().default('root'),
-  DB_PASS: z.string().default(''),
-});
+const User = db.user;
+const Role = db.role;
+const Op = db.Sequelize.Op;
 
-export const env = envSchema.parse(process.env);
-```
+const SALT_ROUNDS = 8;
+const TOKEN_EXPIRATION = 86400; // 24 hours
 
-#### `src/core/utils/password.ts`
-```typescript
-import bcrypt from 'bcryptjs';
-import { env } from '@/config/env';
+class AuthService {
+  /**
+   * Registers a new user and assigns roles.
+   * Invariant: Defaults to role ID 1 if no roles are specified.
+   */
+  async signup({ username, email, password, roles: roleNames }) {
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+    
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+    });
 
-export const hashPassword = (plain: string): Promise<string> =>
-  bcrypt.hash(plain, env.BCRYPT_SALT_ROUNDS);
+    let targetRoles;
+    if (roleNames && roleNames.length > 0) {
+      targetRoles = await Role.findAll({
+        where: {
+          name: {
+            [Op.or]: roleNames,
+          },
+        },
+      });
+    } else {
+      // Default fallback invariant: Role ID 1
+      targetRoles = [1];
+    }
 
-export const verifyPassword = (plain: string, hash: string): Promise<boolean> =>
-  bcrypt.compare(plain, hash);
-```
-
-#### `src/core/utils/jwt.ts`
-```typescript
-import jwt, { SignOptions, Secret } from 'jsonwebtoken';
-import { env } from '@/config/env';
-
-export interface TokenPayload {
-  sub: number; // User ID
-  roles: string[]; // e.g., ['ROLE_ADMIN', 'ROLE_USER']
-}
-
-const signOptions: SignOptions = {
-  algorithm: 'HS256',
-  expiresIn: env.JWT_EXPIRES_IN,
-  issuer: env.JWT_ISSUER,
-  audience: env.JWT_AUDIENCE,
-};
-
-export const signToken = (payload: TokenPayload): string =>
-  jwt.sign(payload, env.JWT_SECRET as Secret, signOptions);
-
-export const verifyToken = (token: string): TokenPayload =>
-  jwt.verify(token, env.JWT_SECRET as Secret, {
-    algorithms: ['HS256'],
-    issuer: env.JWT_ISSUER,
-    audience: env.JWT_AUDIENCE,
-  }) as TokenPayload;
-```
-
-#### `src/core/errors/index.ts`
-```typescript
-// src/core/errors/AppError.ts
-export class AppError extends Error {
-  public readonly statusCode: number;
-  public readonly isOperational: boolean;
-  public readonly details?: unknown;
-
-  constructor(message: string, statusCode: number, details?: unknown) {
-    super(message);
-    this.statusCode = statusCode;
-    this.isOperational = true;
-    this.details = details;
-    Object.setPrototypeOf(this, AppError.prototype);
-    Error.captureStackTrace(this, this.constructor);
+    await user.setRoles(targetRoles);
+    return { message: 'User registered successfully!' };
   }
-}
 
-// Specific Errors
-export class ValidationError extends AppError {
-  constructor(message: string, details?: unknown) {
-    super(message, 400, details);
-    Object.setPrototypeOf(this, ValidationError.prototype);
-  }
-}
+  /**
+   * Authenticates a user and generates a JWT access token along with formatted authorities.
+   */
+  async signin({ username, password }) {
+    const user = await User.findOne({ where: { username } });
+    
+    if (!user) {
+      const error = new Error('User Not found.');
+      error.statusCode = 404;
+      throw error;
+    }
 
-export class AuthenticationError extends AppError {
-  constructor(message = 'Authentication failed') {
-    super(message, 401);
-    Object.setPrototypeOf(this, AuthenticationError.prototype);
-  }
-}
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      const error = new Error('Invalid Password!');
+      error.statusCode = 401;
+      error.accessToken = null;
+      throw error;
+    }
 
-export class AuthorizationError extends AppError {
-  constructor(message = 'Forbidden') {
-    super(message, 403);
-    Object.setPrototypeOf(this, AuthorizationError.prototype);
-  }
-}
-
-export class NotFoundError extends AppError {
-  constructor(resource = 'Resource') {
-    super(`${resource} not found`, 404);
-    Object.setPrototypeOf(this, NotFoundError.prototype);
-  }
-}
-
-export class ConflictError extends AppError {
-  constructor(message: string) {
-    super(message, 409);
-    Object.setPrototypeOf(this, ConflictError.prototype);
-  }
-}
-```
-
-#### `src/core/middleware/validate.ts`
-```typescript
-import { Request, Response, NextFunction } from 'express';
-import { AnyZodObject, ZodError } from 'zod';
-import { ValidationError } from '@/core/errors';
-
-export const validate = (schema: AnyZodObject) =>
-  async (req: Request, _res: Response, next: NextFunction) => {
-    try {
-      await schema.parseAsync({ body: req.body, query: req.query, params: req.params });
-      next();
-    } catch (error) {
-      if (error instanceof ZodError) {
-        next(new ValidationError('Validation failed', error.flatten().fieldErrors));
-      } else {
-        next(error);
+    const token = jwt.sign(
+      { id: user.id },
+      config.secret,
+      {
+        algorithm: 'HS256',
+        allowInsecureKeySizes: true,
+        expiresIn: TOKEN_EXPIRATION,
       }
+    );
+
+    const roles = await user.getRoles();
+    const authorities = roles.map(role => `ROLE_${role.name.toUpperCase()}`);
+
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      roles: authorities,
+      accessToken: token,
+    };
+  }
+}
+
+module.exports = new AuthService();
+```
+
+#### 2. Controller Layer (`controllers/auth.controller.js`)
+```javascript
+const authService = require('../services/auth.service');
+
+class AuthController {
+  /**
+   * HTTP Handler for User Registration
+   */
+  signup = async (req, res) => {
+    try {
+      const result = await authService.signup(req.body);
+      return res.status(200).send(result);
+    } catch (err) {
+      return res.status(500).send({ message: err.message });
     }
   };
+
+  /**
+   * HTTP Handler for User Authentication
+   */
+  signin = async (req, res) => {
+    try {
+      const authResult = await authService.signin(req.body);
+      return res.status(200).send(authResult);
+    } catch (err) {
+      const statusCode = err.statusCode || 500;
+      const responsePayload = { message: err.message };
+      
+      if (err.accessToken !== undefined) {
+        responsePayload.accessToken = err.accessToken;
+      }
+
+      return res.status(statusCode).send(responsePayload);
+    }
+  };
+}
+
+module.exports = new AuthController();
 ```
-
-#### `src/core/middleware/errorHandler.ts`
-```typescript
-import { Request, Response, NextFunction } from 'express';
-import { AppError } from '@/core/errors';
-import { env } from '@/config/env';
-
-export const errorHandler = (err: Error, _req: Request, res: Response, _next: NextFunction) => {
-  if (err instanceof AppError) {
-    return res.status(err.statusCode).json({
-      status: 'error',
-      message: err.message,
-      ...(err.details && { details: err.details }),
-    });
-  }
-
-  // Sequelize / DB Errors
-  if (err.name === 'SequelizeUniqueConstraintError') {
-    return res.status(409).json({ status: 'error', message: 'Record already exists' });
-  }
-  if (err.name === 'SequelizeValidationError') {
-    return res.status(400).json({ status: 'error', message: 'Database validation failed', details: err.errors });
-  }
-
-  console.error('💥 Unhandled Error:', err);
-
-  const message = env.NODE_ENV === 'production' ? 'Internal Server Error' : err.message;
-  return res.status(500).json({ status: 'error

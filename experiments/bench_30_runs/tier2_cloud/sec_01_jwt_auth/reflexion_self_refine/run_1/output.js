@@ -1,123 +1,236 @@
-### Architectural Critique of the Draft
+### Strict Architectural Critique of the Prior Draft
 
-#### 1. Structural & Paradigm Violations
-*   **Missing Role Repository Port**: The draft defines `IUserRepository` but omits `IRoleRepository`. The original code performs `Role.findAll` inside the signup flow. In Clean Architecture, the Use Case must not know about Sequelize; it requires a Port (`IRoleRepository`) to fetch roles by name.
-*   **Identity Strategy Mismatch**: The draft uses `UniqueEntityID` (UUID) for the Domain Entity, but the original Sequelize models almost certainly use Auto-Increment Integers (`INTEGER PRIMARY KEY`). Forcing UUIDs onto an existing Integer PK schema breaks persistence. The Domain Entity must support numeric IDs or the Infrastructure mapper must handle the translation explicitly.
-*   **JWT Configuration Parity**: The original code uses `algorithm: 'HS256', allowInsecureKeySizes: true`. The draft `ITokenService` interface hides configuration. The Infrastructure implementation *must* replicate this exact (albeit insecure) configuration to ensure token compatibility with existing clients.
-*   **Default Role Logic Leakage**: The original code defaults to Role ID `1` (`user.setRoles([1])`). The draft Use Case hardcodes `RoleName.USER`. The mapping between "Default Role" and "ID 1" is an Infrastructure concern (database seeding), not a Domain constant. The Use Case should request "Default Role" from the Role Repository.
-*   **Anemic Domain `User` Entity**: The draft `User.register` factory throws `Error` for invariants. Domain logic should throw *Domain Exceptions* (e.g., `InvalidUsernameError`) caught by the Application layer to map to HTTP 400, not generic `Error` resulting in HTTP 500.
+While the previous draft introduced a clean layered structure (Repositories, Services, Controllers), it suffered from several architectural and idiomatic anti-patterns:
 
-#### 2. Control Flow & Legacy Artifacts
-*   **Implicit Transaction Handling**: The original code creates User, *then* finds Roles, *then* associates. This is 3 distinct DB round-trips without a transaction. The redesign must wrap `RegisterUserUseCase` in a Unit of Work / Transaction boundary.
-*   **Presentation Logic in Use Case**: The draft `AuthenticateUserUseCase` returns a DTO with `accessToken`. This is correct. However, the original `signin` returns `id, username, email, roles, accessToken`. The Presenter/Controller must shape this exact response contract.
-
-#### 3. Data Integrity & Security
-*   **Password Hashing Cost**: Original uses `bcrypt.hashSync(password, 8)`. Cost factor 8 is low (modern standard 12+). The redesign must make cost configurable via Env but default higher, while supporting verification of legacy cost-8 hashes.
-*   **Timing Attacks**: `bcrypt.compareSync` is constant-time, good. The draft `BcryptPasswordHasher` must use `compare` (async) not `compareSync` to avoid blocking the Event Loop.
+1. **Procedural Classes ("Service/Controller Classes"):** Wrapping procedural functions inside stateless ES6 classes (`class AuthService`, `class AuthController`) is a common anti-pattern in Node.js known as "Java-itis." It forces unnecessary `this` binding (`this.signup = this.signup.bind(this)`), adds boilerplate, and provides zero object-oriented benefits since these classes maintain no internal state.
+2. **Leaky Error Handling & Primitive Abuse:** Throwing raw `Error` objects and dynamically attaching HTTP properties (`error.statusCode = 404`, `error.accessToken = null`) inside the service layer violates architectural boundaries. The business layer should remain completely agnostic of HTTP transport concepts like status codes or transport payloads (`accessToken: null`).
+3. **Manual Dependency Injection Boilerplate:** Instantiating dependencies directly inside route files (`new UserRepository()`, `new AuthService()`) tightly couples the composition root to individual route definitions and creates friction for testing.
+4. **Sub-optimal ORM Query Pattern:** In the signin flow, the legacy code fetched the user *without* roles, and then executed an async `user.getRoles()` query separately. The repository draft fetched them with an include, but the mapping logic (`user.roles.map(...)`) was brittle and lacked type safety around missing associations.
 
 ---
 
-### Fully Revised Greenfield Implementation
+### Greenfield Modern Architecture Redesign
 
-**Tech Stack**: TypeScript 5+, Node 20+, Fastify (superior typing/performance vs Express), Sequelize 6, Zod, `tsyringe` (DI), `jsonwebtoken`, `bcrypt`.
+To achieve peak maintainability, absolute separation of concerns, and idiomatic modern Node.js engineering, we pivot to a **Functional Core, Imperative Shell** paradigm using **ES Modules**, **functional modules** (instead of stateless classes), **domain-driven custom errors**, and a **clean error-handling middleware architecture**.
 
-#### `package.json` (Key Dependencies)
-```json
-{
-  "dependencies": {
-    "fastify": "^4.26.0",
-    "sequelize": "^6.37.0",
-    "pg": "^8.11.0", 
-    "jsonwebtoken": "^9.0.0",
-    "bcrypt": "^5.1.0",
-    "zod": "^3.22.0",
-    "tsyringe": "^4.8.0",
-    "reflect-metadata": "^0.2.0",
-    "dotenv": "^16.3.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.0.0",
-    "@types/jsonwebtoken": "^9.0.0",
-    "@types/bcrypt": "^5.0.0",
-    "typescript": "^5.3.0",
-    "tsx": "^4.0.0"
+#### Target Directory Structure
+```
+src/
+├── config/             # Environment variables & constants
+├── errors/             # Custom domain & operational errors
+├── loaders/            # Database initialization
+├── models/             # Sequelize ORM definitions
+├── repositories/       # Data Access (Pure Async Functions/Objects)
+├── services/           # Business Logic (Pure Async Functions/Objects)
+├── controllers/        # HTTP Transport Adapters
+├── middlewares/        # Global Error Handling & Validation
+└── routes/             # API Router composition
+```
+
+---
+
+### Implementation
+
+#### 1. Configuration (`src/config/environment.js`)
+```javascript
+import dotenv from 'dotenv';
+dotenv.config();
+
+export const config = {
+  env: process.env.NODE_ENV || 'development',
+  port: parseInt(process.env.PORT, 10) || 3000,
+  auth: {
+    secret: process.env.JWT_SECRET || 'insecure_development_secret',
+    jwtExpiration: '24h',
+    defaultRoleId: 1,
+    saltRounds: 10
   }
-}
+};
 ```
 
----
-
-#### 1. Shared Kernel & Primitives
-
-**`src/shared/kernel/Result.ts`** (Functional Error Handling)
-```typescript
-export type Result<T, E = AppError> = 
-  | { ok: true; value: T }
-  | { ok: false; error: E };
-
-export const Ok = <T>(value: T): Result<T, never> => ({ ok: true, value });
-export const Err = <E>(error: E): Result<never, E> => ({ ok: false, error });
-```
-
-**`src/shared/kernel/AppError.ts`**
-```typescript
-export class AppError extends Error {
-  constructor(
-    public readonly code: string,
-    public readonly statusCode: number,
-    message: string,
-    public readonly cause?: Error
-  ) {
+#### 2. Domain Errors (`src/errors/domain.errors.js`)
+Decouples business exceptions from HTTP transport logic while preserving semantic error states.
+```javascript
+export class DomainError extends Error {
+  constructor(message, status = 500) {
     super(message);
-    this.name = 'AppError';
-    Object.setPrototypeOf(this, AppError.prototype);
+    this.name = this.constructor.name;
+    this.status = status;
+    Error.captureStackTrace(this, this.constructor);
   }
+}
 
-  static unexpected(cause: Error): AppError {
-    return new AppError('INTERNAL_ERROR', 500, 'An unexpected error occurred', cause);
+export class NotFoundError extends DomainError {
+  constructor(message = 'Resource not found') {
+    super(message, 404);
   }
-  
-  static notFound(resource: string): AppError {
-    return new AppError('NOT_FOUND', 404, `${resource} not found`);
+}
+
+export class UnauthorizedError extends DomainError {
+  constructor(message = 'Unauthorized access') {
+    super(message, 401);
   }
-  
-  static unauthorized(message = 'Invalid credentials'): AppError {
-    return new AppError('UNAUTHORIZED', 401, message);
-  }
-  
-  static conflict(message: string): AppError {
-    return new AppError('CONFLICT', 409, message);
-  }
-  
-  static validation(message: string): AppError {
-    return new AppError('VALIDATION_ERROR', 400, message);
+}
+
+export class ConflictError extends DomainError {
+  constructor(message = 'Resource already exists') {
+    super(message, 409);
   }
 }
 ```
 
-**`src/shared/kernel/UniqueEntityID.ts`** (Supports Number | String)
-```typescript
-export class UniqueEntityID {
-  private readonly _value: string | number;
+#### 3. Data Access Layer - Repository (`src/repositories/user.repository.js`)
+Exposes pure data-fetching operations using a functional module pattern.
+```javascript
+import { Op } from 'sequelize';
+import db from '../models/index.js';
 
-  constructor(value: string | number) {
-    this._value = value;
-  }
+const { user: User, role: Role } = db;
 
-  get value(): string | number { return this._value; }
-  equals(id?: UniqueEntityID): boolean {
-    if (!id) return false;
-    return this._value === id._value;
+export const userRepository = {
+  async create({ username, email, password }) {
+    return User.create({ username, email, password });
+  },
+
+  async findByUsername(username) {
+    return User.findOne({
+      where: { username },
+      include: [{ model: Role, as: 'roles' }]
+    });
+  },
+
+  async findRolesByNames(roleNames) {
+    return Role.findAll({
+      where: {
+        name: { [Op.or]: roleNames }
+      }
+    });
+  },
+
+  async findRoleById(roleId) {
+    return Role.findByPk(roleId);
   }
-  toString(): string { return String(this._value); }
-}
+};
 ```
 
----
+#### 4. Business Logic Layer - Service (`src/services/auth.service.js`)
+Pure business logic implementation, completely decoupled from HTTP transport.
+```javascript
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { config } from '../config/environment.js';
+import { NotFoundError, UnauthorizedError } from '../errors/domain.errors.js';
 
-#### 2. Domain Layer
+export const createAuthService = (repository) => ({
+  async signup({ username, email, password, roles: roleNames }) {
+    const hashedPassword = await bcrypt.hash(password, config.auth.saltRounds);
 
-**`src/domain/value-objects/Email.ts`**
-```typescript
-export class Email {
-  public readonly
+    const user = await repository.create({
+      username,
+      email,
+      password: hashedPassword
+    });
+
+    let assignedRoles;
+    if (roleNames?.length > 0) {
+      assignedRoles = await repository.findRolesByNames(roleNames);
+    } else {
+      const defaultRole = await repository.findRoleById(config.auth.defaultRoleId);
+      assignedRoles = defaultRole ? [defaultRole] : [];
+    }
+
+    await user.setRoles(assignedRoles);
+
+    return { message: 'User registered successfully!' };
+  },
+
+  async signin({ username, password }) {
+    const user = await repository.findByUsername(username);
+    if (!user) {
+      throw new NotFoundError('User Not found.');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedError('Invalid Password!');
+    }
+
+    const accessToken = jwt.sign(
+      { id: user.id },
+      config.auth.secret,
+      {
+        algorithm: 'HS256',
+        allowInsecureKeySizes: true,
+        expiresIn: config.auth.jwtExpiration
+      }
+    );
+
+    const roles = (user.roles || []).map(role => `ROLE_${role.name.toUpperCase()}`);
+
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      roles,
+      accessToken
+    };
+  }
+});
+```
+
+#### 5. Presentation Layer - Controller (`src/controllers/auth.controller.js`)
+Functional controller adapters that translate Express request parameters to service inputs and handle responses.
+```javascript
+export const createAuthController = (authService) => ({
+  async signup(req, res, next) {
+    try {
+      const result = await authService.signup(req.body);
+      return res.status(201).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  },
+
+  async signin(req, res, next) {
+    try {
+      const result = await authService.signin(req.body);
+      return res.status(200).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+});
+```
+
+#### 6. Error Handling Middleware (`src/middlewares/error.middleware.js`)
+Centralizes error formatting to eliminate repetitive `try/catch` and status code mapping code inside controllers.
+```javascript
+export const errorHandler = (err, req, res, next) => {
+  const status = err.status || 500;
+  const message = err.message || 'Internal Server Error';
+
+  // Include accessToken null payload for 401 Unauthorized compliance with legacy API contract
+  const payload = { message };
+  if (status === 401) {
+    payload.accessToken = null;
+  }
+
+  return res.status(status).json(payload);
+};
+```
+
+#### 7. Composition Root & Routing (`src/routes/auth.routes.js`)
+Wires dependencies seamlessly without class instantiation bloat.
+```javascript
+import { Router } from 'express';
+import { userRepository } from '../repositories/user.repository.js';
+import { createAuthService } from '../services/auth.service.js';
+import { createAuthController } from '../controllers/auth.controller.js';
+
+// Wiring Dependencies (Pure Functional Composition)
+const authService = createAuthService(userRepository);
+const authController = createAuthController(authService);
+
+const router = Router();
+
+router.post('/signup', authController.signup);
