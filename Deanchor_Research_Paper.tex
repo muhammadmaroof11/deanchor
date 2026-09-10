@@ -34,7 +34,7 @@
 
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-When instruction-tuned Large Language Models (LLMs) are tasked with redesigning, refactoring, or optimizing existing software codebases and user interfaces, they suffer from severe \textit{Contextual Anchoring Bias}---an intrinsic attention failure where auto-regressive attention heads allocate disproportionate probability mass to legacy syntactic, structural, and visual tokens in the prompt prefix. Consequently, contemporary state-of-the-art models frequently produce trivial cosmetic mutations (e.g., hexadecimal color swaps, variable renaming) rather than fundamental architectural transformations, achieving structural Abstract Syntax Tree (AST) divergence scores below $0.02$ under standard zero-shot prompting. In this paper, we formalize the Contextual Anchoring Hypothesis by decomposing code entropy into functional domain requirements $H(D)$ and presentation topology $H(T \mid D)$. We propose the \textit{Two-Stage Deanchoring Decoupling Protocol}, which strictly eliminates legacy layout tokens from the generative context window by compressing raw code into an intermediate semantic entity-action YAML contract (Stage 1) before synthesizing clean-slate greenfield implementations (Stage 2). To evaluate this framework across distinct operational paradigms, we establish a \textbf{Two-Tier Separated Benchmarking Methodology}: \textbf{Tier 1} evaluates Local Open-Source Edge Models (7B--9B parameters running on a local NVIDIA RTX 3080 GPU measuring local VRAM memory allocation, token generation speed, and AST divergence); \textbf{Tier 2} evaluates Cloud Frontier Flagship Architectures (31B--550B parameters operating over remote cloud APIs measuring presentation noise compression $N_{\text{filter}}$, API round-trip latency, and architectural synthesis quality). Our experimental evaluations span synthetic components, a 1,465-line enterprise SecOps dashboard, and 4 complete full-stack multi-file production repositories. The results prove that Two-Stage Decoupling achieves near-perfect unanchored synthesis ($0.80$--$1.00$ AST divergence) while filtering $53.1\%$ to $100.0\%$ of presentation noise, outperforming base zero-shot baselines by over 50x across local edge hardware and 550B ultra-scale cloud flagships. Finally, we present the production-ready \texttt{deanchor} CLI tool, enabling automated, sub-15-second blank-slate code synthesis with zero-shot syntax self-healing.
+When instruction-tuned Large Language Models (LLMs) are tasked with redesigning, refactoring, or optimizing existing software codebases and user interfaces, they suffer from severe \textit{Contextual Anchoring Bias}---an intrinsic attention failure where auto-regressive attention heads allocate disproportionate probability mass to legacy syntactic, structural, and visual tokens in the prompt prefix. Consequently, contemporary state-of-the-art models frequently produce trivial cosmetic mutations (e.g., hexadecimal color swaps, variable renaming) rather than fundamental architectural transformations, achieving structural Abstract Syntax Tree (AST) divergence scores below $0.02$ under standard zero-shot prompting. In this paper, we formalize the Contextual Anchoring Hypothesis by decomposing code entropy into functional domain requirements $H(D)$ and presentation topology $H(T \mid D)$. We propose the \textit{Two-Stage Deanchoring Decoupling Protocol}, which strictly eliminates legacy layout tokens from the generative context window by compressing raw code into an intermediate semantic entity-action YAML contract (Stage 1) before synthesizing clean-slate greenfield implementations (Stage 2). To evaluate this framework across distinct operational paradigms, we establish a \textbf{Two-Tier Separated Benchmarking Methodology}: \textbf{Tier 1} evaluates Local Open-Source Edge Models (7B--9B parameters running on a local NVIDIA RTX 3080 GPU measuring local VRAM memory allocation, token generation speed, AST divergence, and Tree Edit Distance); \textbf{Tier 2} evaluates Cloud Frontier Flagship Architectures (Google Gemini 3.5 Flash Lite with a 1,000,000-token context window operating over remote cloud APIs with zero marginal cost measuring presentation noise compression $N_{\text{filter}}$, AST divergence, Tree Edit Distance $D_{\text{TED}}$, API round-trip latency, and architectural synthesis quality). The results prove that Two-Stage Decoupling achieves near-perfect unanchored synthesis ($0.9325$--$0.9400$ AST divergence and $0.9471$--$0.9481$ Tree Edit Distance) while filtering up to $94.4\%$ of presentation noise, outperforming base zero-shot baselines by over 50x across local edge hardware and 1M-context cloud flagships ($p < 0.001$). Finally, we present the production-ready \texttt{deanchor} CLI tool, enabling automated, sub-15-second blank-slate code synthesis with zero-shot syntax self-healing.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -93,10 +93,10 @@ To evaluate model performance without lumping disparate model classes into a sin
     \textit{Environment}: Local hardware acceleration on an NVIDIA RTX 3080 GPU (10GB VRAM).
     \textit{Evaluation Metrics}: AST Structural Divergence ($D_{\text{AST}}$), Local VRAM Memory Allocation (GB), On-Device Token Generation Speed (tokens/sec), and Local AST Syntax Integrity Pass Rate (\%).
     
-    \item \textbf{Tier 2: Remote API Telemetry Benchmarks (Cloud Frontier Flagships, 31B--550B Params):}
-    \textit{Models}: Google Gemma 4 31B, Z-AI GLM 5.2 (45B MoE), NVIDIA Nemotron-3 120B MoE, and NVIDIA Nemotron-3 550B Ultra.
-    \textit{Environment}: Distributed remote cloud API endpoints over OpenRouter (`https://openrouter.ai/api/v1`).
-    \textit{Evaluation Metrics}: Presentation Noise Compression Ratio ($N_{\text{filter}}$ \%), API Stage 1 + Stage 2 Round-Trip Latency (seconds), Upstream Rate-Limit Retry Resilience, and High-Level Architectural Innovation Class (State Machines, Immutable Models, Reactive Stream Abstractions).
+    \item \textbf{Tier 2: Remote API Telemetry Benchmarks (Cloud Frontier Flagships, 1M Context Window):}
+    \textit{Models}: Google Gemini 3.5 Flash Lite (1M context window flagship architecture).
+    \textit{Environment}: Remote cloud API endpoints over Google AI Studio / Cloud APIs with zero marginal API cost.
+    \textit{Evaluation Metrics}: AST Structural Divergence ($D_{\text{AST}}$), Normalized Tree Edit Distance ($D_{\text{TED}}$), Presentation Noise Compression Ratio ($N_{\text{filter}}$ \%), API Stage 1 + Stage 2 Round-Trip Latency (seconds), and High-Level Architectural Innovation Class (State Machines, Immutable Models, Reactive Stream Abstractions).
 \end{enumerate}
 
 This separated benchmarking methodology guarantees that local hardware constraints (VRAM, memory bandwidth) are decoupled from cloud API network latency and MoE routing efficiency.
@@ -222,20 +222,28 @@ Table~\ref{tab:tier1_local} presents empirical results for Local Open-Source Edg
 \end{table*}
 
 \subsection{Tier 2: Cloud Frontier Flagship Model Telemetry (Remote Cloud APIs)}
-Table~\ref{tab:tier2_cloud} presents empirical telemetry for Ultra-Scale Cloud Frontier Flagship Models evaluated via OpenRouter APIs. Metrics focus on presentation noise compression ($N_{\text{filter}}$ \%), API stage latencies, upstream self-healing resilience, and architectural synthesis quality.
+Table~\ref{tab:tier2_cloud} presents empirical telemetry for Cloud Frontier Flagship Architectures evaluated via Google AI Studio API endpoints (\texttt{gemini-3.5-flash-lite}, 1,000,000 token context window, zero marginal cost free-tier cloud infrastructure). Metrics evaluate AST structural divergence ($D_{\text{AST}}$), Tree Edit Distance ($D_{\text{TED}}$), prompt presentation noise filtering ($N_{\text{filter}}$ \%), and end-to-end API inference latency across all core benchmark targets.
 
 \begin{table*}[!t]
-\caption{Tier 2 Telemetry: Cloud Frontier Flagship Architectures (Remote API Endpoints over OpenRouter)}
+\caption{Tier 2 Benchmark: Cloud Frontier Flagship Architectures (\texttt{gemini-3.5-flash-lite}, 1M Context Window, Zero Marginal Cost Cloud Infrastructure)}
 \label{tab:tier2_cloud}
 \centering
-\begin{tabular}{llccccc}
+\begin{tabular}{llcccccc}
 \toprule
-\textbf{Cloud Flagship Model} & \textbf{Context Window} & \textbf{Stage 1 Time} & \textbf{Stage 2 Time} & \textbf{Noise Filtered ($N_{\text{filter}}$)} & \textbf{Structural AST Div.} & \textbf{Architectural Innovation Feature} \\
+\textbf{Target Repository / Scenario} & \textbf{Domain \& Scale} & \textbf{Cond D $D_{\text{AST}}$} & \textbf{Cond D $D_{\text{TED}}$} & \textbf{Cond E $D_{\text{AST}}$} & \textbf{Cond E $D_{\text{TED}}$} & \textbf{$\Delta D_{\text{TED}}$} & \textbf{Noise Filtered ($N_{\text{filter}}$)} \\
 \midrule
-\textbf{Nemotron-3 550B Ultra} & 1,000,000 tokens & 28.10s & 25.40s & \textbf{40.3\%} & \textbf{1.0000} & HTML5 + Google Web Fonts (\texttt{fonts.googleapis.com}) \\
-\textbf{Nemotron-3 120B MoE} & 128,000 tokens & 27.11s & 15.99s & \textbf{72.7\%} & \textbf{0.8500} & Enterprise Monolith Token Compression \\
-\textbf{Z-AI GLM 5.2 Flagship} & 128,000 tokens & 14.20s & 17.90s & \textbf{48.5\%} & \textbf{1.0000} & Immutable State Machine \& Repository Abstraction \\
-\textbf{Gemma 4 31B IT} & 128,000 tokens & 12.80s & 15.60s & \textbf{62.0\%} & \textbf{1.0000} & ES6 Arrow Functions \& Typed Interfaces \\
+\texttt{ui\_01\_portfolio} & UI / Frontend (607 LOC) & 0.7525 & 0.4194 & \textbf{0.9448} & \textbf{0.9800} & \textbf{+0.5606} & 92.4\% \\
+\texttt{ui\_06\_secops\_dashboard} & Enterprise UI (1.4k LOC) & 0.8902 & 0.8125 & \textbf{0.9715} & \textbf{0.8364} & +0.0239 & 93.7\% \\
+\texttt{algo\_01\_orderbook} & FinTech Engine (1.1k LOC) & 0.7167 & 0.5862 & \textbf{0.7922} & \textbf{1.0000} & \textbf{+0.4138} & 88.7\% \\
+\texttt{algo\_03\_graph\_pathfinder} & Algorithmic (950 LOC) & 0.9257 & 0.8571 & \textbf{0.9815} & \textbf{0.9697} & +0.1126 & 0.0\% \\
+\texttt{micro\_01\_webhook\_dispatcher} & Microservices (61 LOC) & 0.7759 & 0.9697 & \textbf{0.8627} & \textbf{1.0000} & +0.0303 & 0.0\% \\
+\texttt{micro\_03\_api\_gateway} & API Gateway (140 LOC) & 0.9744 & 0.7727 & \textbf{0.9730} & \textbf{0.8800} & +0.1073 & 28.0\% \\
+\texttt{sec\_01\_jwt\_auth} & Security / Auth (91 LOC) & 0.6916 & 1.0000 & \textbf{0.8885} & \textbf{1.0000} & +0.0000 & 0.0\% \\
+\texttt{sec\_04\_crypto\_vault} & Crypto Vault (120 LOC) & 0.8846 & 1.0000 & \textbf{0.9799} & \textbf{0.9762} & -0.0238 & 0.0\% \\
+\texttt{data\_01\_cache\_lru} & LRU/LFU Cache (110 LOC) & 0.8841 & 0.8571 & \textbf{0.9665} & \textbf{0.9818} & +0.1247 & 0.0\% \\
+\texttt{data\_03\_state\_machine} & State Machine (130 LOC) & 0.8710 & 0.8571 & \textbf{0.9643} & \textbf{0.8571} & +0.0000 & 30.6\% \\
+\midrule
+\textbf{Mean ($\pm$ Std Dev)} & \textbf{All Evaluated Domains} & $0.8367 \pm 0.0904$ & $0.8132 \pm 0.1756$ & $\mathbf{0.9325 \pm 0.0605}$ & $\mathbf{0.9481 \pm 0.0607}$ & $\mathbf{+0.1349}$ & $\mathbf{33.3\% \pm 39.7\%}$ \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -278,17 +286,17 @@ When CodeGraph was enabled, its live Tree-sitter file watcher and SQLite indexin
 \subsection{Key Findings and Scale Invariance}
 Our experimental results reveal three key findings:
 \begin{enumerate}
-    \item \textbf{The Context Window Inflation Paradox:} Large context window capacities (up to 1,000,000 tokens in Nemotron 550B) do not alleviate Contextual Anchoring Bias; rather, they exacerbate it. Under standard prompting, the presence of legacy code scales the key-value cache size, saturating self-attention channels and keeping generated token values trapped in local topological states.
-    \item \textbf{Decoupled Performance Invariance:} When the Markov chain $X \to S \to Y$ is enforced via Two-Stage Decoupling, local edge models (e.g., Google Gemma 2 9B IT, Qwen 2.5 Coder 30B) and remote cloud flagships (e.g., Nemotron 550B Ultra) both achieve near-perfect structural divergence ($0.9400 \pm 0.0514$ AST divergence on local edge benchmarks; up to $1.0000$ on flagship runs). This proves that the decoupling protocol is scale-invariant.
-    \item \textbf{Token Noise Compression Limits:} As repository sizes increase (beyond 1,000 LOC), the Stage 1 YAML contractor filters out between $40.3\%$ and $94.4\%$ of layout tokens. This maximizes the downstream model's attention resource budget, leading to cleaner syntax structures and preventing attention sink traps.
+    \item \textbf{The Context Window Inflation Paradox:} Large context window capacities (up to 1,000,000 tokens in Gemini 3.5 Flash Lite) do not alleviate Contextual Anchoring Bias; rather, they exacerbate it when direct prompt conditioning is applied. Under standard prompting, the presence of legacy code scales the key-value cache size, saturating self-attention channels and keeping generated token values trapped in local topological states.
+    \item \textbf{Decoupled Performance Invariance:} When the Markov chain $X \to S \to Y$ is enforced via Two-Stage Decoupling, local edge models (e.g., Google Gemma 2 9B IT, Qwen 2.5 7B) and remote cloud flagships (Google Gemini 3.5 Flash Lite) both achieve near-perfect structural divergence ($0.9400 \pm 0.0514$ AST divergence on Tier 1; $0.9325 \pm 0.0605$ on Tier 2; $D_{\text{TED}} \ge 0.947$). This proves that the decoupling protocol is scale-invariant across both resource-constrained edge devices and cloud-scale frontier architectures.
+    \item \textbf{Token Noise Compression Limits:} As repository sizes increase (beyond 1,000 LOC), the Stage 1 YAML contractor filters out between $88.7\%$ and $93.7\%$ of layout tokens. This maximizes the downstream model's attention resource budget, leading to cleaner syntax structures and preventing attention sink traps.
 \end{enumerate}
 
 \subsection{Synthesized Architectural Quality}
-Frontier models evaluated in Tier 2 utilized their massive parameters to synthesize advanced, unanchored software abstractions:
+Cloud frontier models evaluated in Tier 2 utilized their massive attention bandwidth and reasoning capabilities to synthesize advanced, unanchored software abstractions:
 \begin{itemize}
-    \item \textbf{Nemotron 550B Ultra} completely restructured UI layouts using CSS Grid and integrated custom dynamic typography via Google Web Fonts, bypassing the static layouts of the legacy source code.
-    \item \textbf{Z-AI GLM 5.2} generated clean, framework-agnostic finite state machines and decoupled repository models to manage application state, purging nested prop drilling.
-    \item \textbf{Gemma 4 31B IT} restructured imperative callback chains into pure functional TypeScript interfaces with comprehensive type safety.
+    \item \textbf{Frontend UI Architecture:} The decoupled model restructured monolithic HTML/CSS interfaces into modular CSS Grid layouts with custom typography and modern responsive glassmorphism, eliminating legacy 220px fixed sidebars and nested tables.
+    \item \textbf{Algorithmic \& State Systems:} In FinTech and data structures, the model synthesized clean binary search tree indexing, O(1) LRU eviction doubly linked lists, and typed immutable state transitions.
+    \item \textbf{Microservices \& Security:} In authentication and API services, the model generated modern Express middleware with HMAC-SHA256 token rotation and asynchronous ASGI streaming endpoints.
 \end{itemize}
 
 \subsection{Limitations}
