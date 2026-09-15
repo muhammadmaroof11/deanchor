@@ -1,0 +1,130 @@
+[
+  {
+    "target_id": "ui_01_portfolio",
+    "domain": "design",
+    "source_chars": 36824,
+    "source_lines": 607,
+    "schema_chars": 4250,
+    "synthesized_chars": 467,
+    "stage1": {
+      "schema_preview": "```yaml\npage_title: Vijay Singh - Frontend Web Developer\ncore_entities:\n  - name: Person Profile\n    data_fields:\n      full_name: Vijay Singh\n      age: 20\n      location: India\n      primary_role: Frontend Web Developer\n      secondary_role: Part-time Blogger\n      education: Master's Degree in Computer Applications (MCA)\n      coding_start_year: 2021\n      gaming_blog: GamesRoid\n      gaming_blog_url: https://gamesroid.com/\n\n  - name: Social Media Profiles\n    data_fields:\n      github: https",
+      "grade": {
+        "entities": {
+          "navigation/menu items": {
+            "status": "MISSING",
+            "evidence": "No site navigation structure or menu items are captured in the schema output."
+          },
+          "project/portfolio cards or items": {
+            "status": "PRESENT",
+            "evidence": "Projects entity explicitly includes structured entries for PfpFinder, BikeKart, and SimplCalc with tech stacks and descriptions."
+          },
+          "contact form or contact info": {
+            "status": "MISSING",
+            "evidence": "No explicit contact form fields, email address, or contact section information are extracted in the schema."
+          },
+          "social links": {
+            "status": "PRESENT",
+            "evidence": "Social Media Profiles section captures URLs for GitHub, Twitter/X, Instagram, YouTube, LinkedIn, and Discord."
+          },
+          "section headings/titles": {
+            "status": "PARTIAL",
+            "evidence": "Implicitly represented via entity names (Person Profile, Technical Stack, Projects, Testimonials, Blog Articles), but explicit document section titles are not extracted as fields."
+          }
+        },
+        "invariants": {
+          "page must have navigation": {
+            "status": "MISSING",
+            "evidence": "Navigation components are completely missing from the schema representation."
+          },
+          "portfolio/project items must be present": {
+            "status": "PRESENT",
+            "evidence": "Three distinct portfolio project items with full detail (PfpFinder, BikeKart, SimplCalc) are preserved."
+          },
+          "contact information must be reachable": {
+            "status": "PARTIAL",
+            "evidence": "Social media profile links and Discord invite permit reaching out, though explicit email or contact form data is absent."
+          }
+        },
+        "overall_retention_score": 0.55,
+        "notes": "The extracted schema captures core domain details well (projects, social profiles, tech stack, testimonials, blogs), but misses structural components like main navigation and dedicated contact form details."
+      },
+      "retention_score": 0.55,
+      "computed_score": 0.5
+    },
+    "stage2": {
+      "output_preview": "```html\n<!DOCTYPE html>\n<html lang=\"en\" data-theme=\"dark\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Vijay Singh - Frontend Web Developer</title>\n  \n  <!-- Fonts -->\n  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n  <link href=\"https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,60",
+      "grade": {
+        "entities": {
+          "navigation/menu items": {
+            "status": "MISSING",
+            "evidence": "Synthesized code is truncated inside the <head> tag and contains no navigation elements."
+          },
+          "project/portfolio cards or items": {
+            "status": "MISSING",
+            "evidence": "Output ends abruptly in the <head> tag before any portfolio or project cards are defined."
+          },
+          "contact form or contact info": {
+            "status": "MISSING",
+            "evidence": "No body content or contact information/form is present due to truncation."
+          },
+          "social links": {
+            "status": "MISSING",
+            "evidence": "No social links are present in the provided snippet."
+          },
+          "section headings/titles": {
+            "status": "MISSING",
+            "evidence": "Only the HTML <title> tag is present; no section headings or page body titles exist."
+          }
+        },
+        "invariants": {
+          "page must have navigation": {
+            "status": "MISSING",
+            "evidence": "The code cut off before reaching the body or navigation markup."
+          },
+          "portfolio/project items must be present": {
+            "status": "MISSING",
+            "evidence": "No portfolio/project section or items were synthesized."
+          },
+          "contact information must be reachable": {
+            "status": "MISSING",
+            "evidence": "Contact information is entirely absent from the truncated snippet."
+          }
+        },
+        "overall_retention_score": 0.0,
+        "notes": "The Stage 2 Synthesized Code output is incomplete and truncated mid-head tag (at Google Fonts link), missing the entire DOM body and all critical domain information."
+      },
+      "retention_score": 0.0,
+      "computed_score": 0.0,
+      "syntax_valid": false,
+      "syntax_errors": [
+        "Unclosed tag '<html>' at end of document",
+        "Unclosed tag '<head>' at end of document"
+      ]
+    },
+    "information_bottleneck": {
+      "compression_ratio": 0.885,
+      "stage1_to_stage2_drop": 0.5
+    },
+    "timing": {
+      "stage1_sec": 16.71,
+      "stage2_sec": 49.61,
+      "total_sec": 130.08
+    }
+  },
+  {
+    "target_id": "algo_01_orderbook",
+    "error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/openai/chat/completions: [{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 28.344546466s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-3.6-flash\"\n            },\n            \"quotaValue\": \"20\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"28s\"\n      }\n    ]\n  }\n}\n]"
+  },
+  {
+    "target_id": "sec_01_jwt_auth",
+    "error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/openai/chat/completions: [{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 54.61182483s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-3.6-flash\"\n            },\n            \"quotaValue\": \"20\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"54s\"\n      }\n    ]\n  }\n}\n]"
+  },
+  {
+    "target_id": "micro_01_webhook_dispatcher",
+    "error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/openai/chat/completions: [{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 8.271238135s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"model\": \"gemini-3.6-flash\",\n              \"location\": \"global\"\n            },\n            \"quotaValue\": \"20\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"8s\"\n      }\n    ]\n  }\n}\n]"
+  },
+  {
+    "target_id": "data_01_cache_lru",
+    "error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/openai/chat/completions: [{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 34.718282882s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-3.6-flash\"\n            },\n            \"quotaValue\": \"20\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"34s\"\n      }\n    ]\n  }\n}\n]"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "target_id": "sec_01_jwt_auth",
+    "domain": "sec",
+    "source_chars": 2322,
+    "source_lines": 91,
+    "schema_chars": 2392,
+    "synthesized_chars": 14472,
+    "stage1": {
+      "schema_preview": "```yaml\nauth_domain: User Authentication and Authorization System\nidentity_entities:\n  - entity: User\n    attributes: [id, username, email, password_hash]\n  - entity: Role\n    attributes: [id, name]\ncredential_policies:\n  - policy: Password Hashing\n    details: Passwords are hashed using bcrypt with a salt round of 8 before storage.\n  - policy: Password Verification\n    details: Stored password hashes are compared with provided passwords using bcrypt.\n  - policy: JWT Generation\n    details: JWTs",
+      "grade": {
+        "parse_error": true,
+        "raw_response": "```json\n{\n  \"entities\": {\n    \"JWT token creation\": {\n      \"status\": \"PRESENT\",\n      \"evidence\": \"credential_policies -> JWT Generation: 'JWTs are generated upon successful signin, containing user ID, signed with a secret using HS256 algorithm, and expire in 24 hours (86400 seconds).'\"\n    },\n    \"token verification/validation\": {\n      \"status\": \"MISSING\",\n      \"evidence\": \"The original source code snippet provided does not contain any logic for verifying",
+        "entities": {},
+        "invariants": {},
+        "overall_retention_score": -1,
+        "notes": "Failed to parse judge response as JSON"
+      },
+      "retention_score": -1,
+      "computed_score": 0.0
+    },
+    "stage2": {
+      "output_preview": "This implementation provides a clean-slate, production-grade authentication and access control system adhering strictly to your provided schema. It uses modern Python practices, FastAPI for the API, SQLAlchemy for database interaction, bcrypt for secure password hashing, and PyJWT for token management.\n\n**Key Features Implemented:**\n\n1.  **Modern Credential Handling:**\n    *   **Secure Hashing:** Passwords are hashed using `bcrypt` with a salt round of 8, as specified.\n    *   **Asymmetric Signi",
+      "grade": {
+        "parse_error": true,
+        "raw_response": "```json\n{\n  \"entities\": {\n    \"JWT token creation\": {\n      \"status\": \"PRESENT\",\n      \"evidence\": \"JWTs are signed using HS256 with a strong secret key. While HS256 is symmetric, it uses a secret *key* for signing, adhering to the 'signing' aspect. JWTs expire in 24 hours (86400 seconds) from generation, as per the schema.\"\n    },\n    \"token verification/validation\": {\n      \"status\": \"PRESENT\",",
+        "entities": {},
+        "invariants": {},
+        "overall_retention_score": -1,
+        "notes": "Failed to parse judge response as JSON"
+      },
+      "retention_score": -1,
+      "computed_score": 0.0,
+      "syntax_valid": false,
+      "syntax_errors": [
+        "Unclosed bracket '{' at character index 14470",
+        "Python SyntaxError: unterminated string literal (detected at line 7) (line 7)"
+      ]
+    },
+    "information_bottleneck": {
+      "compression_ratio": -0.03,
+      "stage1_to_stage2_drop": null
+    },
+    "timing": {
+      "stage1_sec": 9.27,
+      "stage2_sec": 26.93,
+      "total_sec": 65.51
+    }
+  }
+]

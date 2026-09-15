@@ -1,15 +1,21 @@
 {
   "id": "sec_02_oauth2_server",
-  "name": "FastAPI OAuth2 & OIDC Provider",
+  "name": "Authlib OAuth2 Example Server",
   "domain": "Security & Auth",
-  "repo_origin": "lepture/authlib-fastapi",
-  "loc": 3400,
-  "language": "Python",
+  "repo_origin": "authlib/example-oauth2-server",
+  "loc": 102,
+  "loc_status": "VERIFIED",
+  "language": "Python/Flask",
   "legacy_paradigm": "Monolithic auth view functions, hardcoded client validation",
   "deanchored_target": "Pluggable grant type strategies, PKCE cryptographic verifiers",
   "test_type": "Pytest OIDC Grant Tests",
-  "test_assertions": 26,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "full_repo_ingested": true,
+  "repo_total_files": 16,
+  "repo_total_dirs": 2,
+  "repo_test_files_count": 0,
+  "primary_source_file": "website\\oauth2.py"
 }

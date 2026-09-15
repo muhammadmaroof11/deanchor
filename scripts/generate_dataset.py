@@ -280,27 +280,7 @@ def get_user_prompt(mode: str, content: str, subject_name: str) -> str:
     return prompts[mode]
 
 
-# Ensure CUDA runtime DLLs are available on Windows
-if sys.platform == "win32":
-    venv_lib = pathlib.Path(__file__).parent.parent / ".venv" / "Lib" / "site-packages"
-    llama_lib = venv_lib / "llama_cpp" / "lib"
-    if llama_lib.exists():
-        os.add_dll_directory(str(llama_lib))
-    for bin_dir in (venv_lib / "nvidia").glob("*/bin"):
-        if bin_dir.is_dir():
-            os.add_dll_directory(str(bin_dir))
 
-def call_local_llama(llm, system: str, user: str) -> str:
-    """Call local GPU llama_cpp model."""
-    response = llm.create_chat_completion(
-        messages=[
-            {"role": "system", "content": system},
-            {"role": "user",   "content": user},
-        ],
-        temperature=0.85,
-        max_tokens=4096,
-    )
-    return response["choices"][0]["message"]["content"]
 
 def call_api(client: OpenAI, system: str, user: str, model: str) -> str:
     """Call the API and return the assistant's response text."""
@@ -336,28 +316,11 @@ def main():
     parser.add_argument("--mode",    choices=list(SYSTEM_PROMPTS.keys()) + ["all"], default="all")
     parser.add_argument("--subject", default=None, help="Specific subject (e.g. subject_1)")
     parser.add_argument("--model",   default=API_MODEL)
-    parser.add_argument("--local",   action="store_true", default=False, help="Use local GPU GGUF via llama-cpp")
-    parser.add_argument("--local-model", default="models/Qwen2.5-7B-Instruct-Q4_K_M/Qwen2.5-7B-Instruct-Q4_K_M.gguf")
     parser.add_argument("--dry-run", action="store_true", help="Print prompts without calling API")
     parser.add_argument("--output",  default="train.jsonl", help="Output JSONL filename")
     args = parser.parse_args()
 
-    llm = None
-    client = None
-    if args.local:
-        from llama_cpp import Llama
-        model_path = pathlib.Path(args.local_model)
-        if not model_path.exists():
-            model_path = ROOT / args.local_model
-        print(f"Loading local GPU model from: {model_path}")
-        llm = Llama(
-            model_path=str(model_path),
-            n_gpu_layers=-1,
-            n_ctx=4096,
-            verbose=False
-        )
-    else:
-        client = OpenAI(api_key=API_KEY, base_url=API_BASE)
+    client = OpenAI(api_key=API_KEY, base_url=API_BASE)
     output_path = DATASETS / args.output
 
     modes = list(SYSTEM_PROMPTS.keys()) if args.mode == "all" else [args.mode]
@@ -396,13 +359,10 @@ def main():
                 continue
 
             try:
-                target_name = "Local GPU" if args.local else args.model
+                target_name = args.model
                 print(f"  Generating with {target_name}...")
                 t0 = time.time()
-                if args.local:
-                    assistant = call_local_llama(llm, system, user)
-                else:
-                    assistant = call_api(client, system, user, args.model)
+                assistant = call_api(client, system, user, args.model)
                 elapsed = time.time() - t0
 
                 save_pair(output_path, system, user, assistant)

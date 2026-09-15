@@ -3,13 +3,18 @@
   "name": "Graph Pathfinder Shortest Route",
   "domain": "Algorithmic & Fintech",
   "repo_origin": "anvaka/ngraph.path",
-  "loc": 950,
-  "language": "TypeScript",
+  "loc": 156,
+  "loc_status": "VERIFIED",
+  "language": "JavaScript",
   "legacy_paradigm": "Standard recursive Dijkstra with adjacency matrix allocations",
   "deanchored_target": "Bi-directional A* with typed flat array heaps and bitset visited masks",
   "test_type": "Jest Route Verification Tests",
-  "test_assertions": 15,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": true
+  "is_core_subset": true,
+  "full_repo_ingested": true,
+  "repo_total_files": 33,
+  "repo_total_dirs": 8,
+  "repo_test_files_count": 4
 }

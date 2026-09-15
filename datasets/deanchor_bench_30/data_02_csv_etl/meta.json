@@ -1,15 +1,21 @@
 {
   "id": "data_02_csv_etl",
-  "name": "Streaming CSV/JSON ETL Pipeline",
+  "name": "Streaming CSV Parser",
   "domain": "Data Management & State",
   "repo_origin": "mafintosh/csv-parser",
-  "loc": 2200,
-  "language": "Python/Rust",
+  "loc": 307,
+  "loc_status": "VERIFIED",
+  "language": "JavaScript",
   "legacy_paradigm": "Line-by-line string split with high garbage collection overhead",
   "deanchored_target": "Zero-copy byte buffer chunk parser with schema validation generators",
-  "test_type": "Pytest Data Transformation Tests",
-  "test_assertions": 20,
+  "test_type": "Jest/Tape Data Transformation Tests",
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "full_repo_ingested": true,
+  "repo_total_files": 93,
+  "repo_total_dirs": 9,
+  "repo_test_files_count": 39,
+  "primary_source_file": "index.js"
 }

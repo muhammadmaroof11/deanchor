@@ -1,15 +1,22 @@
 {
   "id": "micro_05_graphql_proxy",
-  "name": "GraphQL Schema Stitching Proxy",
+  "name": "GraphQL Tools Toolkit",
   "domain": "Microservices & Webhooks",
   "repo_origin": "ardatan/graphql-tools",
-  "loc": 3100,
+  "loc": 2460,
+  "loc_status": "VERIFIED",
   "language": "TypeScript",
   "legacy_paradigm": "N+1 nested schema query resolution, synchronous remote stitching",
   "deanchored_target": "Batched DataLoader resolver with AST query sub-graph compilation",
   "test_type": "Jest GraphQL Query Execution",
-  "test_assertions": 22,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "notes": "WARNING: This is a large monorepo. Benchmark should target a specific package.",
+  "full_repo_ingested": true,
+  "repo_total_files": 916,
+  "repo_total_dirs": 257,
+  "repo_test_files_count": 117,
+  "primary_source_file": "packages\\executor\\src\\execution\\execute.ts"
 }

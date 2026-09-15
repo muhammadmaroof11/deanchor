@@ -1,15 +1,21 @@
 {
   "id": "algo_02_crypto_bot",
-  "name": "Algorithmic Market Arbitrage Bot",
+  "name": "Crypto Arbitrage Detection Bot",
   "domain": "Algorithmic & Fintech",
-  "repo_origin": "crypto-charlie/arbitrage-engine",
-  "loc": 2800,
+  "repo_origin": "khdarii/CryptoArbitrageBot",
+  "loc": 98,
+  "loc_status": "VERIFIED",
   "language": "Python",
-  "legacy_paradigm": "Synchronous polling loop, global shared state locks, linear price scan",
-  "deanchored_target": "Asyncio event stream, lock-free circular ring buffer, Bellman-Ford graph",
+  "legacy_paradigm": "Synchronous polling loop, global shared state, linear price scan",
+  "deanchored_target": "Asyncio event stream, lock-free ring buffer, Bellman-Ford graph",
   "test_type": "Pytest Arbitrage Detection Tests",
-  "test_assertions": 22,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "full_repo_ingested": true,
+  "repo_total_files": 5,
+  "repo_total_dirs": 0,
+  "repo_test_files_count": 0,
+  "primary_source_file": "main.py"
 }

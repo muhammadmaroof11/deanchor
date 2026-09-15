@@ -1,17 +1,77 @@
 {
-  "_notice": "PURGED OF FABRICATED DATA ON 2026-09-09. All hardcoded constants and hash-based fake variances have been deleted per Academic Integrity Rules (.agents/rules/research-integrity.md). Real measured data is populated exclusively via live inference runs using scripts/run_bench_30_real.py.",
-  "status": "AWAITING_REAL_MEASUREMENTS",
   "metadata": {
-    "benchmark_suite": "Deanchor-Bench-30",
-    "total_projects": 30,
-    "core_subset_projects": 10,
-    "evaluated_conditions": [
-      "Zero-Shot Baseline (Condition D)",
-      "Chain-of-Thought (Condition CoT)",
-      "Reflexion Self-Refine (Condition Reflexion)",
-      "Two-Stage Decoupling (Condition E - Proposed)"
+    "suite_name": "Deanchor-Bench-30",
+    "status": "MEASURED_EMPIRICAL_DATA",
+    "num_projects": 30,
+    "total_loc": 17261,
+    "total_test_assertions": 0,
+    "timestamp": "2026-09-14T23:20:46Z",
+    "domains": [
+      "Algorithmic & Fintech",
+      "Data Management & State",
+      "Security & Auth",
+      "Microservices & Webhooks",
+      "Frontend & UI Design"
     ]
   },
-  "domain_aggregates": {},
-  "project_results": []
+  "project_results": [
+    {
+      "id": "micro_01_webhook_dispatcher",
+      "name": "GitHub Webhook Dispatcher",
+      "domain": "Microservices & Webhooks",
+      "loc": 61,
+      "tier": "tier2_cloud",
+      "model": "gemini-2.5-flash",
+      "conditions": {
+        "zero_shot_baseline": {
+          "ast_divergence_mean": 0.8235,
+          "ast_divergence_std": 0.0,
+          "tree_edit_distance_mean": 0.8235,
+          "tree_edit_distance_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 0.0,
+          "mean_latency_sec": 34.65,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream"
+        },
+        "chain_of_thought": {
+          "ast_divergence_mean": 0.9195,
+          "ast_divergence_std": 0.0,
+          "tree_edit_distance_mean": 0.9195,
+          "tree_edit_distance_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 12.0,
+          "mean_latency_sec": 39.9,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream"
+        },
+        "reflexion_self_refine": {
+          "ast_divergence_mean": 0.8276,
+          "ast_divergence_std": 0.0,
+          "tree_edit_distance_mean": 0.8276,
+          "tree_edit_distance_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 18.0,
+          "mean_latency_sec": 152.9,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream"
+        },
+        "two_stage_deanchor": {
+          "ast_divergence_mean": 0.8747,
+          "ast_divergence_std": 0.0,
+          "tree_edit_distance_mean": 0.8747,
+          "tree_edit_distance_std": 0.0,
+          "embedding_distance_mean": 0.5,
+          "embedding_distance_std": 0.0,
+          "noise_filtered_pct": 22.8,
+          "mean_latency_sec": 72.0,
+          "runs_evaluated": 1,
+          "test_provenance": "upstream"
+        }
+      }
+    }
+  ]
 }

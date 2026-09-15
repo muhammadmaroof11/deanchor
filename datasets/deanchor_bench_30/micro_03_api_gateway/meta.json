@@ -1,15 +1,20 @@
 {
   "id": "micro_03_api_gateway",
-  "name": "FastAPI Reverse Proxy Gateway",
+  "name": "FastAPI API Gateway",
   "domain": "Microservices & Webhooks",
-  "repo_origin": "tiangolo/fastapi-gateway",
-  "loc": 2200,
+  "repo_origin": "b33lz3bubTH/fastapi-apigateway",
+  "loc": 133,
+  "loc_status": "VERIFIED",
   "language": "Python/FastAPI",
   "legacy_paradigm": "Hardcoded path regex matching, synchronous HTTP client calls",
   "deanchored_target": "Async trie router, circuit breaker state machine, token bucket limiter",
   "test_type": "Pytest Route & Timeout Tests",
-  "test_assertions": 20,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": true
+  "is_core_subset": true,
+  "full_repo_ingested": true,
+  "repo_total_files": 12,
+  "repo_total_dirs": 3,
+  "repo_test_files_count": 0
 }

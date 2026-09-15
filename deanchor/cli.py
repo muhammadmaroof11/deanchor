@@ -15,10 +15,10 @@ if sys.stdout and hasattr(sys.stdout, "reconfigure"):
 
 def format_header():
     return """
-╔══════════════════════════════════════════════════════════════════════╗
-║               🌌 DEANCHOR ENGINE — CLI v1.0.0                       ║
-║        Blank-Slate Context Decoupling for AI Code & UI Synthesis     ║
-╚══════════════════════════════════════════════════════════════════════╝
++======================================================================+
+|               DEANCHOR ENGINE -- CLI v1.0.0                          |
+|        Blank-Slate Context Decoupling for AI Code & UI Synthesis     |
++======================================================================+
 """
 
 
@@ -36,8 +36,6 @@ def main():
                         help="Path to save synthesized output file (default: print to stdout / auto-name)")
     parser.add_argument("--save-schema", default=None,
                         help="Optional path to save intermediate Stage 1 YAML schema")
-    parser.add_argument("--ctx", type=int, default=8192,
-                        help="Context window size (default: 8192)")
     parser.add_argument("-t", "--temperature", type=float, default=0.85,
                         help="Sampling temperature for Stage 2 synthesis (default: 0.85)")
     parser.add_argument("-q", "--quiet", action="store_true",
@@ -54,14 +52,14 @@ def main():
 
     if not args.quiet:
         print(format_header())
-        print(f"📁 Target File : {input_path.name} ({len(content):,} chars)")
-        print(f"🎯 Target Niche: {niche.upper()}")
-        print(f"🤖 Model Engine: {args.model.upper()}")
-        print(f"⚙️  Pipeline    : Stage 1 (Schema Extraction) ➔ Stage 2 (Clean Synthesis)")
-        print(f"{'─'*70}")
-        print("⏳ Initializing GPU engine & executing Stage 1...")
+        print(f" Target File : {input_path.name} ({len(content):,} chars)")
+        print(f" Target Niche: {niche.upper()}")
+        print(f" Model Engine: {args.model.upper()}")
+        print(f" Pipeline    : Stage 1 (Schema Extraction) -> Stage 2 (Clean Synthesis)")
+        print("-" * 70)
+        print(" Initializing cloud inference engine & executing Stage 1...")
 
-    engine = DeanchorEngine(model_identifier=args.model, n_ctx=args.ctx)
+    engine = DeanchorEngine(model_identifier=args.model)
 
     try:
         result = engine.deanchor(content, niche=niche, temperature=args.temperature)
@@ -101,16 +99,16 @@ def main():
             print(f"✨ Synthesized clean-slate output saved to: {out_path}")
 
     if not args.quiet:
-        syntax_status = "✅ Valid (0 Errors)" if metrics.get("syntax_valid", True) else f"⚠️ Warning ({len(metrics.get('syntax_errors', []))} Issues Detected)"
-        print(f"{'─'*70}")
-        print(f"📊 PERFORMANCE METRICS:")
-        print(f"   • Stage 1 Extraction Time : {metrics['stage1_time_sec']}s")
-        print(f"   • Stage 2 Synthesis Time  : {metrics['stage2_time_sec']}s")
-        print(f"   • Total Pipeline Time     : {metrics['total_time_sec']}s")
-        print(f"   • Token Noise Filtered    : {metrics['token_noise_reduction_pct']}% reduction")
-        print(f"   • Synthesized Output Size : {metrics['output_chars']:,} chars")
-        print(f"   • Syntax Integrity        : {syntax_status}")
-        print(f"{'═'*70}\n")
+        syntax_status = "Valid (0 Errors)" if metrics.get("syntax_valid", True) else f"Warning ({len(metrics.get('syntax_errors', []))} Issues Detected)"
+        print("-" * 70)
+        print(" PERFORMANCE METRICS:")
+        print(f"   * Stage 1 Extraction Time : {metrics['stage1_time_sec']}s")
+        print(f"   * Stage 2 Synthesis Time  : {metrics['stage2_time_sec']}s")
+        print(f"   * Total Pipeline Time     : {metrics['total_time_sec']}s")
+        print(f"   * Token Noise Filtered    : {metrics['token_noise_reduction_pct']}% reduction")
+        print(f"   * Synthesized Output Size : {metrics['output_chars']:,} chars")
+        print(f"   * Syntax Integrity        : {syntax_status}")
+        print("=" * 70 + "\n")
 
 
 if __name__ == "__main__":

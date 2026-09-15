@@ -1,15 +1,21 @@
 {
   "id": "data_04_signal_store",
-  "name": "Reactive Signal State Container",
+  "name": "Preact Signals Reactive State",
   "domain": "Data Management & State",
   "repo_origin": "preactjs/signals",
-  "loc": 1150,
+  "loc": 1138,
+  "loc_status": "VERIFIED",
   "language": "TypeScript",
   "legacy_paradigm": "Observer pattern with array push/splice on listeners array",
   "deanchored_target": "Dependency graph topological sorting with automatic batching",
   "test_type": "Jest Reactivity & Batch Tests",
-  "test_assertions": 19,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "full_repo_ingested": true,
+  "repo_total_files": 229,
+  "repo_total_dirs": 87,
+  "repo_test_files_count": 34,
+  "primary_source_file": "packages\\core\\src\\index.ts"
 }

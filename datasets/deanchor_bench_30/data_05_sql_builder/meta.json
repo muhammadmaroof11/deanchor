@@ -1,15 +1,22 @@
 {
   "id": "data_05_sql_builder",
-  "name": "Type-Safe SQL Query Builder",
+  "name": "Knex.js SQL Query Builder",
   "domain": "Data Management & State",
   "repo_origin": "knex/knex",
-  "loc": 2600,
-  "language": "TypeScript",
+  "loc": 1640,
+  "loc_status": "VERIFIED",
+  "language": "JavaScript",
   "legacy_paradigm": "Imperative string concatenation with potential SQL injection traps",
   "deanchored_target": "AST query tree compiler with parameterized AST node visitors",
   "test_type": "Jest SQL Compilation Tests",
-  "test_assertions": 28,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "notes": "WARNING: Large library (19K+ stars, 50K+ LOC). Benchmark should target a specific module.",
+  "full_repo_ingested": true,
+  "repo_total_files": 601,
+  "repo_total_dirs": 181,
+  "repo_test_files_count": 91,
+  "primary_source_file": "lib\\query\\querycompiler.js"
 }

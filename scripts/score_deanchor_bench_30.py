@@ -62,12 +62,12 @@ def evaluate_bench_30():
         print(f"[SUCCESS] Updated {OUTPUT_JSON} with {len(results['project_results'])} real evaluated subjects.")
         return
 
-    print("═════════════════════════════════════════════════════════════════════════")
+    print("-" * 75)
     print(" NOTICE: Fabricated seed generators have been purged from this engine.")
     print(" To generate real benchmark evaluations, run:")
     print("   python scripts/run_bench_30_real.py --tier 1 --runs 3")
     print("   python scripts/run_bench_30_real.py --tier 2 --runs 3")
-    print("═════════════════════════════════════════════════════════════════════════")
+    print("-" * 75)
 
 
 if __name__ == "__main__":

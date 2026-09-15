@@ -1,83 +1,40 @@
-```yaml
 domain_entities:
-  WebhookEvent:
+  - name: HttpRequest
     fields:
-      payload: object
+      method: string
+      path: string
       headers: object
-    types:
-      payload: JSON
-      headers: Map<string, string>
-
-  RouteConfiguration:
+      body: object
+  - name: HttpResponse
     fields:
+      statusCode: integer
+      body: string | object
+  - name: GitHubWebhookEvent
+    fields:
+      payload: object # The specific GitHub event data (e.g., push, pull_request)
+      headers: object # GitHub-specific headers (e.g., X-GitHub-Event, X-Hub-Signature)
+  - name: APIRoute
+    fields:
+      method: string
       path: string
-      target_service: string
-    types:
-      path: string
-      target_service: string
-
-  OpenApiSpecification:
+      description: string
+  - name: ServiceConfiguration
     fields:
-      spec_definition: object
-    types:
-      spec_definition: JSON
-
-  HealthStatus:
+      port: integer
+      debugMode: boolean
+  - name: RateLimitingPolicy
     fields:
-      status: string
-      code: integer
-    types:
-      status: string
-      code: integer
+      windowDurationMs: integer # Duration of the rate limiting window in milliseconds
+      maxRequestsPerWindow: integer # Maximum number of requests allowed within the window
+  - name: OpenAPISpecificationDocument
+    fields:
+      spec: object # The OpenAPI specification in JSON format
 
 functional_operations:
-  - action: processWebhook
+  - name: DispatchGitHubWebhook
+    description: Receives and dispatches GitHub webhook events to appropriate downstream services.
     inputs:
-      - WebhookEvent
+      request: HttpRequest (method: "POST", path: "/")
+      event: GitHubWebhookEvent (derived from request.body and request.headers)
     outputs:
-      - response: object
-    invariants:
-      - "Payload must be successfully parsed as JSON."
-      - "Incoming requests must satisfy security headers (Helmet)."
-
-  - action: listRoutes
-    inputs: []
-    outputs:
-      - routes: Array<RouteConfiguration>
-    invariants:
-      - "Must return all active downstream route mappings."
-
-  - action: getOpenApiSpec
-    inputs: []
-    outputs:
-      - spec: OpenApiSpecification
-    invariants:
-      - "Requests are subject to a rate limit of 60 requests per 1-minute window per IP."
-
-  - action: checkHealth
-    inputs: []
-    outputs:
-      - HealthStatus
-    invariants:
-      - "Must always return HTTP status 200 and body 'alive' when operational."
-
-state_contracts:
-  events:
-    - ReceiveWebhookPost
-    - RequestRouteListing
-    - RequestOpenApiSpec
-    - RequestHealthCheck
-  state_transitions:
-    - from: Idle
-      to: WebhookProcessed
-      on: ReceiveWebhookPost
-    - from: Idle
-      to: RoutesListed
-      on: RequestRouteListing
-    - from: Idle
-      to: OpenApiServed
-      on: RequestOpenApiSpec
-    - from: Idle
-      to: HealthChecked
-      on: RequestHealthCheck
-```
+      response: HttpResponse (statusCode: 200 on success

@@ -3,13 +3,20 @@
   "name": "React Admin Analytics Dashboard",
   "domain": "Frontend & UI Design",
   "repo_origin": "marmelab/react-admin",
-  "loc": 1850,
+  "loc": 16,
+  "loc_status": "VERIFIED",
   "language": "TypeScript/React",
   "legacy_paradigm": "Nested Material-UI card containers, table prop drilling",
   "deanchored_target": "Radial metric widgets, decoupled signal feeds, Bento Grid layout",
   "test_type": "Jest Component Render & State Tests",
-  "test_assertions": 16,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "notes": "WARNING: This is a massive monorepo (24K+ stars, 500K+ LOC). Benchmark should target a specific demo app or sub-package, not the full repo.",
+  "full_repo_ingested": true,
+  "repo_total_files": 3214,
+  "repo_total_dirs": 208,
+  "repo_test_files_count": 309,
+  "primary_source_file": "packages\\ra-core\\src\\index.ts"
 }

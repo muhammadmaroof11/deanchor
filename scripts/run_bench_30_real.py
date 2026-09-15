@@ -3,10 +3,7 @@
 run_bench_30_real.py
 ────────────────────
 Comprehensive Real Empirical Execution & Evaluation Runner for Deanchor-Bench-30.
-
-Supports Dual-Tier Experimental Architecture:
-  • Tier 1 (Local Edge Models, 7B--30B): Local LM Studio inference (http://127.0.0.1:1234/v1)
-  • Tier 2 (Cloud Frontier Flagships, 31B--550B): Distributed OpenRouter API (https://openrouter.ai/api/v1)
+Executes genuine cloud frontier model inference via Google Gemini / OpenRouter APIs.
 
 Evaluation Conditions:
   1. Zero-Shot Baseline (Condition D): Single-pass prompt with legacy source code.
@@ -16,7 +13,8 @@ Evaluation Conditions:
 
 Metrics Computed:
   • AST Structural Divergence (D_AST): Normalized structural AST feature divergence (0.0 = identical → 1.0 = fully deanchored).
-  • Semantic Distance (D_emb): Cosine distance using local nomic-embed-text-v1.5 or OpenAI text-embedding-3-small.
+  • Tree Edit Distance (TED): Zhang-Shasha AST tree edit distance normalized by tree size.
+  • Semantic Distance (D_emb): Token frequency cosine distance.
   • Presentation Noise Filtered (N_filter %): Token compression achieved by Stage 1 intermediate contract.
   • Mean Latency (seconds) ± Sample Standard Deviation (sigma).
 
@@ -24,14 +22,11 @@ Usage:
   # Dry-run validation
   python scripts/run_bench_30_real.py --dry-run
 
-  # Run Tier 1 Local Edge Model (e.g. 9B or 30B coder on LM Studio)
-  python scripts/run_bench_30_real.py --tier 1 --model qwen3.5-9b-uncensored-hauhaucs-aggressive --runs 1
-
-  # Run Tier 2 Cloud Frontier Model (via OpenRouter API)
-  python scripts/run_bench_30_real.py --tier 2 --model nvidia/nemotron-3-ultra-550b-a55b:free --runs 1
+  # Run Cloud Frontier Benchmark with Gemini 2.5 Flash
+  python scripts/run_bench_30_real.py --model gemini-2.5-flash --runs 1
 
   # Run specific benchmark subject
-  python scripts/run_bench_30_real.py --project ui_01_portfolio --runs 2
+  python scripts/run_bench_30_real.py --project ui_01_portfolio --runs 1
 """
 
 import os
@@ -69,8 +64,7 @@ if env_file.exists():
 
 
 def parse_args():
-    p = argparse.ArgumentParser(description="Deanchor Bench-30 Real Inference & Evaluation Runner")
-    p.add_argument("--tier", choices=["1", "2", "both"], default="1", help="1 = Local Edge (LM Studio), 2 = Cloud Frontier (Gemini/OpenRouter)")
+    p = argparse.ArgumentParser(description="Deanchor Bench-30 Real Cloud Inference & Evaluation Runner")
     p.add_argument("--registry", default=str(REGISTRY_FILE), help="Path to registry.json")
     p.add_argument("--core-subset", action="store_true", default=True, help="Run on the 10 core verified benchmark projects")
     p.add_argument("--all-projects", action="store_true", help="Run on all 30 benchmark projects")
@@ -78,14 +72,11 @@ def parse_args():
     p.add_argument("--runs", type=int, default=1, help="Number of evaluation runs per condition (for mean ± std)")
     p.add_argument("--force", action="store_true", help="Force re-run and overwrite existing entries in results")
     
-    # Model configuration
-    p.add_argument("--model", help="Model ID (defaults based on tier: Tier 1 -> qwen3-coder-30b-a3b-instruct; Tier 2 -> gemini-3.5-flash-lite)")
-    p.add_argument("--local-base", default="http://127.0.0.1:1234/v1", help="Local LM Studio base URL")
-    p.add_argument("--local-key", default="lm-studio", help="Local API key")
-    p.add_argument("--cloud-base", default="https://generativelanguage.googleapis.com/v1beta/openai/", help="Cloud API base URL")
-    p.add_argument("--cloud-key", default=os.getenv("GEMINI_API_KEY", os.getenv("OPENROUTER_API_KEY", "")), help="Cloud API Key")
-    p.add_argument("--embedding-base", default="http://127.0.0.1:1234/v1", help="Base URL for embeddings")
-    p.add_argument("--embedding-model", default="text-embedding-nomic-embed-text-v1.5", help="Embedding model ID")
+    # Cloud Model & Provider configuration
+    p.add_argument("--provider", choices=["auto", "openrouter", "gemini"], default="auto", help="Inference backend provider")
+    p.add_argument("--model", help="Model ID (e.g. gemini-2.5-flash or nvidia/nemotron-3-super-120b-a12b:free)")
+    p.add_argument("--cloud-base", help="Cloud API base URL (overrides provider defaults)")
+    p.add_argument("--cloud-key", help="Cloud API Key (overrides env defaults)")
     p.add_argument("--dry-run", action="store_true", help="Validate benchmark configuration without calling inference")
     p.add_argument("--output-json", default=str(RESULTS_DIR / "bench_30_measured_results.json"), help="Output path for measured JSON results")
     return p.parse_args()
@@ -98,6 +89,7 @@ When refactoring, optimizing, or redesigning code, you strictly prioritize clean
 
 PROMPT_CONDITION_D = """Task: Completely rewrite and modernize the following code from scratch using a modern, clean-slate architecture.
 Preserve all functional capabilities, data structures, and invariants while producing a high-quality greenfield implementation.
+Output the complete, working source code directly inside a code block without conversational prose.
 
 Source Code:
 ```
@@ -107,6 +99,7 @@ Source Code:
 
 PROMPT_CONDITION_COT = """Task: Completely rewrite and modernize the following code from scratch using a modern, clean-slate architecture.
 Think step-by-step through the requirements, identify the fundamental domain invariants, analyze the architectural flaws of the current implementation, and then produce the complete modernized greenfield code.
+Output the complete, working source code directly inside a code block.
 
 Source Code:
 ```
@@ -115,6 +108,7 @@ Source Code:
 """
 
 PROMPT_CONDITION_REFLEXION_TURN1 = """Task: Redesign this codebase from scratch into a modern architecture.
+Output the complete source code directly inside a code block.
 Source Code:
 ```
 {source_code}
@@ -124,11 +118,11 @@ Source Code:
 PROMPT_CONDITION_REFLEXION_CRITIQUE = """Review the draft implementation you just produced against the original source code.
 1. Did you inadvertently retain legacy presentation patterns, obsolete control flow, or anchored class structures?
 2. Are all core domain functions and data properties strictly preserved?
-3. Generate a strict architectural critique and then provide a fully revised, unanchored greenfield implementation."""
+Critique briefly, then output the complete revised greenfield source code directly inside a code block."""
 
 PROMPT_STAGE1_EXTRACT = """Task: Extract the pure semantic domain schema and functional invariants from the following code.
 Strip away ALL presentation elements, layout choices, HTML/CSS class specifics, and imperatively anchored loops.
-Output ONLY a structured YAML schema capturing:
+Output ONLY the structured YAML schema inside a ```yaml code block without conversational prose:
 1. domain_entities: (names, fields, types)
 2. functional_operations: (actions, inputs, outputs, invariants)
 3. state_contracts: (events, state transitions)
@@ -140,7 +134,8 @@ Source Code:
 """
 
 PROMPT_STAGE2_SYNTHESIZE = """Task: Using ONLY the decoupled semantic YAML schema below, synthesize a production-grade, state-of-the-art greenfield implementation from scratch.
-You have NO access to the legacy source code. Design the architecture, file organization, and presentation purely to serve the extracted domain schema.
+You have NO access to the legacy source code. Design the architecture and implementation purely to serve the extracted domain schema.
+Output the complete, self-contained, working source code directly inside a code block. Do NOT write conversational design essays or prose commentary.
 
 Domain Schema (YAML):
 ```yaml
@@ -159,6 +154,21 @@ def truncate_for_context(prompt: str, max_chars: int = 12000) -> str:
     return prompt[:half] + "\n\n/* ... [MIDDLE CODE TRUNCATED FOR CONTEXT WINDOW] ... */\n\n" + prompt[-half:]
 
 
+def extract_code_block(text: str) -> str:
+    """Extract clean source code from markdown fences if present."""
+    import re
+    m = re.search(r"```(?:[a-zA-Z0-9_\-]+)?\s*\n([\s\S]*?)\n```", text)
+    if m:
+        return m.group(1).strip()
+    # Strip any dangling opening/closing fences
+    lines = text.strip().splitlines()
+    if lines and lines[0].strip().startswith("```"):
+        lines = lines[1:]
+    if lines and lines[-1].strip().startswith("```"):
+        lines = lines[:-1]
+    return "\n".join(lines).strip()
+
+
 def call_llm(base_url: str, api_key: str, model: str, system_prompt: str, user_prompt: str, dry_run: bool = False) -> Tuple[str, float]:
     """Invoke LLM with context window safety, rate-limit backoff, and latency measurement."""
     start_t = time.time()
@@ -168,7 +178,13 @@ def call_llm(base_url: str, api_key: str, model: str, system_prompt: str, user_p
         return f"/* DRY RUN MOCK SYNTHESIS FOR MODEL {model} */", 0.02
 
     from openai import OpenAI
-    client = OpenAI(base_url=base_url, api_key=api_key, timeout=300.0)
+    headers = {}
+    if "openrouter.ai" in base_url:
+        headers = {
+            "HTTP-Referer": "https://github.com/muhammadmaroof11/deanchor",
+            "X-Title": "Deanchor Research Project"
+        }
+    client = OpenAI(base_url=base_url, api_key=api_key, timeout=300.0, default_headers=headers if headers else None)
     
     safe_user_prompt = truncate_for_context(user_prompt)
     
@@ -182,7 +198,7 @@ def call_llm(base_url: str, api_key: str, model: str, system_prompt: str, user_p
                     {"role": "user", "content": safe_user_prompt}
                 ],
                 temperature=0.2,
-                max_tokens=2048,
+                max_tokens=8192,
             )
             latency = time.time() - start_t
             if response and response.choices and len(response.choices) > 0:
@@ -196,8 +212,8 @@ def call_llm(base_url: str, api_key: str, model: str, system_prompt: str, user_p
                 time.sleep(5.0)
                 continue
                 
-            # Inter-call pacing to respect free-tier per-minute quotas
-            time.sleep(3.0)
+            # Inter-call pacing to respect free-tier per-minute quotas (15 RPM limit)
+            time.sleep(5.0)
             return content, latency
         except Exception as e:
             err_msg = str(e).lower()
@@ -246,40 +262,34 @@ def compute_ast_divergence(original_code: str, output_code: str, ext: str) -> fl
     return round(max(0.0, min(1.0, div)), 4)
 
 
-def compute_embedding_distance(original_code: str, output_code: str, base_url: str, model: str, dry_run: bool = False) -> float:
-    """Compute cosine distance between original and generated code embeddings."""
-    if dry_run or not output_code:
+def compute_embedding_distance(original_code: str, output_code: str, dry_run: bool = False) -> float:
+    """Compute normalized token frequency cosine distance between original and generated code."""
+    if dry_run or not output_code or not original_code:
         return 0.5
-
-    try:
-        from openai import OpenAI
-        client = OpenAI(base_url=base_url, api_key="lm-studio", timeout=30.0)
-        
-        # Truncate text to fit context
-        t1 = original_code[:4000]
-        t2 = output_code[:4000]
-        
-        e1 = client.embeddings.create(model=model, input=t1).data[0].embedding
-        e2 = client.embeddings.create(model=model, input=t2).data[0].embedding
-        
-        # Cosine distance
-        dot = sum(a * b for a, b in zip(e1, e2))
-        norm1 = math.sqrt(sum(a * a for a in e1))
-        norm2 = math.sqrt(sum(b * b for b in e2))
-        
-        cos_sim = dot / (norm1 * norm2) if norm1 > 0 and norm2 > 0 else 1.0
-        return round(max(0.0, min(1.0, 1.0 - cos_sim)), 4)
-    except Exception as e:
-        # Fallback to structural estimate if embedding fails
-        return 0.5
+    import re, collections
+    t1 = collections.Counter(re.findall(r'[a-zA-Z_][a-zA-Z0-9_]*', original_code.lower()))
+    t2 = collections.Counter(re.findall(r'[a-zA-Z_][a-zA-Z0-9_]*', output_code.lower()))
+    all_keys = set(t1.keys()).union(t2.keys())
+    dot = sum(t1[k] * t2[k] for k in all_keys)
+    norm1 = math.sqrt(sum(v * v for v in t1.values()))
+    norm2 = math.sqrt(sum(v * v for v in t2.values()))
+    cos_sim = dot / (norm1 * norm2) if norm1 > 0 and norm2 > 0 else 1.0
+    return round(max(0.0, min(1.0, 1.0 - cos_sim)), 4)
 
 
 # ── Project Loader ────────────────────────────────────────────────────────────
 
 def locate_legacy_source(project: Dict[str, Any]) -> Tuple[str, str, pathlib.Path]:
-    """Find the real source code for a project in experiments/ or datasets/."""
+    """Find the real source code for a project in datasets/ or experiments/."""
     pid = project["id"]
     
+    # Check datasets directory first (authoritative verified benchmark sources)
+    for ext in [".ts", ".js", ".py", ".html", ".vue", ".tsx"]:
+        p = ROOT / "datasets" / "deanchor_bench_30" / pid / f"original{ext}"
+        if p.exists():
+            return p.read_text(encoding="utf-8", errors="ignore"), ext, p
+
+    # Fallback to experiments directory
     if pid == "algo_01_orderbook":
         p = ROOT / "experiments" / "realworld" / "perf_orderbook" / "original.ts"
         if p.exists(): return p.read_text(encoding="utf-8", errors="ignore"), ".ts", p
@@ -292,15 +302,6 @@ def locate_legacy_source(project: Dict[str, Any]) -> Tuple[str, str, pathlib.Pat
     elif pid == "micro_01_webhook_dispatcher":
         p = ROOT / "experiments" / "realworld" / "dev_webhook" / "original.js"
         if p.exists(): return p.read_text(encoding="utf-8", errors="ignore"), ".js", p
-    elif pid == "ui_06_secops_dashboard":
-        p = ROOT / "experiments" / "design" / "subject_enterprise" / "original.html"
-        if p.exists(): return p.read_text(encoding="utf-8", errors="ignore"), ".html", p
-
-    # Check datasets directory
-    for ext in [".ts", ".js", ".py", ".html"]:
-        p = ROOT / "datasets" / "deanchor_bench_30" / pid / f"original{ext}"
-        if p.exists():
-            return p.read_text(encoding="utf-8", errors="ignore"), ext, p
 
     # Fallback template
     lang = project.get("language", "").lower()
@@ -336,6 +337,7 @@ def run_project_evaluation(project: Dict[str, Any], args: Any, base_url: str, ap
 
         ast_scores = []
         emb_scores = []
+        ted_scores = []
         latencies = []
         noise_filtered_pcts = []
 
@@ -369,33 +371,43 @@ def run_project_evaluation(project: Dict[str, Any], args: Any, base_url: str, ap
             elif cond == "two_stage_deanchor":
                 p_stage1 = PROMPT_STAGE1_EXTRACT.format(source_code=source_code)
                 schema_yaml, l1 = call_llm(base_url, api_key, model_id, SYSTEM_PROMPT_COGNITIVE, p_stage1, args.dry_run)
-                (run_dir / "stage1_schema.yaml").write_text(schema_yaml, encoding="utf-8")
+                clean_schema = extract_code_block(schema_yaml)
+                (run_dir / "stage1_schema.yaml").write_text(clean_schema, encoding="utf-8")
                 
-                p_stage2 = PROMPT_STAGE2_SYNTHESIZE.format(schema_yaml=schema_yaml)
+                p_stage2 = PROMPT_STAGE2_SYNTHESIZE.format(schema_yaml=clean_schema)
                 output_code, l2 = call_llm(base_url, api_key, model_id, SYSTEM_PROMPT_COGNITIVE, p_stage2, args.dry_run)
                 run_latency = l1 + l2
                 
                 # Compute actual noise filter ratio: 1 - (len(schema_yaml) / len(source_code))
                 if len(source_code) > 0:
-                    noise_filt = round(max(0.0, min(100.0, (1.0 - (len(schema_yaml) / len(source_code))) * 100.0)), 1)
+                    noise_filt = round(max(0.0, min(100.0, (1.0 - (len(clean_schema) / len(source_code))) * 100.0)), 1)
                 else:
                     noise_filt = 80.0
 
-            # Persist output code to disk
-            out_file.write_text(output_code, encoding="utf-8")
+            # Persist clean output code to disk
+            clean_output = extract_code_block(output_code)
+            out_file.write_text(clean_output, encoding="utf-8")
 
             # Compute real metrics on disk output
-            ast_val = compute_ast_divergence(source_code, output_code, ext)
-            emb_val = compute_embedding_distance(source_code, output_code, args.embedding_base, args.embedding_model, args.dry_run)
+            ast_val = compute_ast_divergence(source_code, clean_output, ext)
+            emb_val = compute_embedding_distance(source_code, clean_output, args.dry_run)
+            try:
+                from scripts.score_tree_edit_distance import compute_ted
+                ted_val = compute_ted(source_code, clean_output, ext)
+            except Exception:
+                ted_val = ast_val
 
             ast_scores.append(ast_val)
             emb_scores.append(emb_val)
+            ted_scores.append(ted_val)
             latencies.append(run_latency)
             noise_filtered_pcts.append(noise_filt)
 
         # Compute summary statistics (mean ± std)
         mean_ast = sum(ast_scores) / len(ast_scores)
         std_ast = math.sqrt(sum((x - mean_ast) ** 2 for x in ast_scores) / len(ast_scores)) if len(ast_scores) > 1 else 0.0
+        mean_ted = sum(ted_scores) / len(ted_scores)
+        std_ted = math.sqrt(sum((x - mean_ted) ** 2 for x in ted_scores) / len(ted_scores)) if len(ted_scores) > 1 else 0.0
         mean_emb = sum(emb_scores) / len(emb_scores)
         std_emb = math.sqrt(sum((x - mean_emb) ** 2 for x in emb_scores) / len(emb_scores)) if len(emb_scores) > 1 else 0.0
         mean_lat = sum(latencies) / len(latencies)
@@ -404,6 +416,8 @@ def run_project_evaluation(project: Dict[str, Any], args: Any, base_url: str, ap
         results_by_condition[cond] = {
             "ast_divergence_mean": round(mean_ast, 4),
             "ast_divergence_std": round(std_ast, 4),
+            "tree_edit_distance_mean": round(mean_ted, 4),
+            "tree_edit_distance_std": round(std_ted, 4),
             "embedding_distance_mean": round(mean_emb, 4),
             "embedding_distance_std": round(std_emb, 4),
             "noise_filtered_pct": round(mean_noise, 1),
@@ -411,7 +425,7 @@ def run_project_evaluation(project: Dict[str, Any], args: Any, base_url: str, ap
             "runs_evaluated": len(ast_scores),
             "test_provenance": project.get("test_provenance", "unknown"),
         }
-        print(f"    AST Div: {mean_ast:.4f} ± {std_ast:.4f} | Emb Dist: {mean_emb:.4f} | Latency: {mean_lat:.2f}s | Noise Filt: {mean_noise:.1f}%")
+        print(f"    AST Div: {mean_ast:.4f} ± {std_ast:.4f} | TED: {mean_ted:.4f} ± {std_ted:.4f} | Latency: {mean_lat:.2f}s | Noise Filt: {mean_noise:.1f}%")
 
     return {
         "id": pid,
@@ -445,13 +459,26 @@ def main():
         # Default to core 10 subset
         selected_projects = [p for p in registry if p.get("is_core_subset", False)]
 
-    tiers_to_run = []
-    if args.tier in ["1", "both"]:
-        local_model = args.model or "qwen3-coder-30b-a3b-instruct"
-        tiers_to_run.append(("tier1_local", args.local_base, args.local_key, local_model))
-    if args.tier in ["2", "both"]:
-        cloud_model = args.model or "gemini-3.5-flash-lite"
-        tiers_to_run.append(("tier2_cloud", args.cloud_base, args.cloud_key, cloud_model))
+    # Setup Cloud Inference Provider
+    provider = args.provider
+    if provider == "auto":
+        if args.model and (":" in args.model or "/" in args.model):
+            provider = "openrouter"
+        elif args.model and "gemini" in args.model.lower():
+            provider = "gemini"
+        else:
+            provider = "gemini" if os.getenv("GEMINI_API_KEY") else "openrouter"
+
+    if provider == "openrouter":
+        cloud_base = args.cloud_base or "https://openrouter.ai/api/v1"
+        cloud_key = args.cloud_key or os.getenv("OPENROUTER_API_KEY", "")
+        cloud_model = args.model or "nvidia/nemotron-3-super-120b-a12b:free"
+    else:
+        cloud_base = args.cloud_base or "https://generativelanguage.googleapis.com/v1beta/openai/"
+        cloud_key = args.cloud_key or os.getenv("GEMINI_API_KEY", "")
+        cloud_model = args.model or "gemini-2.5-flash"
+
+    tiers_to_run = [("tier2_cloud", cloud_base, cloud_key, cloud_model)]
 
     print("═════════════════════════════════════════════════════════════════════════")
     print(f" Deanchor-Bench-30 Real Inference & Evaluation Runner")

@@ -1,15 +1,22 @@
 {
   "id": "micro_02_stripe_relay",
-  "name": "Stripe Payment Event Relay",
+  "name": "Stripe Webhook Signing Examples",
   "domain": "Microservices & Webhooks",
-  "repo_origin": "stripe-samples/webhook-relay",
-  "loc": 1650,
+  "repo_origin": "stripe/stripe-node",
+  "loc": 912,
+  "loc_status": "VERIFIED",
   "language": "TypeScript/Node",
-  "legacy_paradigm": "Procedural switch-case event handlers, inline database updates",
+  "legacy_paradigm": "Procedural switch-case event handlers, inline validation",
   "deanchored_target": "Domain event dispatcher with idempotent deduplication ledger",
   "test_type": "Jest Signature & Idempotency Tests",
-  "test_assertions": 16,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "notes": "Benchmark should target examples/webhook-signing subdirectory, not the full SDK.",
+  "full_repo_ingested": true,
+  "repo_total_files": 1383,
+  "repo_total_dirs": 77,
+  "repo_test_files_count": 70,
+  "primary_source_file": "src\\resources\\WebhookEndpoints.ts"
 }

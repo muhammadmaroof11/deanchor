@@ -1,15 +1,21 @@
 {
   "id": "ui_04_svelte_kanban",
-  "name": "Svelte Kanban Drag-and-Drop Board",
+  "name": "Svelte Drag-and-Drop Action Library",
   "domain": "Frontend & UI Design",
-  "repo_origin": "sveltejs/svelte-dnd-action",
-  "loc": 1200,
+  "repo_origin": "isaacHagoel/svelte-dnd-action",
+  "loc": 718,
+  "loc_status": "VERIFIED",
   "language": "Svelte/JS",
-  "legacy_paradigm": "3 rigid vertical column lists with fixed pixel height",
+  "legacy_paradigm": "Rigid vertical column lists with fixed pixel height",
   "deanchored_target": "Spatial node-graph canvas, collapsible swimlanes, zoomable workspace",
-  "test_type": "Vitest DnD Event Handlers",
-  "test_assertions": 14,
+  "test_type": "Integration & DnD Event Tests",
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "full_repo_ingested": true,
+  "repo_total_files": 46,
+  "repo_total_dirs": 8,
+  "repo_test_files_count": 10,
+  "primary_source_file": "src\\pointerAction.js"
 }

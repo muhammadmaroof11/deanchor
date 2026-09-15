@@ -1,15 +1,21 @@
 {
   "id": "sec_05_rate_limiter",
-  "name": "Sliding-Window Token Bucket Limiter",
+  "name": "Node.js Token Bucket Rate Limiter",
   "domain": "Security & Auth",
   "repo_origin": "jhurliman/node-rate-limiter",
-  "loc": 1100,
-  "language": "TypeScript",
+  "loc": 137,
+  "loc_status": "VERIFIED",
+  "language": "JavaScript",
   "legacy_paradigm": "In-memory setInterval timer, locking global counter variable",
-  "deanchored_target": "Lock-free atomic timestamp calculation with Redis Lua script",
-  "test_type": "Jest Rate Limit Threshold Tests",
-  "test_assertions": 18,
+  "deanchored_target": "Lock-free atomic timestamp calculation with sliding window",
+  "test_type": "Mocha Rate Limit Threshold Tests",
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "full_repo_ingested": true,
+  "repo_total_files": 23,
+  "repo_total_dirs": 3,
+  "repo_test_files_count": 4,
+  "primary_source_file": "src\\RateLimiter.ts"
 }

@@ -1,15 +1,21 @@
 {
   "id": "data_03_state_machine",
-  "name": "Deterministic Finite State Machine",
+  "name": "XState State Machine Library",
   "domain": "Data Management & State",
   "repo_origin": "statelyai/xstate",
-  "loc": 1400,
+  "loc": 101,
+  "loc_status": "VERIFIED",
   "language": "TypeScript",
   "legacy_paradigm": "Giant switch statement on action types, mutable context mutations",
   "deanchored_target": "Immutable transition table with pure state transition reducers",
   "test_type": "Jest State Transition Tests",
-  "test_assertions": 25,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": true
+  "is_core_subset": true,
+  "notes": "WARNING: Massive library (27K+ stars, 100K+ LOC). Benchmark should target a specific sub-package like @xstate/fsm or a demo app.",
+  "full_repo_ingested": true,
+  "repo_total_files": 918,
+  "repo_total_dirs": 182,
+  "repo_test_files_count": 145
 }

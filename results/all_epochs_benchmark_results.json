@@ -54,8 +54,8 @@
       "scope": {
         "suite_name": "Deanchor-Bench-30",
         "num_projects": 30,
-        "total_loc": 55415,
-        "total_test_assertions": 579,
+        "total_loc": "PENDING_MEASUREMENT",
+        "total_test_assertions": "PENDING_MEASUREMENT",
         "core_subset_projects": 10,
         "domains": [
           "Frontend & UI Design",

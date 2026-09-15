@@ -1,15 +1,21 @@
 {
   "id": "micro_06_health_sentinel",
-  "name": "Distributed Microservice Sentinel",
+  "name": "Python Health Check Library",
   "domain": "Microservices & Webhooks",
-  "repo_origin": "healthchecks/sentinel",
-  "loc": 1100,
-  "language": "Go / Python",
+  "repo_origin": "ateliedocodigo/py-healthcheck",
+  "loc": 154,
+  "loc_status": "VERIFIED",
+  "language": "Python",
   "legacy_paradigm": "Sequential for-loop HTTP pinging, stdout console logging",
   "deanchored_target": "Concurrent worker pool with exponential backoff and Prometheus metrics",
   "test_type": "Pytest Health Status Verification",
-  "test_assertions": 14,
-  "test_provenance": "author_created",
+  "test_assertions": 0,
+  "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "full_repo_ingested": true,
+  "repo_total_files": 32,
+  "repo_total_dirs": 4,
+  "repo_test_files_count": 7,
+  "primary_source_file": "healthcheck\\healthcheck.py"
 }

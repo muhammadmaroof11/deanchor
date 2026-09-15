@@ -1,281 +1,234 @@
-### Architecture & File Organization
+import os
+import hmac
+import hashlib
+import logging
+import uvicorn
+from typing import Any, Dict, Optional, Union
+from pydantic import BaseModel, Field, ValidationError
+from fastapi import FastAPI, Request, HTTPException, status, Depends
+from fastapi.responses import JSONResponse
+from dotenv import load_dotenv
 
-We will build a production-grade, highly scalable asynchronous API Gateway service using **TypeScript**, **Fastify** (for extreme performance, strict schema validation, and native JSON handling), and an **Actor-inspired Finite State Machine (FSM)** pattern to handle state contracts precisely as dictated by the domain schema.
+# For rate limiting
+from redis.asyncio import Redis
+from fastapi_limiter import FastAPILimiter
+from fastapi_limiter.depends import RateLimiter
 
-#### Directory Structure
-```
-.
-├── package.json
-├── tsconfig.json
-├── .env.example
-└── src
-    ├── core
-    │   ├── errors.ts
-    │   └── logger.ts
-    ├── domain
-    │   ├── entities.ts
-    │   └── state-machine.ts
-    ├── infrastructure
-    │   ├── config.ts
-    │   └── plugins
-    │       ├── helmet.ts
-    │       └── rate-limit.ts
-    ├── interfaces
-    │   └── http
-    │       ├── controllers.ts
-    │       └── routes.ts
-    └── server.ts
-```
+# Load environment variables from .env file for configuration
+load_dotenv()
 
----
+# --- Configuration ---
+class ServiceConfiguration(BaseModel):
+    """
+    Represents the configuration settings for the service.
+    Values are loaded from environment variables or default to specified values.
+    """
+    port: int = Field(default_factory=lambda: int(os.getenv("PORT", "8000")))
+    debug_mode: bool = Field(default_factory=lambda: os.getenv("DEBUG_MODE", "false").lower() == "true")
+    github_webhook_secret: Optional[str] = Field(
+        default_factory=lambda: os.getenv("GITHUB_WEBHOOK_SECRET")
+    )
+    redis_url: str = Field(
+        default_factory=lambda: os.getenv("REDIS_URL", "redis://localhost:6379/0")
+    )
 
-### Configuration & Dependencies
+# Instantiate configuration
+config = ServiceConfiguration()
 
-#### `package.json`
-```json
-{
-  "name": "enterprise-webhook-gateway",
-  "version": "1.0.0",
-  "description": "Production-grade decoupled semantic YAML schema implementation",
-  "main": "dist/server.js",
-  "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
-  },
-  "dependencies": {
-    "@fastify/helmet": "^11.1.1",
-    "@fastify/rate-limit": "^9.1.0",
-    "dotenv": "^16.4.5",
-    "fastify": "^4.26.2",
-    "pino": "^8.19.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.11.24",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.3.3"
-  }
-}
-```
+# --- Logging Setup ---
+logging.basicConfig(level=logging.DEBUG if config.debug_mode else logging.INFO)
+logger = logging.getLogger(__name__)
 
-#### `tsconfig.json`
-```json
-{
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "lib": ["ES2022"],
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
-  },
-  "include": ["src/**/*"]
-}
-```
+# --- Domain Entities (Pydantic Models) ---
 
----
+class HttpRequest(BaseModel):
+    """
+    Represents an incoming HTTP request.
+    """
+    method: str = Field(..., description="HTTP method (e.g., GET, POST)")
+    path: str = Field(..., description="Request path (e.g., /)")
+    headers: Dict[str, str] = Field(..., description="Request headers as key-value pairs")
+    body: Any = Field(..., description="Request body, can be any type (e.g., dict, string)")
 
-### Core Infrastructure & Logging
+class HttpResponse(BaseModel):
+    """
+    Represents an outgoing HTTP response.
+    """
+    statusCode: int = Field(..., description="HTTP status code (e.g., 200, 400)")
+    body: Optional[Union[str, Dict[str, Any]]] = Field(
+        None, description="Response body, can be a string or a JSON object"
+    )
 
-#### `src/core/logger.ts`
-```typescript
-import pino from 'pino';
+class GitHubWebhookEvent(BaseModel):
+    """
+    Represents a parsed GitHub webhook event.
+    """
+    payload: Dict[str, Any] = Field(..., description="The specific GitHub event data (e.g., push, pull_request)")
+    headers: Dict[str, str] = Field(..., description="GitHub-specific headers (e.g., X-GitHub-Event, X-Hub-Signature)")
 
-export const logger = pino({
-  level: process.env.LOG_LEVEL || 'info',
-  transport: process.env.NODE_ENV !== 'production' ? { target: 'pino-pretty' } : undefined,
-});
-```
+class APIRoute(BaseModel):
+    """
+    Describes an API endpoint.
+    """
+    method: str = Field(..., description="HTTP method of the route")
+    path: str = Field(..., description="URL path of the route")
+    description: str = Field(..., description="A brief description of the route's purpose")
 
-#### `src/infrastructure/config.ts`
-```typescript
-import dotenv from 'dotenv';
-dotenv.config();
+class RateLimitingPolicy(BaseModel):
+    """
+    Defines a policy for rate limiting requests.
+    """
+    windowDurationMs: int = Field(..., description="Duration of the rate limiting window in milliseconds")
+    maxRequestsPerWindow: int = Field(..., description="Maximum number of requests allowed within the window")
 
-export const config = {
-  port: parseInt(process.env.PORT || '3000', 10),
-  host: process.env.HOST || '0.0.0.0',
-};
-```
+# Example policy for the webhook endpoint, derived from the schema's existence.
+# In a production system, this might be dynamically loaded or configured per endpoint.
+webhook_rate_limit_policy = RateLimitingPolicy(
+    windowDurationMs=60000, # 1 minute
+    maxRequestsPerWindow=100 # 100 requests per minute
+)
 
----
+class OpenAPISpecificationDocument(BaseModel):
+    """
+    Represents an OpenAPI specification document.
+    FastAPI automatically generates this based on defined routes and models.
+    """
+    spec: Dict[str, Any] = Field(..., description="The OpenAPI specification in JSON format")
 
-### Domain Entities & State Contracts
+# --- Helper Functions ---
 
-#### `src/domain/entities.ts`
-```typescript
-export interface WebhookEvent {
-  payload: Record<string, unknown>;
-  headers: Record<string, string>;
-}
+def verify_github_signature(
+    request_body: bytes, signature_header: Optional[str], secret: str
+) -> bool:
+    """
+    Verifies the GitHub webhook signature using HMAC-SHA256.
+    Refer to: https://docs.github.com/webhooks/securing/#validating-payloads-from-github
+    """
+    if not signature_header:
+        logger.warning("Missing X-Hub-Signature-256 header.")
+        return False
 
-export interface RouteConfiguration {
-  path: string;
-  target_service: string;
-}
+    try:
+        # Expected format: "sha256=..."
+        sha_name, signature = signature_header.split("=", 1)
+        if sha_name != "sha256":
+            logger.warning(f"Unsupported signature algorithm: {sha_name}")
+            return False
+    except ValueError:
+        logger.warning(f"Invalid X-Hub-Signature-256 format: {signature_header}")
+        return False
 
-export interface OpenApiSpecification {
-  spec_definition: Record<string, unknown>;
-}
+    mac = hmac.new(secret.encode("utf-8"), msg=request_body, digestmod=hashlib.sha256)
+    return hmac.compare_digest(mac.hexdigest(), signature)
 
-export interface HealthStatus {
-  status: string;
-  code: number;
-}
-```
+# --- FastAPI Application ---
+app = FastAPI(
+    title="GitHub Webhook Dispatcher Service",
+    description="A service to receive, validate, and dispatch GitHub webhook events.",
+    version="1.0.0",
+    debug=config.debug_mode,
+)
 
-#### `src/domain/state-machine.ts`
-```typescript
-import { logger } from '../core/logger.js';
+# --- Rate Limiter Initialization ---
+@app.on_event("startup")
+async def startup_event():
+    """
+    Initializes the FastAPI-Limiter with Redis on application startup.
+    """
+    if config.redis_url:
+        try:
+            redis_instance = Redis.from_url(config.redis_url, encoding="utf-8", decode_responses=True)
+            await FastAPILimiter.init(redis_instance)
+            logger.info(f"FastAPI-Limiter initialized with Redis at {config.redis_url}")
+        except Exception as e:
+            logger.error(f"Failed to connect to Redis at {config.redis_url}: {e}. Rate limiting will be disabled.")
+            FastAPILimiter.redis = None # Ensure limiter is not active if connection fails
+    else:
+        logger.warning("REDIS_URL not provided. Rate limiting will be disabled.")
+        FastAPILimiter.redis = None # Explicitly disable
 
-export type SystemState = 
-  | 'Idle' 
-  | 'WebhookProcessed' 
-  | 'RoutesListed' 
-  | 'OpenApiServed' 
-  | 'HealthChecked';
+@app.on_event("shutdown")
+async def shutdown_event():
+    """
+    Closes the Redis connection on application shutdown.
+    """
+    if FastAPILimiter.redis:
+        await FastAPILimiter.redis.close()
+        logger.info("FastAPI-Limiter Redis connection closed.")
 
-export type SystemEvent = 
-  | 'ReceiveWebhookPost' 
-  | 'RequestRouteListing' 
-  | 'RequestOpenApiSpec' 
-  | 'RequestHealthCheck';
+# --- Functional Operations ---
 
-const VALID_TRANSITIONS: Record<SystemState, Partial<Record<SystemEvent, SystemState>>> = {
-  Idle: {
-    ReceiveWebhookPost: 'WebhookProcessed',
-    RequestRouteListing: 'RoutesListed',
-    RequestOpenApiSpec: 'OpenApiServed',
-    RequestHealthCheck: 'HealthChecked',
-  },
-  WebhookProcessed: {},
-  RoutesListed: {},
-  OpenApiServed: {},
-  HealthChecked: {},
-};
+@app.post(
+    "/",
+    summary="Dispatch GitHub Webhook Event",
+    description="Receives and dispatches GitHub webhook events to appropriate downstream services.",
+    response_model=HttpResponse,
+    status_code=status.HTTP_200_OK,
+    dependencies=[
+        Depends(RateLimiter(
+            times=webhook_rate_limit_policy.maxRequestsPerWindow,
+            seconds=webhook_rate_limit_policy.windowDurationMs / 1000
+        )) if FastAPILimiter.redis else Depends(lambda: None) # Apply rate limit only if Redis is configured
+    ]
+)
+async def dispatch_github_webhook(request: Request) -> HttpResponse:
+    """
+    Receives a GitHub webhook event, validates its signature, and dispatches it.
+    """
+    logger.info(f"Received {request.method} request to {request.url.path}")
 
-export class DomainStateEngine {
-  private currentState: SystemState = 'Idle';
-
-  public transition(event: SystemEvent): SystemState {
-    const nextState = VALID_TRANSITIONS[this.currentState]?.[event];
+    # 1. Construct HttpRequest from the incoming request
+    method = request.method
+    path = request.url.path
+    headers = dict(request.headers)
     
-    if (!nextState) {
-      logger.warn({ currentState: this.currentState, event }, 'Invalid state transition attempted; resetting or maintaining state boundary.');
-      // For resilient gateways, we acknowledge the event pattern while maintaining atomic state tracking
-      return this.currentState;
+    raw_body = await request.body()
+    
+    try:
+        # Attempt to parse body as JSON if content-type indicates, otherwise keep as raw string
+        if request.headers.get("content-type", "").startswith("application/json"):
+            body_parsed = await request.json()
+        else:
+            body_parsed = raw_body.decode('utf-8', errors='ignore')
+    except Exception as e:
+        logger.warning(f"Could not parse request body as JSON or string: {e}")
+        body_parsed = raw_body.decode('utf-8', errors='ignore') # Fallback to string
+
+    http_request = HttpRequest(
+        method=method,
+        path=path,
+        headers=headers,
+        body=body_parsed
+    )
+    logger.debug(f"HttpRequest created: {http_request.dict()}")
+
+    # 2. Validate GitHub Webhook Signature (if secret is provided)
+    if not config.github_webhook_secret:
+        logger.warning("GITHUB_WEBHOOK_SECRET not set. Skipping signature verification for webhook.")
+    else:
+        signature = headers.get("x-hub-signature-256")
+        if not verify_github_signature(raw_body, signature, config.github_webhook_secret):
+            logger.error("GitHub webhook signature verification failed.")
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Invalid GitHub webhook signature."
+            )
+        logger.info("GitHub webhook signature verified successfully.")
+
+    # 3. Derive GitHubWebhookEvent from request body and headers
+    # The schema states 'event: GitHubWebhookEvent (derived from request.body and request.headers)'
+    # We extract relevant GitHub-specific headers and use the parsed body as the payload.
+    github_event_headers = {
+        k: v for k, v in headers.items()
+        if k.lower().startswith('x-github-') or k.lower() == 'user-agent'
     }
-
-    logger.debug({ from: this.currentState, to: nextState, event }, 'State transition executed successfully.');
-    this.currentState = nextState;
     
-    // Reset state back to Idle immediately after event processing to satisfy continuous polling/stateless contracts
-    const materializedState = this.currentState;
-    this.currentState = 'Idle';
-    
-    return materializedState;
-  }
-}
-```
-
----
-
-### Infrastructure Security & Rate Limiting Plugins
-
-#### `src/infrastructure/plugins/helmet.ts`
-```typescript
-import fp from 'fastify-plugin';
-import fastifyHelmet from '@fastify/helmet';
-import { FastifyInstance } from 'fastify';
-
-export const helmetPlugin = fp(async (fastify: FastifyInstance) => {
-  await fastify.register(fastifyHelmet, {
-    global: true,
-  });
-});
-```
-
-#### `src/infrastructure/plugins/rate-limit.ts`
-```typescript
-import fp from 'fastify-plugin';
-import fastifyRateLimit from '@fastify/rate-limit';
-import { FastifyInstance } from 'fastify';
-
-export const rateLimitPlugin = fp(async (fastify: FastifyInstance) => {
-  await fastify.register(fastifyRateLimit, {
-    max: 60,
-    timeWindow: '1 minute',
-    errorResponseBuilder: () => ({
-      statusCode: 429,
-      error: 'Too Many Requests',
-      message: 'Requests are subject to a rate limit of 60 requests per 1-minute window per IP.',
-    }),
-  });
-});
-```
-
----
-
-### Interfaces & HTTP Controllers
-
-#### `src/interfaces/http/controllers.ts`
-```typescript
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { 
-  WebhookEvent, 
-  RouteConfiguration, 
-  OpenApiSpecification, 
-  HealthStatus 
-} from '../../domain/entities.js';
-import { DomainStateEngine } from '../../domain/state-machine.js';
-
-export class GatewayController {
-  private stateEngine = new DomainStateEngine();
-
-  public async processWebhook(
-    request: FastifyRequest<{ Body: Record<string, unknown> }>, 
-    reply: FastifyReply
-  ) {
-    // Invariant: Payload must be successfully parsed as JSON (handled natively via Fastify JSON parsing)
-    const event: WebhookEvent = {
-      payload: request.body,
-      headers: request.headers as Record<string, string>,
-    };
-
-    this.stateEngine.transition('ReceiveWebhookPost');
-
-    return reply.code(200).send({
-      status: 'success',
-      received: true,
-      processedPayload: event.payload,
-    });
-  }
-
-  public async listRoutes(
-    _request: FastifyRequest, 
-    reply: FastifyReply
-  ) {
-    // Invariant: Must return all active downstream route mappings.
-    this.stateEngine.transition('RequestRouteListing');
-
-    const routes: RouteConfiguration[] = [
-      { path: '/api/v1/services/*', target_service: 'upstream-core-service' },
-      { path: '/webhooks/*', target_service: 'upstream-webhook-processor' }
-    ];
-
-    return reply.code(200).send({ routes });
-  }
-
-  public async getOpenApiSpec(
-    _request: FastifyRequest, 
-    reply: FastifyReply
-  ) {
-    this.stateEngine.transition('RequestOpenApiSpec');
-
-    const spec: OpenApiSpecification = {
-      spec_definition: {
-        openapi: '3.0
+    try:
+        # If body_parsed is not a dict (e.g., raw string), wrap it to fit payload: Dict[str, Any]
+        payload_for_event = body_parsed if isinstance(body_parsed, dict) else {"raw_body": body_parsed}
+        github_webhook_event = GitHubWebhookEvent(
+            payload=payload_for_event,
+            headers=github_event_headers
+        )
+        event_type = github_webhook_event.headers.get('x-github-event', 'unknown')
+        delivery_id = github_webhook_event.headers.get('

@@ -1,15 +1,21 @@
 {
   "id": "ui_05_tailwind_landing",
-  "name": "Tailwind SaaS Landing Page",
+  "name": "Tailwind SaaS Landing Page Template",
   "domain": "Frontend & UI Design",
-  "repo_origin": "tailwindlabs/hero-patterns",
-  "loc": 1500,
-  "language": "HTML/Tailwind",
+  "repo_origin": "cruip/tailwind-landing-page-template",
+  "loc": 192,
+  "loc_status": "VERIFIED",
+  "language": "React/Next.js/Tailwind",
   "legacy_paradigm": "Centered hero headline, 3-tier pricing cards, standard footer links",
-  "deanchored_target": "Asymmetric editorial typography, interactive 3D WebGL hero background",
+  "deanchored_target": "Asymmetric editorial typography, interactive hero, motion sections",
   "test_type": "HTML Linter & Responsive Checks",
-  "test_assertions": 10,
+  "test_assertions": 0,
   "test_provenance": "author_created",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "full_repo_ingested": true,
+  "repo_total_files": 58,
+  "repo_total_dirs": 15,
+  "repo_test_files_count": 2,
+  "primary_source_file": "components\\features-planet.tsx"
 }

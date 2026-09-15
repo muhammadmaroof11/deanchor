@@ -1,15 +1,20 @@
 {
   "id": "ui_06_secops_dashboard",
-  "name": "Enterprise SecOps Command Center",
+  "name": "IT Security Management Dashboard",
   "domain": "Frontend & UI Design",
-  "repo_origin": "grafana/grafana-security-panel",
-  "loc": 1465,
-  "language": "HTML/CSS/SVG",
+  "repo_origin": "Secu7/IT-Security-Management-System-Dashboard",
+  "loc": 1464,
+  "loc_status": "VERIFIED",
+  "language": "HTML/CSS/JS/Chart.js",
   "legacy_paradigm": "Dense tabular log dump, monochrome alert boxes, fixed header",
   "deanchored_target": "Radial incident radar, live heatmap HUD, prioritized stream cards",
   "test_type": "SVG Chart & DOM Event Tests",
-  "test_assertions": 20,
+  "test_assertions": 0,
   "test_provenance": "author_created",
   "upstream_verified": true,
-  "is_core_subset": true
+  "is_core_subset": true,
+  "full_repo_ingested": true,
+  "repo_total_files": 2,
+  "repo_total_dirs": 0,
+  "repo_test_files_count": 0
 }

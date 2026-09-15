@@ -1,7 +1,0 @@
-{
-  "status": "PURGED_FABRICATED_DATA",
-  "tier": "Tier 1: Local Open-Source Edge Models",
-  "notice": "All legacy synthetic Tier 1 benchmark data points have been purged in strict compliance with Academic Integrity Rules (.agents/rules/research-integrity.md). Real measured results (VRAM telemetry, throughput tok/s, AST divergence, and syntax validity) are populated directly from live model inference runs via scripts/run_bench_30_real.py --tier 1.",
-  "timestamp_purged": "2026-09-09",
-  "archived_location": "results/fabricated_archive/tier1_local_benchmark_results.fabricated.json"
-}

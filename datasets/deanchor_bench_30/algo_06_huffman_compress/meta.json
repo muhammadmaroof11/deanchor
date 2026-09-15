@@ -1,15 +1,21 @@
 {
   "id": "algo_06_huffman_compress",
-  "name": "Huffman Stream Encoding Engine",
+  "name": "Huffman Encoding Engine (TypeScript)",
   "domain": "Algorithmic & Fintech",
-  "repo_origin": "node-modules/huffman-stream",
-  "loc": 850,
+  "repo_origin": "wizardpisces/huffman-ts",
+  "loc": 21,
+  "loc_status": "VERIFIED",
   "language": "TypeScript",
   "legacy_paradigm": "String concatenation bit-building, tree traversal recursion",
-  "deanchored_target": "Uint8Array bitwise byte packing, canonical table lookups",
+  "deanchored_target": "Typed array bitwise byte packing, canonical table lookups",
   "test_type": "Jest Lossless Roundtrip Tests",
-  "test_assertions": 12,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "full_repo_ingested": true,
+  "repo_total_files": 17,
+  "repo_total_dirs": 5,
+  "repo_test_files_count": 2,
+  "primary_source_file": "src\\Huffman.ts"
 }

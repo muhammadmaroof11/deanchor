@@ -1,15 +1,21 @@
 {
   "id": "algo_04_btree_indexer",
-  "name": "In-Memory B+ Tree Index Engine",
+  "name": "B+ Tree Sorted Index (TypeScript)",
   "domain": "Algorithmic & Fintech",
-  "repo_origin": "jayb/btree-js",
-  "loc": 1400,
+  "repo_origin": "qwertie/btree-typescript",
+  "loc": 1692,
+  "loc_status": "VERIFIED",
   "language": "TypeScript",
   "legacy_paradigm": "Object pointer linked nodes, deep recursive node splitting",
-  "deanchored_target": "Contiguous memory buffer blocks, SIMD binary search vectorization",
+  "deanchored_target": "Contiguous memory buffer blocks, optimized key comparison",
   "test_type": "Jest Key-Value CRUD Tests",
-  "test_assertions": 24,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "full_repo_ingested": true,
+  "repo_total_files": 60,
+  "repo_total_dirs": 4,
+  "repo_test_files_count": 7,
+  "primary_source_file": "b+tree.ts"
 }

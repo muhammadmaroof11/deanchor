@@ -1,15 +1,22 @@
 {
   "id": "sec_03_rbac_guard",
-  "name": "Hierarchical RBAC Permission Guard",
+  "name": "Node-Casbin RBAC Authorization",
   "domain": "Security & Auth",
   "repo_origin": "casbin/node-casbin",
-  "loc": 1750,
+  "loc": 741,
+  "loc_status": "VERIFIED",
   "language": "TypeScript",
   "legacy_paradigm": "Linear string comparison of role names, nested if-else statements",
   "deanchored_target": "Bitmask permission matrix, inheritance tree graph evaluation",
   "test_type": "Jest RBAC Enforcement Tests",
-  "test_assertions": 20,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": false
+  "is_core_subset": false,
+  "notes": "WARNING: Production library (2.5K+ stars). Larger than originally listed.",
+  "full_repo_ingested": true,
+  "repo_total_files": 149,
+  "repo_total_dirs": 16,
+  "repo_test_files_count": 18,
+  "primary_source_file": "src\\enforcer.ts"
 }

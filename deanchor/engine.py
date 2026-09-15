@@ -4,14 +4,11 @@ Core Two-Stage Decoupling Engine for Deanchor.
 
 import time
 import pathlib
+import ast
+import html.parser
 from typing import Dict, Any, Optional
 from .prompts import STAGE1_SCHEMAS, STAGE2_PROMPTS
 from .models import load_llm
-
-try:
-    from llama_cpp import Llama
-except ImportError:
-    Llama = None
 
 
 def detect_niche(file_path: pathlib.Path, override_niche: Optional[str] = None) -> str:
@@ -31,8 +28,6 @@ def detect_niche(file_path: pathlib.Path, override_niche: Optional[str] = None) 
     return "dev"
 
 
-import html.parser
-import ast
 
 class DeanchorHTMLValidator(html.parser.HTMLParser):
     def __init__(self):
@@ -89,17 +84,42 @@ def validate_syntax(code: str, niche: str) -> tuple[bool, list[str]]:
             errors.append(f"HTML parsing exception: {e}")
 
     else:
-        # Code validation: check bracket/brace balancing
+        # Code validation: check bracket/brace balancing (skip string literals)
         stack = []
         pairs = {')': '(', '}': '{', ']': '['}
-        for idx, char in enumerate(clean_code):
-            if char in pairs.values():
-                stack.append((char, idx))
-            elif char in pairs.keys():
-                if not stack or stack[-1][0] != pairs[char]:
-                    errors.append(f"Mismatched closing bracket '{char}' at character index {idx}")
-                    break
-                stack.pop()
+        in_string = None  # Track active string delimiter
+        i = 0
+        while i < len(clean_code):
+            char = clean_code[i]
+            # Handle string boundaries
+            if char in ('"', "'", '`') and (i == 0 or clean_code[i-1] != '\\'):
+                if in_string is None:
+                    in_string = char
+                elif in_string == char:
+                    in_string = None
+                i += 1
+                continue
+            # Handle line comments
+            if in_string is None and char == '/' and i + 1 < len(clean_code):
+                if clean_code[i+1] == '/':
+                    # Skip to end of line
+                    nl = clean_code.find('\n', i)
+                    i = nl + 1 if nl != -1 else len(clean_code)
+                    continue
+                elif clean_code[i+1] == '*':
+                    # Skip to end of block comment
+                    end = clean_code.find('*/', i + 2)
+                    i = end + 2 if end != -1 else len(clean_code)
+                    continue
+            if in_string is None:
+                if char in pairs.values():
+                    stack.append((char, i))
+                elif char in pairs.keys():
+                    if not stack or stack[-1][0] != pairs[char]:
+                        errors.append(f"Mismatched closing bracket '{char}' at character index {i}")
+                        break
+                    stack.pop()
+            i += 1
 
         if stack:
             errors.append(f"Unclosed bracket '{stack[-1][0]}' at character index {stack[-1][1]}")
@@ -121,27 +141,20 @@ def validate_syntax(code: str, niche: str) -> tuple[bool, list[str]]:
 class DeanchorEngine:
     """Two-Stage Decoupling Engine for unanchored code and UI synthesis."""
 
-    def __init__(self, model_identifier: str = "auto", n_ctx: int = 16384, gpu_layers: int = -1):
+    def __init__(self, model_identifier: str = "auto"):
         self.model_identifier = model_identifier
-        self.n_ctx = n_ctx
-        self.gpu_layers = gpu_layers
         self.llm = None
 
     def initialize(self):
         if self.llm is None:
-            self.llm = load_llm(
-                model_identifier=self.model_identifier,
-                n_ctx=self.n_ctx,
-                n_gpu_layers=self.gpu_layers
-            )
+            self.llm = load_llm(model_identifier=self.model_identifier)
 
     def _infer(self, prompt: str, temperature: float = 0.85, max_tokens: int = 4096) -> str:
         res = self.llm.create_chat_completion(
             messages=[{"role": "user", "content": prompt}],
             temperature=temperature,
             max_tokens=max_tokens,
-            top_p=0.95,
-            repeat_penalty=1.1
+            top_p=0.95
         )
         return res["choices"][0]["message"]["content"]
 
@@ -162,14 +175,16 @@ class DeanchorEngine:
         s1_prompt_template = STAGE1_SCHEMAS[niche_key]
         s1_prompt = s1_prompt_template.format(content=content)
         t_s1_start = time.time()
-        stage1_schema = self._infer(s1_prompt, temperature=0.3, max_tokens=2048)
+        stage1_schema = self._infer(s1_prompt, temperature=0.3, max_tokens=4096)
         t_s1 = time.time() - t_s1_start
 
         # Stage 2: Blank-Slate Unanchored Synthesis
         s2_prompt_template = STAGE2_PROMPTS[niche_key]
         s2_prompt = s2_prompt_template.format(schema=stage1_schema)
         t_s2_start = time.time()
-        stage2_output = self._infer(s2_prompt, temperature=temperature, max_tokens=4096)
+        # Scale token budget: design niche needs full HTML output
+        s2_tokens = 8192 if niche_key == "design" else 6144
+        stage2_output = self._infer(s2_prompt, temperature=temperature, max_tokens=s2_tokens)
         t_s2 = time.time() - t_s2_start
 
         # Syntax verification

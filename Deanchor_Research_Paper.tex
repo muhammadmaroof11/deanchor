@@ -34,11 +34,11 @@
 
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-When instruction-tuned Large Language Models (LLMs) are tasked with redesigning, refactoring, or optimizing existing software codebases and user interfaces, they suffer from severe \textit{Contextual Anchoring Bias}---an intrinsic attention failure where auto-regressive attention heads allocate disproportionate probability mass to legacy syntactic, structural, and visual tokens in the prompt prefix. Consequently, contemporary state-of-the-art models frequently produce trivial cosmetic mutations (e.g., hexadecimal color swaps, variable renaming) rather than fundamental architectural transformations, achieving structural Abstract Syntax Tree (AST) divergence scores below $0.02$ under standard zero-shot prompting. In this paper, we formalize the Contextual Anchoring Hypothesis by decomposing code entropy into functional domain requirements $H(D)$ and presentation topology $H(T \mid D)$. We propose the \textit{Two-Stage Deanchoring Decoupling Protocol}, which strictly eliminates legacy layout tokens from the generative context window by compressing raw code into an intermediate semantic entity-action YAML contract (Stage 1) before synthesizing clean-slate greenfield implementations (Stage 2). To evaluate this framework across distinct operational paradigms, we establish a \textbf{Two-Tier Separated Benchmarking Methodology}: \textbf{Tier 1} evaluates Local Open-Source Edge Models (7B--9B parameters running on a local NVIDIA RTX 3080 GPU measuring local VRAM memory allocation, token generation speed, AST divergence, and Tree Edit Distance); \textbf{Tier 2} evaluates Cloud Frontier Flagship Architectures (Google Gemini 3.5 Flash Lite with a 1,000,000-token context window operating over remote cloud APIs with zero marginal cost measuring presentation noise compression $N_{\text{filter}}$, AST divergence, Tree Edit Distance $D_{\text{TED}}$, API round-trip latency, and architectural synthesis quality). The results prove that Two-Stage Decoupling achieves near-perfect unanchored synthesis ($0.9325$--$0.9400$ AST divergence and $0.9471$--$0.9481$ Tree Edit Distance) while filtering up to $94.4\%$ of presentation noise, outperforming base zero-shot baselines by over 50x across local edge hardware and 1M-context cloud flagships ($p < 0.001$). Finally, we present the production-ready \texttt{deanchor} CLI tool, enabling automated, sub-15-second blank-slate code synthesis with zero-shot syntax self-healing.
+When instruction-tuned Large Language Models (LLMs) are tasked with redesigning, refactoring, or optimizing existing software codebases and user interfaces, they suffer from severe \textit{Contextual Anchoring Bias}---an intrinsic attention failure where auto-regressive attention heads allocate disproportionate probability mass to legacy syntactic, structural, and visual tokens in the prompt prefix. Consequently, contemporary state-of-the-art models frequently produce trivial cosmetic mutations (e.g., hexadecimal color swaps, variable renaming) rather than fundamental architectural transformations, achieving structural Abstract Syntax Tree (AST) divergence scores below $0.02$ under standard zero-shot prompting. In this paper, we formalize the Contextual Anchoring Hypothesis by decomposing code entropy into functional domain requirements $H(D)$ and presentation topology $H(T \mid D)$. We propose the \textit{Two-Stage Deanchoring Decoupling Protocol}, which strictly eliminates legacy layout tokens from the generative context window by compressing raw code into an intermediate semantic entity-action YAML contract (Stage 1) before synthesizing clean-slate greenfield implementations (Stage 2). To evaluate this framework, we conduct extensive empirical benchmarks on Cloud Frontier Architectures across a 30-repository real-world benchmark suite spanning frontend UI design, algorithmic systems, microservices, security/cryptography, and distributed state management. We measure presentation noise compression $N_{\text{filter}}$, AST structural divergence $D_{\text{AST}}$, normalized Tree Edit Distance $D_{\text{TED}}$, end-to-end latency, and synthesis quality across four operational conditions: Zero-Shot Baseline (Condition D), Chain-of-Thought (Condition CoT), Reflexion Self-Refine (Condition Reflexion), and Two-Stage Decoupling (Condition E). Finally, we present the production-ready \texttt{deanchor} CLI tool, enabling automated blank-slate code synthesis with zero-shot syntax self-healing.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Large Language Models, Contextual Anchoring, Attention Sinks, Code Generation, Two-Stage Decoupling, Abstract Syntax Tree Divergence, Local vs Cloud Benchmarking, Tiered Metrics.
+Large Language Models, Contextual Anchoring, Attention Sinks, Code Generation, Two-Stage Decoupling, Abstract Syntax Tree Divergence, Tree Edit Distance, Greenfield Synthesis.
 \end{IEEEkeywords}}
 
 \maketitle
@@ -48,7 +48,20 @@ Large Language Models, Contextual Anchoring, Attention Sinks, Code Generation, T
 \section{Introduction}
 \IEEEPARstart{L}{arge} Language Models (LLMs) have fundamentally transformed automated software engineering, algorithmic synthesis, and interface generation \cite{vaswani2017attention, chen2021evaluating}. Models such as OpenAI Codex, Claude 3.5 Sonnet, Meta Llama 3, and Alibaba Qwen 2.5 demonstrate human-level proficiency in zero-shot function completion and benchmark coding challenges (e.g., HumanEval, MBPP, SWE-bench). However, when prompted to fundamentally redesign, refactor, or modernize pre-existing software codebases or user interfaces, contemporary transformer architectures suffer from an acute systemic vulnerability: \textit{Contextual Anchoring Bias}.
 
-When an LLM is provided with a complete source file $X$ in its prompt prefix and instructed to ``rewrite this codebase from scratch using a modern clean-slate architecture'' or ``redesign this interface into a modern ergonomic dashboard'', the dense auto-regressive attention heads over-index on the existing DOM tree, inline CSS utility classes, variable declarations, imperative loop constructs, and legacy file structures \cite{xiao2023efficient, liu2023lost}. Rather than conceptualizing a novel, ergonomic architecture tailored to the underlying business domain, the LLM acts as a localized patcher, retaining 220px fixed sidebars, 3-column card grids, and nested linear scans while merely modifying superficial aesthetic properties (such as changing hex color codes from \texttt{\#333} to \texttt{\#1a1a1a}).
+Contemporary instruction tuning optimizes for continuous token completion and localized repair. Consequently, when presented with a complete legacy module, auto-regressive attention mechanisms anchor disproportionately to legacy syntax trees, obsolete design tokens, and arbitrary procedural layouts. This results in cosmetic trivial mutations rather than foundational architectural modernization.
+
+In this work, we demonstrate that by strictly separating semantic entity extraction (Stage 1) from unconstrained architectural synthesis (Stage 2), models can bypass the contextual anchoring trap, achieving structural diversity without sacrificing functional correctness.
+
+\subsection{Empirical Benchmarking Methodology}
+To evaluate model performance across diverse software engineering challenges, we establish a rigorous empirical evaluation methodology across 30 real-world open-source repositories spanning five software domains:
+\begin{enumerate}
+    \item \textbf{Frontend \& UI Design:} Highly anchored layout templates and style hierarchies.
+    \item \textbf{Algorithmic \& FinTech Engines:} Performance-critical order books and pathfinding graphs.
+    \item \textbf{Microservices \& Event Gateways:} Webhook dispatchers and asynchronous request routers.
+    \item \textbf{Security \& Cryptography:} Authentication tokens, cryptanalytic vaults, and session state.
+    \item \textbf{Data Management \& State:} High-throughput LRU caches and deterministic finite state machines.
+\end{enumerate}
+Each repository is evaluated under four distinct prompting and reasoning regimes: Zero-Shot Baseline (Condition D), Chain-of-Thought Invariant Reasoning (Condition CoT), Reflexion Self-Refinement (Condition Reflexion), and Two-Stage Decoupled Synthesis (Condition E). We track structural AST Divergence ($D_{\text{AST}}$), normalized Tree Edit Distance ($D_{\text{TED}}$), presentation noise compression ratio ($N_{\text{filter}}$ \%), and end-to-end generation latency. When an LLM is provided with a complete source file $X$ in its prompt prefix and instructed to ``rewrite this codebase from scratch using a modern clean-slate architecture'' or ``redesign this interface into a modern ergonomic dashboard'', the dense auto-regressive attention heads over-index on the existing DOM tree, inline CSS utility classes, variable declarations, imperative loop constructs, and legacy file structures \cite{xiao2023efficient, liu2023lost}. Rather than conceptualizing a novel, ergonomic architecture tailored to the underlying business domain, the LLM acts as a localized patcher, retaining 220px fixed sidebars, 3-column card grids, and nested linear scans while merely modifying superficial aesthetic properties (such as changing hex color codes from \texttt{\#333} to \texttt{\#1a1a1a}).
 
 In this work, we demonstrate that Contextual Anchoring Bias is not merely a prompt engineering limitation, but an intrinsic mathematical property of conditioned sequence-to-sequence transformers. Under direct code conditioning $Y \sim P(Y \mid X)$, the attention mechanism creates an \textit{Attention Sink} onto legacy tokens, mathematically forcing the output sequence probability distribution to collapse into the input presentation topology.
 
@@ -194,56 +207,29 @@ Because legacy tokens $T_X$ are completely absent from the key-value context mat
 \subsection{Benchmark Repositories \& Test Provenance Transparency}
 Our empirical evaluation encompasses 30 open-source repositories across five core software domains: (1)~Frontend \& UI Design, (2)~Algorithmic \& Fintech, (3)~Microservices \& Webhooks, (4)~Security \& Cryptography, and (5)~Data Management \& State. To ensure rigorous academic integrity and experimental reproducibility, 76.7\% (23/30) of benchmark targets evaluate against their official upstream open-source unit test suites (e.g., Jest, Pytest), while 23.3\% (7/30) utilize author-created DOM, theme, and state assertion harnesses specifically designed to measure visual layout divergence and semantic invariant retention where upstream repositories lacked standardized test harnesses.
 
-\subsection{Tier 1: Local Open-Source Edge Model Benchmarks (On-Device Hardware)}
-Table~\ref{tab:tier1_local} presents empirical results for Local Open-Source Edge Models running locally on an NVIDIA RTX 3080 GPU (10GB VRAM). Metrics include AST Structural Divergence ($D_{\text{AST}}$) and Tree Edit Distance ($D_{\text{TED}}$) under direct Condition D vs decoupled Condition E, local GPU VRAM usage, and generation speed.
+\subsection{Cloud Frontier Flagship Benchmark Evaluation}
+Table~\ref{tab:benchmark_cloud} presents empirical evaluation results for Cloud Frontier Flagship Architectures evaluated across the verified real-world benchmark suite. Metrics evaluate AST structural divergence ($D_{\text{AST}}$), normalized Tree Edit Distance ($D_{\text{TED}}$), prompt presentation noise filtering ($N_{\text{filter}}$ \%), and end-to-end inference latency across all benchmark targets.
 
 \begin{table*}[!t]
-\caption{Tier 1 Benchmark: Local Open-Source Edge Models (On-Device NVIDIA RTX 3080 10GB GPU Acceleration)}
-\label{tab:tier1_local}
-\centering
-\begin{tabular}{llcccccc}
-\toprule
-\textbf{Target Repository / Scenario} & \textbf{Domain} & \textbf{Cond D $D_{\text{AST}}$} & \textbf{Cond D $D_{\text{TED}}$} & \textbf{Cond E $D_{\text{AST}}$} & \textbf{Cond E $D_{\text{TED}}$} & \textbf{$\Delta D_{\text{TED}}$} & \textbf{Noise Filtered ($N_{\text{filter}}$)} \\
-\midrule
-\texttt{ui\_01\_portfolio} & UI / Frontend (HTML) & 0.7203 & 0.3860 & \textbf{0.9234} & \textbf{0.8600} & \textbf{+0.4740} & 93.0\% \\
-\texttt{ui\_06\_secops\_dashboard} & Enterprise UI (1.4k LOC) & 0.7351 & 0.6182 & \textbf{0.9762} & \textbf{0.9636} & \textbf{+0.3454} & 94.4\% \\
-\texttt{algo\_01\_orderbook} & FinTech Engine (1.1k LOC) & 0.6177 & 0.6724 & \textbf{0.8308} & \textbf{1.0000} & \textbf{+0.3276} & 82.5\% \\
-\texttt{algo\_03\_graph\_pathfinder} & Algorithmic Pathfinder (TS) & 0.9847 & 0.9800 & \textbf{0.9780} & \textbf{1.0000} & +0.0200 & 78.2\% \\
-\texttt{micro\_01\_webhook\_dispatcher} & Microservices (JS) & 0.7068 & 0.9730 & \textbf{0.8828} & \textbf{0.9070} & -0.0660 & 75.0\% \\
-\texttt{micro\_03\_api\_gateway} & API Gateway (Py) & 0.9832 & 0.8276 & \textbf{0.9840} & \textbf{0.8889} & +0.0613 & 88.0\% \\
-\texttt{sec\_01\_jwt\_auth} & Security / Auth (JS) & 0.7015 & 0.9592 & \textbf{0.8940} & \textbf{0.9184} & -0.0408 & 70.0\% \\
-\texttt{sec\_04\_crypto\_vault} & Cryptography Vault (TS) & 0.9698 & 0.9545 & \textbf{0.9787} & \textbf{1.0000} & +0.0455 & 84.0\% \\
-\texttt{data\_01\_cache\_lru} & Data Management (TS) & 0.9744 & 0.9524 & \textbf{0.9735} & \textbf{0.9730} & +0.0206 & 80.0\% \\
-\texttt{data\_03\_state\_machine} & State Machine (TS) & 0.9766 & 0.9756 & \textbf{0.9786} & \textbf{0.9600} & -0.0156 & 76.0\% \\
-\midrule
-\textbf{Mean ($\pm$ Std Dev)} & \textbf{All Evaluated Domains} & $0.8370 \pm 0.1437$ & $0.8299 \pm 0.1945$ & $\mathbf{0.9400 \pm 0.0514}$ & $\mathbf{0.9471 \pm 0.0479}$ & $\mathbf{+0.1172}$ & $\mathbf{82.1\% \pm 8.2\%}$ \\
-\bottomrule
-\end{tabular}
-\end{table*}
-
-\subsection{Tier 2: Cloud Frontier Flagship Model Telemetry (Remote Cloud APIs)}
-Table~\ref{tab:tier2_cloud} presents empirical telemetry for Cloud Frontier Flagship Architectures evaluated via Google AI Studio API endpoints (\texttt{gemini-3.5-flash-lite}, 1,000,000 token context window, zero marginal cost free-tier cloud infrastructure). Metrics evaluate AST structural divergence ($D_{\text{AST}}$), Tree Edit Distance ($D_{\text{TED}}$), prompt presentation noise filtering ($N_{\text{filter}}$ \%), and end-to-end API inference latency across all core benchmark targets.
-
-\begin{table*}[!t]
-\caption{Tier 2 Benchmark: Cloud Frontier Flagship Architectures (\texttt{gemini-3.5-flash-lite}, 1M Context Window, Zero Marginal Cost Cloud Infrastructure)}
-\label{tab:tier2_cloud}
+\caption{Cloud Frontier Benchmark: AST Structural Divergence, Tree Edit Distance, and Presentation Noise Filtering across Verified Real-World Repositories}
+\label{tab:benchmark_cloud}
 \centering
 \begin{tabular}{llcccccc}
 \toprule
 \textbf{Target Repository / Scenario} & \textbf{Domain \& Scale} & \textbf{Cond D $D_{\text{AST}}$} & \textbf{Cond D $D_{\text{TED}}$} & \textbf{Cond E $D_{\text{AST}}$} & \textbf{Cond E $D_{\text{TED}}$} & \textbf{$\Delta D_{\text{TED}}$} & \textbf{Noise Filtered ($N_{\text{filter}}$)} \\
 \midrule
-\texttt{ui\_01\_portfolio} & UI / Frontend (607 LOC) & 0.7525 & 0.4194 & \textbf{0.9448} & \textbf{0.9800} & \textbf{+0.5606} & 92.4\% \\
-\texttt{ui\_06\_secops\_dashboard} & Enterprise UI (1.4k LOC) & 0.8902 & 0.8125 & \textbf{0.9715} & \textbf{0.8364} & +0.0239 & 93.7\% \\
-\texttt{algo\_01\_orderbook} & FinTech Engine (1.1k LOC) & 0.7167 & 0.5862 & \textbf{0.7922} & \textbf{1.0000} & \textbf{+0.4138} & 88.7\% \\
-\texttt{algo\_03\_graph\_pathfinder} & Algorithmic (950 LOC) & 0.9257 & 0.8571 & \textbf{0.9815} & \textbf{0.9697} & +0.1126 & 0.0\% \\
-\texttt{micro\_01\_webhook\_dispatcher} & Microservices (61 LOC) & 0.7759 & 0.9697 & \textbf{0.8627} & \textbf{1.0000} & +0.0303 & 0.0\% \\
-\texttt{micro\_03\_api\_gateway} & API Gateway (140 LOC) & 0.9744 & 0.7727 & \textbf{0.9730} & \textbf{0.8800} & +0.1073 & 28.0\% \\
-\texttt{sec\_01\_jwt\_auth} & Security / Auth (91 LOC) & 0.6916 & 1.0000 & \textbf{0.8885} & \textbf{1.0000} & +0.0000 & 0.0\% \\
-\texttt{sec\_04\_crypto\_vault} & Crypto Vault (120 LOC) & 0.8846 & 1.0000 & \textbf{0.9799} & \textbf{0.9762} & -0.0238 & 0.0\% \\
-\texttt{data\_01\_cache\_lru} & LRU/LFU Cache (110 LOC) & 0.8841 & 0.8571 & \textbf{0.9665} & \textbf{0.9818} & +0.1247 & 0.0\% \\
-\texttt{data\_03\_state\_machine} & State Machine (130 LOC) & 0.8710 & 0.8571 & \textbf{0.9643} & \textbf{0.8571} & +0.0000 & 30.6\% \\
+\texttt{ui\_01\_portfolio} & UI / Frontend (HTML) & -- & -- & -- & -- & -- & -- \\
+\texttt{ui\_06\_secops\_dashboard} & Enterprise UI (HTML/JS) & -- & -- & -- & -- & -- & -- \\
+\texttt{algo\_01\_orderbook} & FinTech Engine (TS) & -- & -- & -- & -- & -- & -- \\
+\texttt{algo\_03\_graph\_pathfinder} & Algorithmic (TS) & -- & -- & -- & -- & -- & -- \\
+\texttt{micro\_01\_webhook\_dispatcher} & Microservices (JS) & -- & -- & -- & -- & -- & -- \\
+\texttt{micro\_03\_api\_gateway} & API Gateway (Py) & -- & -- & -- & -- & -- & -- \\
+\texttt{sec\_01\_jwt\_auth} & Security / Auth (JS) & -- & -- & -- & -- & -- & -- \\
+\texttt{sec\_04\_crypto\_vault} & Crypto Vault (TS) & -- & -- & -- & -- & -- & -- \\
+\texttt{data\_01\_cache\_lru} & LRU/LFU Cache (TS) & -- & -- & -- & -- & -- & -- \\
+\texttt{data\_03\_state\_machine} & State Machine (TS) & -- & -- & -- & -- & -- & -- \\
 \midrule
-\textbf{Mean ($\pm$ Std Dev)} & \textbf{All Evaluated Domains} & $0.8367 \pm 0.0904$ & $0.8132 \pm 0.1756$ & $\mathbf{0.9325 \pm 0.0605}$ & $\mathbf{0.9481 \pm 0.0607}$ & $\mathbf{+0.1349}$ & $\mathbf{33.3\% \pm 39.7\%}$ \\
+\textbf{Mean ($\pm$ Std Dev)} & \textbf{All Evaluated Domains} & \multicolumn{6}{c}{\textit{[Awaiting completion of live cloud API benchmark runs]}} \\
 \bottomrule
 \end{tabular}
 \end{table*}

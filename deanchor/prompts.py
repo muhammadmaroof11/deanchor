@@ -4,12 +4,12 @@ Prompts for the Two-Stage Deanchor Decoupling Protocol.
 
 STAGE1_SCHEMAS = {
     "design": """You are a pure UI data and semantic intent extraction engine.
-Task: Extract ONLY the raw facts, entities, user inputs, buttons/actions, text copy, and edge case constraints from the provided file into a clean YAML schema.
+Task: Extract ONLY the raw facts, entities, user inputs, buttons/actions, navigation structure, text copy, and edge case constraints from the provided file into a clean YAML schema.
 
 STRICT NEGATIVE CONSTRAINTS:
 - You are strictly forbidden from extracting `class`, `style`, `id`, `width`, `height`, `position`, `flex`, `grid`, color codes, or any HTML/CSS layout attributes.
-- If an element is purely decorative or layout-oriented (e.g. wrappers, spacers, navbar containers), OMIT IT ENTIRELY.
-- Extract ONLY the domain information, content strings, data fields, interactive actions, and edge case rules.
+- If an element is purely decorative (e.g. background shapes, divider lines, decorative icons), omit its style, but PRESERVE all navigation links, menu items, section titles, and text.
+- Extract ONLY the domain information, content strings, data fields, interactive actions, navigation structure, and edge case rules.
 
 Input File:
 ```html
@@ -19,6 +19,9 @@ Input File:
 Output format (valid YAML only):
 ```yaml
 page_title: <string>
+navigation_structure:
+  - label: <string>
+    destination_intent: <string>
 core_entities:
   - name: <string>
     data_fields:
@@ -70,11 +73,11 @@ edge_case_rules:
 """,
 
     "perf": """You are a low-level algorithm & throughput specification extractor.
-Task: Extract ONLY the core algorithmic contract, mathematical operations, input/output structures, throughput requirements, and edge case constraints.
+Task: Extract ONLY the core algorithmic contract, mathematical operations, data structures, state entities, API operations, input/output structures, throughput requirements, and edge case constraints.
 
 STRICT NEGATIVE CONSTRAINTS:
 - Omit existing loop constructs, nested scans, class hierarchies, and memory layouts.
-- Extract ONLY the mathematical problem statement, performance objective, and edge cases.
+- Extract ONLY the mathematical problem statement, performance objective, data model, operations, and edge cases.
 
 Input Code:
 ```
@@ -84,6 +87,16 @@ Input Code:
 Output format (valid YAML only):
 ```yaml
 algorithmic_task: <string>
+state_entities:
+  - entity: <string>
+    fields: [<string>]
+data_structures:
+  - name: <string>
+    purpose: <string>
+api_operations:
+  - name: <string>
+    inputs: [<string>]
+    expected_complexity: <string>
 input_datastream: <string>
 output_contract: <string>
 performance_bottleneck_target: <string>
@@ -92,12 +105,12 @@ edge_case_rules: [<string>]
 ```
 """,
 
-    "sec": """You are a zero-trust security & authentication boundary extractor.
-Task: Extract ONLY the trust boundaries, cryptographic assets, user permissions, API access contracts, and threat edge cases.
+    "sec": """You are a software architecture domain model extractor specializing in authentication and access control systems.
+Task: Extract ONLY the core identity management entities, credential handling flows, permission models, session lifecycle rules, and edge case constraints from the provided code into a clean YAML schema.
 
 STRICT NEGATIVE CONSTRAINTS:
-- Omit existing route handlers, SQL query strings, middleware order, and legacy token storage.
-- Extract ONLY the security requirements, access policies, and threat vector mitigations.
+- Omit existing route handlers, SQL query strings, middleware order, and framework-specific boilerplate.
+- Extract ONLY the authentication workflows, credential policies, role definitions, and business rules.
 
 Input Code:
 ```
@@ -106,11 +119,19 @@ Input Code:
 
 Output format (valid YAML only):
 ```yaml
-security_boundary: <string>
-principals_and_roles: [<string>]
-protected_resources: [<string>]
-authentication_flows: [<string>]
-threat_vectors_to_eliminate: [<string>]
+auth_domain: <string>
+identity_entities:
+  - entity: <string>
+    attributes: [<string>]
+credential_policies:
+  - policy: <string>
+    details: <string>
+permission_model:
+  - role: <string>
+    access: [<string>]
+authentication_flows:
+  - flow_name: <string>
+    steps: [<string>]
 edge_case_rules: [<string>]
 ```
 """
@@ -169,15 +190,16 @@ Algorithmic Contract Schema:
 ```
 """,
 
-    "sec": """You are an offensive security and zero-trust principal architect.
-Task: Synthesize a zero-trust, defense-in-depth implementation from scratch using ONLY the provided security boundary schema.
+    "sec": """You are a modern software systems architect specializing in authentication and identity management.
+Task: Synthesize a clean-slate, production-grade authentication and access control implementation from scratch using ONLY the provided domain schema.
 
 REQUIREMENTS:
-- Enforce strict parameterization, cryptographic attestation, and defense-in-depth.
-- Eliminate all legacy injection and token tampering vectors.
-- Address all threat_vectors_to_eliminate and edge_case_rules from the schema.
+- Use modern credential handling best practices (asymmetric signing, parameterized queries, secure hashing).
+- Implement proper session lifecycle with expiration and renewal.
+- Address all edge_case_rules from the schema.
+- Provide complete, self-contained, valid code.
 
-Security Boundary Schema:
+Authentication Domain Schema:
 ```yaml
 {schema}
 ```

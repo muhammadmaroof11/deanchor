@@ -3,13 +3,18 @@
   "name": "High-Throughput LRU/LFU Cache",
   "domain": "Data Management & State",
   "repo_origin": "isaacs/node-lru-cache",
-  "loc": 1050,
+  "loc": 124,
+  "loc_status": "VERIFIED",
   "language": "TypeScript",
   "legacy_paradigm": "Doubly linked list with individual JS object allocation overhead",
   "deanchored_target": "Flat TypedArray indices (Uint32Array) with O(1) eviction hashing",
   "test_type": "Jest LRU Eviction Tests",
-  "test_assertions": 22,
+  "test_assertions": 0,
   "test_provenance": "upstream",
   "upstream_verified": true,
-  "is_core_subset": true
+  "is_core_subset": true,
+  "full_repo_ingested": true,
+  "repo_total_files": 85,
+  "repo_total_dirs": 10,
+  "repo_test_files_count": 7
 }

@@ -56,11 +56,11 @@
   #text(weight: "bold", size: 10pt)[ABSTRACT] \
   #v(0.3em)
   #text(size: 9.5pt)[
-    When instruction-tuned Large Language Models (LLMs) are tasked with redesigning, refactoring, or optimizing existing software codebases and user interfaces, they suffer from severe *Contextual Anchoring Bias*---an intrinsic attention failure where auto-regressive attention heads allocate disproportionate probability mass to legacy syntactic, structural, and visual tokens in the prompt prefix. Consequently, contemporary state-of-the-art models frequently produce trivial cosmetic mutations (e.g., hexadecimal color swaps, variable renaming) rather than fundamental architectural transformations, achieving structural Abstract Syntax Tree (AST) divergence scores below $0.02$ under standard zero-shot prompting. In this paper, we formalize the Contextual Anchoring Hypothesis by decomposing code entropy into functional domain requirements $H(D)$ and presentation topology $H(T | D)$. We propose the *Two-Stage Deanchoring Decoupling Protocol*, which strictly eliminates legacy layout tokens from the generative context window by compressing raw code into an intermediate semantic entity-action YAML contract (Stage 1) before synthesizing clean-slate greenfield implementations (Stage 2). To evaluate this framework across distinct operational paradigms, we establish a *Two-Tier Separated Benchmarking Methodology*: *Tier 1* evaluates Local Open-Source Edge Models (7B--9B parameters running on a local NVIDIA RTX 3080 GPU measuring local VRAM memory allocation, token generation speed, AST divergence, and Tree Edit Distance); *Tier 2* evaluates Cloud Frontier Flagship Architectures (Google Gemini 3.5 Flash Lite with a 1,000,000-token context window operating over remote cloud APIs with zero marginal cost measuring presentation noise compression $N_"filter"$, AST divergence, Tree Edit Distance $D_("TED")$, API round-trip latency, and architectural synthesis quality). The results prove that Two-Stage Decoupling achieves near-perfect unanchored synthesis ($0.9325$--$0.9400$ AST divergence and $0.9471$--$0.9481$ Tree Edit Distance) while filtering up to $94.4\%$ of presentation noise, outperforming base zero-shot baselines by over 50x across local edge hardware and 1M-context cloud flagships ($p < 0.001$). Finally, we present the production-ready `deanchor` CLI tool, enabling automated, sub-15-second blank-slate code synthesis with zero-shot syntax self-healing.
+    When instruction-tuned Large Language Models (LLMs) are tasked with redesigning, refactoring, or optimizing existing software codebases and user interfaces, they suffer from severe *Contextual Anchoring Bias*---an intrinsic attention failure where auto-regressive attention heads allocate disproportionate probability mass to legacy syntactic, structural, and visual tokens in the prompt prefix. Consequently, contemporary state-of-the-art models frequently produce trivial cosmetic mutations (e.g., hexadecimal color swaps, variable renaming) rather than fundamental architectural transformations, achieving structural Abstract Syntax Tree (AST) divergence scores below $0.02$ under standard zero-shot prompting. In this paper, we formalize the Contextual Anchoring Hypothesis by decomposing code entropy into functional domain requirements $H(D)$ and presentation topology $H(T | D)$. We propose the *Two-Stage Deanchoring Decoupling Protocol*, which strictly eliminates legacy layout tokens from the generative context window by compressing raw code into an intermediate semantic entity-action YAML contract (Stage 1) before synthesizing clean-slate greenfield implementations (Stage 2). To evaluate this framework, we conduct extensive empirical benchmarks on Cloud Frontier Architectures across a 30-repository real-world benchmark suite spanning frontend UI design, algorithmic systems, microservices, security/cryptography, and distributed state management. We evaluate presentation noise compression $N_"filter"$, AST divergence, normalized Tree Edit Distance $D_("TED")$, round-trip latency, and synthesis quality across four operational regimes: Zero-Shot Baseline (Condition D), Chain-of-Thought (Condition CoT), Reflexion Self-Refine (Condition Reflexion), and Two-Stage Decoupling (Condition E). Finally, we present the production-ready `deanchor` CLI tool, enabling automated blank-slate code synthesis with zero-shot syntax self-healing.
   ]
 
   #v(0.6em)
-  #text(weight: "bold", size: 9pt)[Keywords:] #text(size: 9pt)[Large Language Models, Contextual Anchoring, Attention Sinks, Code Generation, Two-Stage Decoupling, Abstract Syntax Tree Divergence, Local vs Cloud Benchmarking, Tiered Metrics.]
+  #text(weight: "bold", size: 9pt)[Keywords:] #text(size: 9pt)[Large Language Models, Contextual Anchoring, Attention Sinks, Code Generation, Two-Stage Decoupling, Abstract Syntax Tree Divergence, Tree Edit Distance, Greenfield Synthesis.]
 ]
 
 #v(1.0em)
@@ -94,10 +94,8 @@ A crucial dimension of our research involved optimization of the context-referen
 - *Transition to Graphify (Static Indexing):* To restrict model context, we introduced Graphify, operating as a static, artifact-generating tool. Running the Graphify snapshot command generated a local code dependency graph, HTML visualizer, and a static Markdown report (`GRAPH_REPORT.md`). While this minimized context footprints, it required manual rebuilds and could not trace real-time edits.
 - *Shift to CodeGraph (Live MCP Indexing):* To achieve real-time synchronization, we transitioned to CodeGraph, which operates as a live, always-on Model Context Protocol (MCP) server backed by local SQLite and Tree-sitter. CodeGraph features a native file watcher that auto-syncs code changes within milliseconds of saving a file. When the agent is invoked, it queries CodeGraph to trace recursive symbols and dependency call paths, enabling dynamic pruning of the context window.
 
-== 1.3 Two-Tier Separated Benchmarking Methodology
-To evaluate model performance without lumping disparate model classes into a single baseline, we establish a *Two-Tier Separated Benchmarking Framework*:
-+ *Tier 1: On-Device Hardware Benchmarks (Local Edge Models, 7B--9B Params):* Evaluated on local NVIDIA RTX 3080 GPU hardware measuring AST divergence, Tree Edit Distance ($D_("TED")$), VRAM memory usage, token generation speed, and local syntax pass rate.
-+ *Tier 2: Remote API Telemetry Benchmarks (Cloud Frontier Flagships, 1M Context Window):* Evaluated over Google AI Studio cloud APIs using `gemini-3.5-flash-lite` (1M context window, zero marginal cost) measuring AST divergence, Tree Edit Distance ($D_("TED")$), presentation noise compression $N_"filter"$, and API round-trip latency.
+== 1.3 Empirical Benchmarking Methodology
+To evaluate model performance without bias or superficial assumptions, we establish a rigorous evaluation suite across 30 real-world open-source repositories spanning five software engineering domains. Each target is evaluated under four distinct operational conditions: Zero-Shot Direct Synthesis (Condition D), Chain-of-Thought Reasoning (Condition CoT), Reflexion Self-Refine (Condition Reflexion), and Two-Stage Decoupled Synthesis (Condition E). We track structural AST Divergence ($D_("AST")$), normalized Tree Edit Distance ($D_("TED")$), presentation noise compression $N_"filter"$, and end-to-end latency.
 
 = 2. Related Work
 
@@ -147,12 +145,12 @@ $ I(T_Y ; T_X | S) = 0 $ <eq_dpi>
 == 2.1 Rotary Position Embeddings (RoPE) Invariance
 Modern LLMs employ Rotary Position Embeddings (RoPE) @su2024roformer to encode relative token distances: $bold(q)_m^T bold(k)_n = bold(x)_m^T bold(W)_q^T bold(R)_(Theta, n-m)^d bold(W)_k bold(x)_n$. While RoPE enforces relative distance decay for distant tokens, legacy prompt tokens $T_X$ occupy initial sequence indices $n in [1, |X|]$. For synthesized tokens at positions $m > |X|$, the attention score $bold(q)_m^T bold(k)_n$ remains strictly non-zero because key vectors $bold(k)_n$ corresponding to legacy DOM nodes persist in the active KV cache. Consequently, RoPE optimizations *do not eliminate Contextual Anchoring Bias*. Only Two-Stage Decoupling ($T_X in.not S arrow.r.double I(T_Y; T_X | S) = 0$) physically purges legacy presentation keys.
 
-= 3. Two-Tier Empirical Benchmarking Results
+= 3. Empirical Benchmarking Results
 
 == 3.1 Benchmark Repositories & Test Provenance Transparency
 Our empirical evaluation encompasses 30 open-source repositories across five core software domains: (1)~Frontend \& UI Design, (2)~Algorithmic \& Fintech, (3)~Microservices \& Webhooks, (4)~Security \& Cryptography, and (5)~Data Management \& State. To ensure rigorous academic integrity and experimental reproducibility, 76.7% (23/30) of benchmark targets evaluate against their official upstream open-source unit test suites (e.g., Jest, Pytest), while 23.3% (7/30) utilize author-created DOM, theme, and state assertion harnesses specifically designed to measure visual layout divergence and semantic invariant retention where upstream repositories lacked standardized test harnesses.
 
-== 3.2 Tier 1 Benchmark: Local Open-Source Edge Models (On-Device Hardware)
+== 3.2 Cloud Frontier Benchmark: Real-World Software Repositories
 
 #align(center)[
   #table(
@@ -163,42 +161,17 @@ Our empirical evaluation encompasses 30 open-source repositories across five cor
     table.header(
       [*Target Repository*], [*Domain*], [*Cond D $D_("AST")$*], [*Cond D $D_("TED")$*], [*Cond E $D_("AST")$*], [*Cond E $D_("TED")$*], [*Noise Filt.*]
     ),
-    [`ui_01_portfolio`], [UI / Frontend], [0.7203], [0.3860], [*0.9234*], [*0.8600*], [93.0%],
-    [`ui_06_secops_dash`], [Enterprise UI], [0.7351], [0.6182], [*0.9762*], [*0.9636*], [94.4%],
-    [`algo_01_orderbook`], [FinTech Engine], [0.6177], [0.6724], [*0.8308*], [*1.0000*], [82.5%],
-    [`algo_03_graph_path`], [Pathfinder], [0.9847], [0.9800], [*0.9780*], [*1.0000*], [78.2%],
-    [`micro_01_webhook`], [Microservices], [0.7068], [0.9730], [*0.8828*], [*0.9070*], [75.0%],
-    [`micro_03_gateway`], [API Gateway], [0.9832], [0.8276], [*0.9840*], [*0.8889*], [88.0%],
-    [`sec_01_jwt_auth`], [Security / Auth], [0.7015], [0.9592], [*0.8940*], [*0.9184*], [70.0%],
-    [`sec_04_crypto_vault`], [Crypto Vault], [0.9698], [0.9545], [*0.9787*], [*1.0000*], [84.0%],
-    [`data_01_cache_lru`], [LRU Cache], [0.9744], [0.9524], [*0.9735*], [*0.9730*], [80.0%],
-    [`data_03_state_mach`], [State Machine], [0.9766], [0.9756], [*0.9786*], [*0.9600*], [76.0%],
-    [*Mean ($plus.minus$ Std)*], [*All Domains*], [0.8370], [0.8299], [*0.9400*], [*0.9471*], [*82.1%*]
-  )
-]
-
-= 4. Tier 2 Telemetry: Cloud Frontier Flagship Architectures (Remote Cloud APIs)
-
-#align(center)[
-  #table(
-    columns: (1.5in, 1.1in, 0.7in, 0.7in, 0.7in, 0.7in, 0.8in),
-    fill: (x, y) => if y == 0 { rgb("#eaecee") } else if calc.even(y) { rgb("#f8f9f9") } else { white },
-    stroke: 0.5pt + rgb("#bdc3c7"),
-    align: (col, row) => if col < 2 { left } else { center },
-    table.header(
-      [*Target Repository*], [*Domain*], [*Cond D $D_("AST")$*], [*Cond D $D_("TED")$*], [*Cond E $D_("AST")$*], [*Cond E $D_("TED")$*], [*Noise Filt.*]
-    ),
-    [`ui_01_portfolio`], [UI / Frontend], [0.7525], [0.4194], [*0.9448*], [*0.9800*], [92.4%],
-    [`ui_06_secops_dash`], [Enterprise UI], [0.8902], [0.8125], [*0.9715*], [*0.8364*], [93.7%],
-    [`algo_01_orderbook`], [FinTech Engine], [0.7167], [0.5862], [*0.7922*], [*1.0000*], [88.7%],
-    [`algo_03_graph_path`], [Pathfinder], [0.9257], [0.8571], [*0.9815*], [*0.9697*], [0.0%],
-    [`micro_01_webhook`], [Microservices], [0.7759], [0.9697], [*0.8627*], [*1.0000*], [0.0%],
-    [`micro_03_gateway`], [API Gateway], [0.9744], [0.7727], [*0.9730*], [*0.8800*], [28.0%],
-    [`sec_01_jwt_auth`], [Security / Auth], [0.6916], [1.0000], [*0.8885*], [*1.0000*], [0.0%],
-    [`sec_04_crypto_vault`], [Crypto Vault], [0.8846], [1.0000], [*0.9799*], [*0.9762*], [0.0%],
-    [`data_01_cache_lru`], [LRU Cache], [0.8841], [0.8571], [*0.9665*], [*0.9818*], [0.0%],
-    [`data_03_state_mach`], [State Machine], [0.8710], [0.8571], [*0.9643*], [*0.8571*], [30.6%],
-    [*Mean ($plus.minus$ Std)*], [*All Domains*], [0.8367], [0.8132], [*0.9325*], [*0.9481*], [*33.3%*]
+    [`ui_01_portfolio`], [UI / Frontend], [--], [--], [--], [--], [--],
+    [`ui_06_secops_dash`], [Enterprise UI], [--], [--], [--], [--], [--],
+    [`algo_01_orderbook`], [FinTech Engine], [--], [--], [--], [--], [--],
+    [`algo_03_graph_path`], [Pathfinder], [--], [--], [--], [--], [--],
+    [`micro_01_webhook`], [Microservices], [--], [--], [--], [--], [--],
+    [`micro_03_gateway`], [API Gateway], [--], [--], [--], [--], [--],
+    [`sec_01_jwt_auth`], [Security / Auth], [--], [--], [--], [--], [--],
+    [`sec_04_crypto_vault`], [Crypto Vault], [--], [--], [--], [--], [--],
+    [`data_01_cache_lru`], [LRU Cache], [--], [--], [--], [--], [--],
+    [`data_03_state_mach`], [State Machine], [--], [--], [--], [--], [--],
+    [*Status*], [*All Domains*], [Awaiting], [live], [cloud], [runs], [--]
   )
 ]
 
