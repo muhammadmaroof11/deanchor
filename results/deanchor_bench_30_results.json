@@ -5,71 +5,71 @@
     "num_projects": 30,
     "total_loc": 17261,
     "total_test_assertions": 0,
-    "timestamp": "2026-09-14T23:20:46Z",
+    "timestamp": "2026-09-17T20:04:11Z",
     "domains": [
-      "Algorithmic & Fintech",
-      "Data Management & State",
       "Security & Auth",
-      "Microservices & Webhooks",
-      "Frontend & UI Design"
+      "Data Management & State",
+      "Frontend & UI Design",
+      "Algorithmic & Fintech",
+      "Microservices & Webhooks"
     ]
   },
   "project_results": [
     {
-      "id": "micro_01_webhook_dispatcher",
-      "name": "GitHub Webhook Dispatcher",
-      "domain": "Microservices & Webhooks",
-      "loc": 61,
+      "id": "ui_01_portfolio",
+      "name": "Web Developer Portfolio Theme",
+      "domain": "Frontend & UI Design",
+      "loc": 607,
       "tier": "tier2_cloud",
       "model": "gemini-2.5-flash",
       "conditions": {
         "zero_shot_baseline": {
-          "ast_divergence_mean": 0.8235,
+          "ast_divergence_mean": 0.9852,
           "ast_divergence_std": 0.0,
-          "tree_edit_distance_mean": 0.8235,
+          "tree_edit_distance_mean": 0.9852,
           "tree_edit_distance_std": 0.0,
-          "embedding_distance_mean": 0.5,
+          "embedding_distance_mean": 0.9622,
           "embedding_distance_std": 0.0,
           "noise_filtered_pct": 0.0,
-          "mean_latency_sec": 34.65,
+          "mean_latency_sec": 41.03,
           "runs_evaluated": 1,
-          "test_provenance": "upstream"
+          "test_provenance": "author_created"
         },
         "chain_of_thought": {
-          "ast_divergence_mean": 0.9195,
+          "ast_divergence_mean": 0.9655,
           "ast_divergence_std": 0.0,
-          "tree_edit_distance_mean": 0.9195,
+          "tree_edit_distance_mean": 0.9655,
           "tree_edit_distance_std": 0.0,
-          "embedding_distance_mean": 0.5,
+          "embedding_distance_mean": 0.9271,
           "embedding_distance_std": 0.0,
           "noise_filtered_pct": 12.0,
-          "mean_latency_sec": 39.9,
+          "mean_latency_sec": 42.55,
           "runs_evaluated": 1,
-          "test_provenance": "upstream"
+          "test_provenance": "author_created"
         },
         "reflexion_self_refine": {
-          "ast_divergence_mean": 0.8276,
+          "ast_divergence_mean": 0.7911,
           "ast_divergence_std": 0.0,
-          "tree_edit_distance_mean": 0.8276,
+          "tree_edit_distance_mean": 0.7911,
           "tree_edit_distance_std": 0.0,
-          "embedding_distance_mean": 0.5,
+          "embedding_distance_mean": 0.7682,
           "embedding_distance_std": 0.0,
           "noise_filtered_pct": 18.0,
-          "mean_latency_sec": 152.9,
+          "mean_latency_sec": 202.54,
           "runs_evaluated": 1,
-          "test_provenance": "upstream"
+          "test_provenance": "author_created"
         },
         "two_stage_deanchor": {
-          "ast_divergence_mean": 0.8747,
+          "ast_divergence_mean": 0.9365,
           "ast_divergence_std": 0.0,
-          "tree_edit_distance_mean": 0.8747,
+          "tree_edit_distance_mean": 0.9365,
           "tree_edit_distance_std": 0.0,
-          "embedding_distance_mean": 0.5,
+          "embedding_distance_mean": 0.8895,
           "embedding_distance_std": 0.0,
-          "noise_filtered_pct": 22.8,
-          "mean_latency_sec": 72.0,
+          "noise_filtered_pct": 87.8,
+          "mean_latency_sec": 75.84,
           "runs_evaluated": 1,
-          "test_provenance": "upstream"
+          "test_provenance": "author_created"
         }
       }
     }

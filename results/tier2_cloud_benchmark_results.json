@@ -1,7 +1,0 @@
-{
-  "status": "PURGED_FABRICATED_DATA",
-  "tier": "Tier 2: Cloud Frontier Flagship Architectures",
-  "notice": "All legacy synthetic Tier 2 cloud telemetry numbers have been purged in strict compliance with Academic Integrity Rules (.agents/rules/research-integrity.md). Real measured results (presentation noise reduction, API latency, AST divergence, and syntax validity) are populated directly from live API inference runs via scripts/run_bench_30_real.py --tier 2.",
-  "timestamp_purged": "2026-09-09",
-  "archived_location": "results/fabricated_archive/tier2_cloud_benchmark_results.fabricated.json"
-}

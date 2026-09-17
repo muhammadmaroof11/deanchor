@@ -1,0 +1,145 @@
+domain_entities:
+  - name: Person
+    fields:
+      - name: name
+        type: String
+      - name: role
+        type: String
+      - name: description
+        type: String
+      - name: keywords
+        type: List<String>
+      - name: authorName
+        type: String
+      - name: profileImageURL
+        type: URL
+  - name: PortfolioWebsite
+    fields:
+      - name: title
+        type: String
+      - name: metaDescription
+        type: String
+      - name: canonicalURL
+        type: URL
+      - name: socialShareImageURL
+        type: URL
+      - name: faviconURL
+        type: URL
+      - name: owner
+        type: Reference<Person>
+      - name: technologiesUsed
+        type: List<String>
+      - name: contactFormSubmissionEndpoint
+        type: URL
+      - name: analyticsTrackingId
+        type: String
+      - name: defaultTheme
+        type: Enum<"dark", "light">
+  - name: WebsiteSection
+    fields:
+      - name: id
+        type: String
+      - name: title
+        type: String
+      - name: navigationLabel
+        type: String
+  - name: BlogArticle
+    fields:
+      - name: title
+        type: String
+      - name: summary
+        type: String
+      - name: externalURL
+        type: URL
+      - name: bannerImageURL
+        type: URL
+      - name: category
+        type: String
+  - name: ContactMessage
+    fields:
+      - name: senderName
+        type: String
+      - name: senderEmail
+        type: Email
+      - name: subject
+        type: String
+      - name: body
+        type: String
+
+functional_operations:
+  - name: InitializeWebsiteContext
+    inputs:
+      - name: websiteConfig
+        type: PortfolioWebsite
+    outputs: []
+    invariants:
+      - Analytics tracking is configured using `websiteConfig.analyticsTrackingId`.
+      - The initial display theme is set to `websiteConfig.defaultTheme`.
+  - name: RequestSectionNavigation
+    inputs:
+      - name: targetSectionId
+        type: String
+    outputs: []
+    invariants:
+      - `targetSectionId` must correspond to an existing `WebsiteSection`.
+  - name: ToggleDisplayTheme
+    inputs: []
+    outputs:
+      - name: newTheme
+        type: Enum<"dark", "light">
+    invariants:
+      - The current display theme is inverted (dark becomes light, light becomes dark).
+  - name: SubmitContactRequest
+    inputs:
+      - name: message
+        type: ContactMessage
+    outputs:
+      - name: submissionStatus
+        type: Enum<"Success", "Failure">
+    invariants:
+      - `message.senderName` is non-empty.
+      - `message.senderEmail` is a valid email format and non-empty.
+      - `message.subject` is non-empty.
+      - `message.body` is non-empty.
+      - The `message` is transmitted to `PortfolioWebsite.contactFormSubmissionEndpoint` via HTTP POST.
+  - name: OpenExternalContent
+    inputs:
+      - name: contentURL
+        type: URL
+    outputs: []
+    invariants:
+      - `contentURL` must be a valid, external URL.
+      - The content is opened in a new, separate browsing context.
+  - name: RequestScrollToTop
+    inputs: []
+    outputs: []
+    invariants:
+      - The primary viewport's vertical scroll position is set to its minimum (top).
+
+state_contracts:
+  - name: WebsiteContextInitialized
+    event: InitializeWebsiteContext operation completes.
+    state_transitions:
+      - The `PortfolioWebsite`'s current `displayTheme` is set to `defaultTheme`.
+      - Analytics services are active.
+  - name: DisplayThemeChanged
+    event: ToggleDisplayTheme operation is performed.
+    state_transitions:
+      - `PortfolioWebsite.currentDisplayTheme` is updated to the `newTheme`.
+  - name: SectionViewRequested
+    event: RequestSectionNavigation operation is performed.
+    state_transitions:
+      - The `PortfolioWebsite`'s active view is focused on the `targetSectionId`.
+  - name: ContactRequestProcessed
+    event: SubmitContactRequest operation completes.
+    state_transitions:
+      - If `submissionStatus` is `Success`, the `ContactMessage` is recorded by the external service.
+      - If `submissionStatus` is `Failure`, an error state is indicated.
+  - name: ScrollPositionMonitored
+    event: The user's scroll position changes.
+    state_transitions:
+      - A `backToTopButtonVisibility` flag (internal UI state) is updated based on whether the scroll position exceeds a predefined threshold.
+  - name: ViewportScrolledToTop
+    event: RequestScrollToTop operation is performed.
+    state_transitions:
+      - The viewport's vertical scroll position is reset to 0.

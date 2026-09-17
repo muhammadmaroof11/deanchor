@@ -1,6 +1,0 @@
-{
-  "status": "PURGED_FABRICATED_DATA",
-  "notice": "All legacy synthetic ablation data points have been purged in strict compliance with Academic Integrity Rules (.agents/rules/research-integrity.md). Real ablation metrics across C_D, C_Trunc, C_Skel, C_Docstring, C_JSON, and C_YAML will be populated directly from empirical multi-condition inference runs.",
-  "timestamp_purged": "2026-09-09",
-  "archived_location": "results/fabricated_archive/ablation_study_results.fabricated.json"
-}

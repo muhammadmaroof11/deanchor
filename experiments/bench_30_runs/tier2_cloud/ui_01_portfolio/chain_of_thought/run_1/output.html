@@ -1,0 +1,38 @@
+my-portfolio/
+├── public/                  # Static assets served directly (e.g., favicon, images)
+│   ├── assets/
+│   │   ├── images/
+│   │   └── vj.webp
+│   └── index.html           # Base HTML template (Vite entry point)
+├── src/
+│   ├── App.svelte           # Main application component, orchestrates sections
+│   ├── main.js              # Svelte entry point
+│   ├── app.css              # Global Tailwind directives and custom base styles
+│   └── lib/                 # Reusable components, utilities, and data
+│       ├── components/
+│       │   ├── About.svelte
+│       │   ├── BackToTop.svelte
+│       │   ├── BlogCard.svelte
+│       │   ├── Contact.svelte
+│       │   ├── Footer.svelte
+│       │   ├── Header.svelte
+│       │   ├── Hero.svelte
+│       │   ├── ProjectCard.svelte
+│       │   ├── SectionHeading.svelte
+│       │   ├── Skills.svelte
+│       │   └── ThemeToggle.svelte
+│       ├── data/
+│       │   ├── about.js
+│       │   ├── blogs.js
+│       │   ├── meta.js
+│       │   ├── navLinks.js
+│       │   ├── projects.js
+│       │   └── skills.js
+│       └── utils/
+│           ├── scroll.js      # Utility for smooth scrolling and scroll spy
+│           └── themeStore.js  # Svelte store for theme management
+├── tailwind.config.js       # Tailwind CSS configuration
+├── postcss.config.js        # PostCSS configuration (for Tailwind)
+├── vite.config.js           # Vite build configuration
+├── package.json
+└── README.md
